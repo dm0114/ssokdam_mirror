@@ -9,19 +9,16 @@ export const InputFormView = styled.div `
 `;
 
 export const InputWrap = styled.div `
+  width: 100%;
   margin-bottom: 9px;
-  padding: 43px 0 0 1px;
   position: relative;
 `;
 
 export const InputText = styled.p `
-  height: 73.49%;
-  width: 50.79%;
   color: ${props => props.theme.colors.black};
   display: flex;
   align-items: center;
-  left: 0;
-  top: 0;
+  margin: 32px 0 8px;
   font-family: ${props => props.theme.fonts.sCoreDream14Regular.family};
   font-size: ${props => props.theme.fonts.sCoreDream14Regular.size};
   font-weight: ${props => props.theme.fonts.sCoreDream14Regular.weight};
@@ -35,4 +32,8 @@ export const InputForm = styled.input.attrs({ required: true })`
   background-color: ${props => props.theme.colors.white};
   border: 0.1px solid;
   border-radius: 5px;
+
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */	
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */	
+  box-sizing: border-box; /* Opera/IE 8+ */
 `;

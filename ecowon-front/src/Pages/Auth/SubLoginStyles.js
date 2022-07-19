@@ -20,9 +20,15 @@ export const SubLoginBackgroundView = styled.div `
 export const Wrap = styled.div`
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `
+
+export const HeaderWrapper = styled(Wrap)`
+  flex-direction: row;
+`
+
 export const Vector = styled.img `
   position: absolute;
   left: 16px;
