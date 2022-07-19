@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const SubLoginBackgroundView = styled.div `
-  width: 100vw;
+  width: 100vh;
   height: 100vh;
 
   background-color:${props => props.theme.colors.whiteSmoke};
