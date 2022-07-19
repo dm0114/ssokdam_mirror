@@ -8,7 +8,8 @@ export default {
     gainsboro: "rgba(217,217,217,1)",
     silver: "rgba(187,187,187,1)",
     white: "rgba(255,255,255,1)",
-    whiteSmoke: "rgba(239,240,242,1)"
+    whiteSmoke: "rgba(239,240,242,1)",
+    red: "rgba(255,0, 0, 1)",
   },
   fonts: {
     inter20Regular: {
