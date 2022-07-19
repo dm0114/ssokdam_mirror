@@ -7,6 +7,8 @@ import {
 import Loading from './Pages/Loading.jsx'
 import Login from './Pages/Auth/Login.jsx'
 import FindId from './Pages/Auth/FindId';
+import SignUp from './Pages/Auth/SignUp.jsx'
+import Home from './Pages/Main/Home'
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
         </Route>
         <Route path='/login' element={<Login/>} />
         <Route path='/login/findId' element={<FindId/>} />
+        <Route path='/signup' element={<SignUp/>} />
       </Routes>
     </Router>
   );

@@ -27,8 +27,8 @@ function Login(){
                 label="아이디" 
                 fullWidth 
                 required 
-                name="email" 
-                autoComplete='email' 
+                name="아이디" 
+                autoComplete='아이디' 
                 autoFocus
                 margin='normal'
                 />
