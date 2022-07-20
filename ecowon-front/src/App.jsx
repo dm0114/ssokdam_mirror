@@ -14,23 +14,11 @@ import FindPw from './Pages/Auth/FindPw';
 
 function App() {
   return (
-<<<<<<< HEAD
-    <Router>
-      <Routes>
-        <Route path='/' element={<Loading/>}>
-        </Route>
-        <Route path='/login' element={<Login/>} />
-        <Route path='/login/findId' element={<FindId/>} />
-        <Route path='/signup' element={<SignUp/>} />
-        <Route path='/login/findPw' element={<FindPw/>} />
-      </Routes>
-    </Router>
-=======
     <>
       <GlobalStyle />
       <Router>
         <Routes>
-          <Route path='/' element={<Loading/>}>
+          <Route path='/' element={<Home/>}>
           </Route>
           <Route path='/login' element={<Login/>} />
           <Route path='/login/findId' element={<FindId/>} />
@@ -39,7 +27,6 @@ function App() {
         </Routes>
       </Router>
     </>
->>>>>>> 6c059a779257dd4a7be67aa39d07bee19e2540cf
   );
 }
 
