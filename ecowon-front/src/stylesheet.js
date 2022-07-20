@@ -18,10 +18,22 @@ export default {
       weight: "400",
       lineHeight: "normal"
     },
+    sCoreDream14Light: {
+      family: "SCoreDream",
+      size: "14px",
+      weight: "400",
+      lineHeight: "normal"
+    },
     sCoreDream14Regular: {
       family: "SCoreDream",
       size: "14px",
       weight: "500",
+      lineHeight: "normal"
+    },
+    sCoreDream16Bold: {
+      family: "SCoreDream",
+      size: "14px",
+      weight: "600",
       lineHeight: "normal"
     },
     sCoreDream16Regular: {
