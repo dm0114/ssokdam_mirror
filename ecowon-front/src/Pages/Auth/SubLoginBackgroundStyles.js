@@ -4,8 +4,8 @@ export const SubLoginBackgroundView = styled.div `
   width: 100vh;
   height: 100vh;
 
-  background-color:${props => props.theme.colors.whiteSmoke};
-  padding: 24px 16px 32px 16px;
+  background-color:${props => props.theme.colors.white};
+  padding: 24px 24px 32px 24px;
   
   display: flex;
   align-items: flex-start;

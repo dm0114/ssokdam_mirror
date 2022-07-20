@@ -14,7 +14,10 @@ import {
   InputForm
 } from './InputFormStyles';
 
+
+
 const FindPassword = () => {
+
     return (
       <SubLoginBackgroundView>
         <Wrap>
