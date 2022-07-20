@@ -8,8 +8,9 @@ import { Link } from "react-router-dom"
 import {useState, useEffect} from 'react'
 import "./LoginModule.css"
 
+
 function Login(){
-  const URL = "http://localhost:8888/users"
+  const URL = "http://localhost:8080/users"
   // const getUser = async() => {
   //   const json = await( await fetch(URL)).json()
   //   console.log(json[0])
@@ -18,8 +19,17 @@ function Login(){
   //   getUser()
   // },[])
   const fetchLogin = async ({ id, password }) => {
-    const response = await fetch("http://localhost:8888/users");
-    console.log("통신!")
+    const response = await fetch(URL, {
+      method: "POST",
+      headers: {
+        'Content-type': 'application/json'
+    },
+      body: JSON.stringify({
+        id: id,
+        password: password
+      })
+    })
+    .then((res) => console.log(res))
     if (response.ok) {
         //서버통신이 성공적으로 이루어지면 users에 json값 대입
       const users = await response.json();
