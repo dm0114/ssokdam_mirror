@@ -17,6 +17,23 @@ export const SubLoginBackgroundView = styled.div `
   box-sizing: border-box; /* Opera/IE 8+ */
 `;
 
+export const SubBackgroundView = styled.div `
+  width: 100%;
+  height: 100vh;
+
+  background-color:${props => props.theme.colors.white};
+  padding: 24px 24px 32px 24px;
+  
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */	
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */	
+  box-sizing: border-box; /* Opera/IE 8+ */
+`;
+
+
 export const Wrap = styled.div`
   width: 100%;
   display: flex;
@@ -31,7 +48,7 @@ export const HeaderWrapper = styled(Wrap)`
 
 export const Vector = styled.img `
   position: absolute;
-  left: 16px;
+  left: 24px;
   width: 2.9%;
   height: 22.95%;
 `;
