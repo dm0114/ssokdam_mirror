@@ -24,6 +24,12 @@ export default {
       weight: "500",
       lineHeight: "normal"
     },
+    sCoreDream16Regular: {
+      family: "SCoreDream",
+      size: "16px",
+      weight: "500",
+      lineHeight: "normal"
+    },
     sCoreDream20Regular: {
       family: "SCoreDream",
       size: "20px",

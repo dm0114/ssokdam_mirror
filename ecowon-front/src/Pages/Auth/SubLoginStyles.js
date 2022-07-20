@@ -4,8 +4,8 @@ export const SubLoginBackgroundView = styled.div `
   width: 100%;
   height: 100vh;
 
-  background-color:${props => props.theme.colors.whiteSmoke};
-  padding: 24px 16px 32px 16px;
+  background-color:${props => props.theme.colors.white};
+  padding: 24px 24px 32px 24px;
   
   display: flex;
   align-items: flex-start;
@@ -41,10 +41,10 @@ export const MainText = styled.p `
   display: flex;
   align-items: center;
   text-align: center;
-  font-family: ${props => props.theme.fonts.sCoreDream20Regular.family};
-  font-size: ${props => props.theme.fonts.sCoreDream20Regular.size};
-  font-weight: ${props => props.theme.fonts.sCoreDream20Regular.weight};
-  line-height: ${props => props.theme.fonts.sCoreDream20Regular.lineHeight};
+  font-family: ${props => props.theme.fonts.sCoreDream16Regular.family};
+  font-size: ${props => props.theme.fonts.sCoreDream16Regular.size};
+  font-weight: ${props => props.theme.fonts.sCoreDream16Regular.weight};
+  line-height: ${props => props.theme.fonts.sCoreDream16Regular.lineHeight};
 `;
 
 export const MainButton = styled.button`
