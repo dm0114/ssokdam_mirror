@@ -1,6 +1,7 @@
 package com.ssaft.project.controller;
 
 import antlr.Token;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.Service.IotUserService;
 import com.ssaft.project.Service.SecurityService;
@@ -39,12 +40,12 @@ public class IotUserController {
 
     @PostMapping("/login/json")                                // json 로그인 기능 true or false 로 전달
     @ResponseBody
-    public Map jsonlogin(@RequestBody Map<String, Object> newUser) {
-        Optional<IotUser> iotUser = iotUserRepository.findById((String) newUser.get("userId"));
+    public Map jsonlogin(@RequestBody Map<String, Object> loginuser) {
+        Optional<IotUser> iotUser = iotUserRepository.findById((String) loginuser.get("id"));
         Map<String, Object> map = new LinkedHashMap<>();
-        if(iotUser.get().getUserPwd().equals((String) newUser.get("userPwd"))){
+        if(iotUser.get().getUserPwd().equals(loginuser.get("password"))){
             String token = securityService.creatToken(iotUser.get().getUserId(), (2*1000*60));
-            map.put("result", token);
+            map.put("token", token);
             System.out.println(map);
             return map;
         }else{

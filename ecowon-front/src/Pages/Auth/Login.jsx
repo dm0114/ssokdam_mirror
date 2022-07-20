@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import {useState, useEffect} from 'react'
 
 function Login(){
-  const URL = "http://localhost:8888/users"
+  const URL = "http://localhost:8080/api/login/json"
   // const getUser = async() => {
   //   const json = await( await fetch(URL)).json()
   //   console.log(json[0])
@@ -16,7 +16,7 @@ function Login(){
   //   getUser()
   // },[])
   const fetchLogin = async ({ id, password }) => {
-    const response = await fetch("http://localhost:8888/users");
+    const response = await fetch(URL);
     console.log("통신!")
     if (response.ok) {
         //서버통신이 성공적으로 이루어지면 users에 json값 대입
