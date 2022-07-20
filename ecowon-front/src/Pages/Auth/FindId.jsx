@@ -7,9 +7,8 @@ import {
     MainText,
     HeaderWrapper,
 
-} from './SubLoginStyles';
+} from '../../styles/SubLoginStyles';
 
-import {InputFormView, InputWrap, InputText, InputForm} from './InputFormStyles'
 import TextField from '@mui/material/TextField';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -50,17 +49,6 @@ const FindId = () => {
                     
                         <TextField id="standard-basic" label="이름" variant="standard" fullWidth sx={ { my:2 } } color="black" />
                         <TextField id="standard-basic" label="이메일" variant="standard" fullWidth sx={ { my:2 } } color="black" />
-
-                    {/* <InputFormView>
-                        <InputWrap>
-                            <InputText>이름</InputText>
-                            <InputForm/>
-                        </InputWrap>
-                        <InputWrap>
-                            <InputText>이름</InputText>
-                            <InputForm/>
-                        </InputWrap>
-                    </InputFormView> */}
                 </Wrap>
                 <MainButton>
                     <ButtonText>아이디 찾기</ButtonText>
