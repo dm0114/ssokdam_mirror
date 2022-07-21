@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 function SignUp(){
   return(
     <React.Fragment>
-      <Container maxWidth="sm" sx={{bgcolor : '#eff0f2', height : '100vh'}}>
+      <Container maxWidth="sm" sx={{bgcolor : '#eff0f2', height : '100%'}}>
       <Box sx={{display:'flex', padding:'30px', justifyContent : 'center', alignItems:'center'}}>
         <ArrowBackIosIcon sx={{color : 'black'}}/>       
           <Typography component="h5" variant="h5" sx={{ flex : '1', textAlign : 'center', fontWeight : 'bold'}}>

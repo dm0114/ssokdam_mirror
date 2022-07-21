@@ -4,10 +4,13 @@ import { CssBaseline, TextField, Typography } from "@mui/material";
 import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Box from '@mui/material/Box';
+import { Link } from "react-router-dom"
 import {useState, useEffect} from 'react'
+import "./LoginModule.css"
+
 
 function Login(){
-  const URL = "http://localhost:8888/users"
+  const URL = "http://localhost:8080/api/login/json"
   // const getUser = async() => {
   //   const json = await( await fetch(URL)).json()
   //   console.log(json[0])
@@ -16,8 +19,17 @@ function Login(){
   //   getUser()
   // },[])
   const fetchLogin = async ({ id, password }) => {
-    const response = await fetch("http://localhost:8888/users");
-    console.log("통신!")
+    const response = await fetch(URL, {
+      method: "POST",
+      headers: {
+        'Content-type': 'application/json'
+    },
+      body: JSON.stringify({
+        id: id,
+        password: password
+      })
+    })
+    .then((res) => console.log(res))
     if (response.ok) {
         //서버통신이 성공적으로 이루어지면 users에 json값 대입
       const users = await response.json();
@@ -65,17 +77,17 @@ function Login(){
 
   return(
     <React.Fragment>
-      <Container maxWidth="sm" sx={{bgcolor : '#00d3ca', height : '100vh'}} style={{ marginX : '0px'}}>
-        <Box sx={{padding:'30px', justifyContent : 'center', alignItems:'center'}}>
+      <Container maxWidth="sm" sx={{bgcolor : '#00d3ca', height : '100%'}} style={{ marginX : '0px'}}>
+        <Box sx={{padding:'30px 10px', justifyContent : 'center', alignItems:'center'}}>
           <ArrowBackIosIcon sx={{color : 'black'}}/>
         </Box>
-        <Box sx={{display:'flex', flexDirection : 'column', justifyContent : 'center', alignItems:'flex-start', marginBottom:'100px'}}>
+        <Box sx={{display:'flex', flexDirection : 'column', justifyContent : 'center', alignItems:'flex-start', marginBottom:'20px'}}>
           <h2 style={{fontWeight : '500', marginBottom : '10px'}}>아름다운 흡연 습관</h2>
           <h1 style={{fontWeight : 'bold', marginTop : '0px'}}>에코원</h1>
         </Box>
         <Box sx={{ display : 'flex', justifyContent : 'center' }}>
           <Box sx={{ height:'64vh', width:'59vh', backgroundColor : 'white', borderRadius : '30px', paddingX : '15px'}}>
-            <Box sx={{ display : 'flex', justifyContent : 'center', alignItems : 'flex-start', flexDirection : 'column', paddingLeft : '10px', paddingTop : '100px', paddingBottom : '10px' }}>
+            <Box sx={{ display : 'flex', justifyContent : 'center', alignItems : 'flex-start', flexDirection : 'column', paddingLeft : '10px', paddingTop : '50px', paddingBottom : '10px' }}>
               <h2 style={{margin : '0'}}>로그인 하기 위한</h2>
               <h2 style={{margin : '0'}}>정보를 입력해주세요</h2>
             </Box>
@@ -88,6 +100,7 @@ function Login(){
                 autoComplete='아이디' 
                 autoFocus
                 margin='normal'
+                variant="standard"
                 onChange={onChangeAccount}
                 />
                 <TextField 
@@ -97,13 +110,14 @@ function Login(){
                 required 
                 name="password" 
                 type="password" 
+                variant="standard"
                 autoComplete='current-password'
                 onChange={onChangeAccount}
                 />
             </Box>
             <Box sx={{ display : 'flex', justifyContent : 'center' }}>
             <Typography component="h3" variant="body1" color="#9e9e9e">
-                아이디 찾기 | 비밀번호 찾기
+               <Link to={'/login/findId'} className={"findText"}>아이디 찾기</Link> | <Link to={'/login/findPw'} className={"findText"}>비밀번호 찾기</Link> 
             </Typography>
             </Box>
           <Box sx={{ display : 'flex', flexDirection : 'column', justifyContent : 'flex-end', height : '25%'}}>
