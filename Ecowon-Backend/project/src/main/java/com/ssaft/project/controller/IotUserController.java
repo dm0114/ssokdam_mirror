@@ -1,7 +1,5 @@
 package com.ssaft.project.controller;
 
-import antlr.Token;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.Service.IotUserService;
 import com.ssaft.project.Service.SecurityService;
@@ -9,10 +7,7 @@ import com.ssaft.project.domain.IotUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -38,17 +33,19 @@ public class IotUserController {
         return iotUser.get().getUserPwd().equals(loginUser.getUserPwd());
     }
 
-    @PostMapping("/login/json")                                // json 로그인 기능 true or false 로 전달
+    @PostMapping("/login/json")                                // json 로그인 기능 json 로 전달
     @ResponseBody
     public Map jsonlogin(@RequestBody Map<String, Object> loginuser) {
-        Optional<IotUser> iotUser = iotUserRepository.findById((String) loginuser.get("id"));
+        String id = (String) loginuser.get("id");
+        String password = (String) loginuser.get("password");
         Map<String, Object> map = new LinkedHashMap<>();
-        if(iotUser.get().getUserPwd().equals(loginuser.get("password"))){
-            String token = securityService.creatToken(iotUser.get().getUserId(), (2*1000*60));
+        try{
+            String token = iotUserService.login(id, password);
             map.put("token", token);
             System.out.println(map);
             return map;
-        }else{
+        }catch(NoSuchElementException e){
+            map.put("error", "error");
             return map;
         }
     }

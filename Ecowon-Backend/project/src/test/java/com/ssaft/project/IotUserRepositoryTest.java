@@ -1,5 +1,6 @@
-package com.ssaft.project.Repository;
+package com.ssaft.project;
 
+import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.Service.IotUserService;
 import com.ssaft.project.domain.IotUser;
 import org.junit.jupiter.api.Test;
@@ -7,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 
+import java.util.NoSuchElementException;
 
-import java.util.List;
-
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
 
 @SpringBootTest
 @Commit
-public class TestIotUserRepository {
+public class IotUserRepositoryTest {
 
     @Autowired
     private IotUserRepository iotUserRepository;
@@ -61,10 +62,27 @@ public class TestIotUserRepository {
 
 
         iotUserService.join(iotuser);
+        try{
+            iotUserService.join(iotuser1);
+            fail();
+        }catch (IllegalStateException e){
+            assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
+        }
 
+    }
 
-
-
+    @Test
+    public void 로그인_성공and실패_테스트(){
+        String token = iotUserService.login("유승우", "1234");
+        if(token != "error"){
+            System.out.println("로그인 성공");
+        }
+        try{
+            iotUserService.login("실패테스트값", "&&^&#@$ㅁㅉㅁ!@#");
+            fail();
+        }catch (NoSuchElementException e){
+            assertThat(e.getMessage()).isEqualTo("No value present");
+        }
 
     }
     /*@Test
