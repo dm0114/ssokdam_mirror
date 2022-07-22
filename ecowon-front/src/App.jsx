@@ -26,8 +26,7 @@ function App() {
       <GlobalStyle />
       <Router>
         <Routes>
-          <Route path='/' element={<Home/>}>
-          </Route>
+          <Route path='/' element={<Home/>} />
           <Route path='/navigation' element={<Navigation/>} />
           <Route path='/myPage' element={<MyPage/>} />
           <Route path='/serviceInfo' element={<ServiceInfo/>} />
