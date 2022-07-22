@@ -52,6 +52,7 @@ function Login(){
     throw new Error("서버 통신이 원할하지 않습니다.");
   };
 
+  // 계정
   const [account, setAccount] = useState({
     id : "",
     password : "",
@@ -64,6 +65,7 @@ function Login(){
     })
     console.log(account)
   }
+
   const onSubmitAccount = async () => {
     try {
       const user = await fetchLogin(account);
@@ -77,7 +79,7 @@ function Login(){
 
   return(
     <React.Fragment>
-      <Container maxWidth="sm" sx={{bgcolor : '#00d3ca', height : '100%'}} style={{ marginX : '0px'}}>
+      <Container maxWidth="sm" sx={{bgcolor : '#00d3ca', height : '100vh'}} style={{ marginX : '0px'}}>
         <Box sx={{padding:'30px 10px', justifyContent : 'center', alignItems:'center'}}>
           <ArrowBackIosIcon sx={{color : 'black'}}/>
         </Box>

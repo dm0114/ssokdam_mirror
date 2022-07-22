@@ -33,7 +33,6 @@ export const SubBackgroundView = styled.div `
   box-sizing: border-box; /* Opera/IE 8+ */
 `;
 
-
 export const Wrap = styled.div`
   width: 100%;
   display: flex;
