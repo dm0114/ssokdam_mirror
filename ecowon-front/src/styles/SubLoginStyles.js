@@ -42,6 +42,14 @@ export const Wrap = styled.div`
   align-items: center;
 `
 
+export const PasswordWrap = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+`
+
 export const HeaderWrapper = styled(Wrap)`
   flex-direction: row;
 `
@@ -65,7 +73,7 @@ export const MainText = styled.p `
 `;
 
 export const MainButton = styled.button`
-  width: 100%;
+  width: ${props => props.width};
   height: 40px;
 
   display: flex;
@@ -74,7 +82,7 @@ export const MainButton = styled.button`
   background-color: ${props => props.theme.colors.darkTurquoise};
   
   border: 0px;
-  border-radius: 10px;
+  border-radius: 5px;
 `
 
 export const ButtonText = styled.p `
