@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -43,5 +44,14 @@ public class SecurityService {
                 .parseClaimsJws(token)
                 .getBody();
         return claims.getSubject();
+    }
+
+    public static String jasyptEncoding(String value) {
+
+        String key = "iotProject";
+        StandardPBEStringEncryptor pbeEnc = new StandardPBEStringEncryptor();
+        pbeEnc.setAlgorithm("PBEWithMD5AndDES");
+        pbeEnc.setPassword(key);
+        return pbeEnc.encrypt(value);
     }
 }

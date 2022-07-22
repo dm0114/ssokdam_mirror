@@ -93,10 +93,7 @@ public class IotUserRepositoryTest {
         iotuser.setUserEmail("swyou1123@naver.com");
         iotUserService.join(iotuser);
 
-        String token = iotUserService.login("swyou", "1234");
-        if(token != "error"){
-            System.out.println("로그인 성공");
-        }
+        iotUserService.login("swyou", "1234");
         try{
             iotUserService.login("실패테스트값", "&&^&#@$ㅁㅉㅁ!@#");
             fail();
