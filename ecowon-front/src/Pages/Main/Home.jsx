@@ -5,21 +5,51 @@ import ToggleButton from '@mui/material/ToggleButton';
 import Box from '@mui/material/Box';
 import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
 import { Typography } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SnackbarContent from '@mui/material/SnackbarContent';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import './HomeModule.css'
+import money from '../../picture/money.png'
+import PhoneIcon from '@mui/icons-material/Phone';
+import InfoIcon from '@mui/icons-material/Info';
 
 const detailGo = (
   <ArrowForwardIosIcon/>
 )
 
+const padNumber = (num, length) => {
+  return String(num).padStart(length, '0');
+};
+
+
 
 function Home(){
-  const [time, setTime] = useState("00:00:00")
+  const [min, setMin] = useState(40);
+  const [sec, setSec] = useState(0);
+  const time = useRef(2400);
+  const timerId = useRef(null);
+
+  useEffect(() => {
+    timerId.current = setInterval(() => {
+      setMin(parseInt(time.current / 60));
+      setSec(time.current % 60);
+      time.current -= 1
+    },1000);
+    return () => clearInterval(timerId.current);
+  },[]);  // 처음 렌더링 될때만 실행
+
+  useEffect(() => {
+    if(time.current <= 0){
+      console.log("time out")
+      clearInterval(timerId.current)
+    }
+  }, [sec])
+
+
+  // const [time, setTime] = useState("00:00")
   const [notice, setNotice] = useState("6조 화이팅!!")
   const theme = createTheme({
     palette: {
@@ -80,17 +110,11 @@ function Home(){
             <Typography component="h4" variant="h6">
               다음 이용까지
             </Typography>
-            <Typography component="h4" variant="h6">
-              { time }
-            </Typography>
+             { (sec < 10) ?  <h3 style={{ margin : 0 }}>{ min } : 0{ sec }</h3>  : <h3 style={{ margin : 0 }}>{ min } : { sec }</h3> } 
           </Box>
           <Box>
             <SnackbarContent style={{ backgroundColor : "#eeeeee", color : "black" }} message={ notice } action={ detailGo }  />
           </Box>
-          {/* <Box sx={{ display : 'flex' }}>
-            <Box sx={{ flex : '1', height : '100px', mx : 1 }}>1</Box>
-            <Box sx={{ flex : '1', mx : 1 }}>2</Box>
-          </Box> */}
            <ImageList sx={{ width: "100%", height: "100%", my: 1 }} gap={6} cols={2} rowHeight={137}>
       {itemData.map((item) => (
           <ImageListItem className="banner" key={item.img}>
@@ -114,7 +138,17 @@ function Home(){
             <h5 style={{ margin :  "1px" }}>내가 적립한 포인트 확인하기</h5> 
           </Box>
           <Box sx={{ flex : "2" }}>
-            <img style={{ borderRadius : "10px" }} className="fitting" src="https://media.istockphoto.com/vectors/banknote-money-and-medal-for-clip-art-gold-dollar-coin-banknote-money-vector-id1220890010?k=20&m=1220890010&s=170667a&w=0&h=1VXPhQ8EEpShJsP2BxF6V5HlDcbcLc6noTjd6_-vLw8="/>
+            <img style={{ borderRadius : "10px" }} className="fitting" src={money}/>
+          </Box>
+        </Box>
+        <Box sx={{ display : "flex", width : "100%", height : "10vh", my : 2 }}>
+          <Box sx={{ flex : '1', mr : 2, borderRadius : "10px" }} style={{ backgroundColor : "#eeeeee" }} className="align-center">
+            <InfoIcon sx = {{ pb : 1, fontSize : "35px" }} ></InfoIcon>
+            <h5 style={{ margin : 0 }}>서비스 안내</h5>
+          </Box>
+          <Box sx={{ flex : '1', borderRadius : "10px" }} style={{ backgroundColor : "#eeeeee" }} className="align-center">
+            <PhoneIcon sx={{ pb : 1, fontSize : "35px" }}></PhoneIcon>
+            <h5 style={{ margin : 0 }}>1:1 문의</h5>
           </Box>
         </Box>
         </Box>

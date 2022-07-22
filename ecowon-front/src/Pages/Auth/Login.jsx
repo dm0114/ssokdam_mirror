@@ -10,11 +10,7 @@ import "./LoginModule.css"
 
 
 function Login(){
-<<<<<<< HEAD
   const URL = "http://localhost:8080/api/login/json"
-=======
-  const URL = "http://localhost:8080/users"
->>>>>>> afa02b5aa004720dd566c62c768f482e6605d02a
   // const getUser = async() => {
   //   const json = await( await fetch(URL)).json()
   //   console.log(json[0])
@@ -23,10 +19,6 @@ function Login(){
   //   getUser()
   // },[])
   const fetchLogin = async ({ id, password }) => {
-<<<<<<< HEAD
-    const response = await fetch(URL);
-    console.log("통신!")
-=======
     const response = await fetch(URL, {
       method: "POST",
       headers: {
@@ -38,7 +30,6 @@ function Login(){
       })
     })
     .then((res) => console.log(res))
->>>>>>> afa02b5aa004720dd566c62c768f482e6605d02a
     if (response.ok) {
         //서버통신이 성공적으로 이루어지면 users에 json값 대입
       const users = await response.json();
