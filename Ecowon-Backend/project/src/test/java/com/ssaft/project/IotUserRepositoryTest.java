@@ -3,6 +3,7 @@ package com.ssaft.project;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.Service.IotUserService;
 import com.ssaft.project.domain.IotUser;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,47 +24,57 @@ public class IotUserRepositoryTest {
     @Autowired
     private  IotUserService iotUserService;
 
+    @AfterEach
+    public void afterEach(){
+        IotUser iotuser = new IotUser();
+        iotuser.setUserId("swyou");
+        iotUserRepository.delete(iotuser);
+    }
+
+
 
     @Test
     public void 회원가입() throws Exception {
         IotUser iotuser = new IotUser();
-        iotuser.setUserId("윤성환");
-        iotuser.setUserEmail("swyou1123@naver.com");
+        iotuser.setUserId("swyou");
         iotuser.setUserPwd("1234");
+        iotuser.setUserName("유승우");
+        iotuser.setUserPhone("010-5638-9909");
         iotuser.setUserBirthDay("1997-11-04");
-        iotuser.setUserName("닉네임");
+        iotuser.setUserEmail("swyou1123@naver.com");
         iotUserService.join(iotuser);
     }
 
     @Test
     public void 아이디로_회원삭제(){
+        IotUser iotuser = new IotUser();
+        iotuser.setUserId("swyou");
+        iotuser.setUserPwd("1234");
+        iotuser.setUserName("유승우");
+        iotuser.setUserPhone("010-5638-9909");
+        iotuser.setUserBirthDay("1997-11-04");
+        iotuser.setUserEmail("swyou1123@naver.com");
+        iotUserService.join(iotuser);
+
         IotUser iotUser = new IotUser();
-        iotUser.setUserId("가나다");
+        iotUser.setUserId("swyou");
         iotUserRepository.delete(iotUser);
     }
 
     @Test
     public void 아이디로_중복검사(){
-        IotUser iotuser1 = new IotUser();
-        iotuser1.setUserId("유승우");
-        iotuser1.setUserEmail("swoyou1123@naver.com");
-        iotuser1.setUserPwd("1234");
-        iotuser1.setUserBirthDay("1997-11-04");
-        iotuser1.setUserName("닉네임");
-        iotuser1.setUserAdmin("N");
-
         IotUser iotuser = new IotUser();
-        iotuser.setUserId("유승우");
-        iotuser.setUserEmail("swoyou1123@naver.com");
+        iotuser.setUserId("swyou");
         iotuser.setUserPwd("1234");
+        iotuser.setUserName("유승우");
+        iotuser.setUserPhone("010-5638-9909");
         iotuser.setUserBirthDay("1997-11-04");
-        iotuser.setUserName("닉네임");
-        iotuser.setUserAdmin("N");
+        iotuser.setUserEmail("swyou1123@naver.com");
 
 
         iotUserService.join(iotuser);
         try{
-            iotUserService.join(iotuser1);
+            iotUserService.join(iotuser);
             fail();
         }catch (IllegalStateException e){
             assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
@@ -73,7 +84,16 @@ public class IotUserRepositoryTest {
 
     @Test
     public void 로그인_성공and실패_테스트(){
-        String token = iotUserService.login("유승우", "1234");
+        IotUser iotuser = new IotUser();
+        iotuser.setUserId("swyou");
+        iotuser.setUserPwd("1234");
+        iotuser.setUserName("유승우");
+        iotuser.setUserPhone("010-5638-9909");
+        iotuser.setUserBirthDay("1997-11-04");
+        iotuser.setUserEmail("swyou1123@naver.com");
+        iotUserService.join(iotuser);
+
+        String token = iotUserService.login("swyou", "1234");
         if(token != "error"){
             System.out.println("로그인 성공");
         }

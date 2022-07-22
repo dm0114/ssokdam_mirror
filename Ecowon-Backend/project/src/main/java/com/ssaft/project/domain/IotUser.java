@@ -19,28 +19,31 @@ public class IotUser {
     @Column(name = "user_id")
     private String userId;
 
-    @Column(name = "user_email")
-    private String userEmail;
-
     @Column(name = "user_pwd")
     private String userPwd;
-
-    @Column(name = "user_birth_day")
-    private String userBirthDay;
 
     @Column(name = "user_name")
     private String userName;
 
-    @Column(name = "user_point")
-    @ColumnDefault("0")
-    private int userPoint;
+    @Column(name = "user_phone")
+    private String userPhone;
+
+    @Column(name = "user_birth_day")
+    private String userBirthDay;
+
+    @Column(name = "user_email")
+    private String userEmail;
+
+    @Column(name = "user_img")
+    @ColumnDefault("")
+    private String userImg;
 
     @Column(name = "user_admin")
     private String userAdmin = "N";
 
-    @Column(name = "user_image")
-    @ColumnDefault("")
-    private String userImage;
+    @Column(name = "user_point")
+    @ColumnDefault("0")
+    private int userPoint;
 
     @Column(name = "user_cnt")
     @ColumnDefault("0")
