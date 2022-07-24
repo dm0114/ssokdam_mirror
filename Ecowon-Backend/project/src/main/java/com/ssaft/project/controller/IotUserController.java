@@ -15,9 +15,9 @@ import java.util.*;
 public class IotUserController {
 
     @Autowired
-    SecurityService securityService;   //Token 생성
+    SecurityService securityService;   //Token 생성  // 암호화
     @Autowired
-    IotUserService iotUserService;   // 아직까진 join
+    IotUserService iotUserService;   // 유저관련 서비스
     @Autowired
     IotUserRepository iotUserRepository;   // jpa
 
@@ -27,133 +27,49 @@ public class IotUserController {
         return iotUserRepository.findAll();
     }
 
-    @PostMapping("/login")                                // json 로그인 기능 json 로 전달
+    @PostMapping("/login")                                //로그인 기능
     @ResponseBody
-    public Map jsonlogin(@RequestBody Map<String, Object> loginuser) {
-        String id = (String) loginuser.get("userId");
-        String password = (String) loginuser.get("userPwd");
-        Map<String, Object> map = new LinkedHashMap<>();
-        try{
-            String token = iotUserService.login(id, password);
-            map.put("token", token);
-            System.out.println(map);
-            return map;
-        }catch(NoSuchElementException e){
-            map.put("error", "error");
-            return map;
-        }
+    public Map jsonlogin(@RequestBody IotUser loginuser) {
+        return iotUserService.login(loginuser.getUserId(), loginuser.getUserPwd());
     }
 
-    @PostMapping("/login/findId")                          //json 방식으로 아이디 찾기
+    @PostMapping("/login/findId")                          //아이디 찾기
     @ResponseBody
-    public Map findId(@RequestBody Map<String, Object> user) {
-        String name = (String) user.get("userName");
-        String email = (String) user.get("userEmail");
-        Map<String, Object> map = new LinkedHashMap<>();
-        List<IotUser> iotUser = iotUserRepository.findByUserEmail(email);
-        System.out.println(iotUser);
-        for (IotUser id : iotUser) {
-            if (id.getUserName().equals(name)) {
-                map.put("userId", id.getUserId());
-                return map;
-            }
-        }
-        map.put("error", "error");
-        return map;
+    public Map findId(@RequestBody IotUser user) {
+        return iotUserService.findId(user);
     }
 
-    @PostMapping("/login/findPw")                          //json 방식으로 비밀번호 찾기
+    @PostMapping("/login/findPw")                          //비밀번호 찾기
     @ResponseBody
-    public Map findPwd(@RequestBody Map<String, Object> user) {
-        String id = (String) user.get("userId");
-        String email = (String) user.get("userEmail");
-        String phone = (String) user.get("userPhone");
-        Map<String, Object> map = new LinkedHashMap<>();
-        Optional<IotUser> iotUser = iotUserRepository.findById(id);
-        System.out.println(iotUser);
-        if(iotUser.get().getUserPhone().equals(phone)){
-            map.put("userPwd", iotUser.get().getUserPwd());
-            return map;
-        }
-        map.put("error", "error");
-        return map;
+    public Map findPwd(@RequestBody IotUser user) {
+        return iotUserService.findPwd(user);
     }
 
-    @PutMapping("/login/findPw/changePw")                          //json 방식으로 비밀번호 찾기
+    @PutMapping("/login/findPw/changePw")                          //json 방식으로 비밀번호 변경
     @ResponseBody
-    public Map changePw(@RequestBody Map<String, Object> user) {
-        String id = (String) user.get("userId");
-        String password = (String) user.get("userPwd");
-        Map<String, Object> map = new LinkedHashMap<>();
-        Optional<IotUser> iotUser = iotUserRepository.findById(id);
-        iotUser.get().setUserPwd(password);
-        iotUserRepository.save(iotUser.get());
-        map.put("sucess" , "sucess");
-        return map;
+    public Map changePw(@RequestBody IotUser user) {
+        return iotUserService.changePw(user);
     }
 
-    @PostMapping("/singup")                          //json 방식으로 비밀번호 찾기
+    @PostMapping("/singup")                          //json 방식으로 로그인
     @ResponseBody
-    public Map singUp(@RequestBody Map<String, Object> user) {
-        IotUser iotUser = new IotUser();
-        iotUser.setUserId((String) user.get("userId"));
-        iotUser.setUserPwd((String) user.get("userPwd"));
-        iotUser.setUserName((String) user.get("userName"));
-        iotUser.setUserPhone((String) user.get("userPhone"));
-        iotUser.setUserBirthDay((String) user.get("userBirthDay"));
-        iotUser.setUserEmail((String) user.get("userEmail"));
+    public Map singUp(@RequestBody IotUser user) {
+        return iotUserService.singup(user);
+    }
+
+    @GetMapping("/")
+    @ResponseBody
+    public Map main(@RequestBody String token){
+        String id = securityService.getSubJect(token);
+        Optional<IotUser> user = iotUserRepository.findById(id);
         Map<String, Object> map = new LinkedHashMap<>();
-        try {
-            iotUserService.join(iotUser);
-            map.put("sucess", "sucess");
-        }catch (IllegalStateException e) {
-            map.put("message", e);
-        }
-        return map;
+        map.put("userTime", user.get().getUserTime());
+        return null;
     }
 
-    @GetMapping("/login/check")
-    public void CheckToken(@RequestBody Map<String, Object> token){
-        String name = securityService.getSubJect((String) token.get("token"));
-        System.out.println(name);
-    }
-
-    @PostMapping("/login/findPw/changePw")                 //form-data 방식으로 비밀번호 변경
-    public String changePw(IotUser changePw){
-        Optional<IotUser> iotuser = iotUserRepository.findById(changePw.getUserId());
-        System.out.println(iotuser);
-        iotuser.get().setUserPwd(changePw.getUserPwd());
-        iotUserRepository.save(iotuser.get());
-        return "비밀번호 변경 완료!";
-    }
-
-    @PostMapping("/singup")                                 // form-data 방식으로 회원가입
-    public String Create(IotUser NewUser){
-        System.out.println(NewUser);
-        IotUser iotUser = new IotUser();
-        iotUser.setUserId(NewUser.getUserId());
-        iotUser.setUserEmail(NewUser.getUserEmail());
-        iotUser.setUserPwd((NewUser.getUserPwd()));
-        iotUser.setUserBirthDay(NewUser.getUserBirthDay());
-
-        iotUserService.join(NewUser);
-
-        return "redirect:/";
-    }
-    @PostMapping("/singup/json")                               // json 방식으로 회원가입
-    public String Create(@RequestBody Map<String, Object> newUser){
-        IotUser iotUser = new IotUser();
-        iotUser.setUserId((String) newUser.get("userId"));
-        iotUser.setUserEmail((String) newUser.get("userEmail"));
-        iotUser.setUserPwd((String) newUser.get("userPwd"));
-        iotUser.setUserName((String) newUser.get("userName"));
 
 
-        System.out.println(iotUser);
 
-        iotUserService.join(iotUser);
-        return "redirect:/";
-    }
 }
 
 

@@ -7,6 +7,8 @@ import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table(name = "tb_user")
 @Getter @Setter
@@ -53,7 +55,15 @@ public class IotUser {
     @ColumnDefault("")
     private String userHealth;
 
+    @Column(name = "user_time")
+    @ColumnDefault("")
+    private String userTime;
+
     @Column(name = "user_dumy")
     @ColumnDefault("")
     private String userDumy;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private List<PostData> postDataList = new ArrayList<>();
 }

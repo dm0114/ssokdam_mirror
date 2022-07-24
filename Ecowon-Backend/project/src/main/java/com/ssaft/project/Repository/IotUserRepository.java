@@ -10,6 +10,7 @@ import java.util.List;
 public interface IotUserRepository extends JpaRepository<IotUser, String> {
 
 //    public List<IotUser> findByUser_email(String user_email);
+
     public List<IotUser> findByUserEmail(String user_name);
 
 }
