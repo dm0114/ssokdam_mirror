@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40e33b94-8b18-458b-9891-9b8549493f6c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/ecowon-front.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Pages/Auth/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/Auth/Login.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Pages/Auth/SignUp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/Auth/SignUp.jsx" afterDir="false" />
-    </list>
+    <list default="true" id="40e33b94-8b18-458b-9891-9b8549493f6c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -56,7 +47,7 @@
       <option name="presentableId" value="Default" />
       <updated>1658707543346</updated>
       <workItem from="1658707552163" duration="938000" />
-      <workItem from="1658708988136" duration="6342000" />
+      <workItem from="1658708988136" duration="7126000" />
     </task>
     <servers />
   </component>
