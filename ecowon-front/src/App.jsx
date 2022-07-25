@@ -5,8 +5,8 @@ import {
   Route
 } from "react-router-dom"
 import GlobalStyle from './styles/GlobalStyle';
-import Loading from './Pages/Loading.jsx'
-import Login from './Pages/Auth/'
+// import Loading from './Pages/Loading.jsx'
+import Login from './Pages/Auth/Login'
 import FindId from './Pages/Auth/FindId';
 import FindPw from './Pages/Auth/FindPw';
 import SignUp from './Pages/Auth/SignUp.jsx'
