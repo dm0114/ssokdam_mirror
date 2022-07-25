@@ -72,9 +72,9 @@ public class IotUserService {
     }
 
     public Map singup(IotUser user){          //회원가입
-        String pwd = securityService.jasyptEncoding(user.getUserPwd());
+       /* String pwd = securityService.jasyptEncoding(user.getUserPwd());
 
-        user.setUserPwd(pwd);
+        user.setUserPwd(pwd);*/
 
         Map<String, Object> map = new LinkedHashMap<>();
         try {
