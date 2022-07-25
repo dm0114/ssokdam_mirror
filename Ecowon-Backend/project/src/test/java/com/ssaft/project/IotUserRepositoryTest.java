@@ -42,7 +42,7 @@ public class IotUserRepositoryTest {
         iotuser.setUserPhone("010-5638-9909");
         iotuser.setUserBirthDay("1997-11-04");
         iotuser.setUserEmail("swyou1123@naver.com");
-        iotUserService.join(iotuser);
+        iotUserService.singup(iotuser);
     }
 
     @Test
@@ -54,7 +54,7 @@ public class IotUserRepositoryTest {
         iotuser.setUserPhone("010-5638-9909");
         iotuser.setUserBirthDay("1997-11-04");
         iotuser.setUserEmail("swyou1123@naver.com");
-        iotUserService.join(iotuser);
+        iotUserService.singup(iotuser);
 
         IotUser iotUser = new IotUser();
         iotUser.setUserId("swyou");
@@ -72,9 +72,9 @@ public class IotUserRepositoryTest {
         iotuser.setUserEmail("swyou1123@naver.com");
 
 
-        iotUserService.join(iotuser);
+        iotUserService.singup(iotuser);
         try{
-            iotUserService.join(iotuser);
+            iotUserService.singup(iotuser);
             fail();
         }catch (IllegalStateException e){
             assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
@@ -91,12 +91,9 @@ public class IotUserRepositoryTest {
         iotuser.setUserPhone("010-5638-9909");
         iotuser.setUserBirthDay("1997-11-04");
         iotuser.setUserEmail("swyou1123@naver.com");
-        iotUserService.join(iotuser);
+        iotUserService.singup(iotuser);
 
-        String token = iotUserService.login("swyou", "1234");
-        if(token != "error"){
-            System.out.println("로그인 성공");
-        }
+        iotUserService.login("swyou", "1234");
         try{
             iotUserService.login("실패테스트값", "&&^&#@$ㅁㅉㅁ!@#");
             fail();

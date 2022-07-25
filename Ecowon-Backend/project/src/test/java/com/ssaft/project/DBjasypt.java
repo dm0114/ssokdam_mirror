@@ -9,8 +9,8 @@ public class DBjasypt {
 
     @Test
     void DB정보암호화() {
-        String url = "jdbc:mysql://localhost:3306/iot-schema?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul";
-        String username = "root";
+        String url = "jdbc:mysql://3.36.78.244:3306/project?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul";
+        String username = "swyou";
         String password = "qudrlxksdir1!";
 
         System.out.println(jasyptEncoding(url));

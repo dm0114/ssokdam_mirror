@@ -5,12 +5,12 @@ import {
   Route
 } from "react-router-dom"
 import GlobalStyle from './styles/GlobalStyle';
-import Loading from './Pages/Loading.jsx'
-import Login from './Pages/Auth/Login.jsx'
+// import Loading from './Pages/Loading.jsx'
+import Login from './Pages/Auth/Login'
 import FindId from './Pages/Auth/FindId';
 import FindPw from './Pages/Auth/FindPw';
 import SignUp from './Pages/Auth/SignUp.jsx'
-
+import EcoMap from "./Pages/Main/EcoMap";
 import Home from './Pages/Main/Home'
 import Navigation from './Pages/Nav/Navigation'
 import ServiceInfo from './Pages/Main/ServiceInfo'
@@ -33,6 +33,7 @@ function App() {
           <Route path='/serviceCenter' element={<ServiceCenter/>} />
           <Route path='/frequentlyQuestion' element={<FrequentlyQuestion />} />
           <Route path='/myAsk' element={<MyAsk />} />
+          <Route path='/map' element={ <EcoMap/>} />
           
           
           <Route path='/login' element={<Login/>} />

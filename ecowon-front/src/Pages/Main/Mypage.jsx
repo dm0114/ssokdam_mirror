@@ -18,8 +18,8 @@ import {
 } from '../../styles/TitleStyle'
 
 import { useQuery } from "@tanstack/react-query";
-import { fetchMyPage } from '../../api';
-import { useState } from 'react';
+import { fetchMyPage } from '../../api/mypage';
+// import { useState } from 'react';
 
 
 export const MyPage = () => { 

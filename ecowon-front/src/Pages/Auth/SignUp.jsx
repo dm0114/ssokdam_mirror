@@ -12,20 +12,18 @@ import {useNavigate} from "react-router-dom";
 import * as Yup from "yup";
 
 
-var IMP = window.IMP; // 생략 가능
-IMP.init("{imp01330466}"); // 예: imp00000000
 
 
 function SignUp(){
   function onClickCertification(){
     const { IMP } = window; // 생략 가능
     IMP.init("imp01330466"); // 예: imp0000000
-
+    const test = "branch test"
     // 본인인증 데이터 정의
     const data = {
       merchant_uid: `mid_${new Date().getTime()}`,  // 주문번호
       popup : true,
-      company: '아임포트',                           // 회사명 또는 URL
+      company: 'Ecowon',                           // 회사명 또는 URL
       carrier: 'SKT',                              // 통신사
       name: '홍길동',                                // 이름
       phone: '01012341234',                        // 전화번호
@@ -41,41 +39,18 @@ function SignUp(){
       } = response;
     
       if (success) {
-        // const app = express()
-        // 백엔드로 url보냄 그리고 정보받아옴
-        // app.use(bodyParser.json());
-        // "/certifications"에 대한 POST 요청을 처리하는 controller
-        const { imp_uid } = response;
-        console.log(imp_uid)
-        try {
-          // 인증 토큰 발급 받기
-          async function getUserInfo(){
-            const getToken = await axios({
-             url: "https://api.iamport.kr/users/getToken",
-             method: "post", // POST method
-             headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
-             data: {
-               imp_key: "8270742312861075", // REST API키
-               imp_secret: "dAjR0eNuEcBlF2m3jpbVAwgBg9A80aOR85pyfLpweaRqnpnynReBHOM4jTp2lvJb7Vh3XhzZOc1tjoo4" // REST API Secret
-             }
-           });
-           const { access_token } = getToken.data.response; // 인증 토큰
-           const getCertifications = await axios({
-             url: `https://api.iamport.kr/certifications/${imp_uid}`, // imp_uid 전달
-             method: "get", // GET method
-             headers: { "Authorization": access_token } // 인증 토큰 Authorization header에 추가
-           });  
-           const certificationsInfo = getCertifications.data.response; // 조회한 인증 정보
-           console.log(certificationsInfo)
-          }
-          // imp_uid로 인증 정보 조회
-          getUserInfo()
-          alert('본인인증 성공');
-        } catch(e) {
-          console.error(e);
-        }
-        // axios.post("/certifications", async (request, response) => {
-        // })
+          const { imp_uid } = response;
+          axios({
+              url:  "http://localhost:8080/api/signup/json", // 예: https://www.myservice.com/certifications
+              method: "post",
+              headers: { "Content-Type": "application/json" },
+              data: { imp_uid: imp_uid }
+          });
+
+          console.log(imp_uid)
+          alert('본인인증 성공')
+
+
       } else {
         alert(`본인인증 실패: ${error_msg}`);
       }
@@ -179,7 +154,11 @@ function SignUp(){
                 sx={{backgroundColor : 'white'}} 
                 fullWidth  
                  />
+<<<<<<< HEAD
                 <div style={{color : 'red'}} className="error-message">
+=======
+                <div style={ { color : "red" } } className="error-message">
+>>>>>>> 89148ca92b31a536623e90f791828194af35bc07
                   {errors.userId}
                 </div>
             </Box>
@@ -196,7 +175,11 @@ function SignUp(){
                 sx={{backgroundColor : 'white'}} 
                 fullWidth 
                  />
+<<<<<<< HEAD
                  <div style={{color : 'red'}} className="error-message">
+=======
+                 <div style={ { color : "red" } } className="error-message">
+>>>>>>> 89148ca92b31a536623e90f791828194af35bc07
                   {errors.userPwd}
                 </div>
             </Box>
@@ -212,7 +195,11 @@ function SignUp(){
                 sx={{backgroundColor : 'white'}} 
                 fullWidth 
                  />
+<<<<<<< HEAD
               <div style={{color : 'red'}} className="error-message">
+=======
+              <div style={ { color : "red" } } className="error-message">
+>>>>>>> 89148ca92b31a536623e90f791828194af35bc07
                   {errors.userPwd2}
               </div>
             </Box>
@@ -228,7 +215,11 @@ function SignUp(){
                 sx={{backgroundColor : 'white'}} 
                 fullWidth 
                  />
+<<<<<<< HEAD
                 <div style={{color : 'red'}} className="error-message">
+=======
+                <div style={ { color : "red" } } className="error-message">
+>>>>>>> 89148ca92b31a536623e90f791828194af35bc07
                     {errors.userEmail}
                 </div>
               </Box>
