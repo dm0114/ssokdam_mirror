@@ -33,6 +33,14 @@ public class IotUserController {
         return iotUserService.login(loginuser.getUserId(), loginuser.getUserPwd());
     }
 
+    @PostMapping("/login/json")                                //로그인 기능
+    @ResponseBody
+    public Map jsonlogin(@RequestBody Map<String, Object> map) {
+        String id = (String) map.get("id");
+        String password = (String) map.get("password");
+        return iotUserService.login(id, password);
+    }
+
     @PostMapping("/login/findId")                          //아이디 찾기
     @ResponseBody
     public Map findId(@RequestBody IotUser user) {

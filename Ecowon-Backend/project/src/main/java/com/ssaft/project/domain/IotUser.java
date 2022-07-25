@@ -63,7 +63,15 @@ public class IotUser {
     @ColumnDefault("")
     private String userDumy;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private List<PostData> postDataList = new ArrayList<>();
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id")
+//    private List<PostData> postDataList = new ArrayList<>();
+//
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id")
+//    private List<UseData> useData = new ArrayList<>();
+//
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id")
+//    private List<QrData> qrData = new ArrayList<>();
 }

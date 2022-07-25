@@ -38,9 +38,9 @@ public class PostData {
     @Column(name = "pst_dumy")
     private String pstDumy;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pst_seq")
-    private List<PostData> postDataList = new ArrayList<>();
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "pst_seq")
+//    private List<PostData> postDataList = new ArrayList<>();
 
     @Transient
     private String userId;
