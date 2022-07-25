@@ -179,7 +179,7 @@ function SignUp(){
                 sx={{backgroundColor : 'white'}} 
                 fullWidth  
                  />
-                <div className="error-message">
+                <div style={{color : 'red'}} className="error-message">
                   {errors.userId}
                 </div>
             </Box>
@@ -196,7 +196,7 @@ function SignUp(){
                 sx={{backgroundColor : 'white'}} 
                 fullWidth 
                  />
-                 <div className="error-message">
+                 <div style={{color : 'red'}} className="error-message">
                   {errors.userPwd}
                 </div>
             </Box>
@@ -212,7 +212,7 @@ function SignUp(){
                 sx={{backgroundColor : 'white'}} 
                 fullWidth 
                  />
-              <div className="error-message">
+              <div style={{color : 'red'}} className="error-message">
                   {errors.userPwd2}
               </div>
             </Box>
@@ -228,7 +228,7 @@ function SignUp(){
                 sx={{backgroundColor : 'white'}} 
                 fullWidth 
                  />
-                <div className="error-message">
+                <div style={{color : 'red'}} className="error-message">
                     {errors.userEmail}
                 </div>
               </Box>
