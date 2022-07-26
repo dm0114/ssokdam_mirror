@@ -2,6 +2,7 @@ import React from "react";
 
 import { useQuery } from "@tanstack/react-query";
 import axios from 'axios'
+import fetchLogin from '../../api/login'
 
 import Container from '@mui/material/Container';
 import { CssBaseline, TextField, Typography } from "@mui/material";
@@ -15,11 +16,11 @@ import "./LoginModule.css"
 
 function Login(){
   // const { isLoading, data } = useQuery(['user'], fetchMyPage)
-
+  const URL = 'http://localhost:8080/api/login'
   const fetchLogin = async ({ id, password }) => {
-
-    let response = await fetch(URL, {
-      method: "POST",
+    
+    await fetch(URL, {
+      method: 'POST',
       headers: {
         'Content-type': 'application/json'
       },
@@ -31,7 +32,11 @@ function Login(){
 
     .then((res) => res.json()
       .then((res) => {
+        // 로그인 상태임을 확인 isLogin == True로 변경 => 
+        // 쿠키에 토큰 만료시 isLogin == False로 변경
+
         console.log(res);
+        localStorage.setItem('access-token', res);
       }))
   };
   
