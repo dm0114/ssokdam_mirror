@@ -1,10 +1,12 @@
 package com.ssaft.project.Service;
 
+import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.domain.IotUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -17,6 +19,9 @@ public class IotUserService {
 
     @Autowired
     private SecurityService securityService;
+
+    @Autowired
+    private IamportService iamportService;
 
 
     public Map login(String id, String password) {    //로그인
@@ -72,12 +77,18 @@ public class IotUserService {
         return map;
     }
 
-    public Map singup(IotUser user){          //회원가입
+    public Map singup(IotUser user) throws IamportResponseException, IOException {          //회원가입
         String pwd = securityService.jasyptEncoding(user.getUserPwd());
-
         user.setUserPwd(pwd);
 
         Map<String, Object> map = new LinkedHashMap<>();
+
+        map = iamportService.getIamport(user.getImp_uid());
+        user.setUserPhone((String) map.get("userPhone"));
+        user.setUserBirthDay((String) map.get("userBirthDay"));
+
+        map.clear();
+
         try {
             CheckId(user.getUserId());
             iotUserRepository.save(user);

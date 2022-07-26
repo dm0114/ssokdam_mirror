@@ -63,6 +63,9 @@ public class IotUser {
     @ColumnDefault("")
     private String userDumy;
 
+    @Transient
+    private String imp_uid;
+
 //    @OneToMany(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "user_id")
 //    private List<PostData> postDataList = new ArrayList<>();
