@@ -1,12 +1,15 @@
 package com.ssaft.project.controller;
 
+import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.ssaft.project.Repository.IotUserRepository;
+import com.ssaft.project.Service.IamportService;
 import com.ssaft.project.Service.IotUserService;
 import com.ssaft.project.Service.SecurityService;
 import com.ssaft.project.domain.IotUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +25,9 @@ public class IotUserController {
     IotUserService iotUserService;   // 유저관련 서비스
     @Autowired
     IotUserRepository iotUserRepository;   // jpa
+
+    @Autowired
+    IamportService iamportService;
 
     @GetMapping("/login")                               //전체 회원 조회 (사용한다면 관리자에서)
     @ResponseBody
@@ -61,9 +67,19 @@ public class IotUserController {
         return iotUserService.changePw(user);
     }
 
-    @PostMapping("/singup")                          //json 방식으로 로그인
+    @PostMapping("/singup/check")                          //json 방식으로 로그인
     @ResponseBody
-    public Map singUp(@RequestBody IotUser user) {
+    public boolean singUpCheck(@RequestBody IotUser user) throws IamportResponseException, IOException {
+        if(iamportService.getIamport(user.getImp_uid()).containsKey("message")){
+            return false;
+        } else{
+            return true;
+        }
+    }
+
+    @PostMapping("/singup")                          //json  방식으로 로그인
+    @ResponseBody
+    public Map singUp(@RequestBody IotUser user) throws IamportResponseException, IOException {
         return iotUserService.singup(user);
     }
 
