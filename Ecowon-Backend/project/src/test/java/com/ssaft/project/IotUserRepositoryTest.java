@@ -57,7 +57,7 @@ public class IotUserRepositoryTest {
         iotUserService.singup(iotuser);
 
         IotUser iotUser = new IotUser();
-        iotUser.setUserId("swyou");
+        iotUser.setUserId("테스트아이디2");
         iotUserRepository.delete(iotUser);
     }
 

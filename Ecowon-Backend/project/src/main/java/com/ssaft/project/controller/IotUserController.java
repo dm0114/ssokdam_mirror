@@ -7,8 +7,10 @@ import com.ssaft.project.domain.IotUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -70,6 +72,15 @@ public class IotUserController {
     public Map main(@RequestBody Map<String, Object> token){
         String token2 = (String) token.get("token");
         String id = securityService.getSubJect(token2);
+        Optional<IotUser> user = iotUserRepository.findById(id);
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("userName", user.get().getUserName());
+        return map;
+    }
+
+    @GetMapping("/mypage/test")
+    public Map mypage(@RequestHeader("token") String token){
+        String id = securityService.getSubJect(token);
         Optional<IotUser> user = iotUserRepository.findById(id);
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("userName", user.get().getUserName());

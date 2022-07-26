@@ -24,7 +24,7 @@ public class IotUserService {
         Optional<IotUser> iotuser = iotUserRepository.findById(id);
         Map<String, Object> map = new LinkedHashMap<>();
         if (iotuser!=null) {
-            if (iotUserRepository.findById(id).get().getUserPwd().equals(password)) {
+            if (securityService.jasyptDecoding(iotuser.get().getUserPwd()).equals(password)) {
                 token = securityService.creatToken(id, (10 * 1000 * 60));
                 map.put("token" , token);
             }
@@ -73,9 +73,9 @@ public class IotUserService {
     }
 
     public Map singup(IotUser user){          //회원가입
-        /*String pwd = securityService.jasyptEncoding(user.getUserPwd());
+        String pwd = securityService.jasyptEncoding(user.getUserPwd());
 
-        user.setUserPwd(pwd);*/
+        user.setUserPwd(pwd);
 
         Map<String, Object> map = new LinkedHashMap<>();
         try {
