@@ -7,6 +7,10 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from 'styled-components'
 import theme from './stylesheet'
+import axios from 'axios';
+
+axios.defaults.baseURL = 'http://localhost:8080/api';
+axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const queryClient = new QueryClient();

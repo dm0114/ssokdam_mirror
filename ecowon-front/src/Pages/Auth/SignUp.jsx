@@ -154,11 +154,7 @@ function SignUp(){
                 sx={{backgroundColor : 'white'}} 
                 fullWidth  
                  />
-<<<<<<< HEAD
-                <div style={{color : 'red'}} className="error-message">
-=======
                 <div style={ { color : "red" } } className="error-message">
->>>>>>> 89148ca92b31a536623e90f791828194af35bc07
                   {errors.userId}
                 </div>
             </Box>
@@ -175,11 +171,7 @@ function SignUp(){
                 sx={{backgroundColor : 'white'}} 
                 fullWidth 
                  />
-<<<<<<< HEAD
-                 <div style={{color : 'red'}} className="error-message">
-=======
                  <div style={ { color : "red" } } className="error-message">
->>>>>>> 89148ca92b31a536623e90f791828194af35bc07
                   {errors.userPwd}
                 </div>
             </Box>
@@ -195,11 +187,7 @@ function SignUp(){
                 sx={{backgroundColor : 'white'}} 
                 fullWidth 
                  />
-<<<<<<< HEAD
-              <div style={{color : 'red'}} className="error-message">
-=======
               <div style={ { color : "red" } } className="error-message">
->>>>>>> 89148ca92b31a536623e90f791828194af35bc07
                   {errors.userPwd2}
               </div>
             </Box>
@@ -215,11 +203,7 @@ function SignUp(){
                 sx={{backgroundColor : 'white'}} 
                 fullWidth 
                  />
-<<<<<<< HEAD
-                <div style={{color : 'red'}} className="error-message">
-=======
                 <div style={ { color : "red" } } className="error-message">
->>>>>>> 89148ca92b31a536623e90f791828194af35bc07
                     {errors.userEmail}
                 </div>
               </Box>
