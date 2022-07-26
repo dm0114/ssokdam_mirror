@@ -10,7 +10,7 @@ import {useState, useEffect} from 'react'
 import "./LoginModule.css"
 
 import { isLoginAtom } from '../../atoms'
-import { useSetRecoilState, useRecoilValue } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 
 
 
@@ -19,7 +19,6 @@ function Login(){
   const URL = 'http://localhost:8080/api/login'
 
   const setIsLogin = useSetRecoilState(isLoginAtom);
-  const isLogin = useRecoilValue(isLoginAtom);
 
   const fetchLogin = async ({ id, password }) => {
     await fetch(URL, {
@@ -37,10 +36,10 @@ function Login(){
       .then((res) => {
         // 로그인 상태임을 확인 isLogin == True로 변경 => 
         // 쿠키에 토큰 만료시 isLogin == False로 변경
-
         localStorage.setItem('access-token', res.token);
+      })).then(()=>{
         setIsLogin(true);
-      }))
+      })
   };
   
 
@@ -55,7 +54,6 @@ function Login(){
       ...account,
       [e.target.name] : e.target.value
     })
-    console.log(account)
   }
 
   const onSubmitAccount = async () => {
