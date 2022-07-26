@@ -8,6 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from 'styled-components'
 import theme from './stylesheet'
 import axios from 'axios';
+import { RecoilRoot } from "recoil";
 
 axios.defaults.baseURL = 'http://localhost:8080/api';
 axios.defaults.withCredentials = true;
@@ -17,12 +18,14 @@ const queryClient = new QueryClient();
 
 root.render(
   <React.StrictMode>
+    <RecoilRoot>
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <ReactQueryDevtools initialIsOpen={true} />
         <App />
       </ThemeProvider>
     </QueryClientProvider>
+    </RecoilRoot>
   </React.StrictMode>,
 );
 
