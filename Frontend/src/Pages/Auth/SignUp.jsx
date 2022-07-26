@@ -121,7 +121,7 @@ function SignUp(){
     <React.Fragment>
       <Container maxWidth="sm" sx={{bgcolor : '#eff0f2', height : '100vh'}}>
       <Box sx={{display:'flex', padding:'30px', justifyContent : 'center', alignItems:'center'}}>
-          <Link to='/'>
+          <Link to='/login'>
               <ArrowBackIosIcon sx={{color : 'black'}}/>
           </Link>
           <Typography component="h5" variant="h5" sx={{ flex : '1', textAlign : 'center', fontWeight : 'bold'}}>
