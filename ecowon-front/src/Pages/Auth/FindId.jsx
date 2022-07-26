@@ -8,7 +8,7 @@ import {
     HeaderWrapper,
 
 } from '../../styles/SubLoginStyles';
-
+import { Link } from 'react-router-dom'
 import TextField from '@mui/material/TextField';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -41,9 +41,9 @@ const FindId = () => {
             <SubLoginBackgroundView>
                 <Wrap>
                     <HeaderWrapper>
-                        <Vector
-                            alt=""
-                            src="https://static.overlay-tech.com/assets/897d620b-7272-4e3f-b46a-7d57d097eecd.svg"/>
+                            <Vector
+                                alt=""
+                                src="https://static.overlay-tech.com/assets/897d620b-7272-4e3f-b46a-7d57d097eecd.svg"/>
                         <MainText>아이디 찾기</MainText>
                     </HeaderWrapper>
                     
