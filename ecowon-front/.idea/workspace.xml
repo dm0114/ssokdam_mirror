@@ -5,21 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5e3c559d-f05e-48c2-9a89-a08cf71b6106" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Pages/Main/EcoMapModule.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Pages/Main/Qr.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/db/positions.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Ecowon-Backend/project/.gradle/7.4.1/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../Ecowon-Backend/project/.gradle/7.4.1/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Ecowon-Backend/project/.gradle/7.4.1/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../Ecowon-Backend/project/.gradle/7.4.1/checksums/md5-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Ecowon-Backend/project/.gradle/7.4.1/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../Ecowon-Backend/project/.gradle/7.4.1/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Ecowon-Backend/project/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Ecowon-Backend/project/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Ecowon-Backend/project/out/production/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../Ecowon-Backend/project/out/production/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Pages/Auth/FindId.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/Auth/FindId.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Pages/Auth/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/Auth/Login.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Pages/Auth/SignUp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/Auth/SignUp.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Pages/Main/EcoMap.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/Main/EcoMap.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Pages/Main/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/Main/Home.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Pages/Main/Qr.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/Main/Qr.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +56,7 @@
       <updated>1658741891622</updated>
       <workItem from="1658741973014" duration="9405000" />
       <workItem from="1658778947059" duration="688000" />
+      <workItem from="1658798784080" duration="15755000" />
     </task>
     <servers />
   </component>

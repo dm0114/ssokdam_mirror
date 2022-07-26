@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import './EcoMapModule.css'
 import { Link } from 'react-router-dom'
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
+import axios from "axios";
 
 function EcoMap(){
     const [state, setState] = useState({
@@ -18,13 +19,23 @@ function EcoMap(){
         errMsg: null,
         isLoading: true,
     })
+    const [positions, setPositions] = useState([])
+    useEffect(() => {
+       const fetchDevice = async () => {
+           const URL = "http://localhost:8888/positions"
+           let response = await axios(URL)
+           setPositions(response.data)
+       };
+       fetchDevice();
+    }, []);
+
+
 
     useEffect(() => {
         if (navigator.geolocation) {
             // GeoLocation을 이용해서 접속 위치를 얻어옵니다
             navigator.geolocation.getCurrentPosition(
                 (position) => {
-                    console.log(position)
                     setState((prev) => ({
                         ...prev,
                         center: {
@@ -33,7 +44,6 @@ function EcoMap(){
                         },
                         isLoading: false,
                     }))
-                    console.log(state.center)
                 },
                 (err) => {
                     setState((prev) => ({
@@ -53,7 +63,6 @@ function EcoMap(){
         }
     }, [])
 
-
     return (
         <React.Fragment>
             <Container maxWidth="sm">
@@ -67,15 +76,29 @@ function EcoMap(){
                         zIndex : 0
 
                     }}
-                    level={5} // 지도의 확대 레벨
+                    level={4} // 지도의 확대 레벨
                 >
-                    {!state.isLoading && (
+                    {(
                         <MapMarker position={state.center}>
                             <div style={{ padding: "5px", color: "#000" }}>
-                                {state.errMsg ? state.errMsg : "여기에 계신가요?!"}
+                                "당신의 위치!"
                             </div>
                         </MapMarker>
                     )}
+                    {(positions.map((position,index) => (
+                        <MapMarker
+                            position={position.latlng}
+                            key={position.id}
+                            image={{
+                                src: "https://cdn-icons-png.flaticon.com/512/999/999047.png", // 마커이미지의 주소입니다
+                                size: {
+                                    width: 24,
+                                    height: 35
+                                },
+                            }}
+                            title={`${position.id}번 디바이스`}
+                        />
+                    )))}
                     <Box sx={{ zIndex : 100, display : 'flex', justifyContent : 'space-evenly' }}>
                         <Link to="/" style={{ textDecoration : 'none' }}>
                             <Button size={'large'} style={{ width : "140px", height : "60px" , backgroundColor : 'white' }} sx={{ border : 1 ,borderRadius : '10px', fontWeight : 'bold' ,color : 'black' }} variant={'contained'}>지도 닫기</Button>
