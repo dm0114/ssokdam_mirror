@@ -25,7 +25,7 @@ public class IotUserService {
         Map<String, Object> map = new LinkedHashMap<>();
         if (iotuser!=null) {
             if (iotUserRepository.findById(id).get().getUserPwd().equals(password)) {
-                token = securityService.creatToken(id, (2 * 1000 * 60));
+                token = securityService.creatToken(id, (10 * 1000 * 60));
                 map.put("token" , token);
             }
         }else{
@@ -48,6 +48,7 @@ public class IotUserService {
         }
         map.put("message", "존재하지 않는 회원입니다.");
         return map;
+
     }
 
     public Map findPwd(IotUser user){
@@ -72,7 +73,7 @@ public class IotUserService {
     }
 
     public Map singup(IotUser user){          //회원가입
-       /* String pwd = securityService.jasyptEncoding(user.getUserPwd());
+        /*String pwd = securityService.jasyptEncoding(user.getUserPwd());
 
         user.setUserPwd(pwd);*/
 

@@ -1,6 +1,7 @@
 package com.ssaft.project;
 
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.jasypt.salt.StringFixedSaltGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -24,7 +25,20 @@ public class DBjasypt {
         StandardPBEStringEncryptor pbeEnc = new StandardPBEStringEncryptor();
         pbeEnc.setAlgorithm("PBEWithMD5AndDES");
         pbeEnc.setPassword(key);
+        pbeEnc.setSaltGenerator(new StringFixedSaltGenerator("someFixedSalt"));
         return pbeEnc.encrypt(value);
     }
+
+   /* @Test
+    public void encryptSimpleTest() {
+        StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
+        encryptor.setPassword("iotProject");
+        encryptor.setAlgorithm("PBEWithMD5AndDES");
+        encryptor.setSaltGenerator(new StringFixedSaltGenerator("someFixedSalt"));
+        String str = "testString";
+        String encStr = encryptor.encrypt(str);
+        String decStr = encryptor.decrypt(encStr);
+        log.debug("str : {}, encStr : {}, decStr : {}", str, encStr, decStr);
+    }*/
 
 }

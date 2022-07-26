@@ -65,14 +65,15 @@ public class IotUserController {
         return iotUserService.singup(user);
     }
 
-    @GetMapping("/")
+    @GetMapping("/mypage")
     @ResponseBody
-    public Map main(@RequestBody String token){
-        String id = securityService.getSubJect(token);
+    public Map main(@RequestBody Map<String, Object> token){
+        String token2 = (String) token.get("token");
+        String id = securityService.getSubJect(token2);
         Optional<IotUser> user = iotUserRepository.findById(id);
         Map<String, Object> map = new LinkedHashMap<>();
-        map.put("userTime", user.get().getUserTime());
-        return null;
+        map.put("userName", user.get().getUserName());
+        return map;
     }
 
 
