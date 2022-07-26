@@ -15,6 +15,8 @@ import './HomeModule.css'
 import money from '../../picture/money.png'
 import PhoneIcon from '@mui/icons-material/Phone';
 import InfoIcon from '@mui/icons-material/Info';
+import {Link} from "react-router-dom";
+import LoginIcon from '@mui/icons-material/Login';
 
 const detailGo = (
   <ArrowForwardIosIcon/>
@@ -79,13 +81,15 @@ function Home(){
       img : "https://navermaps.github.io/ios-map-sdk/assets/2-3-basic.png",
       title : "map",
       littleText : "지도를 확인해서",
-      bigText : "수거기기 찾기"
+      bigText : "수거기기 찾기",
+      link : "/map"
     },
     {
       img : "https://cdn.codingworldnews.com/news/photo/202108/5425_7139_400.jpg",
       title : "QR",
       littleText : "QR 스캔으로",
-      bigText : "꽁초 분리수거"
+      bigText : "꽁초 분리수거",
+      link : "/qr"
     }
   ]
 
@@ -99,7 +103,9 @@ function Home(){
             <h2 style={{marginTop : "0"}}>바다를 지켜준 횟수</h2>
           </Box>
           <Box sx={{flex : '1', display : 'flex', justifyContent : 'center', alignItems : 'center'}}>
-            <NotificationsNoneIcon/>
+            <Link to='/login' sx={{ fontSize : 'medium'}} style={{ color : 'black' }}>
+              <LoginIcon/>
+            </Link>
             <ToggleButton value="justify" aria-label="justified" sx={{ border : "0" }}>
               <FormatAlignJustifyIcon />
             </ToggleButton>
@@ -117,19 +123,21 @@ function Home(){
           </Box>
            <ImageList sx={{ width: "100%", height: "100%", my: 1 }} gap={6} cols={2} rowHeight={137}>
       {itemData.map((item) => (
-          <ImageListItem className="banner" key={item.img}>
-            <img
-              style={{ borderRadius : "10px" }}
-              src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-              alt={item.title}
-              loading="lazy"
-            />
-            <div className="banner-txt">
-              <h5 style={{ fontSize : "1px", margin : "3px" }}>{ item.littleText }</h5>
-              <h4 style={{ fontWeight : "bold" ,fontSize : "10px", margin : "10px" }}>{ item.bigText }</h4>
-            </div>
-          </ImageListItem>
+          <Link to={item.link} style={{ color : 'black', textDecoration : 'none' }}>
+            <ImageListItem className="banner" key={item.img}>
+                <img
+                  style={{ borderRadius : "10px" }}
+                  src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                  srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                  alt={item.title}
+                  loading="lazy"
+                />
+              <div className="banner-txt">
+                <h5 style={{ fontSize : "1px", margin : "3px" }}>{ item.littleText }</h5>
+                <h4 style={{ fontWeight : "bold" ,fontSize : "10px", margin : "10px" }}>{ item.bigText }</h4>
+              </div>
+            </ImageListItem>
+          </Link>
       ))}
     </ImageList>
         <Box sx={{ display : "flex", width : "100%", height : "10vh", borderRadius : "10px" }} style={{ backgroundColor : "#eeeeee" }}>

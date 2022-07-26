@@ -12,6 +12,7 @@ import FindPw from './Pages/Auth/FindPw';
 import SignUp from './Pages/Auth/SignUp.jsx'
 import EcoMap from "./Pages/Main/EcoMap";
 import Home from './Pages/Main/Home'
+import Qr from './Pages/Main/Qr'
 import Navigation from './Pages/Nav/Navigation'
 import ServiceInfo from './Pages/Main/ServiceInfo'
 import ServiceCenter from './Pages/Main/ServiceCenter'
@@ -34,6 +35,7 @@ function App() {
           <Route path='/frequentlyQuestion' element={<FrequentlyQuestion />} />
           <Route path='/myAsk' element={<MyAsk />} />
           <Route path='/map' element={ <EcoMap/>} />
+          <Route path='/qr' element={<Qr/>} />
           
           
           <Route path='/login' element={<Login/>} />

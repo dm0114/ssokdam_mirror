@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import axios from "axios"
 import { toast, ToastContainer } from "react-toastify"
 import {Formik, ErrorMessage} from "formik";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import * as Yup from "yup";
 
 
@@ -121,7 +121,9 @@ function SignUp(){
     <React.Fragment>
       <Container maxWidth="sm" sx={{bgcolor : '#eff0f2', height : '100vh'}}>
       <Box sx={{display:'flex', padding:'30px', justifyContent : 'center', alignItems:'center'}}>
-        <ArrowBackIosIcon sx={{color : 'black'}}/>       
+          <Link to='/'>
+              <ArrowBackIosIcon sx={{color : 'black'}}/>
+          </Link>
           <Typography component="h5" variant="h5" sx={{ flex : '1', textAlign : 'center', fontWeight : 'bold'}}>
             회원가입
           </Typography>

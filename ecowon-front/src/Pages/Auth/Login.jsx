@@ -70,7 +70,9 @@ function Login(){
     <React.Fragment>
       <Container maxWidth="sm" sx={{bgcolor : '#00d3ca', height : '100vh'}} style={{ marginX : '0px'}}>
         <Box sx={{padding:'30px 10px', justifyContent : 'center', alignItems:'center'}}>
-          <ArrowBackIosIcon sx={{color : 'black'}}/>
+          <Link to='/'>
+            <ArrowBackIosIcon sx={{color : 'black'}}/>
+          </Link>
         </Box>
         <Box sx={{display:'flex', flexDirection : 'column', justifyContent : 'center', alignItems:'flex-start', marginBottom:'20px'}}>
           <h2 style={{fontWeight : '500', marginBottom : '10px'}}>아름다운 흡연 습관</h2>
@@ -115,9 +117,11 @@ function Login(){
             <Button onClick={onSubmitAccount} variant={"contained"} sx={{ fontWeight : 'bold' }}  style={{ backgroundColor : "#00d3ca", color : "black" }} fullWidth>
                     로그인
             </Button>
-            <Button variant={"contained"} sx={{fontWeight : 'bold', marginTop : '10px' }}  style={{ backgroundColor : "#9e9e9e", color : "black" }} fullWidth>
-                    회원가입
-            </Button>
+            <Link to='/signup' style={{ textDecoration : 'none' }}>
+              <Button variant={"contained"} sx={{fontWeight : 'bold', marginTop : '10px' }}  style={{ backgroundColor : "#9e9e9e", color : "black" }} fullWidth>
+                      회원가입
+              </Button>
+            </Link>
           </Box>
         </Box>
         </Box>

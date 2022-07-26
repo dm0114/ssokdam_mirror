@@ -1,8 +1,13 @@
 import React from 'react'
-import {Map, MapMarker} from "react-kakao-maps-sdk";
+import {CustomOverlayMap, Map, MapMarker} from "react-kakao-maps-sdk";
 import {useState} from "react";
 import {useEffect} from "react";
+import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
 import Box from '@mui/material/Box';
+import './EcoMapModule.css'
+import { Link } from 'react-router-dom'
+import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 
 function EcoMap(){
     const [state, setState] = useState({
@@ -50,23 +55,38 @@ function EcoMap(){
 
 
     return (
-        <Map // 지도를 표시할 Container
-            center={state.center}
-            style={{
-                // 지도의 크기
-                width: "100%",
-                height: "100vh",
-            }}
-            level={5} // 지도의 확대 레벨
-        >
-            {!state.isLoading && (
-                <MapMarker position={state.center}>
-                    <div style={{ padding: "5px", color: "#000" }}>
-                        {state.errMsg ? state.errMsg : "여기에 계신가요?!"}
-                    </div>
-                </MapMarker>
-            )}
-        </Map>
+        <React.Fragment>
+            <Container maxWidth="sm">
+                <Map // 지도를 표시할 Container
+                    center={state.center}
+                    style={{
+                        // 지도의 크기
+                        width: "100%",
+                        height: "100vh",
+                        marginBottom : -100,
+                        zIndex : 0
+
+                    }}
+                    level={5} // 지도의 확대 레벨
+                >
+                    {!state.isLoading && (
+                        <MapMarker position={state.center}>
+                            <div style={{ padding: "5px", color: "#000" }}>
+                                {state.errMsg ? state.errMsg : "여기에 계신가요?!"}
+                            </div>
+                        </MapMarker>
+                    )}
+                    <Box sx={{ zIndex : 100, display : 'flex', justifyContent : 'space-evenly' }}>
+                        <Link to="/" style={{ textDecoration : 'none' }}>
+                            <Button size={'large'} style={{ width : "140px", height : "60px" , backgroundColor : 'white' }} sx={{ border : 1 ,borderRadius : '10px', fontWeight : 'bold' ,color : 'black' }} variant={'contained'}>지도 닫기</Button>
+                        </Link>
+                        <Link to="/qr" style={{ textDecoration : 'none' }}>
+                            <Button size={'large'} style={{ width : "140px",  height : "60px", backgroundColor : '#00d3ca' }} variant={'contained'} sx={{  borderRadius : '10px', fontWeight : 'bold' }}>사용 하기</Button>
+                        </Link>
+                    </Box>
+                </Map>
+            </Container>
+        </React.Fragment>
     )
 }
 
