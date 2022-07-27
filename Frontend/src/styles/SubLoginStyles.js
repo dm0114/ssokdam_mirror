@@ -84,11 +84,25 @@ export const MainButton = styled.button`
   border-radius: 5px;
 `
 
+export const SubButton = styled.button`
+  width: ${props => props.width};
+  height: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${props => props.theme.colors.gainsboro};
+  
+  margin-top: 12px;
+  border: 0px;
+  border-radius: 5px;
+`
+
 export const ButtonText = styled.p `
   color: ${props => props.theme.colors.black};
   text-align: center;
-  font-family: ${props => props.theme.fonts.sCoreDream14Regular.family};
-  font-size: ${props => props.theme.fonts.sCoreDream14Regular.size};
-  font-weight: ${props => props.theme.fonts.sCoreDream14Regular.weight};
-  line-height: ${props => props.theme.fonts.sCoreDream14Regular.lineHeight};
+  font-family: ${props => props.theme.fonts.sCoreDream16Regular.family};
+  font-size: ${props => props.theme.fonts.sCoreDream16Regular.size};
+  font-weight: ${props => props.theme.fonts.sCoreDream16Regular.weight};
+  line-height: ${props => props.theme.fonts.sCoreDream16Regular.lineHeight};
 `;
