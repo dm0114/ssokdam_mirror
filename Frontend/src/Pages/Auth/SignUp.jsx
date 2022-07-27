@@ -44,15 +44,6 @@ function SignUp(){
     
       if (success) {
           const { imp_uid } = response;
-<<<<<<< HEAD
-=======
-          axios({
-              url:  "http://localhost:8080/api/signup/check", // 예: https://www.myservice.com/certifications
-              method: "post",
-              headers: { "Content-Type": "application/json" },
-              data: { imp_uid: imp_uid }
-          });
->>>>>>> cb179ea908299c8c1b3641817740732e65409e4d
 
           // fetch(url,{
           //     method: "post",
@@ -151,20 +142,22 @@ function SignUp(){
                     imp_uid : `${impUid}`
                 })
             }).then((res) => {
-                console.log(res)
                 if(res.ok){
-                    localStorage.getItem('access-token', res.Access_token)
-                    setUserInfo2({
-                        userName : res.userName,
-                        userEmail : res.userEmail,
-                        userPoint : res.userPoint,
-                        userCnt : res.userCnt,
-                        userImage: res.userImg,
+                    res.json().then((res) => {
+                        localStorage.setItem('access-token', res.Access_token)
+                        setUserInfo2({
+                            userName : res.userName,
+                            userEmail : res.userEmail,
+                            userPoint : res.userPoint,
+                            userCnt : res.userCnt,
+                            userImage: res.userImg,
+                        })
                     })
                 }else{
-                    alert('성인이 아니거나 성인인증을 하지 않으셨습니다.')
+                    alert("성인이 아니거나 성인인증을 하지 않으셨습니다.")
                 }
-            })}
+            })
+        }
         fetchsubmit()
       // 다음에 로그인하는 로직도 넣기
       toast.success()

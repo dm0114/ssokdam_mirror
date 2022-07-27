@@ -20,6 +20,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import { isLoginAtom, userInfo } from '../../atoms'
 import {useRecoilValue} from "recoil";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const detailGo = (
   <ArrowForwardIosIcon/>
@@ -98,6 +99,9 @@ function Home(){
       link : "/qr"
     }
   ]
+  const logout = () => {
+    localStorage.removeItem('access-token')
+  }
 
 
   return (
@@ -113,9 +117,14 @@ function Home(){
             <h2 style={{marginTop : "0"}}>환경을 지켜주세요</h2>
           </Box>)  }
           <Box sx={{flex : '1', display : 'flex', justifyContent : 'center', alignItems : 'center'}}>
-            { localStorage.getItem('access-token') ? (<Link to='/myPage' sx={{ fontSize : 'medium'}} style={{ color : 'black' }}>
+            { localStorage.getItem('access-token') ? (<Box sx={{ display : 'flex', mt : 0.5  }}>
+              <Link to='/myPage' sx={{ fontSize : 'medium'}} style={{ color : 'black', paddingRight : '13px' }}>
               <AccountCircleIcon/>
-            </Link>) : (<Link to='/login' sx={{ fontSize : 'medium'}} style={{ color : 'black' }}>
+            </Link>
+
+                <LogoutIcon onClick={logout}/>
+
+            </Box>) : (<Link to='/login' sx={{ fontSize : 'medium'}} style={{ color : 'black' }}>
               <LoginIcon/>
             </Link>) }
 

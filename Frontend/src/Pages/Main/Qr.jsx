@@ -18,17 +18,31 @@ function Qr(){
     const navigate = useNavigate();
     const [userInfo2, setUserInfo2] = useRecoilState(userInfo)
     const handleScan = data => {
-        const URL = "http://localhost:8080/embedded/qr"
         if (data) {
             setQrscan(data)
             // 백엔드에 URL 보내기
-            const deviceOpen =  async () => {
-                let response = await axios.post(URL, {
-                    embId : parseInt(data),
-                    token : localStorage.getItem('access-token')
+            const fetchQr = async () => {
+                const URL = "http://localhost:8080/embedded/qr"
+                await fetch(URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        embId: parseInt(data),
+                        token: localStorage.getItem('access-token')
+                    })
                 }).then((res) => navigate('/'))
             }
-            deviceOpen()
+            fetchQr()
+
+            // const deviceOpen =  async () => {
+            //     let response = await axios.post(URL, {
+            //         embId : parseInt(data),
+            //         token : localStorage.getItem('access-token')
+            //     }).then((res) => navigate('/'))
+            // }
+            // deviceOpen()
             console.log(data)
         }
     }

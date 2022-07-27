@@ -39,12 +39,13 @@ public class EmbeddedController {
      @PostMapping("/qr")
      @ResponseBody
      public void Qr(@RequestBody EmbeddedData user){
+        System.out.println(user);
         Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(Integer.valueOf(user.getEmbId()));
         String name = securityService.getSubJect(user.getToken());
-        Optional<IotUser> iotUser =  iotUserRepository.findById(name);
-        embeddedData.get().setIotUser(iotUser.get());
-        embeddedData.get().setEmbQr("Y");
-        embeddedDataRepository.save(embeddedData.get());
+         Optional<IotUser> iotUser =  iotUserRepository.findById(name);
+         embeddedData.get().setIotUser(iotUser.get());
+         embeddedData.get().setEmbQr("Y");
+         embeddedDataRepository.save(embeddedData.get());
      }
 
 

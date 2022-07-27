@@ -30,7 +30,7 @@ public class IotUserService {
         Map<String, Object> map = new LinkedHashMap<>();
         if (iotuser!=null) {
             if (securityService.jasyptDecoding(iotuser.get().getUserPwd()).equals(password)) {
-                token = securityService.creatToken(id, (1 * 1000 * 60));
+                token = securityService.creatToken(id, (60 * 1000 * 60));
                 map.put("Access_token" , token);
                 token = securityService.creatToken(id, (10800 * 1000 * 60));
                 iotuser.get().setUserRt(token);
@@ -97,23 +97,16 @@ public class IotUserService {
         return map;
     }
 
-<<<<<<< HEAD
-    public Map singup(IotUser user)  {          //회원가입
-        String pwd = securityService.jasyptEncoding(user.getUserPwd());
-=======
+
     public Map singup(IotUser user) {          //회원가입
         String pwd = securityService.jasyptEncoding(user.getUserPwd());    //비밀번호 암호화
->>>>>>> cb179ea908299c8c1b3641817740732e65409e4d
         user.setUserPwd(pwd);
 
         Map<String ,Object> map = new LinkedHashMap<>();
 
         try {
             map = iamportService.getIamport(user.getImp_uid());
-<<<<<<< HEAD
-=======
             System.out.println(map);
->>>>>>> cb179ea908299c8c1b3641817740732e65409e4d
         } catch (IamportResponseException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
