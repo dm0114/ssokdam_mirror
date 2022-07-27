@@ -6,6 +6,7 @@ import com.ssaft.project.Service.IamportService;
 import com.ssaft.project.Service.IotUserService;
 import com.ssaft.project.Service.SecurityService;
 import com.ssaft.project.domain.IotUser;
+import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -96,16 +97,23 @@ public class IotUserController {
 
     @GetMapping("/mypage/test")
     public Map mypage(@RequestHeader("token") String token){
-        String id = securityService.getSubJect(token);
-        Optional<IotUser> user = iotUserRepository.findById(id);
         Map<String, Object> map = new LinkedHashMap<>();
-        map.put("userName", user.get().getUserName());
-        return map;
+        try {
+            String id = securityService.getSubJect(token);
+            Optional<IotUser> user = iotUserRepository.findById(id);
+            map.put("userName", user.get().getUserName());
+            return map;
+        }catch(JwtException e){
+            System.out.println(e);
+            map.put("Error", "Access 토큰이 만료되었습니다.");
+            return map;
+        }
     }
 
-
-
-
+    @GetMapping("/Refesh/token")
+    public Map refreshToken(@RequestHeader("token") String token){
+        return securityService.refreshTokenCheck(token);
+    }
 }
 
 
