@@ -20,13 +20,12 @@ import {
   import { useQuery } from "@tanstack/react-query";
   import { fetchMyPage } from '../../api/mypage';
   import { isLoginAtom } from '../../atoms'
-  import { useRecoilValue } from 'recoil'
+  import {useRecoilValue, useSetRecoilState} from 'recoil'
   import { Navigate } from "react-router-dom"
-  // import { useState } from 'react';
+
   
   
-  export const MyPage = () => { 
-  
+  export const MyPage = () => {
       const isLogin = useRecoilValue(isLoginAtom);
       const { isLoading, data } = useQuery(['userData'], (() => {
           if (isLogin === true) {
@@ -40,7 +39,7 @@ import {
       // const { fetchedDataKeyName, setFetchedDataKeyName } = useState(['userImg', 'userId', 'userPoint'])
       return (
           <>
-              {isLogin 
+              {localStorage.getItem('access-token')
                 ? (isLoading ? (<>Loading...</>) : (
                     <SubBackgroundView>
                         <Wrap>
