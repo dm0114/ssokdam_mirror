@@ -9,16 +9,20 @@ import axios from "axios"
 import { toast, ToastContainer } from "react-toastify"
 import {Formik, ErrorMessage} from "formik";
 import {Link, useNavigate} from "react-router-dom";
+import { userInfo } from '../../atoms'
+import {useRecoilState} from "recoil";
 import * as Yup from "yup";
+import $ from 'jquery';
 
 
 
 
 function SignUp(){
+    const [impUid, setImpUid] = useState('')
+    const [userInfo2, setUserInfo2] = useRecoilState(userInfo)
   function onClickCertification(){
     const { IMP } = window; // 생략 가능
     IMP.init("imp01330466"); // 예: imp0000000
-    const test = "branch test"
     // 본인인증 데이터 정의
     const data = {
       merchant_uid: `mid_${new Date().getTime()}`,  // 주문번호
@@ -40,13 +44,48 @@ function SignUp(){
     
       if (success) {
           const { imp_uid } = response;
+<<<<<<< HEAD
+=======
           axios({
               url:  "http://localhost:8080/api/signup/check", // 예: https://www.myservice.com/certifications
               method: "post",
               headers: { "Content-Type": "application/json" },
               data: { imp_uid: imp_uid }
           });
+>>>>>>> cb179ea908299c8c1b3641817740732e65409e4d
 
+          // fetch(url,{
+          //     method: "post",
+          //     headers: { "Content-Type": "application/json" },
+          //     data: { imp_uid: imp_uid }
+          // })
+          // $.ajax({
+          //     url: url, // 예: https://www.myservice.com/certifications
+          //     method: "POST",
+          //     headers: { "Content-Type": "application/json" },
+          //     data: { imp_uid: imp_uid }
+          // }).then((res) => console.log(res))
+          const fetchCertification = async () => {
+              const url =  "http://localhost:8080/api/signup/check"
+              await fetch(url, {
+                  method: 'POST',
+                  headers: {
+                      'Content-type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                      imp_uid : `${imp_uid}`
+                  })
+              }).then((res) => {
+                     if(!res.ok){
+                         alert('성인이 아닙니다!')
+                     }
+          })}
+          fetchCertification()
+
+          // axios.post(url, {
+          //     imp_uid : imp_uid
+          // }).then((res) => console.log(res))
+          setImpUid(imp_uid)
           console.log(imp_uid)
           alert('본인인증 성공')
 
@@ -84,27 +123,58 @@ function SignUp(){
       .required(""),
   });
   const submit = async (values) => {
-    const URL = "http://localhost:8888/users"
+    const URL = "http://localhost:8080/api/signup"
     console.log("왔어")
     const {userEmail, userId, userPwd} = values;
     try {
-      await axios.post(URL, {
-        userEmail : userEmail,
-        userId : userId,
-        userPwd : userPwd,
-      })
-      .then((res) => {
-        console.log(res)
-        alert("회원가입이 완료 되었습니다.")
-      })
+      // await axios.post(URL, {
+      //   userEmail : userEmail,
+      //   userId : userId,
+      //   userPwd : userPwd,
+      //   imp_uid : `${impUid}`
+      // })
+      // .then((res) => {
+      //   console.log(res)
+      //   alert("회원가입이 완료 되었습니다.")
+      // })
+        const fetchsubmit = async () => {
+            const URL = "http://localhost:8080/api/signup"
+            await fetch(URL, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userEmail : userEmail,
+                    userId : userId,
+                    userPwd : userPwd,
+                    imp_uid : `${impUid}`
+                })
+            }).then((res) => {
+                console.log(res)
+                if(res.ok){
+                    localStorage.getItem('access-token', res.Access_token)
+                    setUserInfo2({
+                        userName : res.userName,
+                        userEmail : res.userEmail,
+                        userPoint : res.userPoint,
+                        userCnt : res.userCnt,
+                        userImage: res.userImg,
+                    })
+                }else{
+                    alert('성인이 아니거나 성인인증을 하지 않으셨습니다.')
+                }
+            })}
+        fetchsubmit()
       // 다음에 로그인하는 로직도 넣기
       toast.success()
       // toast.success(<h3>회원가입이 완료되었습니다.<br/>로그인 하세요😎</h3>, {
       //   position: "top-center",
       //   autoClose: 2000
       // });
+
       setTimeout(()=> {
-        navigate("/login");
+        navigate("/");
       }, 2000);
 
     } catch (e) {
