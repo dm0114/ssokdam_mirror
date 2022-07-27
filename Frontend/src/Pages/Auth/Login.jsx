@@ -11,7 +11,7 @@ import "./LoginModule.css"
 import {
   useQuery,
 } from '@tanstack/react-query'
-import { isLoginAtom } from '../../atoms'
+import { isLoginAtom, userInfo } from '../../atoms'
 import { useSetRecoilState, useRecoilState } from 'recoil'
 
 
@@ -22,6 +22,7 @@ function Login(){
   const URL = 'http://localhost:8080/api/login'
   const navigate = useNavigate();
   const [isLogin,setIsLogin] = useRecoilState(isLoginAtom);
+  const [userInfo2, setUserInfo2] = useRecoilState(userInfo)
   
   const fetchLogin = async ({ id, password }) => {
     await fetch(URL, {
