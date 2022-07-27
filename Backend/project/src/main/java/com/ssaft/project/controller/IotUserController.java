@@ -68,7 +68,7 @@ public class IotUserController {
         return iotUserService.changePw(user);
     }
 
-    @PostMapping("/signup/check")                          //json 방식으로 로그인
+    @PostMapping("/signup/check")                          // 로그인 체크
     @ResponseBody
     public boolean singUpCheck(@RequestBody IotUser user) throws IamportResponseException, IOException {
         if(iamportService.getIamport(user.getImp_uid()).containsKey("message")){
