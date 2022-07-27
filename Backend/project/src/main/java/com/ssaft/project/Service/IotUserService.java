@@ -97,13 +97,19 @@ public class IotUserService {
         return map;
     }
 
-    public Map singup(IotUser user) throws IamportResponseException, IOException {          //회원가입
+    public Map singup(IotUser user)  {          //회원가입
         String pwd = securityService.jasyptEncoding(user.getUserPwd());
         user.setUserPwd(pwd);
 
         Map<String, Object> map = new LinkedHashMap<>();
 
-        map = iamportService.getIamport(user.getImp_uid());
+        try {
+            map = iamportService.getIamport(user.getImp_uid());
+        } catch (IamportResponseException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         user.setUserPhone((String) map.get("userPhone"));
         user.setUserBirthDay((String) map.get("userBirthDay"));
 
