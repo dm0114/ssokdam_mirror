@@ -17,8 +17,9 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import InfoIcon from '@mui/icons-material/Info';
 import {Link} from "react-router-dom";
 import LoginIcon from '@mui/icons-material/Login';
-import { isLoginAtom } from '../../atoms'
+import { isLoginAtom, userInfo } from '../../atoms'
 import {useRecoilValue} from "recoil";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const detailGo = (
   <ArrowForwardIosIcon/>
@@ -36,6 +37,7 @@ function Home(){
   const time = useRef(2400);
   const timerId = useRef(null);
   const isLogin = useRecoilValue(isLoginAtom)
+  const userInfo2 = useRecoilValue(userInfo)
 
 
   useEffect(() => {
@@ -97,19 +99,26 @@ function Home(){
     }
   ]
 
+
   return (
     <ThemeProvider theme={theme}>
       <React.Fragment>
       <Container maxWidth="sm" sx={{bgcolor : "#00d3ca", height : "100vh", px:"25px"}}>
         <Box sx={{ display : "flex" }}>
-          <Box sx={{flex : '3'}}>
-            <h2 style={{marginTop : "50px", marginBottom : "0"}}>에코원 님이</h2>
+          { localStorage.getItem('access-token') ? (<Box sx={{flex : '3'}}>
+            <h2 style={{marginTop : "50px", marginBottom : "0"}}>{ userInfo2.userName } 님이</h2>
             <h2 style={{marginTop : "0"}}>바다를 지켜준 횟수</h2>
-          </Box>
+          </Box>) : (<Box sx={{flex : '3'}}>
+            <h2 style={{marginTop : "50px", marginBottom : "0"}}>ECOWON과</h2>
+            <h2 style={{marginTop : "0"}}>환경을 지켜주세요</h2>
+          </Box>)  }
           <Box sx={{flex : '1', display : 'flex', justifyContent : 'center', alignItems : 'center'}}>
-            <Link to='/login' sx={{ fontSize : 'medium'}} style={{ color : 'black' }}>
+            { localStorage.getItem('access-token') ? (<Link to='/myPage' sx={{ fontSize : 'medium'}} style={{ color : 'black' }}>
+              <AccountCircleIcon/>
+            </Link>) : (<Link to='/login' sx={{ fontSize : 'medium'}} style={{ color : 'black' }}>
               <LoginIcon/>
-            </Link>
+            </Link>) }
+
             <ToggleButton value="justify" aria-label="justified" sx={{ border : "0" }}>
               <FormatAlignJustifyIcon />
             </ToggleButton>

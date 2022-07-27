@@ -8,7 +8,9 @@ import Box from '@mui/material/Box';
 import {Link, useNavigate } from "react-router-dom"
 import {useState, useEffect} from 'react'
 import "./LoginModule.css"
-
+import {
+  useQuery,
+} from '@tanstack/react-query'
 import { isLoginAtom } from '../../atoms'
 import { useSetRecoilState, useRecoilState } from 'recoil'
 
@@ -20,7 +22,7 @@ function Login(){
   const URL = 'http://localhost:8080/api/login'
   const navigate = useNavigate();
   const [isLogin,setIsLogin] = useRecoilState(isLoginAtom);
-
+  
   const fetchLogin = async ({ id, password }) => {
     await fetch(URL, {
       method: 'POST',
@@ -37,7 +39,15 @@ function Login(){
         alert('일치하는 회원정보가 없습니다!')
       }
       return res.json().then((res) => {
-        localStorage.setItem('access-token', res.token);
+        localStorage.setItem('access-token', res.Access_token);
+        setUserInfo2({
+          userName : res.userName,
+          userEmail : res.userEmail,
+          userPoint : res.userPoint,
+          userCnt : res.userCnt,
+          userImage: res.userImg,
+        })
+        console.log(res)
       })})
         .then(() => {
           setIsLogin(true)

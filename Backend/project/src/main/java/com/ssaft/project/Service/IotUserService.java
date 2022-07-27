@@ -55,7 +55,7 @@ public class IotUserService {
         Map<String, Object> map = new LinkedHashMap<>();
         if(iotUser.get().getUserRt().equals(token)){
             String Accesstoken = securityService.creatToken(iotUser.get().getUserId(), (60 * 1000 * 60));
-            map.put("Access_token", Accesstoken);
+            map.put("Acess token", Accesstoken);
         }
         return map;
     }
