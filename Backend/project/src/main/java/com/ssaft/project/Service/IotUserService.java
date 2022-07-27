@@ -36,6 +36,11 @@ public class IotUserService {
                 iotuser.get().setUserRt(token);
                 iotUserRepository.save(iotuser.get());
                 map.put("Refresh token" , token);
+                map.put("userName", iotuser.get().getUserName());
+                map.put("userEmail", iotuser.get().getUserEmail());
+                map.put("userPoint", iotuser.get().getUserPoint());
+                map.put("userCnt", iotuser.get().getUserCnt());
+                map.put("userImg", iotuser.get().getUserImg());
             }
         }else{
             map.put("message" , "존재하지 않는 회원입니다.");
