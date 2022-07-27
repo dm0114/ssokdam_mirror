@@ -9,7 +9,7 @@ import {Link, useNavigate } from "react-router-dom"
 import {useState, useEffect} from 'react'
 import "./LoginModule.css"
 
-import { isLoginAtom } from '../../atoms'
+import { isLoginAtom, userInfo } from '../../atoms'
 import { useSetRecoilState, useRecoilState } from 'recoil'
 
 
@@ -20,6 +20,7 @@ function Login(){
   const URL = 'http://localhost:8080/api/login'
   const navigate = useNavigate();
   const [isLogin,setIsLogin] = useRecoilState(isLoginAtom);
+  const [userInfo2, setUserInfo2] = useRecoilState(userInfo)
 
   const fetchLogin = async ({ id, password }) => {
     await fetch(URL, {
@@ -38,6 +39,13 @@ function Login(){
       }
       return res.json().then((res) => {
         localStorage.setItem('access-token', res.token);
+        setUserInfo2({
+          userName : res.userName,
+          userEmail : res.userEmail,
+          userPoint : res.userPoint,
+          userCnt : res.userCnt,
+          userImage: res.userImg,
+        })
       })})
         .then(() => {
           setIsLogin(true)

@@ -17,7 +17,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import InfoIcon from '@mui/icons-material/Info';
 import {Link} from "react-router-dom";
 import LoginIcon from '@mui/icons-material/Login';
-import { isLoginAtom } from '../../atoms'
+import { isLoginAtom, userInfo } from '../../atoms'
 import {useRecoilValue} from "recoil";
 
 const detailGo = (
@@ -36,7 +36,8 @@ function Home(){
   const time = useRef(2400);
   const timerId = useRef(null);
   const isLogin = useRecoilValue(isLoginAtom)
-
+  const userInfo2 = useRecoilValue(userInfo)
+  console.log(userInfo2)
 
   useEffect(() => {
     timerId.current = setInterval(() => {
@@ -96,6 +97,7 @@ function Home(){
       link : "/qr"
     }
   ]
+
 
   return (
     <ThemeProvider theme={theme}>
