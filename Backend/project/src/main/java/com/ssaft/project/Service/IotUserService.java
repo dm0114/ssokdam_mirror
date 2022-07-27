@@ -97,26 +97,45 @@ public class IotUserService {
         return map;
     }
 
-    public Map singup(IotUser user) throws IamportResponseException, IOException {          //회원가입
-        String pwd = securityService.jasyptEncoding(user.getUserPwd());
+    public Map singup(IotUser user) {          //회원가입
+        String pwd = securityService.jasyptEncoding(user.getUserPwd());    //비밀번호 암호화
         user.setUserPwd(pwd);
 
-        Map<String, Object> map = new LinkedHashMap<>();
+        Map<String ,Object> map = new LinkedHashMap<>();
 
-        map = iamportService.getIamport(user.getImp_uid());
+        try {
+            map = iamportService.getIamport(user.getImp_uid());
+            System.out.println(map);
+        } catch (IamportResponseException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         user.setUserPhone((String) map.get("userPhone"));
         user.setUserBirthDay((String) map.get("userBirthDay"));
-
+        user.setUserName((String) map.get("userName"));
         map.clear();
+
 
         try {
             CheckId(user.getUserId());
+            String token = securityService.creatToken(user.getUserId(), (1 * 1000 * 60));
+            map.put("Access_token" , token);
+            token = securityService.creatToken(user.getUserId(), (10800 * 1000 * 60));
+            user.setUserRt(token);
             iotUserRepository.save(user);
-            map.put("sucess", "sucess");
+            map.put("Refresh_token" , token);
+            map.put("userName", user.getUserName());
+            map.put("userEmail", user.getUserEmail());
+            map.put("userPoint", user.getUserPoint());
+            map.put("userCnt", user.getUserCnt());
+            map.put("userImg", user.getUserImg());
+            return map;
         }catch (IllegalStateException e) {
+
             map.put("message", e);
+            return map;
         }
-        return map;
     }
 
     public void CheckId(String id){                   // 회원가입 - 중복검사

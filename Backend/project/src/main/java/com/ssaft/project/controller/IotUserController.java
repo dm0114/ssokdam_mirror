@@ -70,17 +70,23 @@ public class IotUserController {
 
     @PostMapping("/signup/check")                          // 로그인 체크
     @ResponseBody
-    public boolean singUpCheck(@RequestBody IotUser user) throws IamportResponseException, IOException {
-        if(iamportService.getIamport(user.getImp_uid()).containsKey("message")){
-            return false;
-        } else{
-            return true;
+    public boolean singUpCheck(@RequestBody IotUser user)  {
+        try {
+            if(iamportService.getIamport(user.getImp_uid()).containsKey("userPhone")){
+                return true;
+            } else{
+                return false;
+            }
+        } catch (IamportResponseException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @PostMapping("/signup")                          //json  방식으로 로그인
     @ResponseBody
-    public Map singUp(@RequestBody IotUser user) throws IamportResponseException, IOException {
+    public Map singUp(@RequestBody IotUser user) {
         return iotUserService.singup(user);
     }
 

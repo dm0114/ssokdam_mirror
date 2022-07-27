@@ -20,6 +20,7 @@ public class IamportService {
     public Map getIamport(String uid) throws IamportResponseException, IOException {
         String birth = String.valueOf(client.certificationByImpUid(uid).getResponse().getBirth());
         String phone = client.certificationByImpUid(uid).getResponse().getPhone();
+        String name = client.certificationByImpUid(uid).getResponse().getName();
 
 
         System.out.println(phone);
@@ -29,6 +30,7 @@ public class IamportService {
         int year = now.getYear();
         System.out.println(userbitrh);
         System.out.println(year);
+        System.out.println(name);
         Map<String , Object> map = new LinkedHashMap<>();
 
         if(userbitrh+19 > year){
@@ -38,6 +40,7 @@ public class IamportService {
 
             map.put("userBirthDay", birth);
             map.put("userPhone", phone);
+            map.put("userName", name);
 
             return map;
         }

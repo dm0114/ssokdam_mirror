@@ -41,7 +41,7 @@ function SignUp(){
       if (success) {
           const { imp_uid } = response;
           axios({
-              url:  "http://localhost:8080/api/signup/json", // 예: https://www.myservice.com/certifications
+              url:  "http://localhost:8080/api/signup/check", // 예: https://www.myservice.com/certifications
               method: "post",
               headers: { "Content-Type": "application/json" },
               data: { imp_uid: imp_uid }
