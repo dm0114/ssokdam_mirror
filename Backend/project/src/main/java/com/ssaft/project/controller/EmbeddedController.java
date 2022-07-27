@@ -3,6 +3,7 @@ package com.ssaft.project.controller;
 import com.ssaft.project.Repository.EmbeddedDataRepository;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.Repository.UseDataRepository;
+import com.ssaft.project.Service.EmbeddedService;
 import com.ssaft.project.domain.EmbeddedData;
 import com.ssaft.project.domain.UseData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class EmbeddedController {
     @Autowired
     IotUserRepository iotUserRepository;
     @Autowired
-    EmbeddedDataRepository embeddedDataRepository;
+    EmbeddedService embeddedService;
 
     @Autowired
     UseDataRepository useDataRepository;
@@ -25,11 +26,7 @@ public class EmbeddedController {
     @PostMapping("/emb")
     @ResponseBody
     public void test(@RequestBody EmbeddedData embeddedData){
-        embeddedDataRepository.save(embeddedData);
-
-        Optional<EmbeddedData> data = embeddedDataRepository.findById(embeddedData.getEmbId());
-
-
+        embeddedService.join(embeddedData);
      }
 
 

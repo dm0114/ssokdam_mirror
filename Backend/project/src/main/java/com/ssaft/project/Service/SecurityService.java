@@ -68,7 +68,7 @@ public class SecurityService {
         }
     }
 
-    public static String jasyptEncoding(String value) {
+    public String jasyptEncoding(String value) {
 
         String key = "iotProject";
         StandardPBEStringEncryptor pbeEnc = new StandardPBEStringEncryptor();

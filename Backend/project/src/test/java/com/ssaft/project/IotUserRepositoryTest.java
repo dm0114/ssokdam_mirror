@@ -1,7 +1,9 @@
 package com.ssaft.project;
 
+import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.Service.IotUserService;
+import com.ssaft.project.Service.SecurityService;
 import com.ssaft.project.domain.IotUser;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 
+import java.io.IOException;
 import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,29 +27,31 @@ public class IotUserRepositoryTest {
     @Autowired
     private  IotUserService iotUserService;
 
-    @AfterEach
+    @Autowired
+    SecurityService securityService;
+
+/*    @AfterEach
     public void afterEach(){
         IotUser iotuser = new IotUser();
         iotuser.setUserId("swyou");
         iotUserRepository.delete(iotuser);
-    }
-
+    }*/
 
 
     @Test
     public void 회원가입() throws Exception {
         IotUser iotuser = new IotUser();
         iotuser.setUserId("swyou");
-        iotuser.setUserPwd("1234");
+        iotuser.setUserPwd(securityService.jasyptEncoding("1234"));
         iotuser.setUserName("유승우");
         iotuser.setUserPhone("010-5638-9909");
         iotuser.setUserBirthDay("1997-11-04");
         iotuser.setUserEmail("swyou1123@naver.com");
-        iotUserService.singup(iotuser);
+        iotUserRepository.save(iotuser);
     }
 
     @Test
-    public void 아이디로_회원삭제(){
+    public void 아이디로_회원삭제() throws IamportResponseException, IOException {
         IotUser iotuser = new IotUser();
         iotuser.setUserId("swyou");
         iotuser.setUserPwd("1234");
@@ -62,7 +67,7 @@ public class IotUserRepositoryTest {
     }
 
     @Test
-    public void 아이디로_중복검사(){
+    public void 아이디로_중복검사() throws IamportResponseException, IOException {
         IotUser iotuser = new IotUser();
         iotuser.setUserId("swyou");
         iotuser.setUserPwd("1234");
@@ -83,7 +88,7 @@ public class IotUserRepositoryTest {
     }
 
     @Test
-    public void 로그인_성공and실패_테스트(){
+    public void 로그인_성공and실패_테스트() throws IamportResponseException, IOException {
         IotUser iotuser = new IotUser();
         iotuser.setUserId("swyou");
         iotuser.setUserPwd("1234");

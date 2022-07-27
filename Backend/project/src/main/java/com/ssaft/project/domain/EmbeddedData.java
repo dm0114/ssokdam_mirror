@@ -4,10 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Table(name = "tb_embedded")
 @Getter @Setter
@@ -19,14 +18,21 @@ public class EmbeddedData {
     @Column(name = "emb_id")
     private int embId;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", updatable = false)
+    private IotUser iotUser;
+
     @Column(name = "emb_ful1")
     private String embFul1;
 
     @Column(name = "emb_ful2")
     private String embFul2;
 
-    @Column(name = "emb_loc")
-    private String embLoc;
+    @Column(name = "emb_lat")
+    private String embLat;
+
+    @Column(name = "emb_Lng")
+    private String embLng;
 
     @Column(name = "emb_bat")
     private String embBat;
@@ -35,12 +41,14 @@ public class EmbeddedData {
     private String embCnt;
 
     @Column(name = "emb_sta")
+    @ColumnDefault("Y")
     private String embSta;
 
     @Column(name = "emb_dumy")
     private String embDumy;
 
     @Column(name = "emb_qr")
+    @ColumnDefault("N")
     private String embQr;
 
 //    @OneToMany(fetch = FetchType.LAZY)
