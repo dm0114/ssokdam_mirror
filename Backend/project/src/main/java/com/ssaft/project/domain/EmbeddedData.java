@@ -57,4 +57,7 @@ public class EmbeddedData {
 
     @Transient
     private String userId;
+
+    @Transient
+    private String token;
 }

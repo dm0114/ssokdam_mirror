@@ -4,7 +4,9 @@ import com.ssaft.project.Repository.EmbeddedDataRepository;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.Repository.UseDataRepository;
 import com.ssaft.project.Service.EmbeddedService;
+import com.ssaft.project.Service.SecurityService;
 import com.ssaft.project.domain.EmbeddedData;
+import com.ssaft.project.domain.IotUser;
 import com.ssaft.project.domain.UseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +23,28 @@ public class EmbeddedController {
     EmbeddedService embeddedService;
 
     @Autowired
+    EmbeddedDataRepository embeddedDataRepository;
+    @Autowired
     UseDataRepository useDataRepository;
+
+    @Autowired
+    SecurityService securityService;
 
     @PostMapping("/emb")
     @ResponseBody
     public void test(@RequestBody EmbeddedData embeddedData){
         embeddedService.join(embeddedData);
+     }
+
+     @PostMapping("/qr")
+     @ResponseBody
+     public void Qr(@RequestBody EmbeddedData user){
+        Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(Integer.valueOf(user.getEmbId()));
+        String name = securityService.getSubJect(user.getToken());
+        Optional<IotUser> iotUser =  iotUserRepository.findById(name);
+        embeddedData.get().setIotUser(iotUser.get());
+        embeddedData.get().setEmbQr("Y");
+        embeddedDataRepository.save(embeddedData.get());
      }
 
 
