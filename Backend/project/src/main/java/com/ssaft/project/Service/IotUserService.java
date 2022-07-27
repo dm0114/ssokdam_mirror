@@ -30,13 +30,28 @@ public class IotUserService {
         Map<String, Object> map = new LinkedHashMap<>();
         if (iotuser!=null) {
             if (securityService.jasyptDecoding(iotuser.get().getUserPwd()).equals(password)) {
-                token = securityService.creatToken(id, (10 * 1000 * 60));
-                map.put("token" , token);
+                token = securityService.creatToken(id, (1 * 1000 * 60));
+                map.put("Access token" , token);
+                token = securityService.creatToken(id, (10800 * 1000 * 60));
+                iotuser.get().setUserRt(token);
+                iotUserRepository.save(iotuser.get());
+                map.put("Refresh token" , token);
             }
         }else{
             map.put("message" , "존재하지 않는 회원입니다.");
         }
 
+        return map;
+    }
+
+    public Map loginRefresh(String token){
+        String id = securityService.getSubJect(token);
+        Optional<IotUser> iotUser = iotUserRepository.findById(id);
+        Map<String, Object> map = new LinkedHashMap<>();
+        if(iotUser.get().getUserRt().equals(token)){
+            String Accesstoken = securityService.creatToken(iotUser.get().getUserId(), (60 * 1000 * 60));
+            map.put("Acess token", Accesstoken);
+        }
         return map;
     }
 
