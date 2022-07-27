@@ -18,8 +18,8 @@ public class EmbeddedData {
     @Column(name = "emb_id")
     private int embId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private IotUser iotUser;
 
     @Column(name = "emb_ful1")

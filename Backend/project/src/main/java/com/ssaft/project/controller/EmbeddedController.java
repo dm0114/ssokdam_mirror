@@ -43,7 +43,7 @@ public class EmbeddedController {
         String name = securityService.getSubJect(user.getToken());
         Optional<IotUser> iotUser =  iotUserRepository.findById(name);
         embeddedData.get().setIotUser(iotUser.get());
-        embeddedData.get().setEmbQr("Y");
+        embeddedData.get().setUserId(name);
         embeddedDataRepository.save(embeddedData.get());
      }
 
