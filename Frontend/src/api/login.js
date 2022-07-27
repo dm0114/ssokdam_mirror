@@ -1,4 +1,38 @@
-// // Axios vs fetch
+
+// Axios vs fetch
+export default async function FetchLogin({ id, password }){
+  const URL = "http://localhost:8080/api/login";
+
+  const response = await fetch(URL, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify({
+      userId: id,
+      userPwd: password,
+    }),
+  })
+    return response
+    
+    //   return res.json().then((res) => {
+    //     localStorage.setItem("access-token", res.Access_token);
+    //     setUserInfo2({
+    //       userName: res.userName,
+    //       userEmail: res.userEmail,
+    //       userPoint: res.userPoint,
+    //       userCnt: res.userCnt,
+    //       userImage: res.userImg,
+    //     });
+    //     console.log(res);
+    //   });
+    // })
+    // .then(() => {
+    //   navigate("/");
+    // });
+};
+
+
 // export async function fetchLogin({ id, password }) {
 //   const URL = 'http://localhost:8080/api/login'
 //   await fetch(URL, {

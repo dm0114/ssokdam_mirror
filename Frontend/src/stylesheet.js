@@ -32,7 +32,7 @@ export default {
     },
     sCoreDream16Bold: {
       family: "SCoreDream",
-      size: "14px",
+      size: "16px",
       weight: "600",
       lineHeight: "normal"
     },
