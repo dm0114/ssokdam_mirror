@@ -9,6 +9,8 @@ import './EcoMapModule.css'
 import { Link } from 'react-router-dom'
 import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import axios from "axios";
+import {useRecoilValue} from "recoil";
+import {isLoginAtom} from '../../atoms'
 
 function EcoMap(){
     const [state, setState] = useState({
