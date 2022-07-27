@@ -17,6 +17,8 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import InfoIcon from '@mui/icons-material/Info';
 import {Link} from "react-router-dom";
 import LoginIcon from '@mui/icons-material/Login';
+import { isLoginAtom } from '../../atoms'
+import {useRecoilValue} from "recoil";
 
 const detailGo = (
   <ArrowForwardIosIcon/>
@@ -33,6 +35,8 @@ function Home(){
   const [sec, setSec] = useState(0);
   const time = useRef(2400);
   const timerId = useRef(null);
+  const isLogin = useRecoilValue(isLoginAtom)
+
 
   useEffect(() => {
     timerId.current = setInterval(() => {

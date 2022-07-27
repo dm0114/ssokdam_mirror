@@ -59,6 +59,10 @@ public class IotUser {
     @ColumnDefault("")
     private String userTime;
 
+    @Column(name = "user_rt")
+    @ColumnDefault("")
+    private String userRt;
+
     @Column(name = "user_dumy")
     @ColumnDefault("")
     private String userDumy;

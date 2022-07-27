@@ -5,20 +5,21 @@ import { CssBaseline, TextField, Typography } from "@mui/material";
 import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Box from '@mui/material/Box';
-import { Link } from "react-router-dom"
+import {Link, useNavigate } from "react-router-dom"
 import {useState, useEffect} from 'react'
 import "./LoginModule.css"
 
 import { isLoginAtom } from '../../atoms'
-import { useSetRecoilState } from 'recoil'
+import { useSetRecoilState, useRecoilState } from 'recoil'
 
 
 
 function Login(){
+
   // const { isLoading, data } = useQuery(['user'], fetchMyPage)
   const URL = 'http://localhost:8080/api/login'
-
-  const setIsLogin = useSetRecoilState(isLoginAtom);
+  const navigate = useNavigate();
+  const [isLogin,setIsLogin] = useRecoilState(isLoginAtom);
 
   const fetchLogin = async ({ id, password }) => {
     await fetch(URL, {
@@ -31,17 +32,25 @@ function Login(){
         userPwd: password
       })
     })
-
-    .then((res) => res.json()
-      .then((res) => {
-        // 로그인 상태임을 확인 isLogin == True로 변경 => 
-        // 쿠키에 토큰 만료시 isLogin == False로 변경
+    .then((res) => {
+      if(!res.ok){
+        alert('일치하는 회원정보가 없습니다!')
+      }
+      return res.json().then((res) => {
         localStorage.setItem('access-token', res.token);
-      })).then(()=>{
-        setIsLogin(true);
-      })
+      })})
+        .then(() => {
+          setIsLogin(true)
+          navigate('/')
+        })
+      // .then((res) => {
+      //   // 로그인 상태임을 확인 isLogin == True로 변경 =>
+      //   // 쿠키에 토큰 만료시 isLogin == False로 변경
+      //   localStorage.setItem('access-token', res.token);
+      // })).then(()=>{
+      //   setIsLogin(true);
+      // })
   };
-  
 
   // 계정
   const [account, setAccount] = useState({
