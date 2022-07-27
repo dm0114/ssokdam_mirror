@@ -72,17 +72,10 @@ public class IotUserController {
     @ResponseBody
     public boolean singUpCheck(@RequestBody IotUser user)  {
         try {
-<<<<<<< HEAD
-            if(iamportService.getIamport(user.getImp_uid()).containsKey("message")){
-                return false;
-            } else{
-                return true;
-=======
             if(iamportService.getIamport(user.getImp_uid()).containsKey("userPhone")){
                 return true;
             } else{
                 return false;
->>>>>>> cb179ea908299c8c1b3641817740732e65409e4d
             }
         } catch (IamportResponseException e) {
             throw new RuntimeException(e);
