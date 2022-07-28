@@ -19,18 +19,16 @@ public class AdminService {
     @Autowired
     IotUserRepository iotUserRepository;
 
-    public boolean login(String id, String password){ // 관리자 로그인
+    public Map login(String id, String password){ // 관리자 로그인
         Optional<IotUser> iotUser = iotUserRepository.findById(id);
         Map<String, Object> map = new LinkedHashMap<>();
         if(iotUser.get().getUserAdmin().equals("N")){
-            return false;
+            map.put("ok", false);
+            return map;
         }
         map =  iotUserService.login(id, password);
-        if(map.containsKey("message")){
-            return false;
-        }
-
-        return true;
+        map.put("ok", true);
+        return map;
     }
 
     public boolean makeAdmin(String id){

@@ -5,6 +5,8 @@ import com.ssaft.project.domain.IotUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
@@ -14,7 +16,7 @@ public class AdminController {
 
     @PostMapping("/login")
     @ResponseBody()
-    public boolean adminLogin(@RequestBody IotUser iotUser){
+    public Map adminLogin(@RequestBody IotUser iotUser){
         return adminService.login(iotUser.getUserId(), iotUser.getUserPwd());
     }
 
