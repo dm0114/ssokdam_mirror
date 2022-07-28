@@ -1,3 +1,4 @@
+/*
 package com.ssaft.project;
 
 import com.siot.IamportRestClient.exception.IamportResponseException;
@@ -30,12 +31,14 @@ public class IotUserRepositoryTest {
     @Autowired
     SecurityService securityService;
 
+*/
 /*    @AfterEach
     public void afterEach(){
         IotUser iotuser = new IotUser();
         iotuser.setUserId("swyou");
         iotUserRepository.delete(iotuser);
-    }*/
+    }*//*
+
 
 
     @Test
@@ -107,7 +110,8 @@ public class IotUserRepositoryTest {
         }
 
     }
-    /*@Test
+    */
+/*@Test
     public void 이메일로_회원찾기(){
         IotUser iotuser = new IotUser();
         iotuser.setUser_email("swoyou1123@naver.com");
@@ -115,5 +119,7 @@ public class IotUserRepositoryTest {
         if(result.size() == 0){
             fail();
         }
-    }*/
+    }*//*
+
 }
+*/
