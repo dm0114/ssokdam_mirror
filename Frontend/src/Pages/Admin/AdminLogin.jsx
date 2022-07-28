@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,7 +12,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import fetchLogin from "../../api/login";
 import {useState} from "react"
 import {useSetRecoilState} from "recoil";
 import fetchAdminLogin from "../../api/adminLogin"
@@ -53,6 +52,7 @@ export default function AdminLogin() {
     const setUserInfo2 = useSetRecoilState(userInfo);
 
     const onChangeAccount = (e) => {
+        console.log(account)
         setAccount({
             ...account,
             [e.target.name]: e.target.value,
@@ -62,10 +62,12 @@ export default function AdminLogin() {
     const onSubmitAccount = async () => {
         try {
             const resUserInfomation = await fetchAdminLogin(account); //성공하면 해당 user 아이디 패스워드값 셋팅
+            console.log(resUserInfomation)
             if (!resUserInfomation.ok) {
                 alert('관리자가 아닙니다!')
             } else {
                 resUserInfomation.json().then((res) => {
+                    console.log(res)
                     localStorage.setItem('access-token', res.Access_token);
                     setUserInfo2({
                         userName : res.userName,
@@ -114,7 +116,7 @@ export default function AdminLogin() {
                                 id="id"
                                 label="아이디"
                                 name="id"
-                                autoComplete="id"
+                                autoComplete="아이디"
                                 autoFocus
                                 onChange={onChangeAccount}
                             />
@@ -134,12 +136,11 @@ export default function AdminLogin() {
                             {/*    label="Remember me"*/}
                             {/*/>*/}
                             <Button
-                                type="submit"
+                                onClick={onSubmitAccount}
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
                                 style={{ backgroundColor : '#00d3ca' }}
-                                onClick={onSubmitAccount}
                             >
                                 로그인
                             </Button>

@@ -1,9 +1,16 @@
 import React from 'react'
-
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 
 function AdminHome(){
     return (
-        <div>AdminHome</div>
+        <React.Fragment>
+            <Container fixed>
+                <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }}>
+
+                </Box>
+            </Container>
+        </React.Fragment>
     )
 }
 
