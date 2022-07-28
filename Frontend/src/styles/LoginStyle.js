@@ -1,34 +1,5 @@
 import styled from "styled-components";
 
-export const LoginPageMainBackGround = styled.div`
-  background-color: ${(props) => props.theme.colors.darkTurquoise};
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-
-  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-  -moz-box-sizing: border-box; /* Firefox, other Gecko */
-  box-sizing: border-box; /* Opera/IE 8+ */
-`;
-
-export const LoginPageSubBackGround = styled.div`
-  background-color: ${(props) => props.theme.colors.white};
-
-  width: 100%;
-  height: 50vh;
-
-  border-radius: 20px 20px 0px 0px;
-  padding: 32px 0 32px 0;
-
-  border: 1px solid #fff;
-
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-`;
 
 export const MainTextWrapper = styled.div`
   display: flex;
@@ -53,10 +24,7 @@ export const ContentWrapper = styled.div`
   box-sizing: border-box; /* Opera/IE 8+ */
 `;
 
-export const BinWrapper = styled.div`
-  padding-top: ${props => props.pt};
-  padding-left: ${props => props.pl};
-`
+
 
 export const FindTextWrapper = styled.div`
   margin-top: 24px;
