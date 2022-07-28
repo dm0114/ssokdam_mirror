@@ -20,6 +20,8 @@ import FrequentlyQuestion from './Pages/Main/FrequentlyQuestion'
 import MyAsk from './Pages/Main/MyAsk'
 import MyPage from './Pages/Main/Mypage'
 import ChangePw from './Pages/Auth/ChangePw';
+import AdminLogin from './Pages/Admin/AdminLogin'
+import AdminHome from './Pages/Admin/AdminHome'
 
 function App() {
   return (
@@ -43,6 +45,9 @@ function App() {
           <Route path='/login/findPw' element={<FindPw/>} />
           <Route path='/signup' element={<SignUp/>} />
           <Route path='/login/changePw' element={<ChangePw/>} />
+
+          <Route path='/adminLogin' element={<AdminLogin/>} />
+          <Route path='/admin' element={<AdminHome/>} />
         </Routes>
       </Router>
     </>
