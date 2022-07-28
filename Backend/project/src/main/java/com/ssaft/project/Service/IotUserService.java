@@ -41,6 +41,8 @@ public class IotUserService {
                 map.put("userPoint", iotuser.get().getUserPoint());
                 map.put("userCnt", iotuser.get().getUserCnt());
                 map.put("userImg", iotuser.get().getUserImg());
+            }else{
+                map.put("message" , "비밀번호가 틀렸습니다.");
             }
         }else{
             map.put("message" , "존재하지 않는 회원입니다.");
