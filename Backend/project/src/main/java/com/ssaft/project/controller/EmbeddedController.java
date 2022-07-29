@@ -42,18 +42,11 @@ public class EmbeddedController {
         System.out.println(user);
         Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(Integer.valueOf(user.getEmbId()));
         String name = securityService.getSubJect(user.getToken());
-<<<<<<< HEAD
-
-=======
->>>>>>> 21d604bb992c9adf8801afe292a259ccc83f2a13
          Optional<IotUser> iotUser =  iotUserRepository.findById(name);
          embeddedData.get().setIotUser(iotUser.get());
          embeddedData.get().setEmbQr("Y");
          embeddedDataRepository.save(embeddedData.get());
-<<<<<<< HEAD
 
-=======
->>>>>>> 21d604bb992c9adf8801afe292a259ccc83f2a13
      }
 
 

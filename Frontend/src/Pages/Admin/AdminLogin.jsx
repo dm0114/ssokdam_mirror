@@ -68,17 +68,21 @@ export default function AdminLogin() {
             } else {
                 resUserInfomation.json().then((res) => {
                     console.log(res)
-                    localStorage.setItem('access-token', res.Access_token);
-                    setUserInfo2({
-                        userName : res.userName,
-                        userEmail : res.userEmail,
-                        userPoint : res.userPoint,
-                        userCnt : res.userCnt,
-                        userImage: res.userImg,
-                    })
-                }).then(() => {
-                    setIsLogin(true)
-                    navigate('/admin')
+                    if(res.ok){
+                        localStorage.setItem('access-token', res.Access_token);
+                        setUserInfo2({
+                            userName : res.userName,
+                            userEmail : res.userEmail,
+                            userPoint : res.userPoint,
+                            userCnt : res.userCnt,
+                            userImage: res.userImg,
+                        })
+                        setIsLogin(true)
+                        navigate('/admin')
+                    }else{
+                        alert('관리자가 아닙니다!')
+                        navigate('/adminlogin')
+                    }
                 })
             }
         } catch (error) {

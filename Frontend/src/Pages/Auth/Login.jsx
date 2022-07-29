@@ -21,14 +21,17 @@ import {
 } from "../../styles/SubLoginStyles";
 
 import {
-  LoginPageMainBackGround,
-  LoginPageSubBackGround,
   ContentWrapper,
   ButtonWrapper,
   FindTextWrapper,
-  BinWrapper,
   MainTextWrapper
 } from "../../styles/LoginStyle";
+
+import {
+  MainBackGround,
+  SubBackGround,
+  BinWrapper,
+} from "../../styles/BackgroundStyle";
 
 import fetchLogin from '../../api/login'
 
@@ -102,10 +105,10 @@ function Login() {
 
   return (
     <ThemeProvider theme={theme}>
-      <LoginPageMainBackGround>
+      <MainBackGround>
         <BinWrapper pt="52px" pl="24px">
           <Link to="/">
-            <ArrowBackIosIcon sx={{ color: "black" }} />
+            <ArrowBackIosIcon color="black"/>
           </Link>
         </BinWrapper>
 
@@ -116,12 +119,12 @@ function Login() {
           <h1 style={{ fontWeight: "bold", marginTop: "0px" }}>에코원</h1>
         </MainTextWrapper>
 
-        <LoginPageSubBackGround>
+        <SubBackGround height="50vh">
           <ContentWrapper>
             <BinWrapper>            
 
               <TextField
-                id="standard-basic"
+                id="id"
                 label="아이디"
                 fullWidth
                 required
@@ -134,7 +137,7 @@ function Login() {
                 onChange={onChangeAccount}
               />
               <TextField
-                id="standard-basic"
+                id="password"
                 label="비밀번호"
                 name="password"
                 type="password"
@@ -180,8 +183,8 @@ function Login() {
             </ButtonWrapper>
 
           </ContentWrapper>
-        </LoginPageSubBackGround>
-      </LoginPageMainBackGround>
+        </SubBackGround>
+      </MainBackGround>
     </ThemeProvider>
   );
 }
