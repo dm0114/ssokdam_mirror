@@ -14,6 +14,7 @@ import {useRecoilState} from "recoil";
 import * as Yup from "yup";
 import $ from 'jquery';
 import {createTheme,ThemeProvider} from "@mui/material/styles";
+import { SERVER_URL } from "../../config";
 
 
 const theme = createTheme(
@@ -58,7 +59,7 @@ function SignUp(){
       carrier: 'SKT',                              // 통신사
       name: '홍길동',                                // 이름
       phone: '01012341234',                        // 전화번호
-    };
+    }; // 별로 의미는 없는 data(공식문서에 적어져있어서 넣어놓긴했음)
 
     IMP.certification(data, callback)
     function callback(response) {
@@ -70,21 +71,9 @@ function SignUp(){
       } = response;
     
       if (success) {
-          const { imp_uid } = response;
-
-          // fetch(url,{
-          //     method: "post",
-          //     headers: { "Content-Type": "application/json" },
-          //     data: { imp_uid: imp_uid }
-          // })
-          // $.ajax({
-          //     url: url, // 예: https://www.myservice.com/certifications
-          //     method: "POST",
-          //     headers: { "Content-Type": "application/json" },
-          //     data: { imp_uid: imp_uid }
-          // }).then((res) => console.log(res))
+          const { imp_uid } = response; // imp_uid를 받을 변수 선언
           const fetchCertification = async () => {
-              const url =  "http://localhost:8080/api/signup/check"
+              const url =  `${SERVER_URL}/signup/check`
               await fetch(url, {
                   method: 'POST',
                   headers: {
@@ -99,11 +88,7 @@ function SignUp(){
                      }
           })}
           fetchCertification()
-
-          // axios.post(url, {
-          //     imp_uid : imp_uid
-          // }).then((res) => console.log(res))
-          setImpUid(imp_uid)
+          setImpUid(imp_uid) // 아임포트 성인인증이 되면 imp_uid를 ImpUid에 저장
           console.log(imp_uid)
           alert('본인인증 성공')
 
@@ -141,22 +126,10 @@ function SignUp(){
       .required(""),
   });
   const submit = async (values) => {
-    const URL = "http://localhost:8080/api/signup"
-    console.log("왔어")
     const {userEmail, userId, userPwd} = values;
     try {
-      // await axios.post(URL, {
-      //   userEmail : userEmail,
-      //   userId : userId,
-      //   userPwd : userPwd,
-      //   imp_uid : `${impUid}`
-      // })
-      // .then((res) => {
-      //   console.log(res)
-      //   alert("회원가입이 완료 되었습니다.")
-      // })
         const fetchsubmit = async () => {
-            const URL = "http://localhost:8080/api/signup"
+            const URL = `${SERVER_URL}/signup`
             await fetch(URL, {
                 method: 'POST',
                 headers: {
@@ -166,7 +139,7 @@ function SignUp(){
                     userEmail : userEmail,
                     userId : userId,
                     userPwd : userPwd,
-                    imp_uid : `${impUid}`
+                    imp_uid : `${impUid}` // 제출버튼을 누르면 갖고있던 impUid를 보낸다.
                 })
             }).then((res) => {
                 if(res.ok){
@@ -180,30 +153,19 @@ function SignUp(){
                             userImage: res.userImg,
                         })
                     })
+                    setTimeout(()=> {
+                        navigate("/");
+                    }, 2000);
                 }else{
                     alert("성인이 아니거나 성인인증을 하지 않으셨습니다.")
                 }
-            })
+            }).catch((e) => alert('서버와의 통신이 원활하지 않습니다.'))
         }
         fetchsubmit()
-      // 다음에 로그인하는 로직도 넣기
-      toast.success()
-      // toast.success(<h3>회원가입이 완료되었습니다.<br/>로그인 하세요😎</h3>, {
-      //   position: "top-center",
-      //   autoClose: 2000
-      // });
-
-      setTimeout(()=> {
-        navigate("/");
-      }, 2000);
 
     } catch (e) {
       alert("서버와 연결되지 않았습니다.")
       console.log("안왔어")
-      // 서버에서 받은 에러 메시지 출력
-      // toast.error(e.response.data.message + "😭", {
-      //   position: "top-center",
-      // });
     }
   };
 
