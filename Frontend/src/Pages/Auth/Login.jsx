@@ -85,14 +85,19 @@ function Login() {
         alert('일치하는 회원정보가 없습니다!')
       } else {
         resUserInfomation.json().then((res) => {
-          localStorage.setItem('access-token', res.Access_token);
-          setUserInfo2({
-            userName : res.userName,
-            userEmail : res.userEmail,
-            userPoint : res.userPoint,
-            userCnt : res.userCnt,
-            userImage: res.userImg,
-          })
+          console.log(res);
+          if ('message' in res) {
+            throw new Error(alert('비밀번호가 틀렸습니다!'))  //비동기 진행 막기
+          } else {
+            localStorage.setItem('access-token', res.Access_token);
+            setUserInfo2({
+              userName : res.userName,
+              userEmail : res.userEmail,
+              userPoint : res.userPoint,
+              userCnt : res.userCnt,
+              userImage: res.userImg,
+            })
+          }
         }).then(() => {
           setIsLogin(true)
           navigate('/')

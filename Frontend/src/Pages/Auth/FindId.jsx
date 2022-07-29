@@ -1,14 +1,21 @@
+import { Link } from 'react-router-dom'
+
 import {
     SubLoginBackgroundView,
     MainButton,
     ButtonText,
     Wrap,
-    Vector,
     MainText,
     HeaderWrapper,
 
 } from '../../styles/SubLoginStyles';
-// import { Link } from 'react-router-dom'
+
+import {
+    BinWrapper,
+  } from "../../styles/BackgroundStyle";
+
+
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import TextField from '@mui/material/TextField';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -41,16 +48,19 @@ const FindId = () => {
             <SubLoginBackgroundView>
                 <Wrap>
                     <HeaderWrapper>
-                            <Vector
-                                alt=""
-                                src="https://static.overlay-tech.com/assets/897d620b-7272-4e3f-b46a-7d57d097eecd.svg"/>
-                        <MainText>아이디 찾기</MainText>
+                        <BinWrapper flex="1">
+                            <Link to="/login">
+                                <ArrowBackIosIcon color="black"/>
+                            </Link>
+                        </BinWrapper>
+                        <MainText flex="3">아이디 찾기</MainText>
+                        <BinWrapper flex="1"></BinWrapper>
                     </HeaderWrapper>
                     
                         <TextField id="standard-basic" label="이름" variant="standard" fullWidth sx={ { my:2 } } color="black" />
                         <TextField id="standard-basic" label="이메일" variant="standard" fullWidth sx={ { my:2 } } color="black" />
                 </Wrap>
-                <MainButton>
+                <MainButton width="100%">
                     <ButtonText>아이디 찾기</ButtonText>
                 </MainButton>
             </SubLoginBackgroundView>

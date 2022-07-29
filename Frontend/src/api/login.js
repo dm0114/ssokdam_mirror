@@ -1,4 +1,3 @@
-
 // Axios vs fetch
 export default async function FetchLogin({ id, password }){
   const URL = "http://localhost:8080/api/login";

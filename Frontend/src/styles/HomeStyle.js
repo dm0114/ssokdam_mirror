@@ -16,7 +16,6 @@ export const MainContainer = styled.div`
 `
 export const MainText = styled.p`
   margin: 0;
-  font-family: ${props => props.theme.fonts.sCoreDream24Bold.family};
   font-size: ${props => props.theme.fonts.sCoreDream24Bold.size};
   font-weight: ${props => props.theme.fonts.sCoreDream24Bold.weight};
   line-height: ${props => props.theme.fonts.sCoreDream24Bold.lineHeight};
@@ -52,11 +51,9 @@ export const Notice = styled.div`
   box-sizing: border-box; /* Opera/IE 8+ */
 `;
 export const NoticeText = styled.p`
-  margin-right: 215px;
-  font-family: ${props => props.theme.fonts.sCoreDream14Regular.family};
+  margin: 0px;
   font-size: ${props => props.theme.fonts.sCoreDream14Regular.size};
   font-weight: ${props => props.theme.fonts.sCoreDream14Regular.weight};
-  line-height: ${props => props.theme.fonts.sCoreDream14Regular.lineHeight};
 `;
 export const ChevronRight = styled.img`
   width: 19.29px;
@@ -91,16 +88,14 @@ export const QrMapSubText = styled.p`
   text-align: center;
 
   color: ${props => props.theme.colors.black};
-  font-family: ${props => props.theme.fonts.sCoreDream14RegularLine24.family};
   font-size: ${props => props.theme.fonts.sCoreDream14RegularLine24.size};
-  font-weight: ${props => props.theme.fonts.sCoreDream14RegularLine24.weight};
+  font-weight: 500;
   line-height: ${props => props.theme.fonts.sCoreDream14RegularLine24.lineHeight};
 
   
 `;
 export const QrMapMainText = styled.strong`
   color: ${props => props.theme.colors.black};
-  font-family: ${props => props.theme.fonts.sCoreDream18Bold.family};
   font-size: ${props => props.theme.fonts.sCoreDream18Bold.size};
   font-weight: ${props => props.theme.fonts.sCoreDream18Bold.weight};
   line-height: ${props => props.theme.fonts.sCoreDream18Bold.lineHeight};
@@ -125,19 +120,16 @@ export const Point = styled.div`
   box-sizing: border-box; /* Opera/IE 8+ */
 `;
 export const PointSubText = styled.p`
-  color: ${props => props.theme.colors.black};
-  font-family: ${props => props.theme.fonts.sCoreDream14LightLine24.family};
-  font-size: ${props => props.theme.fonts.sCoreDream14LightLine24.size};
-  font-weight: ${props => props.theme.fonts.sCoreDream14LightLine24.weight};
+  font-size: 14px;
+  font-weight: 500;
 `;
 export const PointMainText = styled.strong`
-  font-family: ${props => props.theme.fonts.sCoreDream18Bold.family};
   font-size: ${props => props.theme.fonts.sCoreDream18Bold.size};
   font-weight: ${props => props.theme.fonts.sCoreDream18Bold.weight};
-  line-height: ${props => props.theme.fonts.sCoreDream18Bold.lineHeight};
+  margin-bottom: 18px;
 `;
 export const PointImg = styled.img`
-  width: 30%;
+  width: 25%;
   height: 100%;
 `;
 

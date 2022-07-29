@@ -1,7 +1,6 @@
 import React from "react";
+import {Link, useNavigate} from "react-router-dom";
 
-import ToggleButton from '@mui/material/ToggleButton';
-import Box from '@mui/material/Box';
 import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
 import { Typography } from "@mui/material";
 import { useState, useEffect, useRef } from "react";
@@ -9,9 +8,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import './HomeModule.css'
-import {Link} from "react-router-dom";
 import LoginIcon from '@mui/icons-material/Login';
-import { isLoginAtom, userInfo } from '../../atoms'
+import { userInfo } from '../../atoms'
 import {useRecoilValue} from "recoil";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -56,11 +54,46 @@ const detailGo = (
 
 
 function Home(){
+  const theme = createTheme({
+  palette: {
+    black: {
+      main: '#212121',
+    }
+  },
+  typography: {
+      fontFamily: [
+        '-apple-system',
+        'SCoreDream',
+        'BlinkMacSystemFont',
+        '"Segoe UI"',
+        'Roboto',
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
+    },
+});
+
+
   const [min, setMin] = useState(40);
   const [sec, setSec] = useState(0);
   const time = useRef(2400);
   const timerId = useRef(null);
+  // const [time, setTime] = useState("00:00")
+
+
+  const [notice, setNotice] = useState("")
+  const navigate = useNavigate()
   const userInfo2 = useRecoilValue(userInfo)
+  // console.log(userInfo2);
+
+
+  const logout = () => {
+    localStorage.removeItem('access-token')
+  }
 
 
   useEffect(() => {
@@ -72,41 +105,13 @@ function Home(){
     return () => clearInterval(timerId.current);
   },[]);  // 처음 렌더링 될때만 실행
 
+
   useEffect(() => {
     if(time.current <= 0){
       console.log("time out")
       clearInterval(timerId.current)
     }
   }, [sec])
-
-  // const [time, setTime] = useState("00:00")
-  const [notice, setNotice] = useState("")
-  const theme = createTheme({
-    palette: {
-      black: {
-        main: '#212121',
-      }
-    },
-    typography: {
-        fontFamily: [
-          '-apple-system',
-          'SCoreDream',
-          'BlinkMacSystemFont',
-          '"Segoe UI"',
-          'Roboto',
-          '"Helvetica Neue"',
-          'Arial',
-          'sans-serif',
-          '"Apple Color Emoji"',
-          '"Segoe UI Emoji"',
-          '"Segoe UI Symbol"',
-        ].join(','),
-      },
-  });
-
-  // const logout = () => {
-  //   localStorage.removeItem('access-token')
-  // }
 
 
   return (
@@ -115,7 +120,7 @@ function Home(){
           <BinWrapper pt="52px" pl="24px" pr="24px">
             <MainTextContainerWrapper>
               <MainContainer flexNum="3">
-                { localStorage.getItem('access-token') ? (
+                { !!userInfo2.userName ? (
                   <MainText>
                     { userInfo2.userName } 님이 <br/><br/>바다를 지켜준 횟수
                   </MainText>)
@@ -126,16 +131,16 @@ function Home(){
               </MainContainer>
 
               <MainContainer flexNum="1" jc="flex-end">
-                  { localStorage.getItem('access-token') 
+                  { !!userInfo2.userName
                   ? (<>
                     <MainIcon>
                       <Link to='/myPage'>
                         <AccountCircleIcon color='black'/>
                       </Link>
                     </MainIcon>
-                    {/* <MainIcon>
+                    <MainIcon>
                       <LogoutIcon onClick={logout}/>
-                    </MainIcon> */}
+                    </MainIcon>
                     </>) 
 
                   : (<MainIcon>
@@ -165,19 +170,19 @@ function Home(){
 
             <BinWrapper pl="24px" pr="24px" mb="16px">
               <Notice message={ notice } action={ detailGo }>
-                <>공지사항 📢</>
+                <NoticeText>공지사항 📢</NoticeText>
                 <ChevronRight alt="" src="https://static.overlay-tech.com/assets/cdd4539a-7fd6-46c2-96bc-dbee9bd4530c.svg"/>
               </Notice>
             </BinWrapper>
 
             <BinWrapper pl="24px" pr="24px" mb="16px">
               <MainWrapper>
-                <QrMapButton url="https://static.overlay-tech.com/assets/2b51331a-8e20-45a6-a7e2-45e5218306bc.png">
+                <QrMapButton url="https://static.overlay-tech.com/assets/2b51331a-8e20-45a6-a7e2-45e5218306bc.png" onClick={() => navigate('/map')}>
                   <QrMapSubText>지도를 확인해서
                     <QrMapMainText>수거기기 찾기</QrMapMainText>
                   </QrMapSubText>  
                 </QrMapButton>
-                <QrMapButton url="https://static.overlay-tech.com/assets/cba3e919-a122-429f-8edc-4c5eebd06709.png">
+                <QrMapButton url="https://static.overlay-tech.com/assets/cba3e919-a122-429f-8edc-4c5eebd06709.png" onClick={() => navigate('/qr')}>
                   <QrMapSubText>QR 스캔으로
                     <QrMapMainText>꽁초 수거하기</QrMapMainText>
                   </QrMapSubText>
