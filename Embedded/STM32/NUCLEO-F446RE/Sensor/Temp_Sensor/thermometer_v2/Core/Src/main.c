@@ -55,9 +55,9 @@ I2C_HandleTypeDef hi2c1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-uint8_t mlx_read_buffer[6]={0xB4,0x00,0xB5,0};	//ADDR((0x5A<<1)+W(0)), CMD, ADDR((0x5A<<1)+R(1)), LSByte, MSByte, PEC
-uint8_t mlx_write_buffer[5]={0xB4,0};	//ADDR((0x5A<<1)+W(0)), CMD, LSByte, MSByte, PEC
-uint8_t mlx_write_zero[5]={0xB4,0};	//ADDR((0x5A<<1)+W(0)), CMD, LSByte, MSByte, PEC
+uint8_t mlx_read_buffer[6]={0xB4,0x00,0xB5,0};
+uint8_t mlx_write_buffer[5]={0xB4,0};
+uint8_t mlx_write_zero[5]={0xB4,0};
 char uart_buf[30];
 /* USER CODE END PV */
 
@@ -106,7 +106,7 @@ void mlx_read_temperature(void)
 	if(crc_amb==mlx_read_buffer[5])
 	{
 		memset(uart_buf,0,30);
-		sprintf(uart_buf, "ambient temperature : %.2lf\n\r", temp_amb);
+		sprintf(uart_buf, "ambient: %.2lf\n\r", temp_amb);
 		HAL_UART_Transmit_IT(&huart2, uart_buf, sizeof(uart_buf));
 
 	}
@@ -121,16 +121,12 @@ void mlx_read_temperature(void)
 	temp_obj_1=(temp_obj_1*0.02)-273.15;
 	crc_obj_1=HAL_CRC_Calculate(&hcrc,(uint32_t *)mlx_read_buffer,5);
 
-	if(crc_obj_1==mlx_read_buffer[5])
-	{
+//	if(crc_obj_1==mlx_read_buffer[5])
+//	{
 		memset(uart_buf,0,30);
-		sprintf(uart_buf, "obj1 temperature : %.2lf\n\r", temp_obj_1);
+		sprintf(uart_buf, "obj1: %.2lf\n\r", temp_obj_1);
 		HAL_UART_Transmit_IT(&huart2, uart_buf, sizeof(uart_buf));
-	}
-	else
-	{
-
-	}
+//	}
 
 	/*
 	Object 2 temperature, RAM-0x07
@@ -145,16 +141,13 @@ void mlx_read_temperature(void)
 	temp_obj_2=(temp_obj_2*0.02)-273.15;
 	crc_obj_2=HAL_CRC_Calculate(&hcrc,(uint32_t *)mlx_read_buffer,5);
 
-	if(crc_obj_2==mlx_read_buffer[5])
-	{
+//	if(crc_obj_2==mlx_read_buffer[5])
+//	{
 		memset(uart_buf,0,30);
-		sprintf(uart_buf, "obj2 temperature : %.2lf\n\r", temp_obj_2);
+		sprintf(uart_buf, "obj2: %.2lf\n\r", temp_obj_2);
 		HAL_UART_Transmit_IT(&huart2, uart_buf, sizeof(uart_buf));
-	}
-	else
-	{
+//	}
 
-	}
 }
 
 void mlx_change_emissivity(float new_emissivity)
@@ -199,12 +192,12 @@ void mlx_change_emissivity(float new_emissivity)
 
 #endif
 
-	mlx_write_zero[1]=mlx_cmd_emissivity;	//Write CMD, 0x24(0010 0000 + 0x04)
-	mlx_write_zero[4]=HAL_CRC_Calculate(&hcrc,(uint32_t *)mlx_write_zero,4);  //[0]~[3] CRC 계산 결과
+	mlx_write_zero[1]=mlx_cmd_emissivity;
+	mlx_write_zero[4]=HAL_CRC_Calculate(&hcrc,(uint32_t *)mlx_write_zero,4);
 
-	mlx_write_buffer[1]=mlx_cmd_emissivity;	//0x24(0010 0000 + 0x04) (EEPROM - 0x04 (Emissivity)
-	mlx_write_buffer[2]=new_04&0xff;	//LSByte
-	mlx_write_buffer[3]=(new_04>>8)&0xff;	//MSByte
+	mlx_write_buffer[1]=mlx_cmd_emissivity;
+	mlx_write_buffer[2]=new_04&0xff;
+	mlx_write_buffer[3]=(new_04>>8)&0xff;
 	mlx_write_buffer[4]=HAL_CRC_Calculate(&hcrc,(uint32_t *)mlx_write_buffer,4);
 
 //	printf("New_04 : %d, %X, %X, %X	crc : %X\r\n",new_04,new_04,mlx_write_buffer[2],mlx_write_buffer[3],mlx_write_buffer[4]);
@@ -222,9 +215,9 @@ void mlx_change_emissivity(float new_emissivity)
 	HAL_Delay(10);
 
 #ifdef mlx90614xCx
-	mlx_write_zero[1]=mlx_cmd_emissivity_2;	//0x2F (001x xxxx + 0x0F)
+	mlx_write_zero[1]=mlx_cmd_emissivity_2;
 	mlx_write_zero[4]=HAL_CRC_Calculate(&hcrc,(uint32_t *)mlx_write_zero,4);
-	mlx_write_buffer[1]=mlx_cmd_emissivity_2;	//0x2F (001x xxxx + 0x0F)
+	mlx_write_buffer[1]=mlx_cmd_emissivity_2;
 	mlx_write_buffer[2]=new_0f&0xff;
 	mlx_write_buffer[3]=(new_0f>>8)&0xff;
 	mlx_write_buffer[4]=HAL_CRC_Calculate(&hcrc,(uint32_t *)mlx_write_buffer,4);
@@ -276,13 +269,13 @@ void mlx_read_emissivity()
 	uint16_t read_emissivity;
 	float cur_emissivity;
 
-	mlx_read_buffer[mlx_cmd_pointer]=mlx_cmd_emissivity;	//EEPROM-0x04
+	mlx_read_buffer[mlx_cmd_pointer]=mlx_cmd_emissivity;
 	HAL_I2C_Mem_Read_IT(&hi2c1,(uint16_t)MLX90614_addr<<1,mlx_cmd_emissivity,I2C_MEMADD_SIZE_8BIT,
     	(uint8_t *)&mlx_read_buffer[3],3);
 	while(HAL_I2C_GetState(&hi2c1)!=HAL_I2C_STATE_READY)
 	{
 	}
-	crc_emissivity=HAL_CRC_Calculate(&hcrc,(uint32_t *)mlx_read_buffer,5);	//CRC 계산
+	crc_emissivity=HAL_CRC_Calculate(&hcrc,(uint32_t *)mlx_read_buffer,5);
 
 	if(crc_emissivity==mlx_read_buffer[5])
 	{
@@ -298,7 +291,7 @@ void mlx_read_emissivity()
 }
 void mlx_sleep()
 {
-	uint8_t enter_sleep[2]={0xFF,0xE8};	//0xFF-Sleep CMD, 0xE8-PEC (0xB4+0xFF)
+	uint8_t enter_sleep[2]={0xFF,0xE8};
 	HAL_I2C_Master_Transmit_IT(&hi2c1,(uint16_t)MLX90614_addr<<1,(uint8_t *)&enter_sleep,2);
 	while(HAL_I2C_GetState(&hi2c1)!=HAL_I2C_STATE_READY)
 	{
@@ -311,13 +304,13 @@ void mlx_wakeup()
 	HAL_I2C_DeInit(&hi2c1);
 
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_9, GPIO_PIN_RESET);
-	GPIO_InitStruct.Pin = GPIO_PIN_9;
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_RESET);
+	GPIO_InitStruct.Pin = GPIO_PIN_7;
 	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 	HAL_Delay(33);
-	HAL_GPIO_DeInit(GPIOB,GPIO_PIN_9);
+	HAL_GPIO_DeInit(GPIOB,GPIO_PIN_7);
 
 	HAL_I2C_Init(&hi2c1);
 	HAL_Delay(250);
