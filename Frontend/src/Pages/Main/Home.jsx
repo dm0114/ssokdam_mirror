@@ -44,6 +44,10 @@ import {
   MainIcon,
 } from "../../styles/HomeStyle";
 
+import {
+  NavBar
+} from '../Nav/NavBar'
+
 const detailGo = (
   <ArrowForwardIosIcon/>
 )
@@ -151,7 +155,7 @@ function Home(){
                   }
                   
                   <MainIcon>
-                    <FormatAlignJustifyIcon />
+                    <NavBar />
                   </MainIcon>
 
               </MainContainer>
