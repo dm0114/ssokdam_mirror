@@ -19,7 +19,7 @@ export default function AdminNav({adminName}) {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="sticky">
-                <Toolbar sx={{ display : 'flex', bgcolor : '#00d3ca', color : '#000' }}>
+                <Toolbar sx={{ display : 'flex', bgcolor : '#CBF7FF', color : '#000' }}>
                     <IconButton
                         size="large"
                         edge="start"

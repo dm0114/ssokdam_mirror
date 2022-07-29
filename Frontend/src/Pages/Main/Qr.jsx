@@ -62,7 +62,7 @@ function Qr(){
 
     return (
         <React.Fragment>
-            <Container maxWidth="sm" sx={{ bgcolor : "#00d3ca", height : '100vh' }}>
+            <Container maxWidth="sm" sx={{ bgcolor : "#CBF7FF", height : '100vh' }}>
                 <Box sx={{padding:'30px 10px', justifyContent : 'center', alignItems:'center'}}>
                     <Link to='/'>
                         <ArrowBackIosIcon sx={{color : 'black'}}/>

@@ -2,14 +2,12 @@ import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {useRecoilState} from "recoil";
 
-import * as Yup from "yup";
-import $ from 'jquery';
-
-import axios from "axios"
+import { SERVER_URL } from "../../config";
 import {userInfo} from '../../atoms'
 
-import {toast, ToastContainer} from "react-toastify"
-import {Formik, ErrorMessage} from "formik";
+import * as Yup from "yup";
+import {Formik} from "formik";
+import {ToastContainer} from "react-toastify"
 
 import {
     SubLoginBackgroundView,
@@ -19,52 +17,46 @@ import {
     MainText,
     HeaderWrapper
 } from '../../styles/SubLoginStyles';
-
 import {BinWrapper} from "../../styles/BackgroundStyle";
-
 import {MuiTheme} from "../../styles/MuiTheme"
 
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import {ThemeProvider} from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 
-import {Experimental_CssVarsProvider, Typography} from "@mui/material"
-import { borderRadius } from '@mui/system';
+
 
 function SignUp() {
     const [impUid, setImpUid] = useState('')
     const [userInfo2, setUserInfo2] = useRecoilState(userInfo)
-    function onClickCertification() {
-        const {IMP} = window; // 생략 가능
+    function onClickCertification(){
+      const { IMP } = window; // 생략 가능
         IMP.init("imp01330466"); // 예: imp0000000
         // 본인인증 데이터 정의
         const data = {
-            merchant_uid: `mid_${new Date().getTime()}`, // 주문번호
-            popup: true,
-            company: 'Ecowon', // 회사명 또는 URL
-            carrier: 'SKT', // 통신사
-            name: '홍길동', // 이름
-            phone: '01012341234', // 전화번호
-        };
+          merchant_uid: `mid_${new Date().getTime()}`,  // 주문번호
+          popup : true,
+          company: 'Ecowon',                           // 회사명 또는 URL
+          carrier: 'SKT',                              // 통신사
+          name: '홍길동',                                // 이름
+          phone: '01012341234',                        // 전화번호
+        }; // 별로 의미는 없는 data(공식문서에 적어져있어서 넣어놓긴했음)
 
         IMP.certification(data, callback)
         function callback(response) {
             console.log(response)
-            const {success, merchant_uid, error_msg} = response;
+            const {
+              success,
+              merchant_uid,
+              error_msg,
+            } = response;
 
             if (success) {
-                const {imp_uid} = response;
+                const {imp_uid } = response;
 
-                // fetch(url,{     method: "post",     headers: { "Content-Type":
-                // "application/json" },     data: { imp_uid: imp_uid } }) $.ajax({     url:
-                // url,  예: https://www.myservice.com/certifications     method: "POST",
-                // headers: { "Content-Type": "application/json" },     data: { imp_uid: imp_uid
-                // } }).then((res) => console.log(res))
                 const fetchCertification = async () => {
-                    const url = "http://localhost:8080/api/signup/check"
+                    const url =  `${SERVER_URL}/signup/check`
                     await fetch(url, {
                         method: 'POST',
                         headers: {
@@ -79,8 +71,7 @@ function SignUp() {
                 }
                 fetchCertification()
 
-                // axios.post(url, {     imp_uid : imp_uid }).then((res) => console.log(res))
-                setImpUid(imp_uid)
+                setImpUid(imp_uid) // 아임포트 성인인증이 되면 imp_uid를 ImpUid에 저장
                 console.log(imp_uid)
                 alert('본인인증 성공')
 
@@ -126,15 +117,13 @@ function SignUp() {
         });
 
     const submit = async (values) => {
-        const URL = "http://localhost:8080/api/signup"
-        console.log("왔어")
         const {userEmail, userId, userPwd} = values;
         try {
             // await axios.post(URL, {   userEmail : userEmail,   userId : userId,   userPwd
             // : userPwd,   imp_uid : `${impUid}` }) .then((res) => {   console.log(res)
             // alert("회원가입이 완료 되었습니다.") })
             const fetchsubmit = async () => {
-                const URL = "http://localhost:8080/api/signup"
+                const URL =  `${SERVER_URL}/signup`
                 await fetch(URL, {
                     method: 'POST',
                     headers: {
@@ -153,26 +142,20 @@ function SignUp() {
                                     {userName: res.userName, userEmail: res.userEmail, userPoint: res.userPoint, userCnt: res.userCnt, userImage: res.userImg}
                                 )
                             })
+                            setTimeout(() => {
+                              navigate("/");
+                          }, 2000);
                     } else {
                         alert("성인이 아니거나 성인인증을 하지 않으셨습니다.")
                     }
-                })
+                }).catch((e) => alert('서버와의 통신이 원활하지 않습니다.'))
             }
             fetchsubmit()
-            // 다음에 로그인하는 로직도 넣기
-            toast.success()
-            // toast.success(<h3>회원가입이 완료되었습니다.<br/>로그인 하세요😎</h3>, {   position:
-            // "top-center",   autoClose: 2000 });
-
-            setTimeout(() => {
-                navigate("/");
-            }, 2000);
-
+;
         } catch (e) {
             alert("서버와 연결되지 않았습니다.")
             console.log("안왔어")
-            // 서버에서 받은 에러 메시지 출력 toast.error(e.response.data.message + "😭", {   position:
-            // "top-center", });
+
         }
     };
 
@@ -276,17 +259,18 @@ function SignUp() {
                                           type='submit'
                                           onClick={onClickCertification}
                                         >
-                                          <ButtonText>인증 요청</ButtonText>
+                                          <ButtonText>성인 인증 요청</ButtonText>
                                         </MainButton>
+                                      <MainButton width="100%" type='submit'> 
+                                          <ButtonText>회원 가입</ButtonText>
+                                      </MainButton>
                                     </form>
                                 </Box>
                             )
                         }
                     </Formik>
                 </Box>
-                <MainButton width="100%" type='submit'>
-                    <ButtonText>회원 가입</ButtonText>
-                </MainButton>
+                
             </SubLoginBackgroundView>
         </ThemeProvider>
     )
