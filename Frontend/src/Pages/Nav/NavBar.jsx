@@ -37,8 +37,8 @@ export const NavBar = () => {
 
   return (
     <>
-          <Button onClick={() => setOpen(true)}>
-            <FormatAlignJustifyIcon color='black' sx={{width: 24,}}/>
+          <Button onClick={() => setOpen(true)} sx={{width: "100%", padding: "0px", justifyContent: "flex-start", alignItems: "center", marginTop: "-2px"}}>
+            <FormatAlignJustifyIcon color='black' />
           </Button>
 
           <Drawer anchor={'right'} open={open} onClose={() => setOpen(false)}>

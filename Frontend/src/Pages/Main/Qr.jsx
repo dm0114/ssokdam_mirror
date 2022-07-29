@@ -1,3 +1,5 @@
+import { NONEAPI_URL } from '../../config';
+
 import Container from "@mui/material/Container";
 import React, {useState} from 'react'
 import {Fab, TextareaAutosize} from '@material-ui/core'
@@ -22,7 +24,8 @@ function Qr(){
             setQrscan(data)
             // 백엔드에 URL 보내기
             const fetchQr = async () => {
-                const URL = "http://localhost:8080/embedded/qr"
+                
+                const URL = `${NONEAPI_URL}/embedded/qr`
                 await fetch(URL, {
                     method: 'POST',
                     headers: {

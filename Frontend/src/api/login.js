@@ -3,9 +3,7 @@ import { SERVER_URL } from '../config';
 // Axios vs fetch
 export default async function FetchLogin({ id, password }){
 
-  const URL = `${SERVER_URL}/login`;
-  console.log(URL);
-
+  const URL = `${SERVER_URL}/login`
 
   const response = await fetch(URL, {
     method: "POST",

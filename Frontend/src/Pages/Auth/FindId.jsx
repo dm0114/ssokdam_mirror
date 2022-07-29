@@ -7,7 +7,6 @@ import {
     Wrap,
     MainText,
     HeaderWrapper,
-
 } from '../../styles/SubLoginStyles';
 
 import {

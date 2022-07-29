@@ -1,7 +1,6 @@
 import React from "react";
 import {Link, useNavigate} from "react-router-dom";
 
-import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
 import { Typography } from "@mui/material";
 import { useState, useEffect, useRef } from "react";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -80,8 +79,6 @@ function Home(){
       ].join(','),
     },
 });
-
-
   const [min, setMin] = useState(40);
   const [sec, setSec] = useState(0);
   const time = useRef(2400);
@@ -142,9 +139,9 @@ function Home(){
                         <AccountCircleIcon color='black'/>
                       </Link>
                     </MainIcon>
-                    <MainIcon>
+                    {/* <MainIcon>
                       <LogoutIcon onClick={logout}/>
-                    </MainIcon>
+                    </MainIcon> */}
                     </>) 
 
                   : (<MainIcon>

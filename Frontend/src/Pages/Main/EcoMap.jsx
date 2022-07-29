@@ -1,4 +1,7 @@
 import React from 'react'
+
+import { SERVER_URL } from '../../config';
+
 import {CustomOverlayMap, Map, MapMarker} from "react-kakao-maps-sdk";
 import {useState} from "react";
 import {useEffect} from "react";
@@ -7,8 +10,9 @@ import Button from "@mui/material/Button";
 import Box from '@mui/material/Box';
 import './EcoMapModule.css'
 import { Link } from 'react-router-dom'
-import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import axios from "axios";
+
+import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import {useRecoilValue} from "recoil";
 import {isLoginAtom} from '../../atoms'
 
@@ -25,6 +29,7 @@ function EcoMap(){
     console.log(positions)
     useEffect(() => {
        const fetchDevice = async () => {
+<<<<<<< HEAD
            const URL = "http://3.36.78.244:8080/embedded/map"
            // const URL = "http://localhost:8888/positions"
            let response = await fetch(URL, {
@@ -36,6 +41,11 @@ function EcoMap(){
            })
            })
            // console.log(response.data)
+=======
+           const URL = `${SERVER_URL}/positions`;
+           let response = await axios(URL)
+           setPositions(response.data)
+>>>>>>> ab79db093e76b0beeb003a3da4f7a57caac9c7ed
        };
        fetchDevice();
     }, []);
