@@ -68,7 +68,7 @@ export default function AdminLogin() {
             } else {
                 resUserInfomation.json().then((res) => {
                     console.log(res)
-                    if(res.ok){
+                    if(!('message' in res)){
                         localStorage.setItem('access-token', res.Access_token);
                         setUserInfo2({
                             userName : res.userName,
@@ -80,7 +80,7 @@ export default function AdminLogin() {
                         setIsLogin(true)
                         navigate('/admin')
                     }else{
-                        alert('관리자가 아닙니다!')
+                        alert('관리자페이지 접근권한이 없습니다.')
                         navigate('/adminlogin')
                     }
                 })
