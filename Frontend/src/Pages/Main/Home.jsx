@@ -79,8 +79,6 @@ function Home(){
       ].join(','),
     },
 });
-
-
   const [min, setMin] = useState(40);
   const [sec, setSec] = useState(0);
   const time = useRef(2400);
@@ -141,9 +139,9 @@ function Home(){
                         <AccountCircleIcon color='black'/>
                       </Link>
                     </MainIcon>
-                    <MainIcon>
+                    {/* <MainIcon>
                       <LogoutIcon onClick={logout}/>
-                    </MainIcon>
+                    </MainIcon> */}
                     </>) 
 
                   : (<MainIcon>
