@@ -19,6 +19,7 @@ function Qr(){
     const [qrscan, setQrscan] = useState('QR을 스캔해주세요.');
     const navigate = useNavigate();
     const [userInfo2, setUserInfo2] = useRecoilState(userInfo)
+    const [screenSize, setScreenSize] = useState([window.innerWidth, window.innerHeight])
     const handleScan = data => {
         if (data) {
             setQrscan(data)
@@ -77,7 +78,7 @@ function Qr(){
                             delay={300}
                             onError={handleError}
                             onScan={handleScan}
-                            style={{height: 240, width: 320 }}
+                            style={{height: screenSize[1], width: screenSize[0] }}
                         />
                     </div>
                 </center>
