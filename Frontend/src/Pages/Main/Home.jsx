@@ -1,7 +1,6 @@
 import React from "react";
 import {Link, useNavigate} from "react-router-dom";
 
-import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
 import { Typography } from "@mui/material";
 import { useState, useEffect, useRef } from "react";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
