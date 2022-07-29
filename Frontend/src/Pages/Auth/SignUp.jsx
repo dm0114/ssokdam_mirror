@@ -13,6 +13,33 @@ import { userInfo } from '../../atoms'
 import {useRecoilState} from "recoil";
 import * as Yup from "yup";
 import $ from 'jquery';
+import {createTheme,ThemeProvider} from "@mui/material/styles";
+
+
+const theme = createTheme(
+    {
+        palette: {
+            black: {
+                main: "#212121",
+            },
+        },
+        typography: {
+            fontFamily: [
+                "-apple-system",
+                "SCoreDream",
+                "BlinkMacSystemFont",
+                '"Segoe UI"',
+                "Roboto",
+                '"Helvetica Neue"',
+                "Arial",
+                "sans-serif",
+                '"Apple Color Emoji"',
+                '"Segoe UI Emoji"',
+                '"Segoe UI Symbol"',
+            ].join(","),
+        },
+    }
+);
 
 
 
@@ -182,6 +209,8 @@ function SignUp(){
 
   return(
     <React.Fragment>
+        <ThemeProvider theme={theme}>
+
       <Container maxWidth="sm" sx={{bgcolor : '#eff0f2', height : '100vh'}}>
       <Box sx={{display:'flex', padding:'30px', justifyContent : 'center', alignItems:'center'}}>
           <Link to='/login'>
@@ -191,7 +220,7 @@ function SignUp(){
             회원가입
           </Typography>
       </Box>
-      
+
       <Box sx={{ display : 'flex', flexDirection : 'column', flex : '1'}}>
         <Formik
           initialValues={{
@@ -215,15 +244,15 @@ function SignUp(){
               <TextField
                 value={values.userId}
                 name = "userId"
-                onChange={handleChange} 
-                sx={{backgroundColor : 'white'}} 
-                fullWidth  
+                onChange={handleChange}
+                sx={{backgroundColor : 'white'}}
+                fullWidth
                  />
                 <div style={ { color : "red" } } className="error-message">
                   {errors.userId}
                 </div>
             </Box>
-            
+
             <Box sx={{ my : 2 }}>
               <Typography sx={{ fontWeight : 'bold' }}>
                 비밀번호
@@ -232,9 +261,9 @@ function SignUp(){
                 value={values.userPwd}
                 name="userPwd"
                 type="password"
-                onChange={handleChange} 
-                sx={{backgroundColor : 'white'}} 
-                fullWidth 
+                onChange={handleChange}
+                sx={{backgroundColor : 'white'}}
+                fullWidth
                  />
                  <div style={ { color : "red" } } className="error-message">
                   {errors.userPwd}
@@ -248,9 +277,9 @@ function SignUp(){
                 value={values.userPwd2}
                 name="userPwd2"
                 type="password"
-                onChange={handleChange} 
-                sx={{backgroundColor : 'white'}} 
-                fullWidth 
+                onChange={handleChange}
+                sx={{backgroundColor : 'white'}}
+                fullWidth
                  />
               <div style={ { color : "red" } } className="error-message">
                   {errors.userPwd2}
@@ -265,8 +294,8 @@ function SignUp(){
                 name="userEmail"
                 onChange={handleChange}
                 type="email"
-                sx={{backgroundColor : 'white'}} 
-                fullWidth 
+                sx={{backgroundColor : 'white'}}
+                fullWidth
                  />
                 <div style={ { color : "red" } } className="error-message">
                     {errors.userEmail}
@@ -279,13 +308,13 @@ function SignUp(){
           <TextField sx={{backgroundColor : 'white', mb: 1}} value="대한민국 +82" fullWidth />
           <Box sx={{ display : 'flex'}}>
             <TextField sx={{ pr : 1, flex : '3' }} id="outlined-basic" label="전화번호 입력" variant="outlined" />
-            <Button onClick={onClickCertification} style={{ backgroundColor : '#00d3ca' }} variant={"contained"} sx={{ flex : '1', color : 'black', fontWeight : 'bold' }}>인증번호 받기</Button>
+            <Button onClick={onClickCertification} style={{ backgroundColor : '#CBF7FF' }} variant={"contained"} sx={{ flex : '1', color : 'black', fontWeight : 'bold' }}>인증번호 받기</Button>
           </Box>
           <TextField sx={{backgroundColor : 'white', mt: 1}} label="인증번호 입력" fullWidth />
         </Box>
-                <Button 
-                  style={{ backgroundColor : '#00d3ca' }} 
-                  sx={{ color : 'black', fontWeight : 'bold' }} 
+                <Button
+                  style={{ backgroundColor : '#CBF7FF' }}
+                  sx={{ color : 'black', fontWeight : 'bold' }}
                   variant={"contained"}
                   type="submit"
                   fullWidth>회원 가입</Button>
@@ -296,6 +325,7 @@ function SignUp(){
       </Box>
       {/* <Button style={{ backgroundColor : '#00d3ca' }} sx={{ color : 'black', fontWeight : 'bold' }} variant={"contained"} fullWidth>회원 가입</Button> */}
       </Container>
+        </ThemeProvider>
     </React.Fragment>
   )
 }

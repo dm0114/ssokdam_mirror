@@ -22,11 +22,20 @@ function EcoMap(){
         isLoading: true,
     })
     const [positions, setPositions] = useState([])
+    console.log(positions)
     useEffect(() => {
        const fetchDevice = async () => {
-           const URL = "http://localhost:8888/positions"
-           let response = await axios(URL)
-           setPositions(response.data)
+           const URL = "http://3.36.78.244:8080/embedded/map"
+           // const URL = "http://localhost:8888/positions"
+           let response = await fetch(URL, {
+               method : 'GET'
+           }).then((res) => {res.json().then((res) => {
+               console.log(res)
+               setPositions(res)
+               console.log(positions)
+           })
+           })
+           // console.log(response.data)
        };
        fetchDevice();
     }, []);
@@ -53,6 +62,7 @@ function EcoMap(){
                         errMsg: err.message,
                         isLoading: false,
                     }))
+                    console.log(state)
                 }
             )
         } else {
@@ -89,7 +99,8 @@ function EcoMap(){
                     )}
                     {(positions.map((position,index) => (
                         <MapMarker
-                            position={position.latlng}
+                            // position={position.latlng}
+                            position={{"lat" : `${position.embLat}`, "lng" :`${position.embLng}`}}
                             key={position.id}
                             image={{
                                 src: "https://cdn-icons-png.flaticon.com/512/999/999047.png", // 마커이미지의 주소입니다

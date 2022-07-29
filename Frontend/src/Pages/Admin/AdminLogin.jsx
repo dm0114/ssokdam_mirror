@@ -63,12 +63,12 @@ export default function AdminLogin() {
         try {
             const resUserInfomation = await fetchAdminLogin(account); //성공하면 해당 user 아이디 패스워드값 셋팅
             console.log(resUserInfomation)
-            if (!resUserInfomation.ok) {
+            if (!resUserInfomation.ok) { // 아예 아이디가 없는 경우
                 alert('관리자가 아닙니다!')
             } else {
                 resUserInfomation.json().then((res) => {
                     console.log(res)
-                    if(!('message' in res)){
+                    if(res.ok && !('message' in res)){ // 관리자이고 비밀번호도 맞음
                         localStorage.setItem('access-token', res.Access_token);
                         setUserInfo2({
                             userName : res.userName,
@@ -76,12 +76,14 @@ export default function AdminLogin() {
                             userPoint : res.userPoint,
                             userCnt : res.userCnt,
                             userImage: res.userImg,
-                        })
+                        }) 
                         setIsLogin(true)
                         navigate('/admin')
-                    }else{
-                        alert('관리자페이지 접근권한이 없습니다.')
-                        navigate('/adminlogin')
+                    }else if(res.ok && ('message' in res)){
+                        alert('비밀번호가 틀렸습니다.') // 관리자이지만 비밀번호가 틀림
+                    } else{
+                        alert('관리자페이지 권한이 없습니다.')
+                        navigate('/adminlogin') // 관리자가 아님
                     }
                 })
             }
@@ -93,7 +95,7 @@ export default function AdminLogin() {
 
     return (
         <ThemeProvider theme={theme}>
-            <Container component="main" maxWidth="s"  sx={{ display : 'flex', justifyContent: 'center', alignItems : 'center', bgcolor : '#bdbdbd', height : '100vh' }} >
+            <Container component="main" maxWidth="s"  sx={{ display : 'flex', justifyContent: 'center', alignItems : 'center', bgcolor : '#CBF7FF', height : '100vh' }} >
                 <CssBaseline />
                 <Box
                     sx={{
