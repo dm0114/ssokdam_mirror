@@ -15,7 +15,8 @@ import {
     ButtonText,
     Wrap,
     MainText,
-    HeaderWrapper
+    HeaderWrapper,
+    ButtonWrapper2
 } from '../../styles/SubLoginStyles';
 import {BinWrapper} from "../../styles/BackgroundStyle";
 import {MuiTheme} from "../../styles/MuiTheme"
@@ -254,16 +255,20 @@ function SignUp() {
                                               marginBottom: "32px"
                                             }}
                                             color="black"/>
-                                        <MainButton 
-                                          width="100%" 
-                                          type='submit'
-                                          onClick={onClickCertification}
-                                        >
-                                          <ButtonText>성인 인증 요청</ButtonText>
-                                        </MainButton>
-                                      <MainButton width="100%" type='submit'> 
-                                          <ButtonText>회원 가입</ButtonText>
-                                      </MainButton>
+                                          <MainButton 
+                                            width = "100%" 
+                                            type = 'submit'
+                                            onClick = {onClickCertification}
+                                            style = {{backgroundColor: 'gainsboro'}}
+                                            >
+                                            <ButtonText>성인 인증 요청</ButtonText>
+                                          </MainButton>
+                                          <ButtonWrapper2>
+                                            <MainButton width="100%" type='submit'> 
+                                                <ButtonText>회원 가입</ButtonText>
+                                            </MainButton>
+                                          </ButtonWrapper2>
+
                                     </form>
                                 </Box>
                             )
