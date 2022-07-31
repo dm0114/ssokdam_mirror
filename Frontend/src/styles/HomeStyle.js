@@ -21,8 +21,9 @@ export const MainText = styled.p`
   line-height: ${props => props.theme.fonts.sCoreDream24Bold.lineHeight};
 `
 export const MainIcon = styled.p`
+  width: 24px;
   height: 24px;
-  margin: 0px 0px 0px 12px;
+  margin: 0px 0px 0px 16px;
 `
 
 
@@ -78,8 +79,6 @@ export const QrMapButton = styled.div`
 
   text-decoration: none;
 `;
-
-
 export const QrMapSubText = styled.p`
   flex: 1;
   display: flex;

@@ -1,6 +1,9 @@
+import { SERVER_URL } from '../config';
+
 // Axios vs fetch
 export default async function FetchLogin({ id, password }){
-  const URL = "http://localhost:8080/api/login";
+
+  const URL = `${SERVER_URL}/login`
 
   const response = await fetch(URL, {
     method: "POST",
