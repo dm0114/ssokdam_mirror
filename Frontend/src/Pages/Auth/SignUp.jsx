@@ -255,13 +255,14 @@ function SignUp() {
                                             }}
                                             color="black"/>
                                         <MainButton 
-                                          width="100%" 
+                                          width="100%"
+                                          style={{ height : '75px' }}
                                           type='submit'
                                           onClick={onClickCertification}
                                         >
                                           <ButtonText>성인 인증 요청</ButtonText>
                                         </MainButton>
-                                      <MainButton width="100%" type='submit'> 
+                                      <MainButton width="100%" type='submit' style={{marginTop : '100px'}}>
                                           <ButtonText>회원 가입</ButtonText>
                                       </MainButton>
                                     </form>

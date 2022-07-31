@@ -24,6 +24,13 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import {useState} from "react";
 import {useEffect} from "react";
+import { AdminBrokenDeviceManagement } from "../AdminBrokenDeviceManagement";
+import { AdminCheckDevice } from "../AdminCheckDevice";
+import { AdminComplaintManagement } from "../AdminComplaintManagement";
+import { AdminExchange } from "../AdminExchange";
+import { AdminNotice } from "../AdminNotice";
+import { AdminUserManagement } from "../AdminUserManagement";
+import { AdminMain } from "../AdminMain";
 
 const drawerWidth = 240;
 
@@ -44,19 +51,19 @@ function AdminSideBar(props) {
     }
 
     if(mode === "관리자 페이지"){
-        comp = <h1>관리자 페이지</h1>
+        comp = <AdminMain/>
     }else if(mode === "공지사항 관리"){
-        comp = <h1>공지사항 관리</h1>
+        comp = <AdminNotice/>
     }else if(mode === "기기 정보 확인"){
-        comp = <h1>기기 정보 확인</h1>
+        comp = <AdminCheckDevice/>
     }else if(mode === "접수된 불만 사항"){
-        comp = <h1>접수된 불만 사항</h1>
+        comp = <AdminComplaintManagement/>
     }else if(mode === "접수된 고장 신고"){
-        comp = <h1>접수된 고장 신고</h1>
+        comp = <AdminCheckDevice/>
     }else if(mode === "회원 관리"){
-        comp = <h1>회원 관리</h1>
+        comp = <AdminUserManagement/>
     }else if(mode === "포인트 전환"){
-        comp = <h1>포인트 전환</h1>
+        comp = <AdminExchange/>
     }else{
         comp = <h1>잘못된 페이지</h1>
     }
