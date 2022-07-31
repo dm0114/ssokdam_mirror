@@ -104,7 +104,7 @@ function EcoMap(){
                         <MapMarker
                             // position={position.latlng}
                             position={{"lat" : `${position.embLat}`, "lng" :`${position.embLng}`}}
-                            key={position.id}
+                            key={position.embId}
                             image={{
                                 src: "https://cdn-icons-png.flaticon.com/512/999/999047.png", // 마커이미지의 주소입니다
                                 size: {
@@ -112,7 +112,7 @@ function EcoMap(){
                                     height: 35
                                 },
                             }}
-                            title={`${position.id}번 디바이스`}
+                            title={`${position.embId}번 디바이스`}
                         />
                     )))}
                     <Box sx={{ zIndex : 100, display : 'flex', justifyContent : 'space-evenly' }}>

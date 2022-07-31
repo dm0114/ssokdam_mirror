@@ -255,19 +255,6 @@ function SignUp() {
                                               marginBottom: "32px"
                                             }}
                                             color="black"/>
-<<<<<<< HEAD
-                                        <MainButton 
-                                          width="100%"
-                                          style={{ height : '75px' }}
-                                          type='submit'
-                                          onClick={onClickCertification}
-                                        >
-                                          <ButtonText>성인 인증 요청</ButtonText>
-                                        </MainButton>
-                                      <MainButton width="100%" type='submit' style={{marginTop : '100px'}}>
-                                          <ButtonText>회원 가입</ButtonText>
-                                      </MainButton>
-=======
                                           <MainButton 
                                             width = "100%" 
                                             type = 'submit'
@@ -282,7 +269,6 @@ function SignUp() {
                                             </MainButton>
                                           </ButtonWrapper2>
 
->>>>>>> 1f1b143c37621c946d2a021caa464706c5f19a9f
                                     </form>
                                 </Box>
                             )
