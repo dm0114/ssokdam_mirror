@@ -13,13 +13,14 @@ import {useNavigate} from "react-router-dom";
 import { userInfo } from '../../atoms'
 import {useRecoilState} from "recoil";
 import {useEffect} from "react";
-
+import { MainBackGround } from '../../styles/BackgroundStyle';
 
 function Qr(){
     const [qrscan, setQrscan] = useState('QR을 스캔해주세요.');
     const navigate = useNavigate();
     const [userInfo2, setUserInfo2] = useRecoilState(userInfo)
     const [screenSize, setScreenSize] = useState([window.innerWidth, window.innerHeight])
+    console.log(screenSize);
     const handleScan = data => {
         if (data) {
             setQrscan(data)
@@ -61,26 +62,23 @@ function Qr(){
     },[])
 
     return (
-        <React.Fragment>
-            <Container maxWidth="sm" sx={{ bgcolor : "#CBF7FF", height : '100vh' }}>
-                <Box sx={{padding:'30px 10px', justifyContent : 'center', alignItems:'center'}}>
+            <MainBackGround>
+                <Box sx={{padding:'30px', justifyContent : 'center', alignItems:'center'}}>
                     <Link to='/'>
                         <ArrowBackIosIcon sx={{color : 'black'}}/>
                     </Link>
                 </Box>
-                <Box sx={{ display : 'flex', justifyContent : 'center' }}>
+                <Box sx={{ display : 'flex', justifyContent : 'center', width: '100%'}}>
                     <h2>QR을 스캔해주세요.</h2>
                 </Box>
 
                 <center>
-                    <div style={{marginTop:30}}>
                         <QrScan
                             delay={300}
                             onError={handleError}
                             onScan={handleScan}
-                            style={{height: screenSize[1], width: screenSize[0] }}
+                            style={{height: "100vh", width: "100vw" }}
                         />
-                    </div>
                 </center>
 
                 <TextareaAutosize
@@ -89,8 +87,7 @@ function Qr(){
                     defaultValue={qrscan}
                     value={qrscan}
                 />
-            </Container>
-        </React.Fragment>
+            </MainBackGround>
     )
 }
 
