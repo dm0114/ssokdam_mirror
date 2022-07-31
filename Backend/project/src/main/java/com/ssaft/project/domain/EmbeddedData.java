@@ -1,9 +1,6 @@
 package com.ssaft.project.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -22,11 +19,11 @@ public class EmbeddedData {
     @JoinColumn(name = "user_id")
     private IotUser iotUser;
 
-    @Column(name = "emb_ful1")
-    private String embFul1;
+    @Column(name = "emb_full_tra")
+    private String embFullTra;
 
-    @Column(name = "emb_ful2")
-    private String embFul2;
+    @Column(name = "emb_full_cig")
+    private String embFullCig;
 
     @Column(name = "emb_lat")
     private String embLat;
@@ -60,4 +57,5 @@ public class EmbeddedData {
 
     @Transient
     private String token;
+
 }
