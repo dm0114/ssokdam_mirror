@@ -20,7 +20,7 @@ import {useRecoilValue} from 'recoil'
 export const MyPage = () => {
     const userInfo2 = useRecoilValue(userInfo)
     return (<> {
-        userInfo2
+        localStorage.getItem('access-token')
             ? (
                 <SubBackgroundView>
                     <Wrap>

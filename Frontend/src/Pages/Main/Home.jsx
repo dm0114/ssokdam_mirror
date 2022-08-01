@@ -12,6 +12,7 @@ import { userInfo } from '../../atoms'
 import {useRecoilValue} from "recoil";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
+import {recoilPersist} from "recoil-persist";
 
 import {
   MainBackGround,
@@ -121,7 +122,7 @@ function Home(){
           <BinWrapper pt="52px" pl="24px" pr="24px">
             <MainTextContainerWrapper>
               <MainContainer flexNum="3">
-                { !!userInfo2.userName ? (
+                { localStorage.getItem("access-token") ? (
                   <MainText>
                     { userInfo2.userName } 님이 <br/><br/>바다를 지켜준 횟수
                   </MainText>)
@@ -132,16 +133,16 @@ function Home(){
               </MainContainer>
 
               <MainContainer flexNum="1" jc="flex-end">
-                  { !!userInfo2.userName
+                  { localStorage.getItem("access-token")
                   ? (<>
                     <MainIcon>
                       <Link to='/myPage'>
                         <AccountCircleIcon color='black'/>
                       </Link>
                     </MainIcon>
-                    {/* <MainIcon>
-                      <LogoutIcon onClick={logout}/>
-                    </MainIcon> */}
+                    {/*<MainIcon>*/}
+                    {/*  <LogoutIcon onClick={logout}/>*/}
+                    {/*</MainIcon>*/}
                     </>) 
 
                   : (<MainIcon>
