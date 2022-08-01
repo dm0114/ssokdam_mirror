@@ -13,6 +13,7 @@ export default async function FetchLogin({ id, password }){
       userPwd: password,
     }),
   })
+    console.log(response);
     return response
     
     //   return res.json().then((res) => {
