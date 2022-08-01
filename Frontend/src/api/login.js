@@ -1,7 +1,9 @@
+import { SERVER_URL } from '../config';
 
 // Axios vs fetch
 export default async function FetchLogin({ id, password }){
-  const URL = "http://localhost:8080/api/login";
+
+  const URL = `${SERVER_URL}/login`
 
   const response = await fetch(URL, {
     method: "POST",
@@ -15,23 +17,9 @@ export default async function FetchLogin({ id, password }){
   })
     console.log(response);
     return response
-    
-    //   return res.json().then((res) => {
-    //     localStorage.setItem("access-token", res.Access_token);
-    //     setUserInfo2({
-    //       userName: res.userName,
-    //       userEmail: res.userEmail,
-    //       userPoint: res.userPoint,
-    //       userCnt: res.userCnt,
-    //       userImage: res.userImg,
-    //     });
-    //     console.log(res);
-    //   });
-    // })
-    // .then(() => {
-    //   navigate("/");
-    // });
 };
+
+
 
 
 // export async function fetchLogin({ id, password }) {

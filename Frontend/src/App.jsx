@@ -13,13 +13,14 @@ import SignUp from './Pages/Auth/SignUp.jsx'
 import EcoMap from "./Pages/Main/EcoMap";
 import Home from './Pages/Main/Home'
 import Qr from './Pages/Main/Qr'
-import Navigation from './Pages/Nav/Navigation'
 import ServiceInfo from './Pages/Main/ServiceInfo'
 import ServiceCenter from './Pages/Main/ServiceCenter'
 import FrequentlyQuestion from './Pages/Main/FrequentlyQuestion'
 import MyAsk from './Pages/Main/MyAsk'
 import MyPage from './Pages/Main/Mypage'
 import ChangePw from './Pages/Auth/ChangePw';
+import AdminLogin from './Pages/Admin/AdminLogin'
+import AdminHome from './Pages/Admin/AdminHome'
 
 function App() {
   return (
@@ -28,7 +29,6 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' element={<Home/>} />
-          <Route path='/navigation' element={<Navigation/>} />
           <Route path='/myPage' element={<MyPage/>} />
           <Route path='/serviceInfo' element={<ServiceInfo/>} />
           <Route path='/serviceCenter' element={<ServiceCenter/>} />
@@ -43,6 +43,9 @@ function App() {
           <Route path='/login/findPw' element={<FindPw/>} />
           <Route path='/signup' element={<SignUp/>} />
           <Route path='/login/changePw' element={<ChangePw/>} />
+
+          <Route path='/adminLogin' element={<AdminLogin/>} />
+          <Route path='/admin' element={<AdminHome/>} />
         </Routes>
       </Router>
     </>

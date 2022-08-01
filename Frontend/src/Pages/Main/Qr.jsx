@@ -1,3 +1,5 @@
+import { NONEAPI_URL } from '../../config';
+
 import Container from "@mui/material/Container";
 import React, {useState} from 'react'
 import {Fab, TextareaAutosize} from '@material-ui/core'
@@ -11,18 +13,21 @@ import {useNavigate} from "react-router-dom";
 import { userInfo } from '../../atoms'
 import {useRecoilState} from "recoil";
 import {useEffect} from "react";
-
+import { MainBackGround } from '../../styles/BackgroundStyle';
 
 function Qr(){
     const [qrscan, setQrscan] = useState('QR을 스캔해주세요.');
     const navigate = useNavigate();
     const [userInfo2, setUserInfo2] = useRecoilState(userInfo)
+    const [screenSize, setScreenSize] = useState([window.innerWidth, window.innerHeight])
+    console.log(screenSize);
     const handleScan = data => {
         if (data) {
             setQrscan(data)
             // 백엔드에 URL 보내기
             const fetchQr = async () => {
-                const URL = "http://localhost:8080/embedded/qr"
+                
+                const URL = `${NONEAPI_URL}/embedded/qr`
                 await fetch(URL, {
                     method: 'POST',
                     headers: {
@@ -57,26 +62,23 @@ function Qr(){
     },[])
 
     return (
-        <React.Fragment>
-            <Container maxWidth="sm" sx={{ bgcolor : "#00d3ca", height : '100vh' }}>
-                <Box sx={{padding:'30px 10px', justifyContent : 'center', alignItems:'center'}}>
+            <MainBackGround>
+                <Box sx={{padding:'30px', justifyContent : 'center', alignItems:'center'}}>
                     <Link to='/'>
                         <ArrowBackIosIcon sx={{color : 'black'}}/>
                     </Link>
                 </Box>
-                <Box sx={{ display : 'flex', justifyContent : 'center' }}>
+                <Box sx={{ display : 'flex', justifyContent : 'center', width: '100%'}}>
                     <h2>QR을 스캔해주세요.</h2>
                 </Box>
 
                 <center>
-                    <div style={{marginTop:30}}>
                         <QrScan
                             delay={300}
                             onError={handleError}
                             onScan={handleScan}
-                            style={{height: 240, width: 320 }}
+                            style={{height: "100vh", width: "100vw" }}
                         />
-                    </div>
                 </center>
 
                 <TextareaAutosize
@@ -85,8 +87,7 @@ function Qr(){
                     defaultValue={qrscan}
                     value={qrscan}
                 />
-            </Container>
-        </React.Fragment>
+            </MainBackGround>
     )
 }
 

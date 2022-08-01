@@ -1,14 +1,20 @@
+import { Link } from 'react-router-dom'
+
 import {
     SubLoginBackgroundView,
     MainButton,
     ButtonText,
     Wrap,
     PasswordWrap,
-    Vector,
     MainText,
     HeaderWrapper
 } from '../../styles/SubLoginStyles';
+import {
+    BinWrapper,
+  } from "../../styles/BackgroundStyle";
 
+
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
@@ -43,10 +49,13 @@ export const FindPw = () => {
             <SubLoginBackgroundView>
                 <Wrap>
                     <HeaderWrapper>
-                        <Vector
-                            alt=""
-                            src="https://static.overlay-tech.com/assets/897d620b-7272-4e3f-b46a-7d57d097eecd.svg"/>
-                        <MainText>비밀번호 찾기</MainText>
+                        <BinWrapper flex="1">
+                                <Link to="/login">
+                                    <ArrowBackIosIcon color="black"/>
+                                </Link>
+                            </BinWrapper>
+                            <MainText flex="3">비밀번호 찾기</MainText>
+                            <BinWrapper flex="1"></BinWrapper>
                     </HeaderWrapper>
 
                     <TextField

@@ -41,6 +41,8 @@ public class IotUserService {
                 map.put("userPoint", iotuser.get().getUserPoint());
                 map.put("userCnt", iotuser.get().getUserCnt());
                 map.put("userImg", iotuser.get().getUserImg());
+            }else{
+                map.put("message" , "비밀번호가 틀렸습니다.");
             }
         }else{
             map.put("message" , "존재하지 않는 회원입니다.");
@@ -97,7 +99,6 @@ public class IotUserService {
         return map;
     }
 
-
     public Map singup(IotUser user) {          //회원가입
         String pwd = securityService.jasyptEncoding(user.getUserPwd());    //비밀번호 암호화
         user.setUserPwd(pwd);
@@ -120,7 +121,7 @@ public class IotUserService {
 
         try {
             CheckId(user.getUserId());
-            String token = securityService.creatToken(user.getUserId(), (1 * 1000 * 60));
+            String token = securityService.creatToken(user.getUserId(), (60 * 1000 * 60));
             map.put("Access_token" , token);
             token = securityService.creatToken(user.getUserId(), (10800 * 1000 * 60));
             user.setUserRt(token);

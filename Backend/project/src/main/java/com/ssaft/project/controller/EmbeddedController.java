@@ -11,6 +11,9 @@ import com.ssaft.project.domain.UseData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -42,19 +45,48 @@ public class EmbeddedController {
         System.out.println(user);
         Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(Integer.valueOf(user.getEmbId()));
         String name = securityService.getSubJect(user.getToken());
-<<<<<<< HEAD
          Optional<IotUser> iotUser =  iotUserRepository.findById(name);
          embeddedData.get().setIotUser(iotUser.get());
          embeddedData.get().setEmbQr("Y");
          embeddedDataRepository.save(embeddedData.get());
-=======
-        Optional<IotUser> iotUser =  iotUserRepository.findById(name);
-        embeddedData.get().setIotUser(iotUser.get());
-        embeddedData.get().setUserId(name);
-        embeddedDataRepository.save(embeddedData.get());
->>>>>>> d7cd270dd4ceaa9d10282fd8635f467dc5d2c80e
+
      }
 
+     @PostMapping("/send")
+     @ResponseBody
+     public void SensingSend(@RequestBody EmbeddedData sensing){
+        Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(sensing.getEmbId());
+        embeddedData.get().setEmbFullTra(sensing.getEmbFullTra());
+        embeddedData.get().setEmbFullCig(sensing.getEmbFullCig());
+        embeddedData.get().setEmbLat(sensing.getEmbLat());
+        embeddedData.get().setEmbLng(sensing.getEmbLng());
+         embeddedData.get().setEmbBat(sensing.getEmbBat());
+         embeddedData.get().setEmbCnt(sensing.getEmbCnt());
+         embeddedData.get().setEmbSta(sensing.getEmbSta());
+         embeddedDataRepository.save(embeddedData.get());
+     }
+
+    @GetMapping("/receive")
+    @ResponseBody
+    public Map receive(@RequestBody EmbeddedData sensing){
+        Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(sensing.getEmbId());
+        Map<String, Object> map = new LinkedHashMap<>();
+        if(embeddedData.get().getEmbQr().equals("Y")){
+            map.put("userId" , embeddedData.get().getIotUser().getUserId());
+            map.put("embQr" , embeddedData.get().getEmbQr());
+            /*embeddedData.get().setEmbQr("N");
+            embeddedDataRepository.save(embeddedData.get());*/
+            return map;
+        }
+        map.put("error", false);
+        return map;
+    }
+
+     @GetMapping("/map")
+     @ResponseBody
+     public List<Map<String, Object>> EmbeddedLoc(){
+        return embeddedService.sendLoc();
+     }
 
 
     @PostMapping("/use")

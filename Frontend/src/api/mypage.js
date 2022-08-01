@@ -1,10 +1,14 @@
-// Fetch API -> Json
+import { SERVER_URL } from '../config';
+
 export async function fetchMyPage() {
-  const response = await fetch("http://localhost:8080/api/mypage/test", {
+  const URL = `${SERVER_URL}/mypage/test`
+
+  const response = await fetch(URL, {
     headers : {
       token : localStorage.getItem("access-token")
     },
   })
+  
   const json = await response.json();
   console.log(json)
   return json

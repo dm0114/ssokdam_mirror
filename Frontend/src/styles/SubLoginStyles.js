@@ -5,7 +5,7 @@ export const SubLoginBackgroundView = styled.div `
   height: 100vh;
 
   background-color:${props => props.theme.colors.white};
-  padding: 24px 24px 32px 24px;
+  padding: 38px 24px 32px 24px;
   
   display: flex;
   align-items: flex-start;
@@ -54,17 +54,17 @@ export const HeaderWrapper = styled(Wrap)`
 `
 
 export const Vector = styled.img `
-  position: absolute;
-  left: 24px;
-  width: 2.9%;
-  height: 22.95%;
+  width: 10%;
+  height: 100%;
 `;
 
 export const MainText = styled.p `
+  flex: ${props => props.flex};
   color: ${props => props.theme.colors.black};
   display: flex;
   align-items: center;
-  text-align: center;
+  justify-content: center;
+  /* text-align: center; */
   font-family: ${props => props.theme.fonts.sCoreDream16Regular.family};
   font-size: ${props => props.theme.fonts.sCoreDream16Regular.size};
   font-weight: ${props => props.theme.fonts.sCoreDream16Regular.weight};
@@ -106,3 +106,12 @@ export const ButtonText = styled.p `
   font-weight: ${props => props.theme.fonts.sCoreDream16Regular.weight};
   line-height: ${props => props.theme.fonts.sCoreDream16Regular.lineHeight};
 `;
+
+
+export const ButtonWrapper2 = styled.div`
+  position: absolute;
+  width: 87.5%;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 32px;
+`

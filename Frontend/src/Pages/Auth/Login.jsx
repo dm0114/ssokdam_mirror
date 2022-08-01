@@ -21,14 +21,17 @@ import {
 } from "../../styles/SubLoginStyles";
 
 import {
-  LoginPageMainBackGround,
-  LoginPageSubBackGround,
   ContentWrapper,
   ButtonWrapper,
   FindTextWrapper,
-  BinWrapper,
   MainTextWrapper
 } from "../../styles/LoginStyle";
+
+import {
+  MainBackGround,
+  SubBackGround,
+  BinWrapper,
+} from "../../styles/BackgroundStyle";
 
 import fetchLogin from '../../api/login'
 
@@ -82,14 +85,19 @@ function Login() {
         alert('일치하는 회원정보가 없습니다!')
       } else {
         resUserInfomation.json().then((res) => {
-          localStorage.setItem('access-token', res.Access_token);
-          setUserInfo2({
-            userName : res.userName,
-            userEmail : res.userEmail,
-            userPoint : res.userPoint,
-            userCnt : res.userCnt,
-            userImage: res.userImg,
-          })
+          console.log(res);
+          if ('message' in res) {
+            throw new Error(alert('비밀번호가 틀렸습니다!'))  //비동기 진행 막기
+          } else {
+            localStorage.setItem('access-token', res.Access_token);
+            setUserInfo2({
+              userName : res.userName,
+              userEmail : res.userEmail,
+              userPoint : res.userPoint,
+              userCnt : res.userCnt,
+              userImage: res.userImg,
+            })
+          }
         }).then(() => {
           setIsLogin(true)
           navigate('/')
@@ -102,10 +110,10 @@ function Login() {
 
   return (
     <ThemeProvider theme={theme}>
-      <LoginPageMainBackGround>
+      <MainBackGround>
         <BinWrapper pt="52px" pl="24px">
           <Link to="/">
-            <ArrowBackIosIcon sx={{ color: "black" }} />
+            <ArrowBackIosIcon color="black"/>
           </Link>
         </BinWrapper>
 
@@ -116,12 +124,12 @@ function Login() {
           <h1 style={{ fontWeight: "bold", marginTop: "0px" }}>에코원</h1>
         </MainTextWrapper>
 
-        <LoginPageSubBackGround>
+        <SubBackGround height="50vh">
           <ContentWrapper>
             <BinWrapper>            
 
               <TextField
-                id="standard-basic"
+                id="id"
                 label="아이디"
                 fullWidth
                 required
@@ -134,7 +142,7 @@ function Login() {
                 onChange={onChangeAccount}
               />
               <TextField
-                id="standard-basic"
+                id="password"
                 label="비밀번호"
                 name="password"
                 type="password"
@@ -180,8 +188,8 @@ function Login() {
             </ButtonWrapper>
 
           </ContentWrapper>
-        </LoginPageSubBackGround>
-      </LoginPageMainBackGround>
+        </SubBackGround>
+      </MainBackGround>
     </ThemeProvider>
   );
 }

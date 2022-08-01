@@ -1,4 +1,7 @@
 import React from 'react'
+
+import { SERVER_URL } from '../../config';
+
 import {CustomOverlayMap, Map, MapMarker} from "react-kakao-maps-sdk";
 import {useState} from "react";
 import {useEffect} from "react";
@@ -7,8 +10,9 @@ import Button from "@mui/material/Button";
 import Box from '@mui/material/Box';
 import './EcoMapModule.css'
 import { Link } from 'react-router-dom'
-import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import axios from "axios";
+
+import GpsFixedIcon from '@mui/icons-material/GpsFixed';
 import {useRecoilValue} from "recoil";
 import {isLoginAtom} from '../../atoms'
 
@@ -22,11 +26,19 @@ function EcoMap(){
         isLoading: true,
     })
     const [positions, setPositions] = useState([])
+    console.log(positions)
     useEffect(() => {
        const fetchDevice = async () => {
-           const URL = "http://localhost:8888/positions"
-           let response = await axios(URL)
-           setPositions(response.data)
+           const URL = "http://3.36.78.244:8080/embedded/map"
+           // const URL = "http://localhost:8888/positions"
+           let response = await fetch(URL, {
+               method : 'GET'
+           }).then((res) => {res.json().then((res) => {
+               console.log(res)
+               setPositions(res)
+               console.log(positions)
+           })
+           })
        };
        fetchDevice();
     }, []);
@@ -53,6 +65,7 @@ function EcoMap(){
                         errMsg: err.message,
                         isLoading: false,
                     }))
+                    console.log(state)
                 }
             )
         } else {
@@ -89,8 +102,9 @@ function EcoMap(){
                     )}
                     {(positions.map((position,index) => (
                         <MapMarker
-                            position={position.latlng}
-                            key={position.id}
+                            // position={position.latlng}
+                            position={{"lat" : `${position.embLat}`, "lng" :`${position.embLng}`}}
+                            key={position.embId}
                             image={{
                                 src: "https://cdn-icons-png.flaticon.com/512/999/999047.png", // 마커이미지의 주소입니다
                                 size: {
@@ -98,7 +112,7 @@ function EcoMap(){
                                     height: 35
                                 },
                             }}
-                            title={`${position.id}번 디바이스`}
+                            title={`${position.embId}번 디바이스`}
                         />
                     )))}
                     <Box sx={{ zIndex : 100, display : 'flex', justifyContent : 'space-evenly' }}>
