@@ -9,10 +9,14 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import './HomeModule.css'
 import LoginIcon from '@mui/icons-material/Login';
 import { userInfo } from '../../atoms'
-import {useRecoilValue} from "recoil";
+import {useRecoilState, useRecoilValue} from "recoil";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
+<<<<<<< HEAD
 import {recoilPersist} from "recoil-persist";
+=======
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+>>>>>>> a2fecdc1c930e26b64976b93c804d9f6bbb4e8be
 
 import {
   MainBackGround,
@@ -89,12 +93,19 @@ function Home(){
 
   const [notice, setNotice] = useState("")
   const navigate = useNavigate()
-  const userInfo2 = useRecoilValue(userInfo)
+  const [userInfo2, setUserInfo2] = useRecoilState(userInfo)
   // console.log(userInfo2);
 
 
   const logout = () => {
     localStorage.removeItem('access-token')
+    setUserInfo2({
+      userName : '',
+      userEmail : '',
+      userPoint : '',
+      userCnt : '',
+      userImage: '',
+    })
   }
 
 
@@ -135,14 +146,26 @@ function Home(){
               <MainContainer flexNum="1" jc="flex-end">
                   { localStorage.getItem("access-token")
                   ? (<>
-                    <MainIcon>
+                    {/* <MainIcon>
                       <Link to='/myPage'>
                         <AccountCircleIcon color='black'/>
                       </Link>
+<<<<<<< HEAD
                     </MainIcon>
                     {/*<MainIcon>*/}
                     {/*  <LogoutIcon onClick={logout}/>*/}
                     {/*</MainIcon>*/}
+=======
+                    </MainIcon> */}
+                    <MainIcon>
+                      <LogoutIcon onClick={logout}/>
+                    </MainIcon>
+                    <MainIcon>
+                      <Link to='/alarm'>
+                        <NotificationsNoneIcon color='black'/>
+                      </Link>
+                    </MainIcon>
+>>>>>>> a2fecdc1c930e26b64976b93c804d9f6bbb4e8be
                     </>) 
 
                   : (<MainIcon>
@@ -193,7 +216,7 @@ function Home(){
             </BinWrapper>
 
             <BinWrapper pl="24px" pr="24px" mb="16px">
-              <Point>
+              <Point onClick={() => navigate('/exchange')}>
                 <PointSubText>
                   <PointMainText>포인트 확인<br /></PointMainText>
                   내가 적립한 포인트 확인하기
@@ -204,11 +227,11 @@ function Home(){
 
             <BinWrapper pl="24px" pr="24px" mb="24px" bgColor="#fff">
               <MainWrapper>
-                <Service>
+                <Service onClick={() => navigate('/serviceInfo')}>
                   <ServiceVector alt="" src="https://static.overlay-tech.com/assets/38a95fc7-fb7d-4c9a-8f8b-acde86a3f47f.svg"/>
                   <ServiceText>서비스 안내</ServiceText>
                 </Service>
-                <Service>
+                <Service onClick={() => navigate('/serviceCenter')}>
                   <ServiceVector alt="" src="https://static.overlay-tech.com/assets/1e9c2706-edd6-4fe5-b478-4c983313be34.svg"/>
                   <ServiceText>1:1 문의</ServiceText>
                 </Service>

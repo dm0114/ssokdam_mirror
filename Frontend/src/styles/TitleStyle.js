@@ -9,6 +9,7 @@ export const TitleWrapper = styled.div`
   align-items: flex-start;
 
   width: 100%;
+  margin-bottom: 32px;
 `;
 export const TitleText  = styled.p`
 color: ${props => props.theme.colors.black};

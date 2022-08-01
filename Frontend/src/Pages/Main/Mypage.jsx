@@ -24,7 +24,7 @@ export const MyPage = () => {
             ? (
                 <SubBackgroundView>
                     <Wrap>
-                        <HeaderWrapper>
+                        <HeaderWrapper mb="48px">
                             <BinWrapper flex="1">
                                 <Link to="/">
                                     <ArrowBackIosIcon color="black"/>
