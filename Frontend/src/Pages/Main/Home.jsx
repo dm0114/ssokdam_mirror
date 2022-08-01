@@ -9,7 +9,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import './HomeModule.css'
 import LoginIcon from '@mui/icons-material/Login';
 import { userInfo } from '../../atoms'
-import {useRecoilValue} from "recoil";
+import {useRecoilState, useRecoilValue} from "recoil";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 
@@ -88,12 +88,19 @@ function Home(){
 
   const [notice, setNotice] = useState("")
   const navigate = useNavigate()
-  const userInfo2 = useRecoilValue(userInfo)
+  const [userInfo2, setUserInfo2] = useRecoilState(userInfo)
   // console.log(userInfo2);
 
 
   const logout = () => {
     localStorage.removeItem('access-token')
+    setUserInfo2({
+      userName : '',
+      userEmail : '',
+      userPoint : '',
+      userCnt : '',
+      userImage: '',
+    })
   }
 
 
@@ -139,10 +146,10 @@ function Home(){
                         <AccountCircleIcon color='black'/>
                       </Link>
                     </MainIcon>
-                    {/* <MainIcon>
+                     <MainIcon>
                       <LogoutIcon onClick={logout}/>
-                    </MainIcon> */}
-                    </>) 
+                    </MainIcon>
+                    </>)
 
                   : (<MainIcon>
                       <Link to='/login'>
