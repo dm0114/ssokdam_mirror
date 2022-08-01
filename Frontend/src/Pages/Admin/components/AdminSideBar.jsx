@@ -31,10 +31,12 @@ import { AdminExchange } from "../AdminExchange";
 import { AdminNotice } from "../AdminNotice";
 import { AdminUserManagement } from "../AdminUserManagement";
 import { AdminMain } from "../AdminMain";
+import {useNavigate} from "react-router-dom";
 
 const drawerWidth = 240;
 
 function AdminSideBar(props) {
+    const navigate = useNavigate()
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const itemIconList = [<DoorbellIcon/>,<SettingsRemoteIcon/>,<RecordVoiceOverIcon/>,<BrokenImageIcon/>,<ManageAccountsIcon/>,<CurrencyExchangeIcon/>]
@@ -43,7 +45,7 @@ function AdminSideBar(props) {
         setMobileOpen(!mobileOpen);
     };
 
-    let comp = <h1>관리자 페이지</h1>
+    let comp = ''
 
     const onModeHandling = (text) => {
         console.log(mode)
@@ -108,7 +110,7 @@ function AdminSideBar(props) {
                 sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
                 aria-label="mailbox folders"
             >
-                {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+
                 <Drawer
                     container={container}
                     variant="temporary"
@@ -135,7 +137,7 @@ function AdminSideBar(props) {
                     {drawer}
                 </Drawer>
             </Box>
-            <Box>
+            <Box style={{ height : '100vh', width : '100%'}}>
                 {comp}
             </Box>
         </Box>

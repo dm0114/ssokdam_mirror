@@ -40,7 +40,7 @@ function AdminHome(){
         <ThemeProvider theme={theme}>
             <React.Fragment>
                     <AdminNav adminName={adminInfo.userName}/>
-                    <Box sx={{ bgcolor: '#cfe8fc', height: '100vh' }}>
+                    <Box sx={{  height: '100vh'}}>
                         <AdminSideBar/>
                     </Box>
             </React.Fragment>

@@ -1,0 +1,58 @@
+import styled from "styled-components";
+
+export const AdminMainGround = styled.div`
+  background-color: ${(props) => props.theme.colors.silver};
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  //justify-content: space-between;
+
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box; /* Opera/IE 8+ */
+`;
+
+export const FullwidthBox = styled.div`
+    width : 100%;
+    display: flex;
+    height: 100px;
+    margin-top: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
+`
+export const ComponentBox = styled.div`
+  flex: 1;
+  display: flex;
+  background-color: white;
+  margin-left: 10px;
+  margin-right: 20px;
+  justify-content: center;
+  align-items: center;
+  //border-radius: 10px;
+  
+`
+export const TextBox = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+export const AdminMainImg = styled.img`
+  height: 50px;
+  text-align: center;
+  padding: 15px;
+`;
+
+export const ArticleWrapper = styled.div`
+  width : 100%;
+  display: flex;
+  height: 150px;
+  margin-top: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
+`
+
+
+
+
