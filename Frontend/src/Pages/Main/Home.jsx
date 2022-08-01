@@ -12,6 +12,7 @@ import { userInfo } from '../../atoms'
 import {useRecoilValue} from "recoil";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 
 import {
   MainBackGround,
@@ -134,14 +135,19 @@ function Home(){
               <MainContainer flexNum="1" jc="flex-end">
                   { !!userInfo2.userName
                   ? (<>
-                    <MainIcon>
+                    {/* <MainIcon>
                       <Link to='/myPage'>
                         <AccountCircleIcon color='black'/>
                       </Link>
-                    </MainIcon>
-                    {/* <MainIcon>
-                      <LogoutIcon onClick={logout}/>
                     </MainIcon> */}
+                    <MainIcon>
+                      <LogoutIcon onClick={logout}/>
+                    </MainIcon>
+                    <MainIcon>
+                      <Link to='/alarm'>
+                        <NotificationsNoneIcon color='black'/>
+                      </Link>
+                    </MainIcon>
                     </>) 
 
                   : (<MainIcon>
@@ -192,7 +198,7 @@ function Home(){
             </BinWrapper>
 
             <BinWrapper pl="24px" pr="24px" mb="16px">
-              <Point>
+              <Point onClick={() => navigate('/exchange')}>
                 <PointSubText>
                   <PointMainText>포인트 확인<br /></PointMainText>
                   내가 적립한 포인트 확인하기
@@ -203,11 +209,11 @@ function Home(){
 
             <BinWrapper pl="24px" pr="24px" mb="24px" bgColor="#fff">
               <MainWrapper>
-                <Service>
+                <Service onClick={() => navigate('/serviceInfo')}>
                   <ServiceVector alt="" src="https://static.overlay-tech.com/assets/38a95fc7-fb7d-4c9a-8f8b-acde86a3f47f.svg"/>
                   <ServiceText>서비스 안내</ServiceText>
                 </Service>
-                <Service>
+                <Service onClick={() => navigate('/serviceCenter')}>
                   <ServiceVector alt="" src="https://static.overlay-tech.com/assets/1e9c2706-edd6-4fe5-b478-4c983313be34.svg"/>
                   <ServiceText>1:1 문의</ServiceText>
                 </Service>

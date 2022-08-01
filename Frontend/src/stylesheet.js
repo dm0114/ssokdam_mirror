@@ -18,6 +18,12 @@ export default {
       weight: "400",
       lineHeight: "normal"
     },
+    sCoreDream10Regular: {
+      family: "S-Core Dream",
+      size: "10px",
+      weight: "400",
+      lineHeight: "20px"
+    },
     sCoreDream14Light: {
       family: "SCoreDream",
       size: "14px",
@@ -35,6 +41,12 @@ export default {
       size: "14px",
       weight: "500",
       lineHeight: "24px"
+    },
+    sCoreDream14RegularLine20: {
+      family: "S-Core Dream",
+      size: "14px",
+      weight: "400",
+      lineHeight: "20px"
     },
     sCoreDream14RegularLine24: {
       family: "S-Core Dream",
@@ -59,6 +71,12 @@ export default {
       size: "18px",
       weight: "400",
       lineHeight: "24px"
+    },
+    sCoreDream18Regular2: {
+      family: "S-Core Dream",
+      size: "18px",
+      weight: "400",
+      lineHeight: "normal"
     },
     sCoreDream18Bold: {
       family: "S-Core Dream",
@@ -101,6 +119,12 @@ export default {
       size: "32px",
       weight: "500",
       lineHeight: "48px"
+    },
+    sCoreDream28Regular: {
+      family: "S-Core Dream",
+      size: "28px",
+      weight: "400",
+      lineHeight: "normal"
     },
     sCoreDream32Bold: {
       family: "SCoreDream",

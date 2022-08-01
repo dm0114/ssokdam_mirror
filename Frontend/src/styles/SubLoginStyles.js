@@ -51,6 +51,7 @@ export const PasswordWrap = styled.div`
 
 export const HeaderWrapper = styled(Wrap)`
   flex-direction: row;
+  margin-bottom: ${props => props.mb};
 `
 
 export const Vector = styled.img `
