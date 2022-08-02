@@ -25,7 +25,22 @@ export const MainIcon = styled.p`
   height: 24px;
   margin: 0px 0px 0px 16px;
 `
-
+export const MiddleText = styled.p`
+  z-index: 99;
+  width: 120px;
+  margin: 24px auto 32px auto;
+  padding: 16px;
+  
+  color: white;
+  background: rgba(0, 0, 0, 50%);
+  /* border: 2px solid #73AD21; */
+  border-radius: 25px;
+  
+  font-size: 40px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 40px;
+`
 
 // Time
 export const TimeController = styled.div`

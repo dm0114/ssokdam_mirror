@@ -12,14 +12,11 @@ import { userInfo } from '../../atoms'
 import {useRecoilState, useRecoilValue} from "recoil";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
-<<<<<<< HEAD
-import {recoilPersist} from "recoil-persist";
-=======
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
->>>>>>> a2fecdc1c930e26b64976b93c804d9f6bbb4e8be
 
 import {
   MainBackGround,
+  MiddleBackground,
   SubBackGround,
   BinWrapper,
 } from "../../styles/BackgroundStyle";
@@ -46,6 +43,8 @@ import {
   MainTextContainerWrapper,
   MainContainer,
   MainIcon,
+
+  MiddleText,
 } from "../../styles/HomeStyle";
 
 import {
@@ -130,7 +129,7 @@ function Home(){
   return (
     <ThemeProvider theme={theme}>
       <MainBackGround>
-          <BinWrapper pt="52px" pl="24px" pr="24px">
+        <BinWrapper pt="52px" pl="24px" pr="24px">
             <MainTextContainerWrapper>
               <MainContainer flexNum="3">
                 { localStorage.getItem("access-token") ? (
@@ -150,12 +149,6 @@ function Home(){
                       <Link to='/myPage'>
                         <AccountCircleIcon color='black'/>
                       </Link>
-<<<<<<< HEAD
-                    </MainIcon>
-                    {/*<MainIcon>*/}
-                    {/*  <LogoutIcon onClick={logout}/>*/}
-                    {/*</MainIcon>*/}
-=======
                     </MainIcon> */}
                     <MainIcon>
                       <LogoutIcon onClick={logout}/>
@@ -165,7 +158,6 @@ function Home(){
                         <NotificationsNoneIcon color='black'/>
                       </Link>
                     </MainIcon>
->>>>>>> a2fecdc1c930e26b64976b93c804d9f6bbb4e8be
                     </>) 
 
                   : (<MainIcon>
@@ -181,7 +173,17 @@ function Home(){
 
               </MainContainer>
             </MainTextContainerWrapper>
-          </BinWrapper>
+        </BinWrapper>
+        
+        
+        <MiddleText>
+          {userInfo2.userCnt}회
+        </MiddleText>
+        
+
+          <MiddleBackground>
+            <img src="https://ifh.cc/g/fvfPJg.png" alt="" style={{objectFit: 'contain', width: '100vw'}}/>
+          </MiddleBackground>
 
         <SubBackGround height="60vh">              
             <BinWrapper pl="24px" pr="24px" mb="32px">
@@ -194,7 +196,7 @@ function Home(){
             </BinWrapper>
 
             <BinWrapper pl="24px" pr="24px" mb="16px">
-              <Notice message={ notice } action={ detailGo }>
+              <Notice message={ notice } action={ detailGo } onClick={() => navigate('/notice')}>
                 <NoticeText>공지사항 📢</NoticeText>
                 <ChevronRight alt="" src="https://static.overlay-tech.com/assets/cdd4539a-7fd6-46c2-96bc-dbee9bd4530c.svg"/>
               </Notice>

@@ -16,6 +16,7 @@ import EcoMap from "./Pages/Main/EcoMap";
 import Home from './Pages/Main/Home'
 import Qr from './Pages/Main/Qr'
 import MyPage from './Pages/Main/Mypage'
+import Notice from './Pages/Main/Notice'
 
 import Exchange from './Pages/Sub/Exchange'
 import ServiceInfo from './Pages/Sub/ServiceInfo'
@@ -23,6 +24,7 @@ import ServiceCenter from './Pages/Sub/ServiceCenter'
 import MyAsk from './Pages/Sub/MyAsk'
 import Complaint from './Pages/Sub/Complaint'
 import BrokenDeviceReport from './Pages/Sub/BrokenDeviceReport'
+import FrequentlyQuestion from './Pages/Sub/FrequentlyQuestion'
 
 import Alarm from './Pages/Nav/Alarm'
 
@@ -40,6 +42,7 @@ function App() {
           <Route path='/alarm' element={<Alarm/>} />
           <Route path='/map' element={ <EcoMap/>} />
           <Route path='/qr' element={<Qr/>} />
+          <Route path='/notice' element={<Notice/>} />
           
           <Route path='/serviceInfo' element={<ServiceInfo/>} />
           <Route path='/serviceCenter' element={<ServiceCenter/>} />

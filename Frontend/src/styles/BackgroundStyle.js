@@ -26,6 +26,8 @@ export const SubBackGround = styled.div`
 
   border: 1px solid #fff;
 
+  z-index: 1;
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -58,4 +60,31 @@ export const QrBackGround = styled.div`
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
   box-sizing: border-box; /* Opera/IE 8+ */
+`
+
+export const MapBackGround = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box; /* Opera/IE 8+ */
+`
+
+export const MiddleBackground = styled.div`
+  position: absolute;
+  top: 130px;
+  left: 0px;
+  z-index: 0;
+  object-fit: contain;
+  animation: motion 1.5s linear 0s infinite alternate; margin-top: 0;
+
+  @keyframes motion {
+	0% {margin-top: 0px;}
+	100% {margin-top: 15px;}
+}
 `

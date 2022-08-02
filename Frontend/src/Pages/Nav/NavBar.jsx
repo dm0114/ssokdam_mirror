@@ -24,7 +24,7 @@ export const NavBar = () => {
       onKeyDown={() => setOpen(false)}
     >
       <List>
-        {[['마이페이지', '/myPage'], ['나의 흡연습관', '/'], ['포인트 전환', '/'], ['친구 초대', '/'], ['서비스 안내', '/'], ['고객센터', '/']].map((text) => (
+        {[['마이페이지', '/myPage'], ['포인트 전환', '/exChange'], ['서비스 안내', '/serviceInfo'], ['고객센터', '/serviceCenter']].map((text) => (
           <ListItem key={text} disablePadding>
             <ListItemButton onClick={() => navi(text[1])}>
               <ListItemText primary={text[0]} />
