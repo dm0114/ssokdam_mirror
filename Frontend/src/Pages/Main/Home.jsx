@@ -17,6 +17,7 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 
 import {
   MainBackGround,
+  MiddleBackground,
   SubBackGround,
   BinWrapper,
 } from "../../styles/BackgroundStyle";
@@ -43,6 +44,8 @@ import {
   MainTextContainerWrapper,
   MainContainer,
   MainIcon,
+
+  MiddleText,
 } from "../../styles/HomeStyle";
 
 import {
@@ -127,7 +130,7 @@ function Home(){
   return (
     <ThemeProvider theme={theme}>
       <MainBackGround>
-          <BinWrapper pt="52px" pl="24px" pr="24px">
+        <BinWrapper pt="52px" pl="24px" pr="24px">
             <MainTextContainerWrapper>
               <MainContainer flexNum="3">
                 { localStorage.getItem("access-token") ? (
@@ -171,7 +174,17 @@ function Home(){
 
               </MainContainer>
             </MainTextContainerWrapper>
-          </BinWrapper>
+        </BinWrapper>
+        
+        
+        <MiddleText>
+          {userInfo2.userCnt}회
+        </MiddleText>
+        
+
+          <MiddleBackground>
+            <img src="https://ifh.cc/g/fvfPJg.png" alt="" style={{objectFit: 'contain', width: '100vw'}}/>
+          </MiddleBackground>
 
         <SubBackGround height="60vh">              
             <BinWrapper pl="24px" pr="24px" mb="32px">
@@ -184,7 +197,7 @@ function Home(){
             </BinWrapper>
 
             <BinWrapper pl="24px" pr="24px" mb="16px">
-              <Notice message={ notice } action={ detailGo }>
+              <Notice message={ notice } action={ detailGo } onClick={() => navigate('/notice')}>
                 <NoticeText>공지사항 📢</NoticeText>
                 <ChevronRight alt="" src="https://static.overlay-tech.com/assets/cdd4539a-7fd6-46c2-96bc-dbee9bd4530c.svg"/>
               </Notice>

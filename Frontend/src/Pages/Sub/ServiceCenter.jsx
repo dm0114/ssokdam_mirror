@@ -24,6 +24,7 @@ import {
 } from "../../styles/BackgroundStyle";
 
 const ServiceCenter = () => {
+  const navigate = useNavigate()
   return (
     <SubBackgroundView>
        <Wrap>
@@ -41,7 +42,7 @@ const ServiceCenter = () => {
         <TitleWrapper>
             <TitleText>불편 사항</TitleText>
             <TitleDivider />
-            <ContentWrapper onClick={() => navigate('/')}>
+            <ContentWrapper onClick={() => navigate('/complaint')}>
                 <ContentText>불편 사항 접수</ContentText>
                     <ContentVector
                         alt=""
@@ -54,7 +55,7 @@ const ServiceCenter = () => {
         <TitleWrapper>
             <TitleText>고장 신고</TitleText>
             <TitleDivider />
-            <ContentWrapper onClick={() => navigate('/')}>
+            <ContentWrapper onClick={() => navigate('/brokenDeviceReport')}>
                 <ContentText>고장신고 접수</ContentText>
                     <ContentVector
                         alt=""
@@ -67,7 +68,7 @@ const ServiceCenter = () => {
         <TitleWrapper>
             <TitleText>나의 문의 내역</TitleText>
             <TitleDivider />
-            <ContentWrapper onClick={() => navigate('/')}>
+            <ContentWrapper onClick={() => navigate('/myAsk')}>
                 <ContentText>내역 보기</ContentText>
                     <ContentVector
                         alt=""

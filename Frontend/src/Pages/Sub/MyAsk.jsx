@@ -1,7 +1,9 @@
+import {Link, useNavigate} from 'react-router-dom'
+
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import {
   SubBackgroundView,
   Wrap,
-  Vector,
   MainText,
   HeaderWrapper,
 
@@ -17,29 +19,41 @@ import {
     ContentVector
 } from '../../styles/TitleStyle'
 
+import {
+    BinWrapper,
+} from "../../styles/BackgroundStyle";
+
+import { AlarmMainText, AlarmSubText } from '../../styles/AlarmStyle'
+
+
 const MyAsk = () => {
   return (
     <SubBackgroundView>
         <Wrap>
-            <HeaderWrapper>
-                <Vector
-                    alt=""
-                    src="https://static.overlay-tech.com/assets/897d620b-7272-4e3f-b46a-7d57d097eecd.svg"/>
-                <MainText>나의 문의 내역</MainText>
-            </HeaderWrapper>
+        <HeaderWrapper mb="48px">
+            <BinWrapper flex="1">
+                <Link to="/serviceCenter">
+                    <ArrowBackIosIcon color="black"/>
+                </Link>
+            </BinWrapper>
+            <MainText flex="3">나의 문의 내역</MainText>
+            <BinWrapper flex="1"></BinWrapper>
+        </HeaderWrapper>
         </Wrap>
+
         <TitleWrapper>
-            <TitleText>ㅇㅇ</TitleText>
-            <TitleDivider />
+            <TitleText>나의 문의 내역</TitleText>
+            <TitleDivider />            
             <ContentWrapper>
-                <ContentText>이미지</ContentText>
-                    <ContentVector
-                        alt=""
-                        src="https://static.overlay-tech.com/assets/8baf2001-760e-444e-9536-318352b328b5.svg"
-                    />
+              <AlarmMainText>포인트가 적립되었습니다.</AlarmMainText>
+            </ContentWrapper>
+            <ContentWrapper>
+              <AlarmSubText>25분전</AlarmSubText>              
             </ContentWrapper>
             <ContentDivider />
         </TitleWrapper>
+        
+
     </SubBackgroundView>
 );  
 }
