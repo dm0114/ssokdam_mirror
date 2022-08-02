@@ -12,6 +12,7 @@ import { userInfo } from '../../atoms'
 import {useRecoilState, useRecoilValue} from "recoil";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
+import {recoilPersist} from "recoil-persist";
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 
 import {

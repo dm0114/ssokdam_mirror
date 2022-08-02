@@ -34,6 +34,7 @@ export const ComponentBox = styled.div`
   
 `
 export const TextBox = styled.div`
+  font-size : 20px;
   display: flex;
   flex-direction: column;
 `
@@ -44,15 +45,33 @@ export const AdminMainImg = styled.img`
   padding: 15px;
 `;
 
-export const ArticleWrapper = styled.div`
-  width : 100%;
+export const ArticleWrapper = styled.ul`
+  width : 97%;
   display: flex;
-  height: 150px;
+  height: 200px;
   margin-top: 50px;
-  margin-left: 10px;
+  margin-left: 20px;
   margin-right: 10px;
+  padding: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+`
+export const Article = styled.li`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 20%;
+  margin: 10px;
+  //background-color: #9e9e9e;
 `
 
-
+export const IconBox = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+`
 
 

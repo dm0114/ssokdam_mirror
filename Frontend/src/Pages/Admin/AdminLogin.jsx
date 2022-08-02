@@ -64,7 +64,7 @@ export default function AdminLogin() {
             const resUserInfomation = await fetchAdminLogin(account); //성공하면 해당 user 아이디 패스워드값 셋팅
             console.log(resUserInfomation)
             if (!resUserInfomation.ok) { // 아예 아이디가 없는 경우
-                alert('관리자가 아닙니다!')
+                alert('가입되지 않은 아이디입니다.')
             } else {
                 resUserInfomation.json().then((res) => {
                     console.log(res)
