@@ -22,6 +22,7 @@ import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 import BrokenImageIcon from '@mui/icons-material/BrokenImage';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import {useState} from "react";
 import {useEffect} from "react";
 import { AdminBrokenDeviceManagement } from "../AdminBrokenDeviceManagement";
@@ -39,8 +40,8 @@ function AdminSideBar(props) {
     const navigate = useNavigate()
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    const itemIconList = [<DoorbellIcon/>,<SettingsRemoteIcon/>,<RecordVoiceOverIcon/>,<BrokenImageIcon/>,<ManageAccountsIcon/>,<CurrencyExchangeIcon/>]
-    const [mode,setMode] = useState('관리자 페이지')
+    const itemIconList = [<AdminPanelSettingsIcon/> ,<DoorbellIcon/>,<SettingsRemoteIcon/>,<RecordVoiceOverIcon/>,<BrokenImageIcon/>,<ManageAccountsIcon/>,<CurrencyExchangeIcon/>]
+    const [mode,setMode] = useState('관리자 메인')
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
@@ -52,7 +53,7 @@ function AdminSideBar(props) {
         setMode(text)
     }
 
-    if(mode === "관리자 페이지"){
+    if(mode === "관리자 메인"){
         comp = <AdminMain/>
     }else if(mode === "공지사항 관리"){
         comp = <AdminNotice/>
@@ -61,7 +62,7 @@ function AdminSideBar(props) {
     }else if(mode === "접수된 불만 사항"){
         comp = <AdminComplaintManagement/>
     }else if(mode === "접수된 고장 신고"){
-        comp = <AdminCheckDevice/>
+        comp = <AdminBrokenDeviceManagement/>
     }else if(mode === "회원 관리"){
         comp = <AdminUserManagement/>
     }else if(mode === "포인트 전환"){
@@ -75,14 +76,14 @@ function AdminSideBar(props) {
         <div>
             <Box sx={{ display : 'flex', justifyContent : "center", alignItems : "center", height : '64px'}} >
                 <Typography component="h2" variant="h6" style={{ cursor: 'pointer' }} onClick={(e) => {
-                    onModeHandling("관리자 페이지")
+                    onModeHandling("관리자 메인")
                 }}>
-                 관리자 페이지
+                 에코원
                 </Typography>
             </Box>
             <Divider />
             <List>
-                {['공지사항 관리', '기기 정보 확인', '접수된 불만 사항', '접수된 고장 신고', '회원 관리','포인트 전환'].map((text, index) => (
+                {['관리자 메인', '공지사항 관리', '기기 정보 확인', '접수된 불만 사항', '접수된 고장 신고', '회원 관리','포인트 전환'].map((text, index) => (
                     <ListItem key={text}  disablePadding>
                         <ListItemButton onClick={(e) => {
                             onModeHandling(text)

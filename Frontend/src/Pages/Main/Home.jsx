@@ -12,11 +12,8 @@ import { userInfo } from '../../atoms'
 import {useRecoilState, useRecoilValue} from "recoil";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
-<<<<<<< HEAD
 import {recoilPersist} from "recoil-persist";
-=======
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
->>>>>>> a2fecdc1c930e26b64976b93c804d9f6bbb4e8be
 
 import {
   MainBackGround,
@@ -150,12 +147,6 @@ function Home(){
                       <Link to='/myPage'>
                         <AccountCircleIcon color='black'/>
                       </Link>
-<<<<<<< HEAD
-                    </MainIcon>
-                    {/*<MainIcon>*/}
-                    {/*  <LogoutIcon onClick={logout}/>*/}
-                    {/*</MainIcon>*/}
-=======
                     </MainIcon> */}
                     <MainIcon>
                       <LogoutIcon onClick={logout}/>
@@ -165,7 +156,6 @@ function Home(){
                         <NotificationsNoneIcon color='black'/>
                       </Link>
                     </MainIcon>
->>>>>>> a2fecdc1c930e26b64976b93c804d9f6bbb4e8be
                     </>) 
 
                   : (<MainIcon>
