@@ -32,6 +32,7 @@ import {AdminComplaintManagement} from "./Pages/Admin/AdminComplaintManagement";
 import {AdminBrokenDeviceManagement} from "./Pages/Admin/AdminBrokenDeviceManagement";
 import {AdminUserManagement} from "./Pages/Admin/AdminUserManagement";
 import {AdminExchange} from "./Pages/Admin/AdminExchange";
+import {AdminNoticeCreate} from "./Pages/Admin/AdminNoticeCreate";
 
 import AdminLogin from './Pages/Admin/AdminLogin'
 import AdminHome from './Pages/Admin/AdminHome'
@@ -65,7 +66,7 @@ function App() {
           {/* Admin */}
           <Route path='/adminLogin' element={<AdminLogin/>} />
           <Route path='/admin' element={<AdminHome/>} />
-          {/*<Route path='/admin/notice' element={<AdminNotice/>} />*/}
+          <Route path='/admin/notice/create' element={<AdminNoticeCreate/>} />
           {/*<Route path='/admin/checkDevice' element={<AdminCheckDevice/>} />*/}
           {/*<Route path='/admin/complaintManagement' element={<AdminComplaintManagement/>} />*/}
           {/*<Route path='/admin/brokenDeviceManagement' element={<AdminBrokenDeviceManagement/>} />*/}

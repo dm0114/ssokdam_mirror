@@ -5,6 +5,9 @@ import {Link} from "react-router-dom";
 import Button from "@mui/material/Button";
 import {useEffect, useState} from "react";
 import { DataGrid } from '@mui/x-data-grid';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import BuildIcon from '@mui/icons-material/Build';
 
 import { SERVER_URL } from '../../config';
 import axios from "axios";
@@ -36,19 +39,32 @@ const columns = [
 ];
 
 const rows = [
-    { id: 'kiki249', userPwd: '*****!', userBirth: '1993-11-18', userPoint: 120, userEmail : 'kiki249@naver.com' },
-    { id: 'swyou', userPwd: '*****9', userBirth: '1997-11-18', userPoint: 100, userEmail : 'swyou97@naver.com'  },
-    { id: 'kdmhello', userPwd: '*****4', userBirth: '1997-11-18', userPoint: 300, userEmail : 'kdmhello97@naver.com'},
-    { id: 'kdwon', userPwd: '*****$', userBirth: '1997-11-18', userPoint: 240, userEmail : 'kdwon96@naver.com' },
-    { id: 'yshan', userPwd: '*****w', userBirth: '1997-11-18', userPoint: 500, userEmail : 'yshan97@naver.com' },
-    { id: 'jhwon', userPwd: '*****s', userBirth: '1998-11-18', userPoint: 1000, userEmail : 'jhwon98@naver.com' },
-    { id: 'hello', userPwd: '*****j', userBirth: '1994-11-18', userPoint: 20, userEmail : 'kiki249@naver.com' },
-    { id: 'ecowon', userPwd: '*****v', userBirth: '1995-11-18', userPoint: 40, userEmail : 'kiki249@naver.com' },
-    { id: 'cigarnono', userPwd: '*****d', userBirth: '1996-11-18', userPoint: 60, userEmail :'kiki249@naver.com' },
+    { id: 'kiki249', userPwd: '*****!', userBirthDay: '1993-11-18', userPoint: 120, userEmail : 'kiki249@naver.com' },
+    { id: 'swyou', userPwd: '*****9', userBirthDay: '1997-11-18', userPoint: 100, userEmail : 'swyou97@naver.com'  },
+    { id: 'kdmhello', userPwd: '*****4', userBirthDay: '1997-11-18', userPoint: 300, userEmail : 'kdmhello97@naver.com'},
+    { id: 'kdwon', userPwd: '*****$', userBirthDay: '1997-11-18', userPoint: 240, userEmail : 'kdwon96@naver.com' },
+    { id: 'yshan', userPwd: '*****w', userBirthDay: '1997-11-18', userPoint: 500, userEmail : 'yshan97@naver.com' },
+    { id: 'jhwon', userPwd: '*****s', userBirthDay: '1998-11-18', userPoint: 1000, userEmail : 'jhwon98@naver.com' },
+    { id: 'hello', userPwd: '*****j', userBirthDay: '1994-11-18', userPoint: 20, userEmail : 'kiki249@naver.com' },
+    { id: 'ecowon', userPwd: '*****v', userBirthDay: '1995-11-18', userPoint: 40, userEmail : 'kiki249@naver.com' },
+    { id: 'cigarnono', userPwd: '*****d', userBirthDay: '1996-11-18', userPoint: 60, userEmail :'kiki249@naver.com' },
 ];
 
 
 export const AdminUserManagement = () => {
+    const [usersInfo, setUsersInfo] = useState()
+    const fetchUserInfo = async () => {
+        const url =  `${SERVER_URL}/login`
+        await fetch(url, {
+            method: 'GET',
+        }).then((res) => {
+            console.log(res.json())
+            // setUsersInfo(res)
+        })
+    }
+
+    fetchUserInfo() // useEffect 제대로 쓰는법 알아볼것
+
     return (
         <React.Fragment>
             <Box sx={{ marginLeft : '20px' }}>
@@ -62,6 +78,10 @@ export const AdminUserManagement = () => {
                         checkboxSelection
                     />
                 </div>
+            </Box>
+            <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginRight : '20px', marginTop : '10px' }}>
+                <Button variant="contained" startIcon={<BuildIcon />} sx={{ marginRight : '10px' }} >수정</Button>
+                <Button variant="contained" startIcon={<DeleteIcon />} color='error' >삭제</Button>
             </Box>
         </React.Fragment>
     )

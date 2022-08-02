@@ -33,6 +33,7 @@ import { AdminNotice } from "../AdminNotice";
 import { AdminUserManagement } from "../AdminUserManagement";
 import { AdminMain } from "../AdminMain";
 import {useNavigate} from "react-router-dom";
+import {AdminNoticeCreate} from "../AdminNoticeCreate";
 
 const drawerWidth = 240;
 
@@ -68,7 +69,7 @@ function AdminSideBar(props) {
     }else if(mode === "포인트 전환"){
         comp = <AdminExchange/>
     }else{
-        comp = <h1>잘못된 페이지</h1>
+        comp = <AdminNoticeCreate/>
     }
 
 
@@ -83,7 +84,7 @@ function AdminSideBar(props) {
             </Box>
             <Divider />
             <List>
-                {['관리자 메인', '공지사항 관리', '기기 정보 확인', '접수된 불만 사항', '접수된 고장 신고', '회원 관리','포인트 전환'].map((text, index) => (
+                {['관리자 메인', '공지사항 관리', '기기 정보 확인', '접수된 불만 사항', '접수된 고장 신고', '회원 관리','포인트 전환','시험페이지'].map((text, index) => (
                     <ListItem key={text}  disablePadding>
                         <ListItemButton onClick={(e) => {
                             onModeHandling(text)

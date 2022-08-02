@@ -19,6 +19,9 @@ import TableFooter from '@mui/material/TableFooter';
 import PropTypes from 'prop-types';
 import {Box} from "@mui/material";
 import { useTheme } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import EditIcon from "@mui/icons-material/Edit";
+import BorderColorIcon from '@mui/icons-material/BorderColor';
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -187,6 +190,9 @@ export const AdminNotice = () => {
                     </TableFooter>
                 </Table>
             </TableContainer>
+                <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginRight : '20px', marginTop : '10px' }}>
+                    <Button variant="contained" startIcon={<BorderColorIcon />} >글 작성</Button>
+                </Box>
         </>
     )
 }
