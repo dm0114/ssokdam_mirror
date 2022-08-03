@@ -1,7 +1,9 @@
 import React from 'react'
 import Container from "@mui/material/Container";
 import TextField from '@mui/material/TextField';
-import { FormControl } from '@mui/material';
+import {Box, FormControl} from '@mui/material';
+import Button from "@mui/material/Button";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
 
 export const AdminNoticeCreate = () => {
     return (
@@ -14,6 +16,9 @@ export const AdminNoticeCreate = () => {
                     <h3>내용</h3>
                     <TextField fullWidth placeholder="내용을 입력해주세요."  multiline rows={12}></TextField>
                 </FormControl>
+                <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginTop : '10px' }}>
+                    <Button variant="contained" startIcon={<BorderColorIcon />} >작성</Button>
+                </Box>
             </Container>
         </React.Fragment>
     )
