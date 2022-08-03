@@ -1,0 +1,15 @@
+import { SERVER_URL } from '../config';
+
+export async function fetchMyAsk() {
+  const URL = `${SERVER_URL}/myAsk`
+
+  const response = await axios.get(URL, {
+    headers : {
+      token : localStorage.getItem("access-token")
+    },
+  })
+  
+  const json = await response.json();
+  console.log(json)
+  return json
+}
