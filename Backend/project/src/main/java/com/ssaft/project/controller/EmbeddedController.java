@@ -68,8 +68,8 @@ public class EmbeddedController {
 
     @GetMapping("/receive")
     @ResponseBody
-    public Map receive(@RequestBody EmbeddedData sensing){
-        Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(sensing.getEmbId());
+    public Map receive(@RequestParam int embId){
+        Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(embId);
         Map<String, Object> map = new LinkedHashMap<>();
         if(embeddedData.get().getEmbQr().equals("Y")){
             map.put("userId" , embeddedData.get().getIotUser().getUserId());

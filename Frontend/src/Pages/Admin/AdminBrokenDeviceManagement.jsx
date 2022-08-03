@@ -19,6 +19,7 @@ import TableFooter from '@mui/material/TableFooter';
 import PropTypes from 'prop-types';
 import {Box} from "@mui/material";
 import { useTheme } from '@mui/material/styles';
+import {useState} from "react";
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -102,25 +103,49 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-function createData(id, title, author, createDate, views, trash) {
-    return { id, title, author, createDate, views, trash };
-}
-
-const rows = [
-    createData(1, "이제부터 포인트가 2배씩!",  "김도원", "2022-08-02", 240, <DeleteIcon/>),
-    createData(2, "친구 초대 시 500 포인트", "김강현", "2022-08-02", 503, <DeleteIcon/>),
-    createData(3, "QR 찍지 않아도 됩니다!", "권덕민", "2022-08-02", 560, <DeleteIcon/>),
-    createData(4, "공통 프로젝트 C106", "유승우", "2022-08-02", 302, <DeleteIcon/>),
-    createData(5, "1등했다고 합니다", "윤성한", "2022-08-02", 503, <DeleteIcon/>),
-    createData(6, "조금만 힙냅시다!", "정혜원", "2022-08-02", 205, <DeleteIcon/>),
-];
+// function createData(id, title, author, createDate, views, trash) {
+//     return { id, title, author, createDate, views, trash };
+// }
+//
+// const rows = [
+//     createData(1, "이제부터 포인트가 2배씩!",  "김도원", "2022-08-02", 240, <DeleteIcon/>),
+//     createData(2, "친구 초대 시 500 포인트", "김강현", "2022-08-02", 503, <DeleteIcon/>),
+//     createData(3, "QR 찍지 않아도 됩니다!", "권덕민", "2022-08-02", 560, <DeleteIcon/>),
+//     createData(4, "공통 프로젝트 C106", "유승우", "2022-08-02", 302, <DeleteIcon/>),
+//     createData(5, "1등했다고 합니다", "윤성한", "2022-08-02", 503, <DeleteIcon/>),
+//     createData(6, "조금만 힙냅시다!", "정혜원", "2022-08-02", 205, <DeleteIcon/>),
+// ];
 
 
 
 export const AdminBrokenDeviceManagement = () => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [complains,setComplains] = useState([])
+    useEffect(() => {
+        const fetchDevice = async () => {
+            // const URL = "https://3.36.78.244:8080/embedded/map"
+            const URL = "http://localhost:8888/complains"
+            let response = await fetch(URL, {
+                method : 'GET'
+            }).then((res) => {res.json().then((res) => {
+                console.log(res)
+                setComplains(res)
+            })
+            })
+        };
+        fetchDevice();
+    }, []);
+    function createData(id, title, author, createDate, trash) {
+        return { id, title, author, createDate, trash };
+    }
 
+    const rows = [
+        complains.map((complain,index) => {
+            console.log(complain)
+            return createData(index ,complain.pstTitle, complain.userName, complain.pstDt,<DeleteIcon/>)
+        })
+    ];
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -135,7 +160,7 @@ export const AdminBrokenDeviceManagement = () => {
     };
     return (
         <>
-            <h1 style={{ marginLeft : '30px' }}>접수된 고장 신고</h1>
+            <h2 style={{ marginLeft : '30px' }}>접수된 고장 신고</h2>
             <TableContainer sx={{ width : '175vh', margin : '20px' }} component={Paper}>
                 <Table sx={{ minWidth: 700}} aria-label="customized table">
                     <TableHead>
@@ -150,8 +175,8 @@ export const AdminBrokenDeviceManagement = () => {
                     </TableHead>
                     <TableBody>
                         {(rowsPerPage > 0
-                                ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                : rows
+                                ? rows[0].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                : rows[0]
                         ).map((row) => (
                             <StyledTableRow key={row.id}>
                                 <StyledTableCell align="center" component="th" scope="row">

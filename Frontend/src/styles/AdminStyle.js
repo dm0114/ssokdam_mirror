@@ -30,7 +30,7 @@ export const ComponentBox = styled.div`
   margin-right: 20px;
   justify-content: center;
   align-items: center;
-  //border-radius: 10px;
+  border-radius: 10px;
   
 `
 export const TextBox = styled.div`
@@ -57,6 +57,7 @@ export const ArticleWrapper = styled.ul`
   justify-content: center;
   align-items: center;
   font-size: 20px;
+  border-radius: 10px;
 `
 export const Article = styled.li`
   display: flex;
