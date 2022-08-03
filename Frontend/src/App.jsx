@@ -22,6 +22,7 @@ import Exchange from './Pages/Sub/Exchange'
 import ServiceInfo from './Pages/Sub/ServiceInfo'
 import ServiceCenter from './Pages/Sub/ServiceCenter'
 import MyAsk from './Pages/Sub/MyAsk'
+import MyAskDetail from './Pages/Sub/MyAskDetail'
 import Complaint from './Pages/Sub/Complaint'
 import BrokenDeviceReport from './Pages/Sub/BrokenDeviceReport'
 import FrequentlyQuestion from './Pages/Sub/FrequentlyQuestion'
@@ -46,30 +47,31 @@ function App() {
       <Router>
         <Routes>
           {/* clientMain */}
-          <Route path='/' element={<Home/>} />
-          <Route path='/myPage' element={<MyPage/>} />
-          <Route path='/alarm' element={<Alarm/>} />
-          <Route path='/map' element={ <EcoMap/>} />
-          <Route path='/qr' element={<Qr/>} />
-          <Route path='/notice' element={<Notice/>} />
+          <Route exact path='/' element={<Home/>} />
+          <Route exact path='/myPage' element={<MyPage/>} />
+          <Route exact path='/alarm' element={<Alarm/>} />
+          <Route exact path='/map' element={ <EcoMap/>} />
+          <Route exact path='/qr' element={<Qr/>} />
+          <Route exact path='/notice' element={<Notice/>} />
           
-          <Route path='/serviceInfo' element={<ServiceInfo/>} />
-          <Route path='/serviceCenter' element={<ServiceCenter/>} />
-          <Route path='/frequentlyQuestion' element={<FrequentlyQuestion />} />
-          <Route path='/myAsk' element={<MyAsk />} />
-          <Route path='/exchange' element={<Exchange/>} />
-          <Route path='/complaint' element={<Complaint/>} />
-          <Route path='/brokenDeviceReport' element={<BrokenDeviceReport/>} />
+          <Route exact path='/serviceInfo' element={<ServiceInfo/>} />
+          <Route exact path='/serviceCenter' element={<ServiceCenter/>} />
+          <Route exact path='/frequentlyQuestion' element={<FrequentlyQuestion />} />
+          <Route exact path='/myAsk' element={<MyAsk />} />
+          <Route exact path="/myAsk/:id" element={<MyAskDetail/>} />
+          <Route exact path='/exchange' element={<Exchange/>} />
+          <Route exact path='/complaint' element={<Complaint/>} />
+          <Route exact path='/brokenDeviceReport' element={<BrokenDeviceReport/>} />
           {/* ClientAuth */}
-          <Route path='/login' element={<Login/>} />
-          <Route path='/login/findId' element={<FindId/>} />
-          <Route path='/login/findPw' element={<FindPw/>} />
-          <Route path='/signup' element={<SignUp/>} />
-          <Route path='/login/changePw' element={<ChangePw/>} />
+          <Route exact path='/login' element={<Login/>} />
+          <Route exact path='/login/findId' element={<FindId/>} />
+          <Route exact path='/login/findPw' element={<FindPw/>} />
+          <Route exact path='/signup' element={<SignUp/>} />
+          <Route exact path='/login/changePw' element={<ChangePw/>} />
           {/* Admin */}
-          <Route path='/adminLogin' element={<AdminLogin/>} />
-          <Route path='/admin' element={<AdminHome/>} />
-          <Route path='/admin/notice/create' element={<AdminNoticeCreate/>} />
+          <Route exact path='/adminLogin' element={<AdminLogin/>} />
+          <Route exact path='/admin' element={<AdminHome/>} />
+          <Route exact path='/admin/notice/create' element={<AdminNoticeCreate/>} />
           {/*<Route path='/admin/checkDevice' element={<AdminCheckDevice/>} />*/}
           {/*<Route path='/admin/complaintManagement' element={<AdminComplaintManagement/>} />*/}
           {/*<Route path='/admin/brokenDeviceManagement' element={<AdminBrokenDeviceManagement/>} />*/}
