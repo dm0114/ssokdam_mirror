@@ -6,9 +6,12 @@ import {Link} from "react-router-dom";
 import Button from "@mui/material/Button";
 import {useEffect, useState} from "react";
 import { DataGrid } from '@mui/x-data-grid';
-
 import { SERVER_URL } from '../../config';
 import axios from "axios";
+import {MapTypeId} from "react-kakao-maps-sdk";
+import ButtonGroup from '@mui/material/ButtonGroup';
+import {Roadview ,RoadviewMarker} from "react-kakao-maps-sdk";
+import {useMap} from "react-kakao-maps-sdk";
 
 const columns = [
     { field: 'id', headerName: '디바이스 번호', flex : 1, headerAlign: 'center', align: "center" },
@@ -56,8 +59,11 @@ export const AdminCheckDevice = () => {
         errMsg: null,
         isLoading: true,
     })
+    const [roadViewPosition, setRoadViewPosition] = useState(state.center)
+    const [toggle, setToggle] = useState("map")
+    const [mapTypeId, setMapTypeId] = useState()
     const [positions, setPositions] = useState([])
-    console.log(positions)
+    console.log(roadViewPosition)
     useEffect(() => {
         const fetchDevice = async () => {
             const URL = "http://3.36.78.244:8080/embedded/map"
@@ -67,7 +73,6 @@ export const AdminCheckDevice = () => {
             }).then((res) => {res.json().then((res) => {
                 console.log(res)
                 setPositions(res)
-                console.log(positions)
             })
             })
         };
@@ -106,19 +111,54 @@ export const AdminCheckDevice = () => {
         }
     }, [])
 
+    const EventMarkerContainer = ({ position, content }) => {
+        const map = useMap()
+        const [isVisible, setIsVisible] = useState(false)
+
+        return (
+            <MapMarker
+                position={position} // 마커를 표시할 위치
+                // @ts-ignore
+                onClick={(marker) => {
+                    map.panTo(marker.getPosition())
+                    setRoadViewPosition({
+                        "lat" : `${position.lat}`, "lng" :`${position.lng}`
+                    })
+                }}
+                onMouseOver={() => setIsVisible(true)}
+                onMouseOut={() => setIsVisible(false)}
+                image={{
+                    src : 'https://cdn-icons-png.flaticon.com/512/999/999047.png',
+                    size : {
+                        width: 24,
+                        height: 35
+                    }
+                }}
+                // onClick={() => {setRoadViewPosition({
+                //     "lat" : `${position.embLat}`, "lng" :`${position.embLng}`
+                // })}}
+            >
+                {isVisible && content}
+            </MapMarker>
+        )
+    }
+
 
     return (
         <React.Fragment>
             <h3 style={{ marginLeft : '25px', marginBottom : '5px' }}>지도</h3>
             <Container sx={{ marginTop : '0px'}} maxWidth="xxl" >
+                <div style={{ width: "100%", height: "400px", position: "relative" }}>
+
                 <Map // 지도를 표시할 Container
                     center={state.center}
                     style={{
                         // 지도의 크기
                         width: "100%",
                         height: "50vh",
-                        marginBottom : 20,
-                        zIndex : 0
+                        marginBottom : 0,
+                        zIndex : 0,
+                        display: toggle === "map" ? "block" : "none",
 
                     }}
                     level={4} // 지도의 확대 레벨
@@ -131,21 +171,110 @@ export const AdminCheckDevice = () => {
                         </MapMarker>
                     )}
                     {(positions.map((position,index) => (
-                        <MapMarker
-                            // position={position.latlng}
-                            position={{"lat" : `${position.embLat}`, "lng" :`${position.embLng}`}}
+                        // <MapMarker
+                        //     // position={position.latlng}
+                        //     position={{"lat" : `${position.embLat}`, "lng" :`${position.embLng}`}}
+                        //     key={position.embId}
+                        //     image={{
+                        //         src: "https://cdn-icons-png.flaticon.com/512/999/999047.png", // 마커이미지의 주소입니다
+                        //         size: {
+                        //             width: 24,
+                        //             height: 35
+                        //         },
+                        //     }}
+                        //     title={`${position.embId}번 디바이스`}
+                        //     onClick={() => {setRoadViewPosition({
+                        //     "lat" : `${position.embLat}`, "lng" :`${position.embLng}`
+                        //     })}}
+                        // />
+                        <EventMarkerContainer
                             key={position.embId}
-                            image={{
-                                src: "https://cdn-icons-png.flaticon.com/512/999/999047.png", // 마커이미지의 주소입니다
-                                size: {
-                                    width: 24,
-                                    height: 35
-                                },
-                            }}
-                            title={`${position.embId}번 디바이스`}
+                            position={{"lat" : `${position.embLat}`, "lng" :`${position.embLng}`}}
+                            content={`${position.embId}번 디바이스`}
                         />
                     )))}
+                    {toggle === "map" && (
+                        <input
+                            style={{
+                                position: "relative",
+                                top: "5px",
+                                left: "5px",
+                                zIndex: 30,
+                                borderRadius : '30px',
+                                backgroundColor : '#546e7a',
+                                color : 'white',
+                                cursor : 'pointer'
+                            }}
+                            type="button"
+                            onClick={() => setToggle("roadview")}
+                            title="로드뷰 보기"
+                            value="로드뷰"
+                        />
+                    )}
+                    {mapTypeId && <MapTypeId type={mapTypeId}/>}
                 </Map>
+                <Roadview // 로드뷰를 표시할 Container
+                    position={{ ...roadViewPosition, radius: 50 }}
+                    style={{
+                        display: toggle === "roadview" ? "block" : "none",
+                        width: "100%",
+                        height: "100%",
+                        zIndex : 100,
+                    }}
+                >
+                    <RoadviewMarker position={roadViewPosition} />
+                    {toggle === "roadview" && (
+                        <input
+                            style={{
+                                position: "relative",
+                                top: "5px",
+                                left: "5px",
+                                zIndex: 200,
+                                borderRadius : '30px',
+                                backgroundColor : '#546e7a',
+                                color : 'white',
+                                cursor : 'pointer'
+                            }}
+                            type="button"
+                            onClick={() => setToggle("map")}
+                            title="지도 보기"
+                            value="지도"
+                        />
+                    )}
+                </Roadview>
+                </div>
+                <Box sx={{ display : 'flex', justifyContent : 'flex-end' }}>
+                    <ButtonGroup sx={{ marginBottom : '20px' }} variant="outlined" color="info">
+                        <Button
+                            onClick={() => {
+                                setMapTypeId(kakao.maps.MapTypeId.TRAFFIC)
+                            }}
+                        >
+                            교통정보 보기
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                setMapTypeId(kakao.maps.MapTypeId.ROADVIEW)
+                            }}
+                        >
+                            로드뷰 도로정보 보기
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                setMapTypeId(kakao.maps.MapTypeId.TERRAIN)
+                            }}
+                        >
+                            지형정보 보기
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                setMapTypeId(kakao.maps.MapTypeId.USE_DISTRICT)
+                            }}
+                        >
+                            지적편집도 보기
+                        </Button>
+                    </ButtonGroup>
+                </Box>
             </Container>
             <div style={{ height: 400, width: '99%' }}>
                 <DataGrid
