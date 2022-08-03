@@ -15,7 +15,7 @@ import axios from "axios";
 const columns = [
     { field: 'id', headerName: '아이디', flex : 1, headerAlign: 'center', align: "center",  editable: true },
     { field: 'userPwd', headerName: '비밀번호', flex : 1, headerAlign: 'center',align: "center",  editable: true },
-    { field: 'userBirth', headerName: '생년월일', type : 'dateTime' ,headerAlign: 'center', flex : 1, align: "center", editable: true },
+    { field: 'userBirthDay', headerName: '생년월일', type : 'dateTime' ,headerAlign: 'center', flex : 1, align: "center", editable: true },
     {
         field: 'userPoint',
         headerName: '포인트',
