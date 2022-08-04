@@ -134,7 +134,7 @@ export const AdminBrokenDeviceManagement = () => {
             })
             })
         };
-        fetchDevice();
+        // fetchDevice();
     }, []);
     function createData(id, title, author, createDate, trash) {
         return { id, title, author, createDate, trash };

@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -22,6 +22,10 @@ import { useTheme } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import EditIcon from "@mui/icons-material/Edit";
 import BorderColorIcon from '@mui/icons-material/BorderColor';
+import {AdminNoticeCreate} from "./AdminNoticeCreate";
+import {Mode} from "../../atoms";
+import {useRecoilState} from "recoil";
+import {AdminNoticeDetail} from "./AdminNoticeDetail";
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -120,8 +124,11 @@ const rows = [
 
 
 export const AdminNotice = () => {
+    const [mode, setMode] = useRecoilState(Mode)
+    const [status, setStatus] = useState("GENERAL")
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    let content = null;
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
@@ -135,8 +142,16 @@ export const AdminNotice = () => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
+
+    if(status === "DETAIL"){
+        content = <AdminNoticeDetail/>
+    }
+
+
+
     return (
         <>
+            {/*{ status === "GENERAL" ? () : () }*/}
             <h1 style={{ marginLeft : '30px' }}>공지 사항</h1>
             <TableContainer sx={{ width : '175vh', margin : '20px' }} component={Paper}>
                 <Table sx={{ minWidth: 700}} aria-label="customized table">
@@ -191,7 +206,7 @@ export const AdminNotice = () => {
                 </Table>
             </TableContainer>
                 <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginRight : '20px', marginTop : '10px' }}>
-                    <Button variant="contained" startIcon={<BorderColorIcon />} >글 작성</Button>
+                    <Button variant="contained" startIcon={<BorderColorIcon />} onClick={() => setMode('공지사항 작성')} >글 작성</Button>
                 </Box>
         </>
     )

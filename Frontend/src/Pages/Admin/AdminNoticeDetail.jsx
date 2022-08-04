@@ -18,7 +18,7 @@ import {Mode} from "../../atoms";
 import {useRecoilState} from "recoil";
 import CreateAdminNotice from "../../api/admin";
 
-export const AdminNoticeCreate = () => {
+export const AdminNoticeDetail = () => {
     const [mode,setMode] = useRecoilState(Mode)
     const navigate = useNavigate()
     const [image, setImage] = useState({

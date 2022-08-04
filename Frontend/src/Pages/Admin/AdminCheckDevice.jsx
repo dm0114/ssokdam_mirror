@@ -66,7 +66,7 @@ export const AdminCheckDevice = () => {
     console.log(roadViewPosition)
     useEffect(() => {
         const fetchDevice = async () => {
-            const URL = "http://3.36.78.244:8080/embedded/map"
+            const URL = `${SERVER_URL}/embedded/map`
             // const URL = "http://localhost:8888/positions"
             let response = await fetch(URL, {
                 method : 'GET'
@@ -148,7 +148,7 @@ export const AdminCheckDevice = () => {
         <React.Fragment>
             <h3 style={{ marginLeft : '25px', marginBottom : '5px' }}>지도</h3>
             <Container sx={{ marginTop : '0px'}} maxWidth="xxl" >
-                <div style={{ width: "100%", height: "400px", position: "relative" }}>
+                <div style={{ width: "100%", height: "500px", position: "relative" }}>
 
                 <Map // 지도를 표시할 Container
                     center={state.center}
@@ -156,7 +156,7 @@ export const AdminCheckDevice = () => {
                         // 지도의 크기
                         width: "100%",
                         height: "50vh",
-                        marginBottom : 0,
+                        marginBottom : "0",
                         zIndex : 0,
                         display: toggle === "map" ? "block" : "none",
 

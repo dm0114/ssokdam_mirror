@@ -106,7 +106,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export const AdminComplaintManagement = () => {
     const [complains,setComplains] = useState([])
     useEffect(() => {
-        const fetchDevice = async () => {
+        const fetchComplains = async () => {
             // const URL = "https://3.36.78.244:8080/embedded/map"
             const URL = "http://localhost:8888/complains"
             let response = await fetch(URL, {
@@ -117,7 +117,7 @@ export const AdminComplaintManagement = () => {
             })
             })
         };
-        fetchDevice();
+        // fetchComplains();
     }, []);
     function createData(id, title, author, createDate, trash) {
         return { id, title, author, createDate, trash };
@@ -146,15 +146,9 @@ export const AdminComplaintManagement = () => {
         setPage(0);
     };
     return (
-<<<<<<< HEAD
         <React.Fragment>
-            <h1 style={{ marginLeft : '30px' }}>접수된 불만 사항</h1>
-            <TableContainer sx={{ width : '175vh', margin : '20px'  }} component={Paper}>
-=======
-        <>
             <h2 style={{ marginLeft : '30px' }}>접수된 불만 사항</h2>
             <TableContainer sx={{ width : '175vh', margin : '20px' }} component={Paper}>
->>>>>>> 949682b3e04668e52d8d4b966051b79f205d03c9
                 <Table sx={{ minWidth: 700}} aria-label="customized table">
                     <TableHead>
                         <TableRow>
