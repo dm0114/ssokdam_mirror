@@ -20,3 +20,9 @@ export const userInfo = atom({
   },
   effects_UNSTABLE: [persistAtom],
 })
+
+export const Mode = atom({
+  key : 'mode',
+  default : "관리자 메인",
+  effects_UNSTABLE: [persistAtom],
+})

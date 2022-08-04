@@ -11,6 +11,7 @@ import BuildIcon from '@mui/icons-material/Build';
 
 import { SERVER_URL } from '../../config';
 import axios from "axios";
+import {fetchUsers} from "../../api/admin";
 
 const columns = [
     { field: 'id', headerName: '아이디', flex : 1, headerAlign: 'center', align: "center",  editable: true },
@@ -52,18 +53,16 @@ const rows = [
 
 
 export const AdminUserManagement = () => {
-    const [usersInfo, setUsersInfo] = useState()
-    const fetchUserInfo = async () => {
-        const url =  `${SERVER_URL}/login`
-        await fetch(url, {
-            method: 'GET',
-        }).then((res) => {
-            console.log(res.json())
-            // setUsersInfo(res)
-        })
-    }
+    const [usersInfo, setUsersInfo] = useState([])
 
-    fetchUserInfo() // useEffect 제대로 쓰는법 알아볼것
+    useEffect(() => {
+        const fetchMyUser = fetchUsers()
+            .then((res) => console.log(res.json().then((res) => {
+                console.log(res)
+                setUsersInfo(res)
+            })))
+    }, []);
+
 
     return (
         <React.Fragment>
@@ -71,7 +70,7 @@ export const AdminUserManagement = () => {
                 <h2>회원 관리</h2>
                 <div style={{ height: 400, width: '99%' }}>
                     <DataGrid
-                        rows={rows}
+                        rows={usersInfo}
                         columns={columns}
                         pageSize={5}
                         rowsPerPageOptions={[5]}

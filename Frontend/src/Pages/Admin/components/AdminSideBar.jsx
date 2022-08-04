@@ -34,6 +34,9 @@ import { AdminUserManagement } from "../AdminUserManagement";
 import { AdminMain } from "../AdminMain";
 import {useNavigate} from "react-router-dom";
 import {AdminNoticeCreate} from "../AdminNoticeCreate";
+import {Mode} from "../../../atoms";
+import {useRecoilState} from "recoil";
+
 
 const drawerWidth = 240;
 
@@ -42,7 +45,7 @@ function AdminSideBar(props) {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const itemIconList = [<AdminPanelSettingsIcon/> ,<DoorbellIcon/>,<SettingsRemoteIcon/>,<RecordVoiceOverIcon/>,<BrokenImageIcon/>,<ManageAccountsIcon/>,<CurrencyExchangeIcon/>]
-    const [mode,setMode] = useState('관리자 메인')
+    const [mode,setMode] = useRecoilState(Mode)
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
@@ -68,7 +71,10 @@ function AdminSideBar(props) {
         comp = <AdminUserManagement/>
     }else if(mode === "포인트 전환"){
         comp = <AdminExchange/>
-    }else{
+    }else if(mode === '공지사항 작성'){
+        comp = <AdminNoticeCreate/>
+    }
+    else{
         comp = <AdminNoticeCreate/>
     }
 

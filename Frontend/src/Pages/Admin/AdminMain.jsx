@@ -13,9 +13,19 @@ import AddIcon from '@mui/icons-material/Add';
 import {SERVER_URL} from "../../config";
 import {useState} from "react";
 import { useEffect }  from "react";
+import {fetchGeneralInfo} from "../../api/admin";
 
 
 export const AdminMain = () => {
+    const [generalInfo, setGeneralInfo] = useState({})
+
+    useEffect(() => {
+        const fetchMyGeneralInfo = fetchGeneralInfo()
+            .then((res) => console.log(res.json().then(res => {
+                console.log(res)
+                setGeneralInfo(res)
+            })))
+    },[])
 
     return (
         <React.Fragment>
