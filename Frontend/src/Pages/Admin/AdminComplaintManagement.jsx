@@ -146,15 +146,9 @@ export const AdminComplaintManagement = () => {
         setPage(0);
     };
     return (
-<<<<<<< HEAD
-        <React.Fragment>
-            <h1 style={{ marginLeft : '30px' }}>접수된 불만 사항</h1>
-            <TableContainer sx={{ width : '175vh', margin : '20px'  }} component={Paper}>
-=======
         <>
             <h2 style={{ marginLeft : '30px' }}>접수된 불만 사항</h2>
             <TableContainer sx={{ width : '175vh', margin : '20px' }} component={Paper}>
->>>>>>> 949682b3e04668e52d8d4b966051b79f205d03c9
                 <Table sx={{ minWidth: 700}} aria-label="customized table">
                     <TableHead>
                         <TableRow>
@@ -203,6 +197,6 @@ export const AdminComplaintManagement = () => {
                     </TableFooter>
                 </Table>
             </TableContainer>
-        </React.Fragment>
+        </>
     )
 }
