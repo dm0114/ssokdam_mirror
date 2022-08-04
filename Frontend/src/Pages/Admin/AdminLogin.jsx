@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useState} from "react"
 import {useSetRecoilState} from "recoil";
-import fetchAdminLogin from "../../api/adminLogin"
+import FetchAdminLogin from "../../api/adminLogin"
 import {isLoginAtom, userInfo} from "../../atoms";
 
 const theme = createTheme(
@@ -61,7 +61,7 @@ export default function AdminLogin() {
 
     const onSubmitAccount = async () => {
         try {
-            const resUserInfomation = await fetchAdminLogin(account); //성공하면 해당 user 아이디 패스워드값 셋팅
+            const resUserInfomation = await FetchAdminLogin(account); //성공하면 해당 user 아이디 패스워드값 셋팅
             console.log(resUserInfomation)
             if (!resUserInfomation.ok) { // 아예 아이디가 없는 경우
                 alert('가입되지 않은 아이디입니다.')
