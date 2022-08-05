@@ -116,3 +116,16 @@ export const ButtonWrapper2 = styled.div`
   margin-right: auto;
   bottom: 32px;
 `
+
+export const NotReadyToSubmitButton = styled.div`
+  width: 100%;
+  height: 40px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${props => props.theme.colors.silver};
+  
+  border: 0px;
+  border-radius: 5px;
+`
