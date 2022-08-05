@@ -20,6 +20,8 @@ import PropTypes from 'prop-types';
 import {Box} from "@mui/material";
 import { useTheme } from '@mui/material/styles';
 import {useState} from "react";
+import {ADMIN_SERVER_URL} from "../../../config";
+import {fetchBrokenDevice} from "../../../api/admin";
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -123,18 +125,11 @@ export const AdminBrokenDeviceManagement = () => {
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [complains,setComplains] = useState([])
     useEffect(() => {
-        const fetchDevice = async () => {
-            // const URL = "https://3.36.78.244:8080/embedded/map"
-            const URL = "http://localhost:8888/complains"
-            let response = await fetch(URL, {
-                method : 'GET'
-            }).then((res) => {res.json().then((res) => {
+        fetchBrokenDevice()
+            .then((res) => {res.json().then((res) => {
                 console.log(res)
                 setComplains(res)
-            })
-            })
-        };
-        // fetchDevice();
+            })})
     }, []);
     function createData(id, title, author, createDate, trash) {
         return { id, title, author, createDate, trash };
@@ -142,8 +137,7 @@ export const AdminBrokenDeviceManagement = () => {
 
     const rows = [
         complains.map((complain,index) => {
-            console.log(complain)
-            return createData(index ,complain.pstTitle, complain.userName, complain.pstDt,<DeleteIcon/>)
+            return createData(index ,complain.pstTitle, complain.userId, complain.pstDt,<DeleteIcon/>)
         })
     ];
     // Avoid a layout jump when reaching the last page with empty rows.
@@ -169,7 +163,6 @@ export const AdminBrokenDeviceManagement = () => {
                             <StyledTableCell align="center">제목</StyledTableCell>
                             <StyledTableCell align="center">작성자</StyledTableCell>
                             <StyledTableCell align="center">작성일</StyledTableCell>
-                            <StyledTableCell align="center">조회수</StyledTableCell>
                             <StyledTableCell align="center"></StyledTableCell>
                         </TableRow>
                     </TableHead>
@@ -185,7 +178,6 @@ export const AdminBrokenDeviceManagement = () => {
                                 <StyledTableCell align="center">{row.title}</StyledTableCell>
                                 <StyledTableCell align="center">{row.author}</StyledTableCell>
                                 <StyledTableCell align="center">{row.createDate}</StyledTableCell>
-                                <StyledTableCell align="center">{row.views}</StyledTableCell>
                                 <StyledTableCell align="center">{row.trash}</StyledTableCell>
                             </StyledTableRow>
                         ))}

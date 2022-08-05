@@ -59,6 +59,10 @@ export const AdminUserManagement = () => {
         const fetchMyUser = fetchUsers()
             .then((res) => console.log(res.json().then((res) => {
                 console.log(res)
+                for(let i=0; i < res.length; i++ ){
+                    res[i].id = res[i].userId
+                    delete res[i].userId
+                }
                 setUsersInfo(res)
             })))
     }, []);

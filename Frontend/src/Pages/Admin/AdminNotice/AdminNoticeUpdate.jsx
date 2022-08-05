@@ -7,38 +7,41 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import IconButton from "@mui/material/IconButton";
 import axios from 'axios';
-import "./uploader.scss";
+import "../uploader.scss";
 import {useState, useEffect} from "react";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import {useNavigate} from "react-router-dom";
-import {Mode} from "../../atoms";
+import {Mode} from "../../../atoms";
 import {useRecoilState} from "recoil";
-import CreateAdminNotice from "../../api/admin";
+import {NoticeDetail} from "../../../atoms";
+import CreateAdminNotice from "../../../api/admin";
+import {fetchNoticeUpdate} from "../../../api/admin";
 
-export const AdminNoticeCreate = () => {
+export const AdminNoticeUpdate = () => {
     const [mode,setMode] = useRecoilState(Mode)
     const navigate = useNavigate()
+    const [notice,setNotice] = useRecoilState(NoticeDetail)
     const [image, setImage] = useState({
-        image_file: "",
+        image_file: "", // 나중에 image로직 알게되면 preview_URL default값으로 notice.file URL 넣기
         preview_URL: "https://cdn-icons-png.flaticon.com/512/7715/7715867.png",
     });
-    const [article, setArticle] = useState({
-        title : "",
-        content : "",
-    });
+    // const [article, setArticle] = useState({
+    //     title : "",
+    //     content : "",
+    // });
     // useEffect(() => setArticle({...article, file : image.image_file}),
     //     [image])
     // console.log(article)
 
     const onChangeArticle = (e) => {
-        setArticle({
-            ...article,
+        setNotice({
+            ...notice,
             [e.target.name] : e.target.value
         })
-        console.log(article)
+        console.log(notice)
     }
 
     const [value, setValue] = useState('imageNotice');
@@ -80,20 +83,20 @@ export const AdminNoticeCreate = () => {
         }
     }, [])
 
-    const createNotice = async () => {
-        if(!article.title){
+    const updateNotice = async () => {
+        if(!notice.title){
             alert("제목을 입력해주세요.")
-        }else if (image.image_file || article.content) {
+        }else if(image.image_file && notice.content){
+            alert("텍스트와 이미지는 동시에 작성할 수 없습니다.")
+        } else if (image.image_file || notice.content) {
             const formData = new FormData()
-            console.log(image.image_file)
             formData.append('file', image.image_file);
             // await axios.post('/api/image/upload', formData);
             console.log(formData)
-            // setArticle({...article, file : image.image_file})
-            // console.log(article)
-            // const createResponse = await CreateAdminNotice(article);
-            await axios.post('http://localhost:8888/notices', {...article, formData})
-            // console.log(createResponse)
+            // setArticle({...notice, file : image.image_file})
+            // const createResponse = await CreateAdminNotice(notice);
+            await axios.post('http://localhost:8888/notices', {...notice, formData})
+            // fetchNoticeUpdate도 써보기
             alert("서버에 등록이 완료되었습니다!");
             setImage({
                 image_file: "",
@@ -130,6 +133,7 @@ export const AdminNoticeCreate = () => {
                         placeholder="제목을 입력해주세요."
                         name="title"
                         autoFocus
+                        value={notice.pstTitle}
                         onChange={onChangeArticle}
                     ></TextField>
                     <h3>내용</h3>
@@ -166,12 +170,13 @@ export const AdminNoticeCreate = () => {
                         rows={12}
                         name="content"
                         autoFocus
+                        value={notice.pstCtnt}
                         onChange={onChangeArticle}
                     ></TextField> ) }
                 </FormControl>
 
                 <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginTop : '10px' }}>
-                    <Button variant="contained" startIcon={<BorderColorIcon />} onClick={createNotice} >작성</Button>
+                    <Button variant="contained" startIcon={<BorderColorIcon />} onClick={updateNotice} >수정 </Button>
                 </Box>
             </Container>
         </React.Fragment>

@@ -29,13 +29,13 @@ import FrequentlyQuestion from './Pages/Sub/FrequentlyQuestion'
 
 import Alarm from './Pages/Nav/Alarm'
 import {AdminMain} from "./Pages/Admin/AdminMain";
-import {AdminNotice} from "./Pages/Admin/AdminNotice";
+import {AdminNotice} from "./Pages/Admin/AdminNotice/AdminNotice";
 import {AdminCheckDevice} from "./Pages/Admin/AdminCheckDevice";
-import {AdminComplaintManagement} from "./Pages/Admin/AdminComplaintManagement";
-import {AdminBrokenDeviceManagement} from "./Pages/Admin/AdminBrokenDeviceManagement";
+import {AdminComplaintManagement} from "./Pages/Admin/AdminComplain/AdminComplaintManagement";
+import {AdminBrokenDeviceManagement} from "./Pages/Admin/AdminComplain/AdminBrokenDeviceManagement";
 import {AdminUserManagement} from "./Pages/Admin/AdminUserManagement";
 import {AdminExchange} from "./Pages/Admin/AdminExchange";
-import {AdminNoticeCreate} from "./Pages/Admin/AdminNoticeCreate";
+import {AdminNoticeCreate} from "./Pages/Admin/AdminNotice/AdminNoticeCreate";
 
 import AdminLogin from './Pages/Admin/AdminLogin'
 import AdminHome from './Pages/Admin/AdminHome'
