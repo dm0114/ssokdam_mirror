@@ -19,6 +19,8 @@ import TableFooter from '@mui/material/TableFooter';
 import PropTypes from 'prop-types';
 import {Box} from "@mui/material";
 import { useTheme } from '@mui/material/styles';
+import {ADMIN_SERVER_URL} from "../../../config";
+import {fetchComplains} from "../../../api/admin";
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -106,18 +108,23 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export const AdminComplaintManagement = () => {
     const [complains,setComplains] = useState([])
     useEffect(() => {
-        const fetchComplains = async () => {
-            // const URL = "https://3.36.78.244:8080/embedded/map"
-            const URL = "http://localhost:8888/complains"
-            let response = await fetch(URL, {
-                method : 'GET'
-            }).then((res) => {res.json().then((res) => {
+        // const fetchComplains = async () => {
+        //     // const URL = "https://3.36.78.244:8080/embedded/map"
+        //     const URL = `${ADMIN_SERVER_URL}/ComplainP`
+        //     let response = await fetch(URL, {
+        //         method : 'GET'
+        //     }).then((res) => {res.json().then((res) => {
+        //         console.log(res)
+        //         setComplains(res)
+        //     })
+        //     })
+        // };
+        // fetchComplains();
+        fetchComplains()
+            .then((res) => {res.json().then((res) => {
                 console.log(res)
                 setComplains(res)
-            })
-            })
-        };
-        // fetchComplains();
+            })})
     }, []);
     function createData(id, title, author, createDate, trash) {
         return { id, title, author, createDate, trash };
@@ -125,8 +132,7 @@ export const AdminComplaintManagement = () => {
 
     const rows = [
         complains.map((complain,index) => {
-            console.log(complain)
-            return createData(index ,complain.pstTitle, complain.userName, complain.pstDt,<DeleteIcon/>)
+            return createData(index ,complain.pstTitle, complain.userId, complain.pstDt,<DeleteIcon/>)
         })
     ];
     console.log(rows[0])

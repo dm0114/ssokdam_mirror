@@ -20,10 +20,12 @@ export const AdminMain = () => {
     const [generalInfo, setGeneralInfo] = useState({})
 
     useEffect(() => {
-        const fetchMyGeneralInfo = fetchGeneralInfo()
-            .then((res) => console.log(res.json().then(res => {
+        fetchGeneralInfo()
+            .then((res) => (res.json().then(res => {
                 console.log(res)
-                setGeneralInfo(res)
+                if(res != 'undefined' && res != null) {
+                    setGeneralInfo(res)
+                }
             })))
     },[])
 
@@ -36,14 +38,14 @@ export const AdminMain = () => {
                         <AdminMainImg alt="" src="https://cdn-icons-png.flaticon.com/512/7715/7715867.png"></AdminMainImg>
                         <TextBox>
                             <span>지급 요청</span>
-                            <span style={{ fontWeight : 'bold' }}>0 건</span>
+                            <span style={{ fontWeight : 'bold' }}>{ generalInfo.exchangeLth } 건</span>
                         </TextBox>
                     </ComponentBox>
                     <ComponentBox>
                         <AdminMainImg alt="" src="https://cdn-icons-png.flaticon.com/512/3135/3135706.png"></AdminMainImg>
                         <TextBox>
                             <span>지급된 금액</span>
-                            <span style={{ fontWeight : 'bold' }}>0 원</span>
+                            <span style={{ fontWeight : 'bold' }}>{ generalInfo.exchangeMoney } 원</span>
                         </TextBox>
                     </ComponentBox>
                     <ComponentBox>
@@ -57,13 +59,13 @@ export const AdminMain = () => {
                 <FullwidthBox>
                     <ComponentBox>
                         <TextBox>
-                            <span style={{ fontWeight : 'bold', textAlign : 'center' }}>0</span>
+                            <span style={{ fontWeight : 'bold', textAlign : 'center' }}>{ generalInfo.complain.length }</span>
                             <span style={{ textAlign : 'center' }}>문의 사항</span>
                         </TextBox>
                     </ComponentBox>
                     <ComponentBox>
                         <TextBox>
-                            <span style={{ fontWeight : 'bold',textAlign : 'center' }}>0</span>
+                            <span style={{ fontWeight : 'bold',textAlign : 'center' }}>{ generalInfo.Broken.length }</span>
                             <span>고장 신고</span>
                         </TextBox>
                     </ComponentBox>

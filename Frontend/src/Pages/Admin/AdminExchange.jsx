@@ -13,10 +13,11 @@ import axios from "axios";
 import {fetchExchange} from "../../api/admin";
 
 const columns = [
-    { field: 'id', headerName: '아이디', flex : 1, headerAlign: 'center', align: "center",  editable: true },
-    { field: 'reqDt', headerName: '신청 날짜', type : 'dateTime' ,headerAlign: 'center', flex : 1, align: "center", editable: true },
+    { field: 'id', headerName: '번호', flex : 1, headerAlign: 'center', align: "center",  editable: true },
+    { field: 'userId', headerName: '아이디', flex : 1, headerAlign: 'center', align: "center",  editable: true },
+    { field: 'pbDt', headerName: '신청 날짜', type : 'dateTime' ,headerAlign: 'center', flex : 1, align: "center", editable: true },
     {
-        field: 'reqPt',
+        field: 'pbMoney',
         headerName: '신청 포인트',
         type : 'number',
         flex : 1,
@@ -24,17 +25,17 @@ const columns = [
         headerAlign: 'center',
         editable: true
     },
-    {
-        field: 'userEmail',
-        headerName: '이메일',
-        type : 'email',
-        flex : 1,
-        align: "center",
-        headerAlign: 'center',
-        editable: true
-        // valueGetter: (params) =>
-        //     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-    },
+    // {
+    //     field: '',
+    //     headerName: '이메일',
+    //     type : 'email',
+    //     flex : 1,
+    //     align: "center",
+    //     headerAlign: 'center',
+    //     editable: true
+    //     // valueGetter: (params) =>
+    //     //     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+    // },
 ];
 
 const rows = [
@@ -56,6 +57,10 @@ export const AdminExchange = () => {
     useEffect(() => {
         const fetchExchanges = fetchExchange()
             .then((res) => console.log(res.json().then((res) => {
+                for(let i=0; i < res.length; i++ ){
+                    res[i].id = res[i].pbSeq
+                    delete res[i].pbSeq
+                }
                 console.log(res)
                 setExchanges(res)
             })))

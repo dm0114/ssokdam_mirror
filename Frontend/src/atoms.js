@@ -26,3 +26,16 @@ export const Mode = atom({
   default : "관리자 메인",
   effects_UNSTABLE: [persistAtom],
 })
+
+export const NoticeDetail = atom({
+  key : 'noticeDetail',
+  default : {
+    userId : "",
+    pstSeq : "",
+    pstTitle : "",
+    pstCtnt : "",
+    pstDt : "",
+    file : ""
+  },
+  effects_UNSTABLE: [persistAtom],
+})

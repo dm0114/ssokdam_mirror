@@ -7,18 +7,18 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
 import IconButton from "@mui/material/IconButton";
 import axios from 'axios';
-import "./uploader.scss";
+import "../uploader.scss";
 import {useState, useEffect} from "react";
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import {useNavigate} from "react-router-dom";
-import {Mode} from "../../atoms";
+import {Mode} from "../../../atoms";
 import {useRecoilState} from "recoil";
-import CreateAdminNotice from "../../api/admin";
+import CreateAdminNotice from "../../../api/admin";
 
-export const AdminNoticeDetail = () => {
+export const AdminNoticeCreate = () => {
     const [mode,setMode] = useRecoilState(Mode)
     const navigate = useNavigate()
     const [image, setImage] = useState({
@@ -83,7 +83,9 @@ export const AdminNoticeDetail = () => {
     const createNotice = async () => {
         if(!article.title){
             alert("제목을 입력해주세요.")
-        }else if (image.image_file || article.content) {
+        }else if(image.image_file && article.content){
+            alert("텍스트와 이미지는 동시에 작성할 수 없습니다.")
+        } else if (image.image_file || article.content) {
             const formData = new FormData()
             console.log(image.image_file)
             formData.append('file', image.image_file);
