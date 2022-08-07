@@ -1,5 +1,6 @@
 package com.ssaft.project.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -17,6 +18,7 @@ public class EmbeddedData {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private IotUser iotUser;
 
     @Column(name = "emb_full_tra")

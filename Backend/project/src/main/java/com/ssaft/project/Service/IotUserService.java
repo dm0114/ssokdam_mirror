@@ -11,7 +11,7 @@ import java.util.*;
 
 @Service
 public class IotUserService {
-    private final IotUserRepository iotUserRepository ;
+    private final IotUserRepository iotUserRepository;
 
     public IotUserService(IotUserRepository iotUserRepository) {
         this.iotUserRepository = iotUserRepository;
@@ -28,47 +28,47 @@ public class IotUserService {
         String token = "error";
         Optional<IotUser> iotuser = iotUserRepository.findById(id);
         Map<String, Object> map = new LinkedHashMap<>();
-        if (iotuser!=null) {
+        if (iotuser != null) {
             if (securityService.jasyptDecoding(iotuser.get().getUserPwd()).equals(password)) {
                 token = securityService.creatToken(id, (60 * 1000 * 60));
-                map.put("Access_token" , token);
+                map.put("Access_token", token);
                 token = securityService.creatToken(id, (10800 * 1000 * 60));
                 iotuser.get().setUserRt(token);
                 iotUserRepository.save(iotuser.get());
-                map.put("Refresh_token" , token);
+                map.put("Refresh_token", token);
                 map.put("userName", iotuser.get().getUserName());
                 map.put("userEmail", iotuser.get().getUserEmail());
                 map.put("userPoint", iotuser.get().getUserPoint());
                 map.put("userCnt", iotuser.get().getUserCnt());
                 map.put("userImg", iotuser.get().getUserImg());
-            }else{
-                map.put("message" , "비밀번호가 틀렸습니다.");
+            } else {
+                map.put("message", "비밀번호가 틀렸습니다.");
             }
-        }else{
-            map.put("message" , "존재하지 않는 회원입니다.");
+        } else {
+            map.put("message", "존재하지 않는 회원입니다.");
         }
 
         return map;
     }
 
-    public Map loginRefresh(String token){
+    public Map loginRefresh(String token) {
         String id = securityService.getSubJect(token);
         Optional<IotUser> iotUser = iotUserRepository.findById(id);
         Map<String, Object> map = new LinkedHashMap<>();
-        if(iotUser.get().getUserRt().equals(token)){
+        if (iotUser.get().getUserRt().equals(token)) {
             String Accesstoken = securityService.creatToken(iotUser.get().getUserId(), (60 * 1000 * 60));
             map.put("Acess token", Accesstoken);
         }
         return map;
     }
 
-    public Map findId(IotUser user){                      //아이디 찾기
+    public Map findId(IotUser user) {                      //아이디 찾기
         Map<String, Object> map = new LinkedHashMap<>();
 
-        List<IotUser> iotUser = iotUserRepository.findByUserEmail(user.getUserEmail());
+        List<IotUser> iotUser = iotUserRepository.findByUserName(user.getUserName());
         System.out.println(iotUser);
         for (IotUser id : iotUser) {
-            if (id.getUserName().equals(user.getUserName())) {
+            if (id.getUserPhone().equals(user.getUserPhone())) {
                 map.put("userId", id.getUserId());
                 return map;
             }
@@ -78,24 +78,28 @@ public class IotUserService {
 
     }
 
-    public Map findPwd(IotUser user){
+    public Map findPwd(IotUser user) {
         Map<String, Object> map = new LinkedHashMap<>();
-        Optional<IotUser> iotUser = iotUserRepository.findById(user.getUserId());
-        System.out.println(iotUser);
-        if(iotUser.get().getUserPhone().equals(user.getUserPhone())){
-            map.put("userPwd", iotUser.get().getUserPwd());
-            return map;
+        try {
+            Optional<IotUser> iotUser = iotUserRepository.findById(user.getUserId());
+            if (iotUser.get().getUserPhone().equals(user.getUserPhone())) {
+                map.put("userPwd", securityService.jasyptDecoding(iotUser.get().getUserPwd()));
+                return map;
+            }
+            map.put("error", "휴대폰 번호가 틀렸습니다.");
+        }catch (NoSuchElementException e){
+            map.put("error", "존재하지 않는 회원입니다.");
         }
-        map.put("error", "error");
         return map;
     }
 
-    public Map changePw(IotUser user){
+
+    public Map changePw(IotUser user) {
         Map<String, Object> map = new LinkedHashMap<>();
         Optional<IotUser> iotUser = iotUserRepository.findById(user.getUserId());
-        iotUser.get().setUserPwd(user.getUserPwd());
+        iotUser.get().setUserPwd(securityService.jasyptEncoding(user.getUserPwd()));
         iotUserRepository.save(iotUser.get());
-        map.put("messge" , "비밀번호 변경 완료!!");
+        map.put("messge", "비밀번호 변경 완료!!");
         return map;
     }
 

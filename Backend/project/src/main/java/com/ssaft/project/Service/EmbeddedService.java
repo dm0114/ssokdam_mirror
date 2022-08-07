@@ -38,4 +38,13 @@ public class EmbeddedService {
         System.out.println(List);
         return List;
     };
+
+    public List<EmbeddedData> findAll(){
+        List<EmbeddedData> embeddedData = embeddedDataRepository.findAll();
+//        for(int i=0;i<embeddedData.size();i++){
+//            embeddedData.get(i).setUserId(embeddedData.get(i).getIotUser().getUserId());
+//            embeddedData.get(i).
+//        }
+        return embeddedDataRepository.findAll();
+    }
 }

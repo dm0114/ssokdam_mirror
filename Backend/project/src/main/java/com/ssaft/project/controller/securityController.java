@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/security")
+@RequestMapping("/api")
 public class securityController {
 
 

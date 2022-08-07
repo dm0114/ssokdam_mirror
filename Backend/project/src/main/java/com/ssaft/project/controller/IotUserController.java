@@ -30,7 +30,7 @@ public class IotUserController {
     @Autowired
     IamportService iamportService;
 
-    @GetMapping("/login")                               //전체 회원 조회 (사용한다면 관리자에서)
+    @GetMapping("/admin/users")                               //전체 회원 조회 (사용한다면 관리자에서)
     @ResponseBody
     public List<IotUser> test() {
         return iotUserRepository.findAll();
@@ -56,7 +56,7 @@ public class IotUserController {
         return iotUserService.findId(user);
     }
 
-    @PostMapping("/login/findPw")                          //비밀번호 찾기
+    @PostMapping("/login/findPwd")                          //비밀번호 찾기
     @ResponseBody
     public Map findPwd(@RequestBody IotUser user) {
         return iotUserService.findPwd(user);
@@ -84,13 +84,13 @@ public class IotUserController {
         }
     }
 
-    @PostMapping("/signup")                          //json  방식으로 로그인
+    @PostMapping("/signUp")                          //json  방식으로 로그인
     @ResponseBody
     public Map singUp(@RequestBody IotUser user) {
         return iotUserService.singup(user);
     }
 
-    @GetMapping("/mypage")
+    @GetMapping("/myPage")
     @ResponseBody
     public Map main(@RequestBody Map<String, Object> token){
         String token2 = (String) token.get("token");
@@ -100,6 +100,7 @@ public class IotUserController {
         map.put("userName", user.get().getUserName());
         return map;
     }
+
 
     @GetMapping("/mypage/test")
     public Map mypage(@RequestHeader("token") String token){
