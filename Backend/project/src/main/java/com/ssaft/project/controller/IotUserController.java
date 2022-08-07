@@ -101,6 +101,7 @@ public class IotUserController {
         return map;
     }
 
+
     @GetMapping("/mypage/test")
     public Map mypage(@RequestHeader("token") String token){
         Map<String, Object> map = new LinkedHashMap<>();
