@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/embedded")
+@RequestMapping("/api")
 public class EmbeddedController {
 
     @Autowired
@@ -33,13 +33,13 @@ public class EmbeddedController {
     @Autowired
     SecurityService securityService;
 
-    @PostMapping("/emb")
+    @PostMapping("/embedded/emb")
     @ResponseBody
     public void test(@RequestBody EmbeddedData embeddedData){
         embeddedService.join(embeddedData);
      }
 
-     @PostMapping("/qr")
+     @PostMapping("/embedded/qr")
      @ResponseBody
      public void Qr(@RequestBody EmbeddedData user){
         System.out.println(user);
@@ -52,7 +52,7 @@ public class EmbeddedController {
 
      }
 
-     @PostMapping("/send")
+     @PostMapping("/embedded/send")
      @ResponseBody
      public void SensingSend(@RequestBody EmbeddedData sensing){
         Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(sensing.getEmbId());
@@ -66,7 +66,7 @@ public class EmbeddedController {
          embeddedDataRepository.save(embeddedData.get());
      }
 
-    @GetMapping("/receive")
+    @GetMapping("/embedded/receive")
     @ResponseBody
     public Map receive(@RequestParam int embId){
         Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(embId);
@@ -82,14 +82,14 @@ public class EmbeddedController {
         return map;
     }
 
-     @GetMapping("/map")
+     @GetMapping("/embedded/map")
      @ResponseBody
      public List<Map<String, Object>> EmbeddedLoc(){
         return embeddedService.sendLoc();
      }
 
 
-    @PostMapping("/use")
+    @PostMapping("/embedded/use")
     @ResponseBody
     public void test3(@RequestBody UseData useData){
         useDataRepository.save(useData);

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/Post")
+@RequestMapping("/api")
 public class PostController {
 
     @Autowired
