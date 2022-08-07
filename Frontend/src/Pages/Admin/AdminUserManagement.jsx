@@ -11,7 +11,7 @@ import BuildIcon from '@mui/icons-material/Build';
 
 import { SERVER_URL } from '../../config';
 import axios from "axios";
-import {fetchUsers} from "../../api/admin";
+import {fetchUsers, UpdateUser, DeleteUser } from "../../api/admin";
 
 const columns = [
     { field: 'id', headerName: '아이디', flex : 1, headerAlign: 'center', align: "center",  editable: true },
@@ -54,6 +54,7 @@ const rows = [
 
 export const AdminUserManagement = () => {
     const [usersInfo, setUsersInfo] = useState([])
+    const [select, setSelection] = useState([]);
 
     useEffect(() => {
         const fetchMyUser = fetchUsers()
@@ -67,6 +68,16 @@ export const AdminUserManagement = () => {
             })))
     }, []);
 
+    const updateUsers = () => {
+        UpdateUser(select)
+            .then((res) => console.log(res))
+    }
+
+    const deleteUsers = () => {
+        DeleteUser(select)
+            .then((res) => console.log(res))
+    }
+
 
     return (
         <React.Fragment>
@@ -79,12 +90,19 @@ export const AdminUserManagement = () => {
                         pageSize={5}
                         rowsPerPageOptions={[5]}
                         checkboxSelection
+                        onSelectionModelChange={(newSelection) => {
+                            setSelection(newSelection)
+                        }}
                     />
                 </div>
             </Box>
             <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginRight : '20px', marginTop : '10px' }}>
-                <Button variant="contained" startIcon={<BuildIcon />} sx={{ marginRight : '10px' }} >수정</Button>
-                <Button variant="contained" startIcon={<DeleteIcon />} color='error' >삭제</Button>
+                <Button variant="contained" startIcon={<BuildIcon />} sx={{ marginRight : '10px' }} onClick={() => {
+                    updateUsers()
+                }} >수정</Button>
+                <Button variant="contained" startIcon={<DeleteIcon />} color='error' onClick={() => {
+                    deleteUsers()
+                }} >삭제</Button>
             </Box>
         </React.Fragment>
     )

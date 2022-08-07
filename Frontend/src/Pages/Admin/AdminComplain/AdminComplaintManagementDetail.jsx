@@ -1,6 +1,6 @@
 import React from 'react'
 import Container from "@mui/material/Container";
-import {Box, Divider, FormControl} from "@mui/material";
+import {Box, Divider, FormControl, TextField} from "@mui/material";
 import FormLabel from "@mui/material/FormLabel";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -9,11 +9,41 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import {AdminNoticeUpdate} from "../AdminNotice/AdminNoticeUpdate";
+import { Avatar, Grid, Paper } from "@material-ui/core";
+import {PostDetail} from "../../../atoms";
+import {useRecoilState} from "recoil";
+import {Mode} from "../../../atoms";
+import belu from "../../../picture/belu.png"
+import {userInfo} from "../../../atoms";
+import {CommentInputBox} from "../../../styles/AdminStyle";
+import {useState} from "react";
+import {commentCreate, commentUpdate, commentDelete} from "../../../api/admin";
 
 
 
 
 export const AdminComplaintManagementDetail = () => {
+    const [mode,setMode] = useRecoilState(Mode)
+    const [postDetail, setPostDetail] = useRecoilState(PostDetail)
+    const imgLink = belu
+    const [myUserInfo, setMyUserInfo] = useRecoilState(userInfo)
+    const [editId, setEditId] = useState(null);
+
+    const myCommentCreate = () => {
+        commentCreate()
+            .then((res)=> console.log(res))
+    }
+
+    const myCommentDelete = () => {
+        commentDelete()
+            .then((res) => console.log(res))
+    }
+    const myCommentEdit = () => {
+        commentUpdate()
+            .then((res) => console.log(res))
+    }
+
+
     return (
         <React.Fragment>
                 <Container maxWidth="xl">
@@ -21,39 +51,92 @@ export const AdminComplaintManagementDetail = () => {
                     <FormControl fullWidth>
                         <h3>제목</h3>
                         <Typography sx={{ marginLeft : '10px', marginBottom : '10px' }} component="h2" variant="h3" >
-                            { notice.pstTitle }
+                            { postDetail.pstTitle }
                         </Typography>
                         <Divider/>
                         <h3>내용</h3>
-                            <div className="uploader-wrapper">
-                                {/*<input type="file" accept="image/*"*/}
-                                {/*       onChange={saveImage}*/}
-                                {/*    // 클릭할 때 마다 file input의 value를 초기화 하지 않으면 버그가 발생할 수 있다*/}
-                                {/*    // 사진 등록을 두개 띄우고 첫번째에 사진을 올리고 지우고 두번째에 같은 사진을 올리면 그 값이 남아있음!*/}
-                                {/*       onClick={(e) => e.target.value = null}*/}
-                                {/*       ref={refParam => inputRef = refParam}*/}
-                                {/*       style={{display: "none"}}*/}
-                                {/*/>*/}
-                                {/*<div className="img-wrapper">*/}
-                                {/*    <img src={image.preview_URL}/>*/}
-                                {/*</div>*/}
-                                    {/*<Button color="success" variant="contained" onClick={createNotice}>*/}
-                                    {/*    Upload*/}
-                                    {/*</Button>*/}
-                            </div>
+                            {/*<div className="uploader-wrapper">*/}
+                            {/*    <div className="img-wrapper">*/}
+                            {/*        <img src={postDetail.preview_URL}/>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
                          <Typography>
-                            { notice.pstCtnt }
+                            { postDetail.pstCtnt }
                         </Typography>
+                        <Divider/>
                     </FormControl>
 
                     <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginTop : '10px' }}>
-                        <Button sx={{ marginRight : '5px' }} variant="contained" startIcon={<BorderColorIcon />} onClick={() => {
-                            setStatus("EDIT")
-                        }}>수정하기</Button>
-                        <Button color="error" variant="contained" onClick={deleteNotice}>
+                        <Button color="error" variant="contained" sx={{ m : 1 }}>
                             삭제
                         </Button>
                     </Box>
+            <Divider/>
+            <div style={{ padding: 14 }}>
+                {/*<h1>불만사항 답변</h1>*/}
+                <Paper style={{ padding: "40px 20px" }}>
+                    <Grid container wrap="nowrap" spacing={2}>
+                        {/* comment 덩어리 */}
+                        <Grid item>
+                            <Avatar alt="Remy Sharp" src={belu} />
+                        </Grid>
+                        <Grid justifyContent="left" item xs zeroMinWidth>
+                            <h4 style={{ margin: 0, textAlign: "left" }}>{ myUserInfo.userName } 관리자님</h4>
+                            <p style={{ textAlign: "left" }}>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
+                                luctus ut est sed faucibus. Duis bibendum ac ex vehicula laoreet.
+                                Suspendisse congue vulputate lobortis. Pellentesque at interdum
+                                tortor. Quisque arcu quam, malesuada vel mauris et, posuere
+                                sagittis ipsum. Aliquam ultricies a ligula nec faucibus. In elit
+                                metus, efficitur lobortis nisi quis, molestie porttitor metus.
+                                Pellentesque et neque risus. Aliquam vulputate, mauris vitae
+                                tincidunt interdum, mauris mi vehicula urna, nec feugiat quam
+                                lectus vitae ex.{" "}
+                            </p>
+                            <p style={{ textAlign: "left", color: "gray" }}>
+                                posted 1 minute ago
+                            </p>
+                            <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginTop : '10px' }}>
+                                <Button color="info" variant="contained" sx={{ margin : "0 5px" }}>
+                                    수정
+                                </Button>
+                                <Button color="error" variant="contained" sx={{ margin : "0 5px" }} onClick={() => {
+                                    myCommentDelete()
+                                }}>
+                                    삭제
+                                </Button>
+                            </Box>
+                        </Grid>
+                        {/* comment 덩어리 */}
+                    </Grid>
+                </Paper>
+            </div>
+                    <div style={{ padding: 14 }}>
+                        <paper style={{ padding: "40px 20px" }}>
+                            <Grid container wrap="nowrap" spacing={2}>
+                                <Grid item>
+                                    <Avatar alt="Remy Sharp" src={belu} />
+                                </Grid>
+                                <Grid justifyContent="left" item xs zeroMinWidth>
+                                    <h4 style={{ margin: 0, textAlign: "left" }}>{ myUserInfo.userName } 관리자님</h4>
+                                    <TextField
+                                        sx={{ pt : 2 }}
+                                        fullWidth
+                                        multiline
+                                        rows = {5}
+                                        placeholder="답변 작성"
+                                        id="fullWidth" />
+                                    <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginTop : '10px' }}>
+                                        <Button color="primary" variant="contained" sx={{ margin : "0 5px" }} onClick={() => {
+                                            myCommentCreate()
+                                        }}>
+                                            작성
+                                        </Button>
+                                    </Box>
+                                </Grid>
+                            </Grid>
+                        </paper>
+                    </div>
                 </Container>
 
         </React.Fragment>

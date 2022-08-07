@@ -74,5 +74,7 @@ export const IconBox = styled.div`
   display: flex;
   justify-content: flex-end;
 `
-
+export const CommentInputBox = styled.div`
+  display: flex;
+`
 

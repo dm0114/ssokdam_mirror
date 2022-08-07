@@ -172,6 +172,7 @@ export const AdminNoticeDetail = () => {
                         )  : ( <Typography>
                         { notice.pstCtnt }
                         </Typography> ) }
+                        <Divider/>
                     </FormControl>
 
                     <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginTop : '10px' }}>

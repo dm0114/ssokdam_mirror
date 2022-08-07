@@ -59,13 +59,17 @@ export const AdminMain = () => {
                 <FullwidthBox>
                     <ComponentBox>
                         <TextBox>
-                            <span style={{ fontWeight : 'bold', textAlign : 'center' }}>{ generalInfo.complain.length }</span>
+                            <span style={{ fontWeight : 'bold', textAlign : 'center' }}>{ generalInfo.complain ?
+                                generalInfo.complain.length : null
+                            }</span>
                             <span style={{ textAlign : 'center' }}>문의 사항</span>
                         </TextBox>
                     </ComponentBox>
                     <ComponentBox>
                         <TextBox>
-                            <span style={{ fontWeight : 'bold',textAlign : 'center' }}>{ generalInfo.Broken.length }</span>
+                            <span style={{ fontWeight : 'bold',textAlign : 'center' }}>{ generalInfo.Broken ?
+                                generalInfo.Broken.length : null
+                            }</span>
                             <span>고장 신고</span>
                         </TextBox>
                     </ComponentBox>

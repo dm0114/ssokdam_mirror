@@ -9,6 +9,7 @@ import { ThemeProvider } from 'styled-components'
 import theme from './stylesheet'
 import axios from 'axios';
 import { RecoilRoot } from "recoil";
+// import 'semantic-ui-css/semantic.min.css'
 
 axios.defaults.baseURL = 'http://localhost:8080/api';
 axios.defaults.withCredentials = true;

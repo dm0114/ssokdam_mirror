@@ -21,6 +21,11 @@ import {Box} from "@mui/material";
 import { useTheme } from '@mui/material/styles';
 import {ADMIN_SERVER_URL} from "../../../config";
 import {fetchComplains} from "../../../api/admin";
+import {PostDetail} from "../../../atoms";
+import {useRecoilState} from "recoil";
+import {Mode} from "../../../atoms";
+import {AdminComplaintManagementDetail} from "./AdminComplaintManagementDetail";
+import Button from "@mui/material/Button";
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -105,8 +110,35 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
+
+
 export const AdminComplaintManagement = () => {
+    // status 상태 상수
+    const General = "GENERAL"
+    const Detail = "DETAIL"
+    // 글로벌 Mode
+    const [mode, setMode] = useRecoilState(Mode)
+    // 전체 글
     const [complains,setComplains] = useState([])
+    // 글 Detail
+    const [status, setStatus] = useState(General)
+    const [id, setId] = useState(null);
+    const [postDetail, setPostDetail] = useRecoilState(PostDetail)
+    // pagination
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    console.log(id)
+
+    function createData(id, pstTitle, userId, pstDt, trash) {
+        return { id, pstTitle, userId, pstDt, trash };
+    }
+
+    const rows = [
+        complains.map((complain) => {
+            return createData(complain.id ,complain.pstTitle, complain.userId, complain.pstDt,<DeleteIcon/>)
+        })
+    ];
+
     useEffect(() => {
         // const fetchComplains = async () => {
         //     // const URL = "https://3.36.78.244:8080/embedded/map"
@@ -123,21 +155,24 @@ export const AdminComplaintManagement = () => {
         fetchComplains()
             .then((res) => {res.json().then((res) => {
                 console.log(res)
+                for(let i=0; i < res.length; i++ ){
+                    res[i].id = res[i].pstSeq
+                    delete res[i].pstSeq
+                }
+                console.log(res)
                 setComplains(res)
             })})
     }, []);
-    function createData(id, title, author, createDate, trash) {
-        return { id, title, author, createDate, trash };
+
+    if(status === Detail){
+        // notices돌면서 id와 같은것 정보 가져옴
+        for(let i=0; i<complains.length; i++){
+            if(complains[i].id === id){
+                setPostDetail(complains[i])
+            }
+        }
     }
 
-    const rows = [
-        complains.map((complain,index) => {
-            return createData(index ,complain.pstTitle, complain.userId, complain.pstDt,<DeleteIcon/>)
-        })
-    ];
-    console.log(rows[0])
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
@@ -153,56 +188,71 @@ export const AdminComplaintManagement = () => {
     };
     return (
         <React.Fragment>
-            <h2 style={{ marginLeft : '30px' }}>접수된 불만 사항</h2>
-            <TableContainer sx={{ width : '175vh', margin : '20px' }} component={Paper}>
-                <Table sx={{ minWidth: 700}} aria-label="customized table">
-                    <TableHead>
-                        <TableRow>
-                            <StyledTableCell align="center">번호</StyledTableCell>
-                            <StyledTableCell align="center">제목</StyledTableCell>
-                            <StyledTableCell align="center">작성자</StyledTableCell>
-                            <StyledTableCell align="center">작성일</StyledTableCell>
-                            <StyledTableCell align="center"></StyledTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {(rowsPerPage > 0
-                                ? rows[0].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                : rows[0]
-                        ).map((row) => (
-                            <StyledTableRow key={row.id}>
-                                <StyledTableCell align="center" component="th" scope="row">
-                                    {row.id}
-                                </StyledTableCell>
-                                <StyledTableCell align="center">{row.title}</StyledTableCell>
-                                <StyledTableCell align="center">{row.author}</StyledTableCell>
-                                <StyledTableCell align="center">{row.createDate}</StyledTableCell>
-                                <StyledTableCell align="center">{row.trash}</StyledTableCell>
-                            </StyledTableRow>
-                        ))}
-                    </TableBody>
-                    <TableFooter>
-                        <TableRow>
-                            <TablePagination
-                                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                                colSpan={3}
-                                count={rows.length}
-                                rowsPerPage={rowsPerPage}
-                                page={page}
-                                SelectProps={{
-                                    inputProps: {
-                                        'aria-label': 'rows per page',
-                                    },
-                                    native: true,
-                                }}
-                                onPageChange={handleChangePage}
-                                onRowsPerPageChange={handleChangeRowsPerPage}
-                                ActionsComponent={TablePaginationActions}
-                            />
-                        </TableRow>
-                    </TableFooter>
-                </Table>
-            </TableContainer>
+            { status === General ? (
+                <>
+                    <h2 style={{ marginLeft : '30px' }}>접수된 불만 사항</h2>
+                    <TableContainer sx={{ width : '175vh', margin : '20px' }} component={Paper}>
+                        <Table sx={{ minWidth: 700}} aria-label="customized table">
+                            <TableHead>
+                                <TableRow>
+                                    <StyledTableCell align="center">번호</StyledTableCell>
+                                    <StyledTableCell align="center">제목</StyledTableCell>
+                                    <StyledTableCell align="center">작성자</StyledTableCell>
+                                    <StyledTableCell align="center">작성일</StyledTableCell>
+                                    <StyledTableCell align="center"></StyledTableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {(rowsPerPage > 0
+                                        ? rows[0].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                        : rows[0]
+                                ).map((complain,index) => (
+                                    <StyledTableRow key={complain.id}>
+                                        <StyledTableCell align="center" component="th" scope="complain">
+                                            { index + 1 }
+                                        </StyledTableCell>
+                                        <StyledTableCell onClick={() => {
+                                            console.log(complain.id)
+                                            setId(complain.id)
+                                            setStatus(Detail)
+                                        }} align="center">{complain.pstTitle}</StyledTableCell>
+                                        <StyledTableCell align="center">{complain.userId}</StyledTableCell>
+                                        <StyledTableCell align="center">{complain.pstDt}</StyledTableCell>
+                                        <StyledTableCell align="center">{complain.trash}</StyledTableCell>
+                                    </StyledTableRow>
+                                ))}
+                            </TableBody>
+                            <TableFooter>
+                                <TableRow>
+                                    <TablePagination
+                                        rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                                        colSpan={3}
+                                        count={rows[0].length}
+                                        rowsPerPage={rowsPerPage}
+                                        page={page}
+                                        SelectProps={{
+                                            inputProps: {
+                                                'aria-label': 'rows per page',
+                                            },
+                                            native: true,
+                                        }}
+                                        onPageChange={handleChangePage}
+                                        onRowsPerPageChange={handleChangeRowsPerPage}
+                                        ActionsComponent={TablePaginationActions}
+                                    />
+                                </TableRow>
+                            </TableFooter>
+                        </Table>
+                    </TableContainer>
+                </>
+            ) : (<>
+                <AdminComplaintManagementDetail/>
+                <Button variant="contained" onClick={() => {
+                    setStatus(General)
+                }}>
+                    뒤로가기
+                </Button>
+            </>) }
         </React.Fragment>
     )
 }

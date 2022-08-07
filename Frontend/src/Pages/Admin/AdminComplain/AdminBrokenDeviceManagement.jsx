@@ -22,6 +22,11 @@ import { useTheme } from '@mui/material/styles';
 import {useState} from "react";
 import {ADMIN_SERVER_URL} from "../../../config";
 import {fetchBrokenDevice} from "../../../api/admin";
+import {Mode} from "../../../atoms";
+import {PostDetail} from "../../../atoms";
+import {useRecoilState} from "recoil";
+import {AdminComplaintManagementDetail} from "./AdminComplaintManagementDetail";
+import Button from "@mui/material/Button";
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -105,41 +110,52 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-// function createData(id, title, author, createDate, views, trash) {
-//     return { id, title, author, createDate, views, trash };
-// }
-//
-// const rows = [
-//     createData(1, "이제부터 포인트가 2배씩!",  "김도원", "2022-08-02", 240, <DeleteIcon/>),
-//     createData(2, "친구 초대 시 500 포인트", "김강현", "2022-08-02", 503, <DeleteIcon/>),
-//     createData(3, "QR 찍지 않아도 됩니다!", "권덕민", "2022-08-02", 560, <DeleteIcon/>),
-//     createData(4, "공통 프로젝트 C106", "유승우", "2022-08-02", 302, <DeleteIcon/>),
-//     createData(5, "1등했다고 합니다", "윤성한", "2022-08-02", 503, <DeleteIcon/>),
-//     createData(6, "조금만 힙냅시다!", "정혜원", "2022-08-02", 205, <DeleteIcon/>),
-// ];
-
 
 
 export const AdminBrokenDeviceManagement = () => {
+    // status 상태상수
+    const General = "GENERAL"
+    const Detail = "DETAIL"
+    // 글로벌 Mode
+    const [mode, setMode] = useRecoilState(Mode)
+    // 전체 글
+    const [brokens,setBrokens] = useState([])
+    // 글 Detail
+    const [status, setStatus] = useState(General)
+    const [id, setId] = useState(null);
+    const [postDetail, setPostDetail] = useRecoilState(PostDetail)
+    // pagination
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    const [complains,setComplains] = useState([])
     useEffect(() => {
         fetchBrokenDevice()
             .then((res) => {res.json().then((res) => {
                 console.log(res)
-                setComplains(res)
+                for(let i=0; i < res.length; i++ ){
+                    res[i].id = res[i].pstSeq
+                    delete res[i].pstSeq
+                }
+                setBrokens(res)
             })})
     }, []);
-    function createData(id, title, author, createDate, trash) {
-        return { id, title, author, createDate, trash };
+    function createData(id, pstTitle, userId, pstDt, trash) {
+        return { id, pstTitle, userId, pstDt, trash };
     }
 
     const rows = [
-        complains.map((complain,index) => {
-            return createData(index ,complain.pstTitle, complain.userId, complain.pstDt,<DeleteIcon/>)
+        brokens.map((broken,index) => {
+            return createData(broken.id ,broken.pstTitle, broken.userId, broken.pstDt,<DeleteIcon/>)
         })
     ];
+
+    if(status === Detail){
+        // notices돌면서 id와 같은것 정보 가져옴
+        for(let i=0; i<brokens.length; i++){
+            if(brokens[i].id === id){
+                setPostDetail(brokens[i])
+            }
+        }
+    }
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -153,57 +169,74 @@ export const AdminBrokenDeviceManagement = () => {
         setPage(0);
     };
     return (
-        <>
-            <h2 style={{ marginLeft : '30px' }}>접수된 고장 신고</h2>
-            <TableContainer sx={{ width : '175vh', margin : '20px' }} component={Paper}>
-                <Table sx={{ minWidth: 700}} aria-label="customized table">
-                    <TableHead>
-                        <TableRow>
-                            <StyledTableCell align="center">번호</StyledTableCell>
-                            <StyledTableCell align="center">제목</StyledTableCell>
-                            <StyledTableCell align="center">작성자</StyledTableCell>
-                            <StyledTableCell align="center">작성일</StyledTableCell>
-                            <StyledTableCell align="center"></StyledTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {(rowsPerPage > 0
-                                ? rows[0].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                : rows[0]
-                        ).map((row) => (
-                            <StyledTableRow key={row.id}>
-                                <StyledTableCell align="center" component="th" scope="row">
-                                    {row.id}
-                                </StyledTableCell>
-                                <StyledTableCell align="center">{row.title}</StyledTableCell>
-                                <StyledTableCell align="center">{row.author}</StyledTableCell>
-                                <StyledTableCell align="center">{row.createDate}</StyledTableCell>
-                                <StyledTableCell align="center">{row.trash}</StyledTableCell>
-                            </StyledTableRow>
-                        ))}
-                    </TableBody>
-                    <TableFooter>
-                        <TableRow>
-                            <TablePagination
-                                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                                colSpan={3}
-                                count={rows.length}
-                                rowsPerPage={rowsPerPage}
-                                page={page}
-                                SelectProps={{
-                                    inputProps: {
-                                        'aria-label': 'rows per page',
-                                    },
-                                    native: true,
-                                }}
-                                onPageChange={handleChangePage}
-                                onRowsPerPageChange={handleChangeRowsPerPage}
-                                ActionsComponent={TablePaginationActions}
-                            />
-                        </TableRow>
-                    </TableFooter>
-                </Table>
-            </TableContainer>
-        </>
+        <React.Fragment>
+            { status === General ? (
+                <>
+                    <h2 style={{ marginLeft : '30px' }}>접수된 고장 신고</h2>
+                    <TableContainer sx={{ width : '175vh', margin : '20px' }} component={Paper}>
+                        <Table sx={{ minWidth: 700}} aria-label="customized table">
+                            <TableHead>
+                                <TableRow>
+                                    <StyledTableCell align="center">번호</StyledTableCell>
+                                    <StyledTableCell align="center">제목</StyledTableCell>
+                                    <StyledTableCell align="center">작성자</StyledTableCell>
+                                    <StyledTableCell align="center">작성일</StyledTableCell>
+                                    <StyledTableCell align="center"></StyledTableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {(rowsPerPage > 0
+                                        ? rows[0].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                        : rows[0]
+                                ).map((broken, index) => (
+                                    <StyledTableRow key={broken.id}>
+                                        <StyledTableCell align="center" component="th" scope="broken">
+                                            {index + 1}
+                                        </StyledTableCell>
+                                        <StyledTableCell align="center" onClick={() => {
+                                            setId(broken.id)
+                                            setStatus(Detail)
+                                        }}>{broken.pstTitle}</StyledTableCell>
+                                        <StyledTableCell align="center">{broken.userId}</StyledTableCell>
+                                        <StyledTableCell align="center">{broken.pstDt}</StyledTableCell>
+                                        <StyledTableCell align="center">{broken.trash}</StyledTableCell>
+                                    </StyledTableRow>
+                                ))}
+                            </TableBody>
+                            <TableFooter>
+                                <TableRow>
+                                    <TablePagination
+                                        rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                                        colSpan={3}
+                                        count={rows[0].length}
+                                        rowsPerPage={rowsPerPage}
+                                        page={page}
+                                        SelectProps={{
+                                            inputProps: {
+                                                'aria-label': 'rows per page',
+                                            },
+                                            native: true,
+                                        }}
+                                        onPageChange={handleChangePage}
+                                        onRowsPerPageChange={handleChangeRowsPerPage}
+                                        ActionsComponent={TablePaginationActions}
+                                    />
+                                </TableRow>
+                            </TableFooter>
+                        </Table>
+                    </TableContainer>
+                </>
+            ) : (
+                <>
+                    <AdminComplaintManagementDetail/>
+                    <Button variant="contained" onClick={() => {
+                        setStatus(General)
+                    }}>
+                        뒤로가기
+                    </Button>
+                </>
+            ) }
+
+        </React.Fragment>
     )
 }

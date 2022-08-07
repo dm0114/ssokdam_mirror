@@ -39,3 +39,17 @@ export const NoticeDetail = atom({
   },
   effects_UNSTABLE: [persistAtom],
 })
+
+export const PostDetail = atom({
+  key : 'postDetail',
+  default : {
+    userId : "",
+    pstSeq : "",
+    pstTitle : "",
+    pstCtnt : "",
+    pstDt : "",
+    file : ""
+  },
+  effects_UNSTABLE: [persistAtom],
+  // 나중에 comment도 와야함
+})

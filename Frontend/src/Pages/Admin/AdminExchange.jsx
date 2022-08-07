@@ -11,6 +11,8 @@ import CheckIcon from '@mui/icons-material/Check';
 import { SERVER_URL } from '../../config';
 import axios from "axios";
 import {fetchExchange} from "../../api/admin";
+import {AcceptExchange} from "../../api/admin";
+import {DeleteExchange} from "../../api/admin";
 
 const columns = [
     { field: 'id', headerName: '번호', flex : 1, headerAlign: 'center', align: "center",  editable: true },
@@ -53,6 +55,8 @@ const rows = [
 
 export const AdminExchange = () => {
     const [exchanges, setExchanges] = useState([])
+    const [select, setSelection] = useState([]);
+    console.log(select)
 
     useEffect(() => {
         const fetchExchanges = fetchExchange()
@@ -67,6 +71,19 @@ export const AdminExchange = () => {
     }, []);
 
 
+    const acceptExchange = () => {
+        console.log(select)
+        AcceptExchange(select)
+            .then((res) => console.log(res))
+    }
+
+    const deleteExchange = () => {
+        console.log(select)
+        DeleteExchange(select)
+            .then((res) => console.log(res))
+    }
+
+
     return (
         <React.Fragment>
             <Box sx={{ marginLeft : '20px' }}>
@@ -78,12 +95,19 @@ export const AdminExchange = () => {
                         pageSize={5}
                         rowsPerPageOptions={[5]}
                         checkboxSelection
+                        onSelectionModelChange={(newSelection) => {
+                            setSelection(newSelection)
+                        }}
                     />
                 </div>
             </Box>
             <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginRight : '20px', marginTop : '10px' }}>
-                <Button variant="contained" startIcon={<CheckIcon />} sx={{ marginRight : '10px' }} >승인</Button>
-                <Button variant="contained" startIcon={<DeleteIcon />} color='error' >삭제</Button>
+                <Button variant="contained" startIcon={<CheckIcon />} sx={{ marginRight : '10px' }} onClick={() => {
+                    acceptExchange()
+                }} >승인</Button>
+                <Button variant="contained" startIcon={<DeleteIcon />} color='error' onClick={() => {
+                    deleteExchange()
+                }} >삭제</Button>
             </Box>
         </React.Fragment>
     )

@@ -112,19 +112,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-function createData(id, pstTitle, userId, pstDt, trash) {
-    return { id, pstTitle, userId, pstDt, trash };
-}
 
-const rows = [
-    createData(1, "이제부터 포인트가 2배씩!",  "김도원", "2022-08-02", <DeleteIcon/>),
-    createData(2, "친구 초대 시 500 포인트", "김강현", "2022-08-02",  <DeleteIcon/>),
-    createData(3, "QR 찍지 않아도 됩니다!", "권덕민", "2022-08-02",  <DeleteIcon/>),
-    createData(4, "공통 프로젝트 C106", "유승우", "2022-08-02", <DeleteIcon/>),
-    createData(5, "1등했다고 합니다", "윤성한", "2022-08-02",  <DeleteIcon/>),
-    createData(6, "조금만 힙냅시다!", "정혜원", "2022-08-02",  <DeleteIcon/>),
-    // 정보 받아오면 create(pstSeq, pstTitle, userId, pstDt, <DeleteIcon/> ) map 함수로 돌리기
-];
 
 
 export const AdminNotice = () => {
@@ -138,7 +126,24 @@ export const AdminNotice = () => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     // 전체 공지사항
-    const [notices, setNotices] = useState(rows)
+    const [notices, setNotices] = useState([])
+
+    function createData(id, pstTitle, userId, pstDt, trash) {
+        return { id, pstTitle, userId, pstDt, trash };
+    }
+
+    const rows = [
+        // createData(1, "이제부터 포인트가 2배씩!",  "김도원", "2022-08-02", <DeleteIcon/>),
+        // createData(2, "친구 초대 시 500 포인트", "김강현", "2022-08-02",  <DeleteIcon/>),
+        // createData(3, "QR 찍지 않아도 됩니다!", "권덕민", "2022-08-02",  <DeleteIcon/>),
+        // createData(4, "공통 프로젝트 C106", "유승우", "2022-08-02", <DeleteIcon/>),
+        // createData(5, "1등했다고 합니다", "윤성한", "2022-08-02",  <DeleteIcon/>),
+        // createData(6, "조금만 힙냅시다!", "정혜원", "2022-08-02",  <DeleteIcon/>),
+        // 정보 받아오면 create(pstSeq, pstTitle, userId, pstDt, <DeleteIcon/> ) map 함수로 돌리기
+        notices.map((notice) => {
+            return createData(notice.id ,notice.pstTitle, notice.userId, notice.pstDt,<DeleteIcon/>)
+        })
+    ];
 
 
     useEffect(() => {
@@ -201,12 +206,12 @@ export const AdminNotice = () => {
                             </TableHead>
                             <TableBody>
                                 {(rowsPerPage > 0
-                                        ? notices.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                        : notices
-                                ).map((notice) => (
+                                        ? rows[0].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                        : rows[0]
+                                ).map((notice,index) => (
                                     <StyledTableRow key={notice.id}>
                                         <StyledTableCell align="center" component="th" scope="row">
-                                            {notice.id}
+                                            {index + 1}
                                         </StyledTableCell>
                                         <StyledTableCell  onClick={() => {
                                             setId(notice.id)
@@ -224,7 +229,7 @@ export const AdminNotice = () => {
                                     <TablePagination
                                         rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                                         colSpan={3}
-                                        count={notices.length}
+                                        count={rows[0].length}
                                         rowsPerPage={rowsPerPage}
                                         page={page}
                                         SelectProps={{
