@@ -3,7 +3,7 @@ import React from 'react';
 import { MapBackGround } from '../../styles/BackgroundStyle';
 import { ButtonWrapper } from '../../styles/MapStyle';
 
-import { SERVER_URL } from '../../config';
+import { SERVER_URL,NONEAPI_URL } from '../../config';
 
 import { CustomOverlayMap, Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useState } from 'react';
@@ -32,7 +32,7 @@ function EcoMap() {
   console.log(positions);
   useEffect(() => {
     const fetchDevice = async () => {
-      const URL = 'http://3.36.78.244:8080/embedded/map';
+      const URL = `${SERVER_URL}/embedded/map`;
       // const URL = "http://localhost:8888/positions"
       let response = await fetch(URL, {
         method: 'GET',

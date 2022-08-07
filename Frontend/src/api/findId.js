@@ -1,29 +1,40 @@
 import axios from "axios";
 import { SERVER_URL } from "../config";
 
-export default async function FetchFindId({name, phone}) {
-  const URL = `${SERVER_URL}/findId`
+export default async function FetchFindId(userInput) {
+  const URL = `${SERVER_URL}/login/findId`
   
-  const data = {
-    userName: name,
-    userPhone: phone,
-  };
+  const data = JSON.stringify({
+    userName: userInput.userName,
+    userPhone: userInput.userPhone,
+  });
 
-  const response = {
-    userId : 'test'
-  }
-  
+  const customConfig = {
+    headers: {
+    'Content-Type': 'application/json'
+    }
+};
   
 
-  // await axios
-  //   .post(URL, JSON.stringify(data), {
-  //     headers: {
-  //       "Content-Type": `application/json`,
-  //     },
-  //   })
-  //   .then((res) => {
+  // const response = await axios.post(URL, data, customConfig)
+  
+  // console.log(response);
+  // response.then((res) => {
   //     console.log(res);
-  //   });
+  // });
+  const response = await fetch(URL, { 
+    method: "POST",
+    headers: {"Content-Type": `application/json`,},
+    body: JSON.stringify({
+      userName: userInput.userName,
+      userPhone: userInput.userPhone,
+    }),
+  })
+  
+  console.log(response);
+  response.then((res) => {
+      console.log(res);
+  });
   
   return response
 }

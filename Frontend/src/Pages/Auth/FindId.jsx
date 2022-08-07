@@ -45,7 +45,7 @@ const FindId = () => {
   };
 
   const onSubmitAccount = async () => {
-    await FetchFindId(inputData.userName, inputData.userPhone).then((res) => {
+    await FetchFindId(inputData).then((res) => {
         setResData(res.userId)
         handleClickOpen()
     }); 
@@ -98,8 +98,8 @@ const FindId = () => {
           </HeaderWrapper>
 
           <TextField
-            id="userId"
-            label="아이디"
+            id="userName"
+            label="이름"
             variant="standard"
             fullWidth
             sx={{ my: 2 }}

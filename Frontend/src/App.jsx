@@ -29,13 +29,13 @@ import FrequentlyQuestion from './Pages/Sub/FrequentlyQuestion'
 
 import Alarm from './Pages/Nav/Alarm'
 import {AdminMain} from "./Pages/Admin/AdminMain";
-import {AdminNotice} from "./Pages/Admin/AdminNotice";
+import {AdminNotice} from "./Pages/Admin/AdminNotice/AdminNotice";
 import {AdminCheckDevice} from "./Pages/Admin/AdminCheckDevice";
-import {AdminComplaintManagement} from "./Pages/Admin/AdminComplaintManagement";
-import {AdminBrokenDeviceManagement} from "./Pages/Admin/AdminBrokenDeviceManagement";
+import {AdminComplaintManagement} from "./Pages/Admin/AdminComplain/AdminComplaintManagement";
+import {AdminBrokenDeviceManagement} from "./Pages/Admin/AdminComplain/AdminBrokenDeviceManagement";
 import {AdminUserManagement} from "./Pages/Admin/AdminUserManagement";
 import {AdminExchange} from "./Pages/Admin/AdminExchange";
-import {AdminNoticeCreate} from "./Pages/Admin/AdminNoticeCreate";
+import {AdminNoticeCreate} from "./Pages/Admin/AdminNotice/AdminNoticeCreate";
 
 import AdminLogin from './Pages/Admin/AdminLogin'
 import AdminHome from './Pages/Admin/AdminHome'
@@ -61,7 +61,7 @@ function App() {
           <Route exact path="/myAsk/:id" element={<MyAskDetail/>} />
           <Route exact path='/exchange' element={<Exchange/>} />
           <Route exact path='/complaint' element={<Complaint/>} />
-          <Route exact path='/brokenDeviceReport' element={<BrokenDeviceReport/>} />
+          {/* <Route exact path='/brokenDeviceReport' element={<BrokenDeviceReport/>} /> */}
           {/* ClientAuth */}
           <Route exact path='/login' element={<Login/>} />
           <Route exact path='/login/findId' element={<FindId/>} />

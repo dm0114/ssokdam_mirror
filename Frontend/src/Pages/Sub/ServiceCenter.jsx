@@ -52,7 +52,7 @@ const ServiceCenter = () => {
             <ContentDivider />
         </TitleWrapper>
 
-        <TitleWrapper>
+        {/* <TitleWrapper>
             <TitleText>고장 신고</TitleText>
             <TitleDivider />
             <ContentWrapper onClick={() => navigate('/brokenDeviceReport')}>
@@ -63,7 +63,7 @@ const ServiceCenter = () => {
                     />
             </ContentWrapper>
             <ContentDivider />
-        </TitleWrapper>
+        </TitleWrapper> */}
 
         <TitleWrapper>
             <TitleText>나의 문의 내역</TitleText>

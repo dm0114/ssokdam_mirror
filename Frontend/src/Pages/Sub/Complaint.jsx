@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import {Link, useNavigate} from "react-router-dom";
 
 import {
@@ -8,20 +8,55 @@ import {
   HeaderWrapper,
   MainButton,
   ButtonText,
+  NotReadyToSubmitButton,
 } from '../../styles/SubLoginStyles';
 import {BinWrapper} from "../../styles/BackgroundStyle";
 import {MuiTheme} from "../../styles/MuiTheme"
 
-
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import TextField from '@mui/material/TextField';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { ThemeProvider } from '@mui/material/styles';
-import { borderRadius } from '@mui/system';
+
+import { CreateComplaint } from '../../api/complaint';
 
 
 const Complaint = () => {
+  const [isReadyToSubmit, setIsReadyToSubmit] = useState(false)
+  const [userInput, setUserInput] = useState({
+    pstTitle: '',
+    pstCtnt: '',
+    pstType: '',
+  });
+
+  const navigate = useNavigate()
+
+  const handleChange = (event) => { 
+    setUserInput((state) => {
+      return { ...state, [event.target.name]: event.target.value };
+    })
+  }
+  const submitComplaint = async (userInput) => {
+    // create complaint 코드 수정
+    const res = await CreateComplaint(userInput)
+    // if createComplaint의 결과가 트루면 navigate
+    // navigate('/myAsk')
+    console.log(res);
+  }
+
+  useEffect(() => {
+    if (!(Object.values(userInput).includes(''))) {
+      setIsReadyToSubmit(true)
+    } else {
+      setIsReadyToSubmit(false)
+    }
+  }, [userInput])
+
   return (
     <ThemeProvider theme={MuiTheme}>
       <SubLoginBackgroundView>
@@ -37,10 +72,27 @@ const Complaint = () => {
           </HeaderWrapper>
         </Wrap>
         <BinWrapper>
+          
+          <FormControl fullWidth>
+            <InputLabel id="pstType">문의 유형</InputLabel>
+            <Select
+              name="pstType"
+              labelId="pstType"
+              id="pstType"
+              value={userInput.pstType}
+              label="pstType"
+              onChange={handleChange}
+              sx={{marginBottom: "24px"}}
+              required
+            >
+              <MenuItem value={"complaint"}>불편 사항</MenuItem>
+              <MenuItem value={"brokenQuesion"}>고장 신고</MenuItem>
+            </Select>
+          </FormControl>
 
           <TextField
-            name='title'
-            id='title'
+            name='pstTitle'
+            id='pstTitle'
             label='제목'
             variant='standard'
             fullWidth
@@ -48,12 +100,13 @@ const Complaint = () => {
               marginBottom: '32px',
             }}
             color='black'
+            onChange={handleChange}
             required
           />
 
           <TextField
-            name='userPwd2'
-            id='content'
+            name='pstCtnt'
+            id='pstCtnt'
             label='내용'
             variant='standard'
             multiline
@@ -62,9 +115,12 @@ const Complaint = () => {
               marginBottom: '32px',
             }}
             color='black'
+            onChange={handleChange}
             required
           />
+
         </BinWrapper>
+
 
         <IconButton
           color='black'
@@ -84,10 +140,17 @@ const Complaint = () => {
           <input hidden accept='image/*' type='file' />
           <PhotoCamera />
         </IconButton>
+        
+        {isReadyToSubmit ? (
+          <MainButton width='100%' type='submit' onClick={() => submitComplaint(userInput)}>
+            <ButtonText>제출하기</ButtonText>
+          </MainButton>
+        ) : (
+          <NotReadyToSubmitButton>
+            <ButtonText>제출하기</ButtonText>
+          </NotReadyToSubmitButton>
+        )}
 
-        <MainButton width='100%' type='submit'>
-          <ButtonText>제출하기</ButtonText>
-        </MainButton>
       </SubLoginBackgroundView>
     </ThemeProvider>
   );

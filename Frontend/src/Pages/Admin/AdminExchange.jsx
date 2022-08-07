@@ -10,12 +10,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import { SERVER_URL } from '../../config';
 import axios from "axios";
+import {fetchExchange} from "../../api/admin";
 
 const columns = [
-    { field: 'id', headerName: '아이디', flex : 1, headerAlign: 'center', align: "center",  editable: true },
-    { field: 'userAsk', headerName: '신청 날짜', type : 'dateTime' ,headerAlign: 'center', flex : 1, align: "center", editable: true },
+    { field: 'id', headerName: '번호', flex : 1, headerAlign: 'center', align: "center",  editable: true },
+    { field: 'userId', headerName: '아이디', flex : 1, headerAlign: 'center', align: "center",  editable: true },
+    { field: 'pbDt', headerName: '신청 날짜', type : 'dateTime' ,headerAlign: 'center', flex : 1, align: "center", editable: true },
     {
-        field: 'userAskPoint',
+        field: 'pbMoney',
         headerName: '신청 포인트',
         type : 'number',
         flex : 1,
@@ -23,17 +25,17 @@ const columns = [
         headerAlign: 'center',
         editable: true
     },
-    {
-        field: 'userEmail',
-        headerName: '이메일',
-        type : 'email',
-        flex : 1,
-        align: "center",
-        headerAlign: 'center',
-        editable: true
-        // valueGetter: (params) =>
-        //     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-    },
+    // {
+    //     field: '',
+    //     headerName: '이메일',
+    //     type : 'email',
+    //     flex : 1,
+    //     align: "center",
+    //     headerAlign: 'center',
+    //     editable: true
+    //     // valueGetter: (params) =>
+    //     //     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+    // },
 ];
 
 const rows = [
@@ -50,13 +52,28 @@ const rows = [
 
 
 export const AdminExchange = () => {
+    const [exchanges, setExchanges] = useState([])
+
+    useEffect(() => {
+        const fetchExchanges = fetchExchange()
+            .then((res) => console.log(res.json().then((res) => {
+                for(let i=0; i < res.length; i++ ){
+                    res[i].id = res[i].pbSeq
+                    delete res[i].pbSeq
+                }
+                console.log(res)
+                setExchanges(res)
+            })))
+    }, []);
+
+
     return (
         <React.Fragment>
             <Box sx={{ marginLeft : '20px' }}>
                 <h2>포인트 전환</h2>
                 <div style={{ height: 400, width: '99%' }}>
                     <DataGrid
-                        rows={rows}
+                        rows={exchanges}
                         columns={columns}
                         pageSize={5}
                         rowsPerPageOptions={[5]}
