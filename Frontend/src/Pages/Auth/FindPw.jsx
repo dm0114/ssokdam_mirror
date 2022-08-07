@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 
 
@@ -8,7 +8,8 @@ import {
     ButtonText,
     Wrap,
     MainText,
-    HeaderWrapper
+    HeaderWrapper,
+    NotReadyToSubmitButton,
 } from '../../styles/SubLoginStyles';
 import {
     BinWrapper,
@@ -34,6 +35,7 @@ import FetchFindPw from '../../api/findPw';
 
 export const FindPw = () => {
   const navigate = useNavigate();
+  const [isReadyToSubmit, setIsReadyToSubmit] = useState(false)
 
   const [inputData, setInputData] = useState({
     userId: "",
@@ -48,8 +50,17 @@ export const FindPw = () => {
     });
   };
 
+  useEffect(() => {
+    if (!(Object.values(inputData).includes(''))) {
+      setIsReadyToSubmit(true)
+    } else {
+      setIsReadyToSubmit(false)
+    }
+  }, [inputData])
+
+
   const onSubmitAccount = async () => {
-    await FetchFindPw(inputData.userId, inputData.userPhone).then((res) => {
+    await FetchFindPw(inputData).then((res) => {
         setResData(res.userPw)
         handleClickOpen()
     }); 
@@ -122,9 +133,15 @@ export const FindPw = () => {
                         onChange={onChangeInputData}
                         color="black"/>
                 </Wrap>
-                <MainButton width="100%" onClick={onSubmitAccount}>
-                    <ButtonText>비밀번호 찾기</ButtonText>
-                </MainButton>
+                {isReadyToSubmit ? (
+                    <MainButton width='100%' type='submit' onClick={() => onSubmitAccount(inputData)}>
+                        <ButtonText>비밀번호 찾기</ButtonText>
+                    </MainButton>
+                ) : (
+                    <NotReadyToSubmitButton>
+                        <ButtonText>비밀번호 찾기</ButtonText>
+                    </NotReadyToSubmitButton>
+                )}
 
 
                 <>

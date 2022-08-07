@@ -1,14 +1,15 @@
 import { SERVER_URL } from '../config';
 
-export async function fetchMyPage() {
-  const URL = `${SERVER_URL}/mypage/test`
+export async function fetchNotice() {
+  const URL = `${SERVER_URL}/notice/id`
 
   const response = await fetch(URL, {
     headers : {
-      token : localStorage.getItem("access-token")
-    },
+      "Content-Type": `application/json`,
+    }
   })
   
   const json = await response.json();
+  console.log(json);
   return json
 }

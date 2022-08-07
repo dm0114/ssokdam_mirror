@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 
@@ -9,6 +9,7 @@ import {
   Wrap,
   MainText,
   HeaderWrapper,
+  NotReadyToSubmitButton,
 } from "../../styles/SubLoginStyles";
 import { BinWrapper } from "../../styles/BackgroundStyle";
 import { MuiTheme } from "../../styles/MuiTheme";
@@ -30,6 +31,7 @@ import FetchFindId from "../../api/findId";
 
 const FindId = () => {
   const navigate = useNavigate();
+  const [isReadyToSubmit, setIsReadyToSubmit] = useState(false)
 
   const [inputData, setInputData] = useState({
     userName: "",
@@ -44,7 +46,16 @@ const FindId = () => {
     });
   };
 
-  const onSubmitAccount = async () => {
+  useEffect(() => {
+    if (!(Object.values(inputData).includes(''))) {
+      setIsReadyToSubmit(true)
+    } else {
+      setIsReadyToSubmit(false)
+    }
+  }, [inputData])
+
+
+  const onSubmitAccount = async (inputData) => {
     await FetchFindId(inputData).then((res) => {
         setResData(res.userId)
         handleClickOpen()
@@ -116,9 +127,16 @@ const FindId = () => {
             onChange={onChangeInputData}
           />
         </Wrap>
-        <MainButton width="100%" onClick={onSubmitAccount}>
-          <ButtonText>아이디 찾기</ButtonText>
-        </MainButton>
+        {isReadyToSubmit ? (
+          <MainButton width='100%' type='submit' onClick={() => onSubmitAccount(inputData)}>
+            <ButtonText>아이디 찾기</ButtonText>
+          </MainButton>
+        ) : (
+          <NotReadyToSubmitButton>
+            <ButtonText>아이디 찾기</ButtonText>
+          </NotReadyToSubmitButton>
+        )}
+
         <>
             <Dialog
                 open={open}

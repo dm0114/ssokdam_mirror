@@ -44,9 +44,11 @@ const Complaint = () => {
   const submitComplaint = async (userInput) => {
     // create complaint 코드 수정
     const res = await CreateComplaint(userInput)
-    // if createComplaint의 결과가 트루면 navigate
-    // navigate('/myAsk')
-    console.log(res);
+    if (res.sucess === 'sucess') {
+      navigate('/myAsk')
+    } else {
+      alert('오류 발생')
+    }
   }
 
   useEffect(() => {

@@ -24,13 +24,29 @@ import { SubInnerText } from "../../styles/MyPageStyle";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { userInfo } from "../../atoms";
 import { useRecoilValue } from "recoil";
+import { fetchAlarm } from '../../api/alarm';
+import { useQuery } from '@tanstack/react-query';
 
 export const Alarm = () => {
   const userInfo2 = useRecoilValue(userInfo);
+  const {isLoading, data} = useQuery(['myAlarmList'], async () => await fetchAlarm())
+
+  const alarmList = data.map((alarm, index) => (
+    <BinWrapper key={index}>
+      <ContentWrapper>
+        {alarm.notCtnt === "포인트 적립" ? (<AlarmMainText>{alarm.notMoney} 포인트가 적립되었습니다.</AlarmMainText>) : (<AlarmMainText>{alarm.notMoney} 포인트가 환전되었습니다.</AlarmMainText>)}
+      </ContentWrapper>
+      <ContentWrapper>
+        <AlarmSubText>{alarm.notDt}</AlarmSubText>
+      </ContentWrapper>
+      <ContentDivider />
+    </BinWrapper>
+  ));
+
   return (
     <>
       {userInfo2 ? (
-        <SubBackgroundView>
+        isLoading ? (<>Loading...</>) : (<SubBackgroundView>
           <Wrap>
             <HeaderWrapper mb="48px">
               <BinWrapper flex="1">
@@ -42,19 +58,11 @@ export const Alarm = () => {
               <BinWrapper flex="1"></BinWrapper>
             </HeaderWrapper>
           </Wrap>
-          
-            <ContentWrapper>
-              <AlarmMainText>포인트가 적립되었습니다.</AlarmMainText>
-              <MainText>{userInfo2.userImage}</MainText>
-            </ContentWrapper>
-            <ContentWrapper>
-              <AlarmSubText>25분전</AlarmSubText>
-              <SubInnerText>{userInfo2.userImage}</SubInnerText>
-            </ContentWrapper>
-            <ContentDivider />
-            <AlarmMainText>이미지 넣기, Map함수로 렌더링하기</AlarmMainText>
 
-        </SubBackgroundView>
+          {alarmList}
+
+        </SubBackgroundView>)
+        
       ) : (
         <Navigate to="/login" />
       )}
