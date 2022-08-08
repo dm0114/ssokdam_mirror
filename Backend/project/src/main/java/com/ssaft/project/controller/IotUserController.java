@@ -2,10 +2,10 @@ package com.ssaft.project.controller;
 
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.ssaft.project.Repository.IotUserRepository;
-import com.ssaft.project.Service.IamportService;
-import com.ssaft.project.Service.IotUserService;
-import com.ssaft.project.Service.SecurityService;
+import com.ssaft.project.Service.*;
+import com.ssaft.project.domain.EmbeddedData;
 import com.ssaft.project.domain.IotUser;
+import com.ssaft.project.domain.PostData;
 import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +26,16 @@ public class IotUserController {
     IotUserService iotUserService;   // 유저관련 서비스
     @Autowired
     IotUserRepository iotUserRepository;   // jpa
-
     @Autowired
     IamportService iamportService;
+    @Autowired
+    AdminService adminService;
+    @Autowired
+    PostService postService;
+    @Autowired
+    EmbeddedService embeddedService;
+    @Autowired
+    PaybackService paybackService;
 
     @GetMapping("/admin/users")                               //전체 회원 조회 (사용한다면 관리자에서)
     @ResponseBody
@@ -40,14 +47,6 @@ public class IotUserController {
     @ResponseBody
     public Map jsonlogin(@RequestBody IotUser loginuser) {
         return iotUserService.login(loginuser.getUserId(), loginuser.getUserPwd());
-    }
-
-    @PostMapping("/login/json")                                //로그인 기능
-    @ResponseBody
-    public Map jsonlogin(@RequestBody Map<String, Object> map) {
-        String id = (String) map.get("id");
-        String password = (String) map.get("password");
-        return iotUserService.login(id, password);
     }
 
     @PostMapping("/login/findId")                          //아이디 찾기
@@ -68,6 +67,18 @@ public class IotUserController {
         return iotUserService.changePw(user);
     }
 
+    @PostMapping("/users")
+    @ResponseBody
+    public Map userDelete(@RequestBody IotUser iotUser){
+        return iotUserService.userDelete(iotUser.getUserId());
+    }
+
+    @PostMapping("/signUp")                          //json  방식으로 로그인
+    @ResponseBody
+    public Map singUp(@RequestBody IotUser user) {
+        return iotUserService.singup(user);
+    }
+
     @PostMapping("/signup/check")                          // 로그인 체크
     @ResponseBody
     public boolean singUpCheck(@RequestBody IotUser user)  {
@@ -83,12 +94,55 @@ public class IotUserController {
             throw new RuntimeException(e);
         }
     }
-
-    @PostMapping("/signUp")                          //json  방식으로 로그인
-    @ResponseBody
-    public Map singUp(@RequestBody IotUser user) {
-        return iotUserService.singup(user);
+    //*************************************** 관리자 **************************************//
+    @PostMapping("/admin/login")       //관리자 로그인
+    @ResponseBody()
+    public Map adminLogin(@RequestBody IotUser iotUser){
+        return adminService.login(iotUser.getUserId(), iotUser.getUserPwd());
     }
+
+    @PostMapping("/admin/make")             //관리자 등록
+    @ResponseBody()
+    public boolean makeAdmin(@RequestBody IotUser iotUser){
+        return adminService.makeAdmin(iotUser.getUserId());
+    }
+
+    @GetMapping("/admin/notice")              // 속성값 게시판 호출
+    @ResponseBody()
+    public List<PostData> noticeAll(){
+        return postService.findAll("공지사항");
+    }
+    @GetMapping("/admin/complain")              // 속성값 게시판 호출
+    @ResponseBody()
+    public List<PostData> ComplainPAll(){
+        return postService.findAll("불만사항");
+    }
+    @GetMapping("/admin/broken")              // 속성값 게시판 호출
+    @ResponseBody()
+    public List<PostData> BrokenAll(){
+        return postService.findAll("고장신고");
+    }
+
+    @GetMapping("/admin/checkDevice")              // 임베디드 기기정보 호출
+    @ResponseBody()
+    public List<EmbeddedData> embeddedAll(){
+        return embeddedService.findAll();
+    }
+
+    @GetMapping("/admin")              // 관리자 메인 페이지
+    @ResponseBody()
+    public Map dataAll(){
+        Map<String , Object> map = new LinkedHashMap<>();
+        map.put("exchangeLth" , paybackService.findNcnt());
+        map.put("exchangeMoney" , paybackService.findYmoney());
+        map.put("complain" , postService.findAll("불만사항"));
+        map.put("Broken" , postService.findAll("고장신고"));
+        return map;
+    }
+
+
+
+
 
     @GetMapping("/myPage")
     @ResponseBody
@@ -100,6 +154,7 @@ public class IotUserController {
         map.put("userName", user.get().getUserName());
         return map;
     }
+
 
 
     @GetMapping("/mypage/test")

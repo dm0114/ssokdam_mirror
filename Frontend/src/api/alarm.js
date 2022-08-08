@@ -11,9 +11,13 @@ export async function fetchAlarm() {
       token : localStorage.getItem("access-token")
     },
   })
-  
 
+  console.log(response)
+  response.then((res) => {
+    console.log(res)
+    return res
+  })
   const json = await response.json();
   console.log(json);
-  return json
+  // return json
 }

@@ -1,21 +1,26 @@
 package com.ssaft.project.domain;
 
+import com.ssaft.project.Function.Function;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 
-@Table(name = "tb_get")
+import java.util.Date;
+
+@Table(name = "tb_comment")
 @Getter @Setter
 @Entity
 @NoArgsConstructor
 @ToString
-public class GetData {
+public class CommentData {
+
     @Id
-    @Column(name = "get_seq")
-    private int getSeq;
+    @Column(name = "cmt_seq")
+    private int cmtSeq;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "pst_seq", updatable = false)
@@ -25,20 +30,17 @@ public class GetData {
     @JoinColumn(name = "user_id", updatable = false)
     private IotUser iotUser;
 
-    @Column(name = "get_sub")
-    private int getSub = 0;
+    @Column(name = "cmt_sub")
+    private int cmtSub = 0;
 
-    @Column(name = "get_dt")
-    private String getDt;
+    @Column(name = "cmt_dt")
+    private String cmtDt = Function.nowDate();
 
-    @Column(name = "get_title")
-    private String getTitle;
+    @Column(name = "cmt_ctnt")
+    private String cmtCtnt;
 
-    @Column(name = "get_ctnt")
-    private String getCtnt;
-
-    @Column(name = "get_dumy")
-    private String getDumy;
+    @Column(name = "cmt_dumy")
+    private String vDumy;
 
     @Transient
     private int pstSeq;

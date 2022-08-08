@@ -17,6 +17,7 @@ import {useNavigate} from "react-router-dom";
 import {Mode} from "../../../atoms";
 import {useRecoilState} from "recoil";
 import CreateAdminNotice from "../../../api/admin";
+import {SERVER_URL} from "../../../config";
 
 export const AdminNoticeCreate = () => {
     const [mode,setMode] = useRecoilState(Mode)
@@ -88,14 +89,15 @@ export const AdminNoticeCreate = () => {
         } else if (image.image_file || article.content) {
             const formData = new FormData()
             console.log(image.image_file)
-            formData.append('file', image.image_file);
+            formData.append('pstImg', image.image_file);
             // await axios.post('/api/image/upload', formData);
-            console.log(formData)
             // setArticle({...article, file : image.image_file})
             // console.log(article)
             // const createResponse = await CreateAdminNotice(article);
-            await axios.post('http://localhost:8888/notices', {...article, formData})
-            // console.log(createResponse)
+
+            // await axios.post(`${SERVER_URL}/post`, formData)
+            CreateAdminNotice({...article, formData})
+
             alert("서버에 등록이 완료되었습니다!");
             setImage({
                 image_file: "",

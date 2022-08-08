@@ -1,3 +1,4 @@
+/*
 package com.ssaft.project.controller;
 
 import com.ssaft.project.Service.AdminService;
@@ -65,12 +66,6 @@ public class AdminController {
         return embeddedService.findAll();
     }
 
-    @GetMapping("/admin/exchange")              // 환전 데이터 전부 호출
-    @ResponseBody()
-    public List<PaybackData> paybackDataAll(){
-        return paybackService.paybackAll();
-    }
-
     @GetMapping("/admin")              // 관리자 메인 페이지
     @ResponseBody()
     public Map dataAll(){
@@ -99,3 +94,4 @@ public class AdminController {
         adminService.postPush(postData);
     }
 }
+*/

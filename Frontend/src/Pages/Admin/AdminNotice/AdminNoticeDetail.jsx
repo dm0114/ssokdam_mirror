@@ -22,6 +22,7 @@ import Typography from "@mui/material/Typography";
 import {AdminNoticeUpdate} from "./AdminNoticeUpdate";
 import { Divider } from '@mui/material';
 import {fetchNoticeDelete} from "../../../api/admin";
+import {Grid} from "@mui/material";
 
 export const AdminNoticeDetail = () => {
     const [mode,setMode] = useRecoilState(Mode)
@@ -113,8 +114,9 @@ export const AdminNoticeDetail = () => {
         }
     }
     const deleteNotice = () => {
-        fetchNoticeDelete(notice.pstSeq)
+        fetchNoticeDelete(notice.id)
             .then((res) => console.log(res))
+        window.location.replace("/admin")
     }
 
 
@@ -143,35 +145,42 @@ export const AdminNoticeDetail = () => {
                         </Typography>
                         <Divider/>
                         <h3>내용</h3>
-                        { notice.file ?  (
-                            <div className="uploader-wrapper">
-                                <input type="file" accept="image/*"
-                                       onChange={saveImage}
-                                    // 클릭할 때 마다 file input의 value를 초기화 하지 않으면 버그가 발생할 수 있다
-                                    // 사진 등록을 두개 띄우고 첫번째에 사진을 올리고 지우고 두번째에 같은 사진을 올리면 그 값이 남아있음!
-                                       onClick={(e) => e.target.value = null}
-                                       ref={refParam => inputRef = refParam}
-                                       style={{display: "none"}}
-                                />
-                                <div className="img-wrapper">
-                                    <img src={image.preview_URL}/>
-                                </div>
+                        <Box style={{ padding: "20px 20px" }}>
+                            <Grid container wrap="nowrap" spacing={2}>
+                                <Grid item>
+                                    { notice.file ?  (
+                                        <div className="uploader-wrapper">
+                                            <input type="file" accept="image/*"
+                                                   onChange={saveImage}
+                                                // 클릭할 때 마다 file input의 value를 초기화 하지 않으면 버그가 발생할 수 있다
+                                                // 사진 등록을 두개 띄우고 첫번째에 사진을 올리고 지우고 두번째에 같은 사진을 올리면 그 값이 남아있음!
+                                                   onClick={(e) => e.target.value = null}
+                                                   ref={refParam => inputRef = refParam}
+                                                   style={{display: "none"}}
+                                            />
+                                            <div className="img-wrapper">
+                                                <img src={image.preview_URL}/>
+                                            </div>
 
-                                <div className="upload-button">
-                                    <Button type="primary" variant="contained" onClick={() => inputRef.click()}>
-                                        이미지 업로드
-                                    </Button>
-                                    <Button color="error" variant="contained" onClick={deleteImage}>
-                                        삭제
-                                    </Button>
-                                    {/*<Button color="success" variant="contained" onClick={createNotice}>*/}
-                                    {/*    Upload*/}
-                                    {/*</Button>*/}
-                                </div>
-                            </div>
-                        )  : ( <Typography>
-                        { notice.pstCtnt }
-                        </Typography> ) }
+                                            <div className="upload-button">
+                                                <Button type="primary" variant="contained" onClick={() => inputRef.click()}>
+                                                    이미지 업로드
+                                                </Button>
+                                                <Button color="error" variant="contained" onClick={deleteImage}>
+                                                    삭제
+                                                </Button>
+                                                {/*<Button color="success" variant="contained" onClick={createNotice}>*/}
+                                                {/*    Upload*/}
+                                                {/*</Button>*/}
+                                            </div>
+                                        </div>
+                                    )  : ( <Typography>
+                                        { notice.pstCtnt }
+                                    </Typography> ) }
+                                </Grid>
+                            </Grid>
+
+                        </Box>
                         <Divider/>
                     </FormControl>
 

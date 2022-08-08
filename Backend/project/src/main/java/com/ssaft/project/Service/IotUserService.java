@@ -144,6 +144,12 @@ public class IotUserService {
         }
     }
 
+    public Map userDelete(String id){
+        iotUserRepository.delete(iotUserRepository.findById(id).get());
+        Map<String ,Object> map = new LinkedHashMap<>();
+        return map;
+    }
+
     public void CheckId(String id){                   // 회원가입 - 중복검사
         iotUserRepository.findById(id)
                 .ifPresent(m -> {

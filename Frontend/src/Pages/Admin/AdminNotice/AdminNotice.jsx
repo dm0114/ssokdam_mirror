@@ -184,6 +184,7 @@ export const AdminNotice = () => {
     const deleteNotice = (id) => {
         fetchNoticeDelete(id)
             .then((res) => console.log(res))
+        window.location.replace("/admin")
     }
 
 
@@ -193,61 +194,63 @@ export const AdminNotice = () => {
             { status === "GENERAL" ? (
                 <>
                     <h1 style={{ marginLeft : '30px' }}>공지 사항</h1>
-                    <TableContainer sx={{ width : '175vh', margin : '20px' }} component={Paper}>
-                        <Table sx={{ minWidth: 700}} aria-label="customized table">
-                            <TableHead>
-                                <TableRow>
-                                    <StyledTableCell align="center">번호</StyledTableCell>
-                                    <StyledTableCell align="center">제목</StyledTableCell>
-                                    <StyledTableCell align="center">작성자</StyledTableCell>
-                                    <StyledTableCell align="center">작성일</StyledTableCell>
-                                    <StyledTableCell align="center"></StyledTableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {(rowsPerPage > 0
-                                        ? rows[0].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                        : rows[0]
-                                ).map((notice,index) => (
-                                    <StyledTableRow key={notice.id}>
-                                        <StyledTableCell align="center" component="th" scope="row">
-                                            {index + 1}
-                                        </StyledTableCell>
-                                        <StyledTableCell  onClick={() => {
-                                            setId(notice.id)
-                                            setStatus("DETAIL")
-                                        }} align="center">{notice.pstTitle}</StyledTableCell>
-                                        <StyledTableCell align="center">{notice.userId}</StyledTableCell>
-                                        <StyledTableCell align="center">{notice.pstDt}</StyledTableCell>
-                                        <StyledTableCell align="center" onClick={() => deleteNotice(notice.id)}>{notice.trash}</StyledTableCell>
-                                    </StyledTableRow>
-                                ))}
-                                <hr style={{ visibility : 'hidden' }}/>
-                            </TableBody>
-                            <TableFooter>
-                                <TableRow>
-                                    <TablePagination
-                                        rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                                        colSpan={3}
-                                        count={rows[0].length}
-                                        rowsPerPage={rowsPerPage}
-                                        page={page}
-                                        SelectProps={{
-                                            inputProps: {
-                                                'aria-label': 'rows per page',
-                                            },
-                                            native: true,
-                                        }}
-                                        onPageChange={handleChangePage}
-                                        onRowsPerPageChange={handleChangeRowsPerPage}
-                                        ActionsComponent={TablePaginationActions}
-                                    />
-                                </TableRow>
-                            </TableFooter>
-                        </Table>
-                    </TableContainer>
-                    <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginRight : '20px', marginTop : '10px' }}>
-                        <Button variant="contained" startIcon={<BorderColorIcon />} onClick={() => setMode('공지사항 작성')} >글 작성</Button>
+                    <Box sx={{ display : "flex", flexDirection : 'column', width : '100%' }}>
+                        <TableContainer sx={{ width : '100%', margin : '20px' }} component={Paper}>
+                            <Table sx={{ minWidth: 700}} aria-label="customized table">
+                                <TableHead>
+                                    <TableRow>
+                                        <StyledTableCell align="center">번호</StyledTableCell>
+                                        <StyledTableCell align="center">제목</StyledTableCell>
+                                        <StyledTableCell align="center">작성자</StyledTableCell>
+                                        <StyledTableCell align="center">작성일</StyledTableCell>
+                                        <StyledTableCell align="center"></StyledTableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {(rowsPerPage > 0
+                                            ? rows[0].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                            : rows[0]
+                                    ).map((notice,index) => (
+                                        <StyledTableRow key={notice.id}>
+                                            <StyledTableCell align="center" component="th" scope="row">
+                                                {index + 1}
+                                            </StyledTableCell>
+                                            <StyledTableCell style={{ cursor : 'pointer' }}  onClick={() => {
+                                                setId(notice.id)
+                                                setStatus("DETAIL")
+                                            }} align="center">{notice.pstTitle}</StyledTableCell>
+                                            <StyledTableCell style={{ cursor : 'pointer' }} align="center">{notice.userId}</StyledTableCell>
+                                            <StyledTableCell style={{ cursor : 'pointer' }} align="center">{notice.pstDt}</StyledTableCell>
+                                            <StyledTableCell style={{ cursor : 'pointer' }} align="center" onClick={() => deleteNotice(notice.id)}>{notice.trash}</StyledTableCell>
+                                        </StyledTableRow>
+                                    ))}
+                                    <hr style={{ visibility : 'hidden' }}/>
+                                </TableBody>
+                                <TableFooter>
+                                    <TableRow>
+                                        <TablePagination
+                                            rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                                            colSpan={3}
+                                            count={rows[0].length}
+                                            rowsPerPage={rowsPerPage}
+                                            page={page}
+                                            SelectProps={{
+                                                inputProps: {
+                                                    'aria-label': 'rows per page',
+                                                },
+                                                native: true,
+                                            }}
+                                            onPageChange={handleChangePage}
+                                            onRowsPerPageChange={handleChangeRowsPerPage}
+                                            ActionsComponent={TablePaginationActions}
+                                        />
+                                    </TableRow>
+                                </TableFooter>
+                            </Table>
+                        </TableContainer>
+                        <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginRight : '20px', marginTop : '10px' }}>
+                            <Button variant="contained" startIcon={<BorderColorIcon />} onClick={() => setMode('공지사항 작성')} >글 작성</Button>
+                        </Box>
                     </Box>
                 </>
             ) : (

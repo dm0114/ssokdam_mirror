@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class TokenTest {
 
     @Autowired
-    private SecurityService securityService;
+    SecurityService securityService;
 
     @Test
     void 로그인서비스_토큰(){  // 토큰이 잘생성되고 가져올때 생성한 토큰이 맞는지 테스트

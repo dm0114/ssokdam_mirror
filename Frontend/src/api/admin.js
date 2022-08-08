@@ -1,5 +1,5 @@
 import { ADMIN_SERVER_URL } from '../config';
-
+import {SERVER_URL} from "../config";
 // ----------- Main function --------
 
 export async function fetchGeneralInfo(){
@@ -13,22 +13,23 @@ export async function fetchGeneralInfo(){
 
 // ----------- Notice function -------------------
 
-export default async function CreateAdminNotice({ title, content, file }){
-    // const URL = `${ADMIN_SERVER_URL}/notice/create`;
-    const URL = 'http://localhost:8888/notices'
+export default async function CreateAdminNotice({ title, content, pstImg }){
+    const URL = `${SERVER_URL}/post`;
     const response = await fetch(URL, {
         method: "POST",
         headers: {
             "Content-type": "application/json",
+            token : localStorage.getItem('access-token'),
         },
         body: JSON.stringify({
             pstTitle : title,
             pstCtnt : content,
-            file : file
+            pstImg : "",
+            pstProp : "공지사항"
         }),
     })
     return response
-}; // Notice Create
+}; // Notice Create => todo => ready
 
 export async function fetchNotices(){
     // const URL = `${ADMIN_SERVER_URL}/exchange`;
@@ -39,8 +40,8 @@ export async function fetchNotices(){
     return response
 }; // Notice Read
 
-export async function fetchNoticeUpdate({ id, title, content, file }){
-    const URL = `${ADMIN_SERVER_URL}/notice/${id}`;
+export async function fetchNoticeUpdate({ pstSeq, pstTitle, pstCtnt, file }){
+    const URL = `${ADMIN_SERVER_URL}/post/${pstSeq}`;
     // const URL = 'http://localhost:8888/notices'
     const response = await fetch(URL, {
         method: "PUT",
@@ -48,22 +49,24 @@ export async function fetchNoticeUpdate({ id, title, content, file }){
             "Content-type": "application/json",
         },
         body: JSON.stringify({
-            pstTitle : title,
-            pstCtnt : content,
-            file : file
+            token : localStorage.getItem('access-token'),
+            pstTitle : pstTitle,
+            pstCtnt : pstCtnt,
+            pstImg : file,
+            pstProp : "공지사항"
         }), // 백엔드에서 생성일시 update되는 순간 최신화
     })
     return response
-}; // Notice Update
+}; // Notice Update todo => ready
 
-export async function fetchNoticeDelete({id}){
-    const URL = `${ADMIN_SERVER_URL}/notice/${id}`;
+export async function fetchNoticeDelete(id){
+    const URL = `${SERVER_URL}/post/${id}`;
     // const URL = 'http://localhost:8888/notices'
     const response = await fetch(URL, {
         method: "DELETE",
     })
     return response
-}; // Notice DELETE
+}; // Notice DELETE todo => ready
 
 
 
@@ -74,7 +77,7 @@ export async function fetchComplains(){
         method : 'GET',
     })
     return response
-}
+} // done
 
 export async function fetchBrokenDevice(){
     const URL = `${ADMIN_SERVER_URL}/broken`
@@ -82,7 +85,16 @@ export async function fetchBrokenDevice(){
         method : 'GET'
     })
     return response
-}
+} // done
+
+export async function DeleteComplain(id){
+    const URL = `${ADMIN_SERVER_URL}/post/${id}`
+    let response = await fetch(URL, {
+        method : 'DELETE',
+    })
+    return response
+} // todo => ready
+
 
 export async function commentCreate({postId, cmtCtnt}){
     const URL = `${ADMIN_SERVER_URL}/post/${postId}/comment`
@@ -92,11 +104,12 @@ export async function commentCreate({postId, cmtCtnt}){
             "Content-type": "application/json",
         },
         body: JSON.stringify({
+            token : localStorage.getItem('access-token'),
             cmtCtnt : cmtCtnt
         }),
     })
     return response
-}
+} // todo => ready
 
 export async function commentUpdate({postId,cmtId,cmtCtnt}){
     const URL = `${ADMIN_SERVER_URL}/post/${postId}/comment/${cmtId}`
@@ -106,11 +119,12 @@ export async function commentUpdate({postId,cmtId,cmtCtnt}){
             "Content-type": "application/json",
         },
         body: JSON.stringify({
+            token : localStorage.getItem('access-token'),
             cmtCtnt : cmtCtnt
         }),
     })
     return response
-}
+} // todo
 
 
 export async function commentDelete({postId, cmtId}){
@@ -119,7 +133,7 @@ export async function commentDelete({postId, cmtId}){
         method : 'DELETE',
         })
     return response
-}
+} // todo => ready
 
 
 
@@ -135,21 +149,21 @@ export async function fetchExchange(){
         method: "GET"
     })
     return response
-};
+}; // done
 
 export async function AcceptExchange(id){
-    const URL = `${ADMIN_SERVER_URL}/exchange/${id}` // id리스트로
+    const URL = `${ADMIN_SERVER_URL}/exchange` // id리스트로
     const response = await fetch(URL, {
-        method: "DELETE",
+        method: "POST",
         headers: {
             "Content-type": "application/json",
         },
         body: JSON.stringify({
-            isAccept : "accept"
+            id : id
         }),
     })
     return response
-}
+} // todo => ready
 
 export async function DeleteExchange(id){
     const URL = `${ADMIN_SERVER_URL}/exchange/${id}` // id리스트로
@@ -157,7 +171,7 @@ export async function DeleteExchange(id){
         method: "DELETE",
     })
     return response
-}
+} // todo => ready
 // ---------------------------- UserManagement ----------- //
 
 export async function fetchUsers(){
@@ -182,13 +196,16 @@ export async function UpdateUser(id, newData){
 
     })
     return response
-}
+} // todo => 삭제
 
-export async function DeleteUser(id){
-    const URL = `${ADMIN_SERVER_URL}/users/${id}` // id리스트로
+export async function DeleteUser(userId){
+    const URL = `${ADMIN_SERVER_URL}/users` // id리스트로
     const response = await fetch(URL, {
-        method: "DELETE"
+        method: "POST",
+        body: JSON.stringify({
+            userId : userId
+        }),
     })
     return response
-}
+} // todo => ready
 

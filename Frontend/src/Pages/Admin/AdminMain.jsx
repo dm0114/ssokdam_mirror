@@ -29,9 +29,25 @@ export const AdminMain = () => {
             })))
     },[])
 
+    const complains = generalInfo.complain?.slice(0,3).map((complaint,index) => (
+        <Article key={index}>
+            <b>{complaint.pstDt.split(" ")[0]}
+            </b>
+            &nbsp; |  &nbsp; <span>{ complaint.pstTitle }</span>
+        </Article>
+    ))
+    const brokens = generalInfo.Broken?.slice(0,3).map((broke,index) => (
+        <Article key={index}>
+            <b>{broke.pstDt.split(" ")[0]}
+            </b>
+            &nbsp; |  &nbsp; <span>{ broke.pstTitle }</span>
+        </Article>
+    ))
+
+
+
     return (
         <React.Fragment>
-
             <AdminMainGround>
                 <FullwidthBox>
                     <ComponentBox>
@@ -91,18 +107,17 @@ export const AdminMain = () => {
                         <IconBox>
                             <AddIcon></AddIcon>
                         </IconBox>
-                        <Article><b>2022-08-02</b> &nbsp; |  &nbsp; <span>이것은 제목입니다.</span> </Article>
-                        <Article><b>2022-08-02</b> &nbsp; |  &nbsp; <span>이것은 제목입니다.</span></Article>
-                        <Article><b>2022-08-02</b> &nbsp; |  &nbsp; <span>이것은 제목입니다.</span></Article>
+                        {complains}
+                        {/*{ generalInfo.complain?.slice(0,2).map((complaint,index) => {*/}
+                        {/*    <Article key={index}><b>{ complaint.pstDt.split(" ")[0] }</b></Article>*/}
+                        {/*})}*/}
                     </ArticleWrapper>
                 <h2 style={{ marginLeft : '20px', marginTop : '25px', marginBottom : '10px'}}>접수된 고장 신고</h2>
                 <ArticleWrapper style={{ backgroundColor : 'white' , marginTop : '0px', marginRight : '20px' }}>
                         <IconBox>
                             <AddIcon></AddIcon>
                         </IconBox>
-                        <Article><b>2022-08-02</b> &nbsp; |  &nbsp; <span>이것은 제목입니다.</span></Article>
-                        <Article><b>2022-08-02</b> &nbsp; |  &nbsp;<span>이것은 제목입니다.</span></Article>
-                        <Article><b>2022-08-02</b> &nbsp; |  &nbsp; <span>이것은 제목입니다.</span></Article>
+                    {brokens}
                 </ArticleWrapper>
             </AdminMainGround>
         </React.Fragment>

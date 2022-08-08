@@ -18,19 +18,26 @@ import {userInfo} from "../../../atoms";
 import {CommentInputBox} from "../../../styles/AdminStyle";
 import {useState} from "react";
 import {commentCreate, commentUpdate, commentDelete} from "../../../api/admin";
-
+import {DeleteComplain} from "../../../api/admin";
 
 
 
 export const AdminComplaintManagementDetail = () => {
     const [mode,setMode] = useRecoilState(Mode)
     const [postDetail, setPostDetail] = useRecoilState(PostDetail)
+    const [comment, setComment] = useState("")
     const imgLink = belu
     const [myUserInfo, setMyUserInfo] = useRecoilState(userInfo)
     const [editId, setEditId] = useState(null);
 
+    const onChangeComment = (e) => {
+        console.log(comment)
+        setComment(e.target.value)
+    }
+
+
     const myCommentCreate = () => {
-        commentCreate()
+        commentCreate({postId : postDetail.pstSeq, cmtCtnt : comment })
             .then((res)=> console.log(res))
     }
 
@@ -40,6 +47,11 @@ export const AdminComplaintManagementDetail = () => {
     }
     const myCommentEdit = () => {
         commentUpdate()
+            .then((res) => console.log(res))
+    }
+
+    const deleteComplain = () => {
+        DeleteComplain()
             .then((res) => console.log(res))
     }
 
@@ -60,14 +72,20 @@ export const AdminComplaintManagementDetail = () => {
                             {/*        <img src={postDetail.preview_URL}/>*/}
                             {/*    </div>*/}
                             {/*</div>*/}
-                         <Typography>
-                            { postDetail.pstCtnt }
-                        </Typography>
+                         <Box style={{ padding: "20px 20px" }}>
+                             <Grid container wrap="nowrap" spacing={2}>
+                                 <Grid item>
+                                     { postDetail.pstCtnt }
+                                 </Grid>
+                             </Grid>
+                        </Box>
                         <Divider/>
                     </FormControl>
 
                     <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginTop : '10px' }}>
-                        <Button color="error" variant="contained" sx={{ m : 1 }}>
+                        <Button color="error" variant="contained" sx={{ m : 1 }} onClick={() => {
+                            deleteComplain(postDetail.pstSeq)
+                        }}>
                             삭제
                         </Button>
                     </Box>
@@ -125,7 +143,9 @@ export const AdminComplaintManagementDetail = () => {
                                         multiline
                                         rows = {5}
                                         placeholder="답변 작성"
-                                        id="fullWidth" />
+                                        id="fullWidth"
+                                        onChange={onChangeComment}
+                                    />
                                     <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginTop : '10px' }}>
                                         <Button color="primary" variant="contained" sx={{ margin : "0 5px" }} onClick={() => {
                                             myCommentCreate()

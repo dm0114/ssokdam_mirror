@@ -7,11 +7,7 @@ import com.ssaft.project.domain.PaybackData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 
 @Service
@@ -34,12 +30,6 @@ public class PaybackService {
     public void paybackPush(PaybackData paybackData){
         Optional<IotUser> iotUser = iotUserRepository.findById(paybackData.getUserId());
         paybackData.setIotUser(iotUser.get());
-        Date today = new Date();
-        Locale currentLocale = new Locale("KOREAN", "KOREA");
-        String pattern = "yyyy-MM-dd HH:mm:ss"; //hhmmss로 시간,분,초만 뽑기도 가능
-        SimpleDateFormat formatter = new SimpleDateFormat(pattern,
-                currentLocale);
-        paybackData.setPbDt(formatter.format(today));
         paybackDataRepository.save(paybackData);
     }
 
@@ -55,5 +45,29 @@ public class PaybackService {
             money += pD.getPbMoney();
         }
         return money;
+    }
+
+    public Map exchange(String pbSeq){
+        String[] id = pbSeq.split(",");
+        for(String data : id){
+            System.out.println(data);
+            Optional<PaybackData> paybackData = paybackDataRepository.findById(Integer.valueOf(data));
+            paybackData.get().setPbCheck("Y");
+            paybackDataRepository.save(paybackData.get());
+        }
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ok", true);
+        return map;
+    }
+
+    public Map paybackDelete(String id){
+        Map<String, Object> map = new LinkedHashMap<>();
+        String[] data = id.split(",");
+        for(String delete : data){
+            Optional<PaybackData> paybackData = paybackDataRepository.findById(Integer.valueOf(delete));
+            paybackDataRepository.delete(paybackData.get());
+        }
+        map.put("ok", true);
+        return map;
     }
 }
