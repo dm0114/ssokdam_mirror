@@ -13,7 +13,7 @@ export async function fetchGeneralInfo(){
 
 // ----------- Notice function -------------------
 
-export default async function CreateAdminNotice({ pstTitle, pstCtnt, pstImg }){
+export default async function CreateAdminNotice({ title, content, pstImg }){
     const URL = `${SERVER_URL}/post`;
     const response = await fetch(URL, {
         method: "POST",
@@ -22,9 +22,9 @@ export default async function CreateAdminNotice({ pstTitle, pstCtnt, pstImg }){
             token : localStorage.getItem('access-token'),
         },
         body: JSON.stringify({
-            pstTitle : pstTitle,
-            pstCtnt : pstCtnt,
-            pstImg : pstImg,
+            pstTitle : title,
+            pstCtnt : content,
+            pstImg : "",
             pstProp : "공지사항"
         }),
     })

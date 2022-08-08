@@ -184,6 +184,7 @@ export const AdminNotice = () => {
     const deleteNotice = (id) => {
         fetchNoticeDelete(id)
             .then((res) => console.log(res))
+        window.location.replace("/admin")
     }
 
 
@@ -214,13 +215,13 @@ export const AdminNotice = () => {
                                             <StyledTableCell align="center" component="th" scope="row">
                                                 {index + 1}
                                             </StyledTableCell>
-                                            <StyledTableCell  onClick={() => {
+                                            <StyledTableCell style={{ cursor : 'pointer' }}  onClick={() => {
                                                 setId(notice.id)
                                                 setStatus("DETAIL")
                                             }} align="center">{notice.pstTitle}</StyledTableCell>
-                                            <StyledTableCell align="center">{notice.userId}</StyledTableCell>
-                                            <StyledTableCell align="center">{notice.pstDt}</StyledTableCell>
-                                            <StyledTableCell align="center" onClick={() => deleteNotice(notice.id)}>{notice.trash}</StyledTableCell>
+                                            <StyledTableCell style={{ cursor : 'pointer' }} align="center">{notice.userId}</StyledTableCell>
+                                            <StyledTableCell style={{ cursor : 'pointer' }} align="center">{notice.pstDt}</StyledTableCell>
+                                            <StyledTableCell style={{ cursor : 'pointer' }} align="center" onClick={() => deleteNotice(notice.id)}>{notice.trash}</StyledTableCell>
                                         </StyledTableRow>
                                     ))}
                                     <hr style={{ visibility : 'hidden' }}/>

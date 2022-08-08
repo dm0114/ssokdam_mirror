@@ -116,6 +116,7 @@ export const AdminNoticeDetail = () => {
     const deleteNotice = () => {
         fetchNoticeDelete(notice.id)
             .then((res) => console.log(res))
+        window.location.replace("/admin")
     }
 
 

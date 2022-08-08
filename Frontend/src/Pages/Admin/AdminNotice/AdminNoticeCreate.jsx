@@ -90,18 +90,13 @@ export const AdminNoticeCreate = () => {
             const formData = new FormData()
             console.log(image.image_file)
             formData.append('pstImg', image.image_file);
-            formData.append('pstTitle', article.title);
-            formData.append('pstCtnt', article.content);
-            console.log(formData.get('pstImg'))
-            console.log(formData.get('pstTitle'))
-            console.log(formData.get('pstCtnt'))
             // await axios.post('/api/image/upload', formData);
             // setArticle({...article, file : image.image_file})
             // console.log(article)
             // const createResponse = await CreateAdminNotice(article);
 
-            await axios.post(`${SERVER_URL}/post`, formData)
-            // CreateAdminNotice(formData)
+            // await axios.post(`${SERVER_URL}/post`, formData)
+            CreateAdminNotice({...article, formData})
 
             alert("서버에 등록이 완료되었습니다!");
             setImage({
