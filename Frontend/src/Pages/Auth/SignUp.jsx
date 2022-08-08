@@ -12,11 +12,14 @@ import {ToastContainer} from "react-toastify"
 import {
     SubLoginBackgroundView,
     MainButton,
+    SubButton,
     ButtonText,
     Wrap,
     MainText,
     HeaderWrapper,
-    ButtonWrapper2
+    ButtonWrapper2,
+    NotReadyToSubmitButton,
+
 } from '../../styles/SubLoginStyles';
 import {BinWrapper} from "../../styles/BackgroundStyle";
 import {MuiTheme} from "../../styles/MuiTheme"
@@ -30,7 +33,10 @@ import { ThemeProvider } from '@mui/material/styles';
 
 function SignUp() {
     const [impUid, setImpUid] = useState('')
+    const [isReadyToSubmit, setIsReadyToSubmit] = useState(false)
+
     const [userInfo2, setUserInfo2] = useRecoilState(userInfo)
+    
     function onClickCertification(){
       const { IMP } = window; // 생략 가능
         IMP.init("imp01330466"); // 예: imp0000000
@@ -116,8 +122,9 @@ function SignUp() {
                 ], "비밀번호가 일치하지 않습니다!")
                 .required("")
         });
-
+    
     const submit = async (values) => {
+        console.log(values);
         const {userEmail, userId, userPwd} = values;
         try {
             // await axios.post(URL, {   userEmail : userEmail,   userId : userId,   userPwd
@@ -193,7 +200,8 @@ function SignUp() {
                         onSubmit={submit}
                         validateOnMount={true}>
                         {
-                            ({values, handleSubmit, handleChange, errors}) => (
+                            ({values, handleSubmit, handleChange, errors}) =>                                 // console.log(values)
+                                (
                                 <Box>
                                     <ToastContainer/>
                                     <form onSubmit={handleSubmit} autoComplete="off">
@@ -255,18 +263,23 @@ function SignUp() {
                                               marginBottom: "32px"
                                             }}
                                             color="black"/>
-                                          <MainButton 
+                                          <SubButton 
                                             width = "100%" 
                                             type = 'submit'
                                             onClick = {onClickCertification}
-                                            style = {{backgroundColor: 'gainsboro'}}
                                             >
                                             <ButtonText>성인 인증 요청</ButtonText>
-                                          </MainButton>
+                                          </SubButton>
                                           <ButtonWrapper2>
-                                            <MainButton width="100%" type='submit'> 
+                                            {isReadyToSubmit ? (
+                                            <MainButton width='100%' type='submit'>
                                                 <ButtonText>회원 가입</ButtonText>
                                             </MainButton>
+                                            ) : (
+                                            <NotReadyToSubmitButton>
+                                                <ButtonText>회원 가입</ButtonText>
+                                            </NotReadyToSubmitButton>
+                                            )}
                                           </ButtonWrapper2>
 
                                     </form>

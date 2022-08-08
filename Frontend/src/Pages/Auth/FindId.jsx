@@ -37,7 +37,8 @@ const FindId = () => {
     userName: "",
     userPhone: "",
   });
-  const [resData, setResData] = useState({})
+  
+  const [resData, setResData] = useState('')
 
   const onChangeInputData = (e) => {
     setInputData({
@@ -54,34 +55,16 @@ const FindId = () => {
     }
   }, [inputData])
 
+  
+  const onSubmitAccount = async () => {
+    const resUserInfomation = await FetchFindId(inputData);
 
-  const onSubmitAccount = async (inputData) => {
-    await FetchFindId(inputData).then((res) => {
-        setResData(res.userId)
-        handleClickOpen()
-    }); 
-    
-    // try {
-    //   const resUserInfomation = await FetchFindId(inputData); //성공하면 해당 user 아이디 패스워드값 셋팅
-    //   if (!resUserInfomation.ok) {
-    //     alert('일치하는 회원정보가 없습니다!')
-    //   } else {
-    //     resUserInfomation.json().then((res) => {
-    //       console.log(res);
-    //       if ('message' in res) {
-    //         throw new Error(alert('앗!'))  //비동기 진행 막기
-    //       } else {
-    //         setResponseData({
-    //           userId : res.UserId
-    //         })
-    //       }
-    //     }).then(() => {
-
-    //     })
-    //   }
-    // } catch (error) {
-    //   window.alert(error);  //실패하면 throw new Error("") 값 출력
-    // }
+    if (!!Object.keys(resUserInfomation).includes("message")) {
+      alert(resUserInfomation.message);
+    } else {
+      setResData(resUserInfomation.userId);
+      handleClickOpen();
+    }
   };
 
 
@@ -137,31 +120,32 @@ const FindId = () => {
           </NotReadyToSubmitButton>
         )}
 
-        <>
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-
-                <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                    아이디 찾기 결과<br/>
-                    <DialogTitle id="alert-dialog-title">
-                    {resData}
-                    </DialogTitle>
-                </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                <Button onClick={() => {
-                    handleClose()
-                    navigate('/login')}}
-                    autoFocus>
-                    확인
-                </Button>
-                </DialogActions>
-            </Dialog>
+<>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                아이디 찾기 결과
+                <br />
+              </DialogContentText>
+              <DialogTitle id="alert-dialog-title" style={{textAlign: 'center'}}>{resData}</DialogTitle>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={() => {
+                  handleClose();
+                  navigate("/login");
+                }}
+                autoFocus
+              >
+                확인
+              </Button>
+            </DialogActions>
+          </Dialog>
         </>
       </SubLoginBackgroundView>
     </ThemeProvider>
