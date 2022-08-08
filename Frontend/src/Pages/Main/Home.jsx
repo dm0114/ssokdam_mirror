@@ -176,10 +176,10 @@ function Home(){
             </MainTextContainerWrapper>
         </BinWrapper>
         
-        
-        <MiddleText>
+        {localStorage.getItem("access-token") ? (<MiddleText>
           {userInfo2.userCnt}회
-        </MiddleText>
+        </MiddleText>) : null}
+        
         
 
           <MiddleBackground>

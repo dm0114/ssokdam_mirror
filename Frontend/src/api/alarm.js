@@ -5,13 +5,14 @@ export async function fetchAlarm() {
   const URL = `${SERVER_URL}/alarm`
 
   const response = await axios(URL, {
-    method: 'GET',
+    method: 'get',
     withCredentials: true,
     headers : {
       token : localStorage.getItem("access-token")
     },
   })
   
+
   const json = await response.json();
   console.log(json);
   return json

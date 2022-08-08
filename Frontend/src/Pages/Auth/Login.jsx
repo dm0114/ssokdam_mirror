@@ -175,14 +175,9 @@ function Login() {
               >
                 <ButtonText>로그인</ButtonText>
               </MainButton>
-              <SubButton>
+              <SubButton onClick={() => navigate('/signup')}>
                 <ButtonText>
-                  <Link
-                    to="/signup"
-                    style={{ textDecoration: "none", color: "#000" }}
-                  >
                     회원가입
-                  </Link>
                 </ButtonText>
               </SubButton>
             </ButtonWrapper>

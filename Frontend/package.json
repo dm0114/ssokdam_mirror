@@ -24,6 +24,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-kakao-maps-sdk": "^1.1.1",
+    "react-naver-maps": "^0.0.13",
     "react-qr-reader": "^2.2.1",
     "react-query": "^4.0.0",
     "react-router-dom": "^6.3.0",
