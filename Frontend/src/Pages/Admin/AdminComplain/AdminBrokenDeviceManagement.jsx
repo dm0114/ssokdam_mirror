@@ -173,58 +173,61 @@ export const AdminBrokenDeviceManagement = () => {
             { status === General ? (
                 <>
                     <h2 style={{ marginLeft : '30px' }}>접수된 고장 신고</h2>
-                    <TableContainer sx={{ width : '175vh', margin : '20px' }} component={Paper}>
-                        <Table sx={{ minWidth: 700}} aria-label="customized table">
-                            <TableHead>
-                                <TableRow>
-                                    <StyledTableCell align="center">번호</StyledTableCell>
-                                    <StyledTableCell align="center">제목</StyledTableCell>
-                                    <StyledTableCell align="center">작성자</StyledTableCell>
-                                    <StyledTableCell align="center">작성일</StyledTableCell>
-                                    <StyledTableCell align="center"></StyledTableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {(rowsPerPage > 0
-                                        ? rows[0].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                        : rows[0]
-                                ).map((broken, index) => (
-                                    <StyledTableRow key={broken.id}>
-                                        <StyledTableCell align="center" component="th" scope="broken">
-                                            {index + 1}
-                                        </StyledTableCell>
-                                        <StyledTableCell align="center" onClick={() => {
-                                            setId(broken.id)
-                                            setStatus(Detail)
-                                        }}>{broken.pstTitle}</StyledTableCell>
-                                        <StyledTableCell align="center">{broken.userId}</StyledTableCell>
-                                        <StyledTableCell align="center">{broken.pstDt}</StyledTableCell>
-                                        <StyledTableCell align="center">{broken.trash}</StyledTableCell>
-                                    </StyledTableRow>
-                                ))}
-                            </TableBody>
-                            <TableFooter>
-                                <TableRow>
-                                    <TablePagination
-                                        rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                                        colSpan={3}
-                                        count={rows[0].length}
-                                        rowsPerPage={rowsPerPage}
-                                        page={page}
-                                        SelectProps={{
-                                            inputProps: {
-                                                'aria-label': 'rows per page',
-                                            },
-                                            native: true,
-                                        }}
-                                        onPageChange={handleChangePage}
-                                        onRowsPerPageChange={handleChangeRowsPerPage}
-                                        ActionsComponent={TablePaginationActions}
-                                    />
-                                </TableRow>
-                            </TableFooter>
-                        </Table>
-                    </TableContainer>
+                    <Box sx={{ display : 'flex', flexDirection : 'column', width : "100%" }}>
+
+                        <TableContainer sx={{ width : '100%', margin : '20px' }} component={Paper}>
+                            <Table sx={{ minWidth: 700}} aria-label="customized table">
+                                <TableHead>
+                                    <TableRow>
+                                        <StyledTableCell align="center">번호</StyledTableCell>
+                                        <StyledTableCell align="center">제목</StyledTableCell>
+                                        <StyledTableCell align="center">작성자</StyledTableCell>
+                                        <StyledTableCell align="center">작성일</StyledTableCell>
+                                        <StyledTableCell align="center"></StyledTableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {(rowsPerPage > 0
+                                            ? rows[0].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                            : rows[0]
+                                    ).map((broken, index) => (
+                                        <StyledTableRow key={broken.id}>
+                                            <StyledTableCell align="center" component="th" scope="broken">
+                                                {index + 1}
+                                            </StyledTableCell>
+                                            <StyledTableCell align="center" onClick={() => {
+                                                setId(broken.id)
+                                                setStatus(Detail)
+                                            }}>{broken.pstTitle}</StyledTableCell>
+                                            <StyledTableCell align="center">{broken.userId}</StyledTableCell>
+                                            <StyledTableCell align="center">{broken.pstDt}</StyledTableCell>
+                                            <StyledTableCell align="center">{broken.trash}</StyledTableCell>
+                                        </StyledTableRow>
+                                    ))}
+                                </TableBody>
+                                <TableFooter>
+                                    <TableRow>
+                                        <TablePagination
+                                            rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                                            colSpan={3}
+                                            count={rows[0].length}
+                                            rowsPerPage={rowsPerPage}
+                                            page={page}
+                                            SelectProps={{
+                                                inputProps: {
+                                                    'aria-label': 'rows per page',
+                                                },
+                                                native: true,
+                                            }}
+                                            onPageChange={handleChangePage}
+                                            onRowsPerPageChange={handleChangeRowsPerPage}
+                                            ActionsComponent={TablePaginationActions}
+                                        />
+                                    </TableRow>
+                                </TableFooter>
+                            </Table>
+                        </TableContainer>
+                    </Box>
                 </>
             ) : (
                 <>

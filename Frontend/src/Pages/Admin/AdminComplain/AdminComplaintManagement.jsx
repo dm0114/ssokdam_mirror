@@ -26,6 +26,7 @@ import {useRecoilState} from "recoil";
 import {Mode} from "../../../atoms";
 import {AdminComplaintManagementDetail} from "./AdminComplaintManagementDetail";
 import Button from "@mui/material/Button";
+import {DeleteComplain} from "../../../api/admin";
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -172,6 +173,10 @@ export const AdminComplaintManagement = () => {
             }
         }
     }
+    const deleteComplain = () => {
+        DeleteComplain()
+            .then((res) => console.log(res))
+    }
 
 
     // Avoid a layout jump when reaching the last page with empty rows.
@@ -191,7 +196,9 @@ export const AdminComplaintManagement = () => {
             { status === General ? (
                 <>
                     <h2 style={{ marginLeft : '30px' }}>접수된 불만 사항</h2>
-                    <TableContainer sx={{ width : '175vh', margin : '20px' }} component={Paper}>
+                    <Box sx={{ display : 'flex', flexDirection : 'column', width : '100%' }}>
+
+                    <TableContainer sx={{ width : '100%', margin : '20px' }} component={Paper}>
                         <Table sx={{ minWidth: 700}} aria-label="customized table">
                             <TableHead>
                                 <TableRow>
@@ -218,7 +225,9 @@ export const AdminComplaintManagement = () => {
                                         }} align="center">{complain.pstTitle}</StyledTableCell>
                                         <StyledTableCell align="center">{complain.userId}</StyledTableCell>
                                         <StyledTableCell align="center">{complain.pstDt}</StyledTableCell>
-                                        <StyledTableCell align="center">{complain.trash}</StyledTableCell>
+                                        <StyledTableCell align="center" onClick={() => {
+                                            deleteComplain(complain.id)
+                                        }}>{complain.trash}</StyledTableCell>
                                     </StyledTableRow>
                                 ))}
                             </TableBody>
@@ -244,6 +253,7 @@ export const AdminComplaintManagement = () => {
                             </TableFooter>
                         </Table>
                     </TableContainer>
+                    </Box>
                 </>
             ) : (<>
                 <AdminComplaintManagementDetail/>

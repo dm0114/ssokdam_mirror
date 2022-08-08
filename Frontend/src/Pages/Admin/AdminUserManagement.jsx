@@ -55,6 +55,7 @@ const rows = [
 export const AdminUserManagement = () => {
     const [usersInfo, setUsersInfo] = useState([])
     const [select, setSelection] = useState([]);
+    console.log(select)
 
     useEffect(() => {
         const fetchMyUser = fetchUsers()
@@ -68,10 +69,10 @@ export const AdminUserManagement = () => {
             })))
     }, []);
 
-    const updateUsers = () => {
-        UpdateUser(select)
-            .then((res) => console.log(res))
-    }
+    // const updateUsers = () => {
+    //     UpdateUser(select)
+    //         .then((res) => console.log(res))
+    // }
 
     const deleteUsers = () => {
         DeleteUser(select)
@@ -97,9 +98,9 @@ export const AdminUserManagement = () => {
                 </div>
             </Box>
             <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginRight : '20px', marginTop : '10px' }}>
-                <Button variant="contained" startIcon={<BuildIcon />} sx={{ marginRight : '10px' }} onClick={() => {
-                    updateUsers()
-                }} >수정</Button>
+                {/*<Button variant="contained" startIcon={<BuildIcon />} sx={{ marginRight : '10px' }} onClick={() => {*/}
+                {/*    updateUsers()*/}
+                {/*}} >수정</Button>*/}
                 <Button variant="contained" startIcon={<DeleteIcon />} color='error' onClick={() => {
                     deleteUsers()
                 }} >삭제</Button>

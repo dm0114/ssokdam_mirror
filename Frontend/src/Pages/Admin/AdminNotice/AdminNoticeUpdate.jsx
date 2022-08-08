@@ -95,7 +95,8 @@ export const AdminNoticeUpdate = () => {
             console.log(formData)
             // setArticle({...notice, file : image.image_file})
             // const createResponse = await CreateAdminNotice(notice);
-            await axios.post('http://localhost:8888/notices', {...notice, formData})
+            // await axios.post('http://localhost:8888/notices', {...notice, formData})
+            fetchNoticeUpdate({...notice, file : formData})
             // fetchNoticeUpdate도 써보기
             alert("서버에 등록이 완료되었습니다!");
             setImage({
