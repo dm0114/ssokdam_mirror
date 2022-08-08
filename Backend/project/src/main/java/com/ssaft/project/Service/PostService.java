@@ -49,4 +49,30 @@ public class PostService {
         postData.setPstDt(formatter.format(today));
         postDataRepository.save(postData);
     }
+
+    public Map postEdit(int pstSeq, PostData postData){   // 게시판 수정
+        Map<String , Object> map = new LinkedHashMap<>();
+        try {
+            Optional<PostData> editPost = postDataRepository.findById(pstSeq);
+            editPost.get().setPstTitle(postData.getPstTitle());
+            editPost.get().setPstCtnt(postData.getPstCtnt());
+            editPost.get().setPstImg(postData.getPstImg());
+            postDataRepository.save(editPost.get());
+            map.put("ok", true);
+        }catch (NoSuchElementException e){
+            map.put("ok", false);
+        }
+        return map;
+    }
+    public Map postDelete(int pstSeq){
+        Map<String, Object> map = new LinkedHashMap<>();
+        try{
+            Optional<PostData> postData = postDataRepository.findById(pstSeq);
+            postDataRepository.delete(postData.get());
+            map.put("ok", true);
+        } catch (NoSuchElementException e){
+            map.put("ok", false);
+        }
+        return map;
+    }
 }

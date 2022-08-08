@@ -1,6 +1,7 @@
 package com.ssaft.project.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ssaft.project.Function.Function;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,7 +27,7 @@ public class PaybackData {
     private IotUser iotUser;
 
     @Column(name = "pb_dt")
-    private String pbDt;
+    private String pbDt = Function.nowDate();
 
     @Column(name = "pb_check")
     private String pbCheck = "N";
