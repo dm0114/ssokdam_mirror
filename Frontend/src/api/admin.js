@@ -13,8 +13,7 @@ export async function fetchGeneralInfo(){
 
 // ----------- Notice function -------------------
 
-export default async function CreateAdminNotice({ title, content, file }){
-    console.log(title,content,file)
+export default async function CreateAdminNotice({ pstTitle, pstCtnt, pstImg }){
     const URL = `${SERVER_URL}/post`;
     const response = await fetch(URL, {
         method: "POST",
@@ -23,9 +22,9 @@ export default async function CreateAdminNotice({ title, content, file }){
             token : localStorage.getItem('access-token'),
         },
         body: JSON.stringify({
-            pstTitle : title,
-            pstCtnt : content,
-            pstImg : file,
+            pstTitle : pstTitle,
+            pstCtnt : pstCtnt,
+            pstImg : pstImg,
             pstProp : "공지사항"
         }),
     })
