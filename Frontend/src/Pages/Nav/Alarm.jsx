@@ -31,7 +31,7 @@ export const Alarm = () => {
   const userInfo2 = useRecoilValue(userInfo);
   const {isLoading, data} = useQuery(['myAlarmList'], async () => await fetchAlarm())
 
-  const alarmList = data.map((alarm, index) => (
+  const alarmList = data?.map((alarm, index) => (
     <BinWrapper key={index}>
       <ContentWrapper>
         {alarm.notCtnt === "포인트 적립" ? (<AlarmMainText>{alarm.notMoney} 포인트가 적립되었습니다.</AlarmMainText>) : (<AlarmMainText>{alarm.notMoney} 포인트가 환전되었습니다.</AlarmMainText>)}

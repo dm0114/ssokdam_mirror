@@ -2,7 +2,7 @@ import axios from "axios";
 import { SERVER_URL } from "../config";
 
 export default async function FetchFindPw(userInput) {
-  const URL = `${SERVER_URL}/login/findPw`
+  const URL = `${SERVER_URL}/login/findPwd`
 
   // const data = {
   //   userId: id,

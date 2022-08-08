@@ -83,6 +83,22 @@ export const MainButton = styled.button`
   
   border: 0px;
   border-radius: 5px;
+
+  @keyframes buttonAnimation {
+    from {
+        background-color: silver;
+    }
+    to {
+        background-color: ${props => props.theme.colors.darkTurquoise};
+    }
+  }
+
+  animation: buttonAnimation;
+  animation-duration: 0.5s;
+
+  :active {
+    background-color: #80ECFF;
+  }
 `
 
 export const SubButton = styled.button`
@@ -97,6 +113,10 @@ export const SubButton = styled.button`
   margin-top: 12px;
   border: 0px;
   border-radius: 5px;
+
+  :active {
+    background-color: #808080;
+  }
 `
 
 export const ButtonText = styled.p `
