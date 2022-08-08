@@ -49,7 +49,6 @@ public class EmbeddedController {
          embeddedData.get().setIotUser(iotUser.get());
          embeddedData.get().setEmbQr("Y");
          embeddedDataRepository.save(embeddedData.get());
-
      }
 
      @PostMapping("/embedded/send")
