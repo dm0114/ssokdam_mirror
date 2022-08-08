@@ -14,6 +14,7 @@ export async function fetchGeneralInfo(){
 // ----------- Notice function -------------------
 
 export default async function CreateAdminNotice({ title, content, pstImg }){
+    console.log(title,content,pstImg)
     const URL = `${SERVER_URL}/post`;
     const response = await fetch(URL, {
         method: "POST",
@@ -24,7 +25,7 @@ export default async function CreateAdminNotice({ title, content, pstImg }){
         body: JSON.stringify({
             pstTitle : title,
             pstCtnt : content,
-            pstImg : "",
+            pstImg : pstImg,
             pstProp : "공지사항"
         }),
     })

@@ -18,6 +18,8 @@ import {Mode} from "../../../atoms";
 import {useRecoilState} from "recoil";
 import CreateAdminNotice from "../../../api/admin";
 import {SERVER_URL} from "../../../config";
+import {storage} from "../../../firebase";
+
 
 export const AdminNoticeCreate = () => {
     const [mode,setMode] = useRecoilState(Mode)
@@ -30,6 +32,11 @@ export const AdminNoticeCreate = () => {
         title : "",
         content : "",
     });
+    // const [image, setImage] = useState("");
+    const [imageUrl, setImageUrl] = useState("");
+    const [error, setError] = useState("");
+    const [progress, setProgress] = useState(100);
+    console.log(imageUrl)
     // useEffect(() => setArticle({...article, file : image.image_file}),
     //     [image])
     // console.log(article)
@@ -87,16 +94,39 @@ export const AdminNoticeCreate = () => {
         }else if(image.image_file && article.content){
             alert("텍스트와 이미지는 동시에 작성할 수 없습니다.")
         } else if (image.image_file || article.content) {
-            const formData = new FormData()
-            console.log(image.image_file)
-            formData.append('pstImg', image.image_file);
+            // const formData = new FormData()
+            // console.log(image.image_file)
+            // formData.append('pstImg', image.image_file);
             // await axios.post('/api/image/upload', formData);
             // setArticle({...article, file : image.image_file})
             // console.log(article)
             // const createResponse = await CreateAdminNotice(article);
-
+            const storageRef = storage.ref("images/test/")
+            const imagesRef = storageRef.child(image.image_file.name)
+            const upLoadTask = imagesRef.put(image.image_file);
             // await axios.post(`${SERVER_URL}/post`, formData)
-            CreateAdminNotice({...article, formData})
+            upLoadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    console.log("snapshot", snapshot);
+                    const percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log(percent + "% done");
+                    setProgress(percent);
+                },
+                (error) => {
+                    console.log("err", error);
+                    setError("파일 업로드에 실패했습니다." + error);
+                    setProgress(100); //진행중인 바를 삭제
+                },
+                () => {
+                    upLoadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                        console.log("File available at", downloadURL);
+                        setImageUrl(downloadURL);
+                        CreateAdminNotice({...article, pstImg : downloadURL})
+                    });
+                }
+            );
+            // CreateAdminNotice({...article, formData})
 
             alert("서버에 등록이 완료되었습니다!");
             setImage({
