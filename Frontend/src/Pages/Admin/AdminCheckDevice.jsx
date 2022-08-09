@@ -13,12 +13,12 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import { Roadview, RoadviewMarker } from "react-kakao-maps-sdk";
 import { useMap } from "react-kakao-maps-sdk";
 
-import {
-  NaverMap,
-  RenderAfterNavermapsLoaded,
-  Marker,
-  Polyline,
-} from "react-naver-maps";
+// import {
+//   NaverMap,
+//   RenderAfterNavermapsLoaded,
+//   Marker,
+//   Polyline,
+// } from "react-naver-maps";
 
 const columns = [
   {
@@ -142,7 +142,13 @@ export const AdminCheckDevice = () => {
   const [toggle, setToggle] = useState("map");
   const [mapTypeId, setMapTypeId] = useState();
   const [positions, setPositions] = useState([]);
-  // console.log(roadViewPosition)
+  console.log(state?.center.lng);
+  console.log(state?.center.lat);
+  console.log(roadViewPosition?.lng);
+  console.log(roadViewPosition?.lat);
+  console.log(roadViewPosition.lng);
+  console.log(roadViewPosition.lat);
+  
   useEffect(() => {
     const fetchDevice = async () => {
       const URL = `${SERVER_URL}/embedded/map`;
@@ -228,8 +234,8 @@ export const AdminCheckDevice = () => {
     <React.Fragment>
       <h3 style={{ marginLeft: "25px", marginBottom: "5px" }}>지도</h3>
       <Container sx={{ marginTop: "0px" }} maxWidth="xxl">
-        <div style={{ width: "100%", height: "500px", position: "relative" }}>
-          <RenderAfterNavermapsLoaded
+        <div style={{ width: "100%", height: "400px", position: "relative" }}>
+          {/* <RenderAfterNavermapsLoaded
             ncpClientId={"q0l4kvoi7w"}
             // 네이버 클라우드에서 받은 client id를 적어야 한다.
             // 필자는 환경변수 이용
@@ -267,14 +273,14 @@ export const AdminCheckDevice = () => {
                 strokeWeight={5}
               />
             </NaverMap>
-          </RenderAfterNavermapsLoaded>
-          {/* <Map // 지도를 표시할 Container
+          </RenderAfterNavermapsLoaded> */}
+          <Map // 지도를 표시할 Container
                     center={state.center}
                     style={{
                         // 지도의 크기
                         width: "100%",
-                        height: "50vh",
-                        marginBottom : "0",
+                        height: "30vh",
+                        marginBottom : "20px",
                         zIndex : 0,
                         display: toggle === "map" ? "block" : "none",
 
@@ -289,28 +295,37 @@ export const AdminCheckDevice = () => {
                         </MapMarker>
                     )}
                     {(positions.map((position,index) => (
-                        // <MapMarker
-                        //     // position={position.latlng}
-                        //     position={{"lat" : `${position.embLat}`, "lng" :`${position.embLng}`}}
-                        //     key={position.embId}
-                        //     image={{
-                        //         src: "https://cdn-icons-png.flaticon.com/512/999/999047.png", // 마커이미지의 주소입니다
-                        //         size: {
-                        //             width: 24,
-                        //             height: 35
-                        //         },
-                        //     }}
-                        //     title={`${position.embId}번 디바이스`}
-                        //     onClick={() => {setRoadViewPosition({
-                        //     "lat" : `${position.embLat}`, "lng" :`${position.embLng}`
-                        //     })}}
-                        // />
-                        <EventMarkerContainer
-                            key={position.embId}
-                            position={{"lat" : `${position.embLat}`, "lng" :`${position.embLng}`}}
-                            content={`${position.embId}번 디바이스`}
-                        />
+                        <Box key={index}>
+                          <MapMarker
+                              // position={position.latlng}
+                              position={{"lat" : `${position.embLat}`, "lng" :`${position.embLng}`}}
+                              key={position.embId}
+                              image={{
+                                  src: "https://cdn-icons-png.flaticon.com/512/999/999047.png", // 마커이미지의 주소입니다
+                                  size: {
+                                      width: 24,
+                                      height: 35
+                                  },
+                              }}
+                              title={`${position.embId}번 디바이스`}
+                              onClick={() => {setRoadViewPosition({
+                              "lat" : `${position.embLat}`, "lng" :`${position.embLng}`
+                              })}}
+                          />
+                          <EventMarkerContainer
+                              key={index}
+                              position={{"lat" : `${position.embLat}`, "lng" :`${position.embLng}`}}
+                              content={`${position.embId}번 디바이스`}
+                          />
+                        </Box>
+                      
                     )))}
+                    {!!(state && roadViewPosition) ? (<button>
+                      <a href={`https://map.naver.com/v5/directions/${state?.center.lng},${state?.center.lat},내위치/${roadViewPosition?.lng},${roadViewPosition?.lat},목적지/-/car?c=14121208.9388342,4181426.9377556,15,0,0,0,dh`} target="_blank">
+                        길찾기
+                      </a>
+                    </button>) : (<></>) }
+                    
                     {toggle === "map" && (
                         <input
                             style={{
@@ -330,7 +345,8 @@ export const AdminCheckDevice = () => {
                         />
                     )}
                     {mapTypeId && <MapTypeId type={mapTypeId}/>}
-                </Map> */}
+                
+                </Map>
           <Roadview // 로드뷰를 표시할 Container
             position={{ ...roadViewPosition, radius: 50 }}
             style={{

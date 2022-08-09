@@ -7,6 +7,7 @@ export const MainTextWrapper = styled.div`
   justify-content: center;
   align-items: flex-start;
   margin-bottom: 20px;
+  margin-bottom: 10vh;
   padding-left: 24px;
 `
 

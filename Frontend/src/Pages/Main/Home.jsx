@@ -20,6 +20,7 @@ import {
   MiddleBackground,
   SubBackGround,
   BinWrapper,
+  TopBackGround,
 } from "../../styles/BackgroundStyle";
 
 import {
@@ -46,6 +47,7 @@ import {
   MainIcon,
 
   MiddleText,
+  Footer
 } from "../../styles/HomeStyle";
 
 import {
@@ -129,64 +131,70 @@ function Home(){
 
   return (
     <ThemeProvider theme={theme}>
-      <MainBackGround>
-        <BinWrapper pt="52px" pl="24px" pr="24px">
-            <MainTextContainerWrapper>
-              <MainContainer flexNum="3">
-                { localStorage.getItem("access-token") ? (
-                  <MainText>
-                    { userInfo2.userName } 님이 <br/><br/>바다를 지켜준 횟수
-                  </MainText>)
-                  : (<MainText>
-                    EcoWon과 <br/><br/>바다를 지켜주세요
-                  </MainText>)  
-                }
-              </MainContainer>
-
-              <MainContainer flexNum="1" jc="flex-end">
-                  { localStorage.getItem("access-token")
-                  ? (<>
-                    {/* <MainIcon>
-                      <Link to='/myPage'>
-                        <AccountCircleIcon color='black'/>
-                      </Link>
-                    </MainIcon> */}
-                    <MainIcon>
-                      <LogoutIcon onClick={logout}/>
-                    </MainIcon>
-                    <MainIcon>
-                      <Link to='/alarm'>
-                        <NotificationsNoneIcon color='black'/>
-                      </Link>
-                    </MainIcon>
-                    </>) 
-
-                  : (<MainIcon>
-                      <Link to='/login'>
-                        <LoginIcon color='black'/>
-                      </Link>
-                    </MainIcon>) 
+      <MainBackGround bgColor="#fff">
+        <TopBackGround>
+          <BinWrapper pt="52px" pl="24px" pr="24px">
+              <MainTextContainerWrapper>
+                <MainContainer flexNum="3">
+                  { localStorage.getItem("access-token") ? (
+                    <MainText>
+                      { userInfo2.userName } 님이 <br/><br/>바다를 지켜준 횟수
+                    </MainText>)
+                    : (<MainText>
+                      EcoWon과 <br/><br/>바다를 지켜주세요
+                    </MainText>)  
                   }
-                  
-                  <MainIcon>
-                    <NavBar />
-                  </MainIcon>
+                </MainContainer>
 
-              </MainContainer>
-            </MainTextContainerWrapper>
-        </BinWrapper>
-        
-        {localStorage.getItem("access-token") ? (<MiddleText>
-          {userInfo2.userCnt}회
-        </MiddleText>) : null}
+                <MainContainer flexNum="1" jc="flex-end">
+                    { localStorage.getItem("access-token")
+                    ? (<>
+                      {/* <MainIcon>
+                        <Link to='/myPage'>
+                          <AccountCircleIcon color='black'/>
+                        </Link>
+                      </MainIcon> */}
+                      <MainIcon>
+                        <LogoutIcon onClick={logout}/>
+                      </MainIcon>
+                      <MainIcon>
+                        <Link to='/alarm'>
+                          <NotificationsNoneIcon color='black'/>
+                        </Link>
+                      </MainIcon>
+                      </>) 
+
+                    : (<MainIcon>
+                        <Link to='/login'>
+                          <LoginIcon color='black'/>
+                        </Link>
+                      </MainIcon>) 
+                    }
+                    
+                    <MainIcon>
+                      <NavBar />
+                    </MainIcon>
+
+                </MainContainer>
+              </MainTextContainerWrapper>
+          </BinWrapper>
+          
+          {localStorage.getItem("access-token") ? (<MiddleText>
+            {userInfo2.userCnt}회
+          </MiddleText>) : null}
+
+          <BinWrapper mb="144px"></BinWrapper>
+        </TopBackGround>
+
+
         
         
 
-          <MiddleBackground>
+          {/* <MiddleBackground>
             <img src="https://ifh.cc/g/fvfPJg.png" alt="" style={{objectFit: 'contain', width: '100vw'}}/>
-          </MiddleBackground>
+          </MiddleBackground> */}
 
-        <SubBackGround height="60vh">              
+        <SubBackGround>              
             <BinWrapper pl="24px" pr="24px" mb="32px">
               <TimeController>
                 <Typography component="h4" variant="h6">
@@ -228,20 +236,30 @@ function Home(){
               </Point>
             </BinWrapper>
 
-            <BinWrapper pl="24px" pr="24px" mb="24px" bgColor="#fff">
+            <BinWrapper pl="24px" pr="24px" mb="24px">
               <MainWrapper>
-                <Service onClick={() => navigate('/serviceInfo')}>
-                  <ServiceVector alt="" src="https://static.overlay-tech.com/assets/38a95fc7-fb7d-4c9a-8f8b-acde86a3f47f.svg"/>
-                  <ServiceText>서비스 안내</ServiceText>
-                </Service>
-                <Service onClick={() => navigate('/serviceCenter')}>
-                  <ServiceVector alt="" src="https://static.overlay-tech.com/assets/1e9c2706-edd6-4fe5-b478-4c983313be34.svg"/>
-                  <ServiceText>1:1 문의</ServiceText>
+                <Service >
+                  <BinWrapper onClick={() => navigate('/myPage')} display="flex" jc="center" ai="center">
+                    <ServiceVector alt="" src="https://static.overlay-tech.com/assets/ec312d4a-84ac-4930-ae91-6ca29a07712d.svg"/>
+                    <ServiceText>마이 페이지</ServiceText>
+                  </BinWrapper>
+                
+                  <BinWrapper onClick={() => navigate('/serviceInfo')}>
+                    <ServiceVector alt="" src="https://static.overlay-tech.com/assets/38a95fc7-fb7d-4c9a-8f8b-acde86a3f47f.svg"/>
+                    <ServiceText>서비스 안내</ServiceText>
+                  </BinWrapper>
+                
+                  <BinWrapper onClick={() => navigate('/serviceCenter')}>
+                    <ServiceVector alt="" src="https://static.overlay-tech.com/assets/1e9c2706-edd6-4fe5-b478-4c983313be34.svg"/>
+                    <ServiceText>1:1 문의</ServiceText>
+                  </BinWrapper>
                 </Service>
               </MainWrapper>
             </BinWrapper>
         </SubBackGround>
-
+        <Footer>
+          ⓒ EcoWon 2022
+        </Footer>
       </MainBackGround>
     </ThemeProvider>
   )

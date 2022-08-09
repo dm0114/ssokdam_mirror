@@ -110,7 +110,7 @@ function Login() {
 
   return (
     <ThemeProvider theme={theme}>
-      <MainBackGround>
+      <MainBackGround bgColor="#CBF7FF">
         <BinWrapper pt="52px" pl="24px">
           <Link to="/">
             <ArrowBackIosIcon color="black"/>
@@ -124,7 +124,7 @@ function Login() {
           <h1 style={{ fontWeight: "bold", marginTop: "0px" }}>에코원</h1>
         </MainTextWrapper>
 
-        <SubBackGround height="50vh">
+        <SubBackGround height="50vh" borderRadius="20px 20px 0px 0px">
           <ContentWrapper>
             <BinWrapper>            
 

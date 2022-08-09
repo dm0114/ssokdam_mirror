@@ -28,17 +28,10 @@ export const MainIcon = styled.p`
 export const MiddleText = styled.p`
   z-index: 99;
   width: 120px;
-  margin: 24px auto 32px auto;
-  padding: 16px;
-  
-  color: white;
-  background: rgba(0, 0, 0, 50%);
-  /* border: 2px solid #73AD21; */
-  border-radius: 25px;
-  
+  margin: 36px auto 32px 24px;
+    
   font-size: 40px;
   font-weight: 600;
-  text-align: center;
   line-height: 40px;
 `
 
@@ -54,13 +47,17 @@ export const TimeController = styled.div`
 // Notice
 export const Notice = styled.div`
   width: 100%;
-  background-color: ${props => props.theme.colors.whiteSmoke};
+  background-color: ${props => props.theme.colors.white};
+
   border-radius: 10px;
   padding: 12px 16px 12px 16px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  border: 1px solid rgba(0,0,255,0.1);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
@@ -93,6 +90,9 @@ export const QrMapButton = styled.div`
   justify-content: center;
 
   text-decoration: none;
+
+  border: 1px solid rgba(0,0,255,0.1);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 `;
 export const QrMapSubText = styled.p`
   flex: 1;
@@ -120,7 +120,6 @@ export const QrMapMainText = styled.strong`
 export const Point = styled.div`
   width: 100%;
   height: 25vw;
-  background: rgba(239,240,242,1);
   border-radius: 10px;
 
   padding: 16px;
@@ -128,6 +127,9 @@ export const Point = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  border: 1px solid rgba(0,0,255,0.1);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
@@ -150,21 +152,21 @@ export const PointImg = styled.img`
 
 // 서비스 안내 / 문의
 export const Service = styled.div`
-  width: 38%;
-  height: 20vw;
+  width: 100%;
+  height: 16vw;
   border-radius: 10px;  
-  margin-bottom: 32px;
   padding: 16px;
-  background-color: ${props => props.theme.colors.whiteSmoke};
+  background-color: ${props => props.theme.colors.white};
+
+  border: 1px solid rgba(0,0,255,0.1);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
 `;
 export const ServiceVector = styled.img`
-  height: 36px;
-  margin-bottom: 16px;
-  text-align: center;
+  height: 28px;
 `;
 export const ServiceText = styled.p`
   margin: 0px;
@@ -172,7 +174,13 @@ export const ServiceText = styled.p`
 
   color: ${props => props.theme.colors.black};
   text-align: center;
-  font-family: ${props => props.theme.fonts.sCoreDream14Regular.family};
-  font-size: ${props => props.theme.fonts.sCoreDream14Regular.size};
-  font-weight: ${props => props.theme.fonts.sCoreDream14Regular.weight};
+  font-size: 14px;
+  font-weight: 500;
 `;
+
+export const Footer = styled.p`
+  margin: auto;
+  line-height: 24px;
+  font-size: 8px;
+  font-weight: 400;
+` 

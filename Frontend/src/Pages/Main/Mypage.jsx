@@ -19,6 +19,7 @@ import {useRecoilValue} from 'recoil'
 
 export const MyPage = () => {
     const userInfo2 = useRecoilValue(userInfo)
+    
     return (<> {
         localStorage.getItem('access-token')
             ? (

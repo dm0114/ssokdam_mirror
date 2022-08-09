@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const MainBackGround = styled.div`
-  background-color: ${(props) => props.theme.colors.darkTurquoise};
+  background-color: ${props => props.bgColor};
   width: 100%;
   height: 100vh;
   display: flex;
@@ -9,24 +9,31 @@ export const MainBackGround = styled.div`
   align-items: flex-start;
   justify-content: space-between;
 
+
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
   box-sizing: border-box; /* Opera/IE 8+ */
 `;
 
+export const TopBackGround = styled.div`
+  background-color: ${(props) => props.theme.colors.darkTurquoise};
+  width: 100%;
+  height: 30vh;
+  border-radius: 0px 0px 20px 20px;
+  z-index: 10;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+`
+
 export const SubBackGround = styled.div`
   background-color: ${(props) => props.theme.colors.white};
 
   width: 100%;
-  height: ${props => props.height};
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+  height: 100%;
 
-  border-radius: 20px 20px 0px 0px;
-  padding: 32px 0 32px 0;
+  padding: 32px 0 0 0;
 
-  border: 1px solid #fff;
-
-  z-index: 1;
+  border-radius: ${props => props.borderRadius};
 
   display: flex;
   flex-direction: column;
@@ -42,6 +49,10 @@ export const BinWrapper = styled.div`
   padding-left: ${props => props.pl};
   padding-right: ${props => props.pr};
   background-color: ${props => props.bgColor};
+
+  display: ${props => props.display};
+  justify-content: ${props => props.jc};
+  align-items: ${props => props.ai};
   
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
