@@ -27,6 +27,7 @@ import {Mode} from "../../../atoms";
 import {AdminComplaintManagementDetail} from "./AdminComplaintManagementDetail";
 import Button from "@mui/material/Button";
 import {DeleteComplain} from "../../../api/admin";
+import {Status} from "../../../atoms";
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -122,13 +123,13 @@ export const AdminComplaintManagement = () => {
     // 전체 글
     const [complains,setComplains] = useState([])
     // 글 Detail
-    const [status, setStatus] = useState(General)
+    const [status, setStatus] = useRecoilState(Status)
     const [id, setId] = useState(null);
     const [postDetail, setPostDetail] = useRecoilState(PostDetail)
     // pagination
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    console.log(id)
+
 
     function createData(id, pstTitle, userId, pstDt, trash) {
         return { id, pstTitle, userId, pstDt, trash };
@@ -173,8 +174,8 @@ export const AdminComplaintManagement = () => {
             }
         }
     }
-    const deleteComplain = () => {
-        DeleteComplain()
+    const deleteComplain = (id) => {
+        DeleteComplain(id)
             .then((res) => console.log(res))
     }
 
@@ -257,7 +258,7 @@ export const AdminComplaintManagement = () => {
                 </>
             ) : (<>
                 <AdminComplaintManagementDetail/>
-                <Button variant="contained" onClick={() => {
+                <Button variant="contained" sx={{ mx : 5 }} onClick={() => {
                     setStatus(General)
                 }}>
                     뒤로가기

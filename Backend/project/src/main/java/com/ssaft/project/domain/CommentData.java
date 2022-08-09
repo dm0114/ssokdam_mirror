@@ -1,5 +1,6 @@
 package com.ssaft.project.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssaft.project.Function.Function;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,10 +25,12 @@ public class CommentData {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "pst_seq", updatable = false)
+    @JsonIgnore
     private PostData postData;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", updatable = false)
+    @JsonIgnore
     private IotUser iotUser;
 
     @Column(name = "cmt_sub")

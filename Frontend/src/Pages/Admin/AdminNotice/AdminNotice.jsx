@@ -256,7 +256,7 @@ export const AdminNotice = () => {
             ) : (
                 <>
                     <AdminNoticeDetail/>
-                    <Button variant="contained" onClick={() => {
+                    <Button variant="contained" sx={{ mx : 4 }} onClick={() => {
                     setStatus("GENERAL")
                 }}>뒤로가기</Button>
                 </>

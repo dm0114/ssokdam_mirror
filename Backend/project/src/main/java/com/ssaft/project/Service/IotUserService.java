@@ -1,6 +1,7 @@
 package com.ssaft.project.Service;
 
 import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.ssaft.project.Function.Function;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.domain.IotUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,9 @@ public class IotUserService {
         this.iotUserRepository = iotUserRepository;
     }
 
-    @Autowired
-    private SecurityService securityService;
 
     @Autowired
-    private IamportService iamportService;
+    Function function;
 
 
     public Map login(String id, String password) {    //로그인
@@ -29,10 +28,10 @@ public class IotUserService {
         Optional<IotUser> iotuser = iotUserRepository.findById(id);
         Map<String, Object> map = new LinkedHashMap<>();
         if (iotuser != null) {
-            if (securityService.jasyptDecoding(iotuser.get().getUserPwd()).equals(password)) {
-                token = securityService.creatToken(id, (60 * 1000 * 60));
+            if (function.jasyptDecoding(iotuser.get().getUserPwd()).equals(password)) {
+                token = function.creatToken(id, (60 * 1000 * 60));
                 map.put("Access_token", token);
-                token = securityService.creatToken(id, (10800 * 1000 * 60));
+                token = function.creatToken(id, (10800 * 1000 * 60));
                 iotuser.get().setUserRt(token);
                 iotUserRepository.save(iotuser.get());
                 map.put("Refresh_token", token);
@@ -52,11 +51,11 @@ public class IotUserService {
     }
 
     public Map loginRefresh(String token) {
-        String id = securityService.getSubJect(token);
+        String id = function.getSubJect(token);
         Optional<IotUser> iotUser = iotUserRepository.findById(id);
         Map<String, Object> map = new LinkedHashMap<>();
         if (iotUser.get().getUserRt().equals(token)) {
-            String Accesstoken = securityService.creatToken(iotUser.get().getUserId(), (60 * 1000 * 60));
+            String Accesstoken = function.creatToken(iotUser.get().getUserId(), (60 * 1000 * 60));
             map.put("Acess token", Accesstoken);
         }
         return map;
@@ -83,7 +82,7 @@ public class IotUserService {
         try {
             Optional<IotUser> iotUser = iotUserRepository.findById(user.getUserId());
             if (iotUser.get().getUserPhone().equals(user.getUserPhone())) {
-                map.put("userPwd", securityService.jasyptDecoding(iotUser.get().getUserPwd()));
+                map.put("userPwd", function.jasyptDecoding(iotUser.get().getUserPwd()));
                 return map;
             }
             map.put("error", "휴대폰 번호가 틀렸습니다.");
@@ -97,20 +96,20 @@ public class IotUserService {
     public Map changePw(IotUser user) {
         Map<String, Object> map = new LinkedHashMap<>();
         Optional<IotUser> iotUser = iotUserRepository.findById(user.getUserId());
-        iotUser.get().setUserPwd(securityService.jasyptEncoding(user.getUserPwd()));
+        iotUser.get().setUserPwd(function.jasyptEncoding(user.getUserPwd()));
         iotUserRepository.save(iotUser.get());
         map.put("messge", "비밀번호 변경 완료!!");
         return map;
     }
 
     public Map singup(IotUser user) {          //회원가입
-        String pwd = securityService.jasyptEncoding(user.getUserPwd());    //비밀번호 암호화
+        String pwd = function.jasyptEncoding(user.getUserPwd());    //비밀번호 암호화
         user.setUserPwd(pwd);
 
         Map<String ,Object> map = new LinkedHashMap<>();
 
         try {
-            map = iamportService.getIamport(user.getImp_uid());
+            map = function.getIamport(user.getImp_uid());
             System.out.println(map);
         } catch (IamportResponseException e) {
             throw new RuntimeException(e);
@@ -125,9 +124,9 @@ public class IotUserService {
 
         try {
             CheckId(user.getUserId());
-            String token = securityService.creatToken(user.getUserId(), (60 * 1000 * 60));
+            String token = function.creatToken(user.getUserId(), (60 * 1000 * 60));
             map.put("Access_token" , token);
-            token = securityService.creatToken(user.getUserId(), (10800 * 1000 * 60));
+            token = function.creatToken(user.getUserId(), (10800 * 1000 * 60));
             user.setUserRt(token);
             iotUserRepository.save(user);
             map.put("Refresh_token" , token);
@@ -150,10 +149,45 @@ public class IotUserService {
         return map;
     }
 
+    public Map pointPush(String token, IotUser iotUser){
+        String id = function.getSubJect(token);
+        Optional<IotUser> realUser = iotUserRepository.findById(id);
+        realUser.get().setUserPoint(realUser.get().getUserPoint()+iotUser.getUserPoint());
+        iotUserRepository.save(realUser.get());
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ok", true);
+        return map;
+    }
+
+    public Map amdinLogin(String id, String password){ // 관리자 로그인
+        Optional<IotUser> iotUser = iotUserRepository.findById(id);
+        Map<String, Object> map = new LinkedHashMap<>();
+        if(iotUser.get().getUserAdmin().equals("N")){
+            map.put("ok", false);
+            return map;
+        }
+        map =  login(id, password);
+        map.put("ok", true);
+        return map;
+    }
+
+    public boolean makeAdmin(String id){         //관리자 생성
+        try {
+            Optional<IotUser> iotUser = iotUserRepository.findById(id);
+            iotUser.get().setUserAdmin("Y");
+            iotUserRepository.save(iotUser.get());
+            return  true;
+        }catch (NegativeArraySizeException e){
+            return false;
+        }
+    }
+
+
     public void CheckId(String id){                   // 회원가입 - 중복검사
         iotUserRepository.findById(id)
                 .ifPresent(m -> {
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });
     }
+
 }

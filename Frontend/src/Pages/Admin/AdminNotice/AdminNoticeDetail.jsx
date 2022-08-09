@@ -125,20 +125,8 @@ export const AdminNoticeDetail = () => {
         <React.Fragment>
             { status === "DETAIL" ? (
                 <Container maxWidth="xl">
-                    <h2>공지사항 작성</h2>
+                    <h2>공지사항 상세</h2>
                     <FormControl fullWidth>
-                        <Box>
-                            <FormLabel id="demo-controlled-radio-buttons-group">공지사항 종류</FormLabel>
-                            <RadioGroup
-                                aria-labelledby="demo-controlled-radio-buttons-group"
-                                name="controlled-radio-buttons-group"
-                                value={value}
-                                onChange={handleChange}
-                            >
-                                <FormControlLabel value="imageNotice" control={<Radio />} label="이미지 공지사항" />
-                                <FormControlLabel value="textNotice" control={<Radio />} label="텍스트 공지사항" />
-                            </RadioGroup>
-                        </Box>
                         <h3>제목</h3>
                         <Typography sx={{ marginLeft : '10px', marginBottom : '10px' }} component="h2" variant="h3" >
                             { notice.pstTitle }
@@ -148,7 +136,7 @@ export const AdminNoticeDetail = () => {
                         <Box style={{ padding: "20px 20px" }}>
                             <Grid container wrap="nowrap" spacing={2}>
                                 <Grid item>
-                                    { notice.file ?  (
+                                    { notice.pstImg ?  (
                                         <div className="uploader-wrapper">
                                             <input type="file" accept="image/*"
                                                    onChange={saveImage}
@@ -159,20 +147,9 @@ export const AdminNoticeDetail = () => {
                                                    style={{display: "none"}}
                                             />
                                             <div className="img-wrapper">
-                                                <img src={image.preview_URL}/>
+                                                <img src={notice.pstImg}/>
                                             </div>
 
-                                            <div className="upload-button">
-                                                <Button type="primary" variant="contained" onClick={() => inputRef.click()}>
-                                                    이미지 업로드
-                                                </Button>
-                                                <Button color="error" variant="contained" onClick={deleteImage}>
-                                                    삭제
-                                                </Button>
-                                                {/*<Button color="success" variant="contained" onClick={createNotice}>*/}
-                                                {/*    Upload*/}
-                                                {/*</Button>*/}
-                                            </div>
                                         </div>
                                     )  : ( <Typography>
                                         { notice.pstCtnt }

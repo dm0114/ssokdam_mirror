@@ -36,6 +36,7 @@ import {useNavigate} from "react-router-dom";
 import {AdminNoticeCreate} from "../AdminNotice/AdminNoticeCreate";
 import {Mode} from "../../../atoms";
 import {useRecoilState} from "recoil";
+import {Status} from "../../../atoms";
 
 
 const drawerWidth = 240;
@@ -46,6 +47,7 @@ function AdminSideBar(props) {
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const itemIconList = [<AdminPanelSettingsIcon/> ,<DoorbellIcon/>,<SettingsRemoteIcon/>,<RecordVoiceOverIcon/>,<BrokenImageIcon/>,<ManageAccountsIcon/>,<CurrencyExchangeIcon/>]
     const [mode,setMode] = useRecoilState(Mode)
+    const [status, setStatus] = useRecoilState(Status)
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
@@ -94,6 +96,7 @@ function AdminSideBar(props) {
                     <ListItem key={text}  disablePadding>
                         <ListItemButton onClick={(e) => {
                             onModeHandling(text)
+                            setStatus("GENERAL")
                         }}>
                             <ListItemIcon>
                                 {itemIconList[index]}

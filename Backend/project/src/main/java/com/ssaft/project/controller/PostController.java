@@ -3,6 +3,7 @@ package com.ssaft.project.controller;
 import com.ssaft.project.Repository.CommentDataRepository;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.Repository.PostDataRepository;
+import com.ssaft.project.Service.CommentService;
 import com.ssaft.project.Service.PostService;
 import com.ssaft.project.domain.CommentData;
 import com.ssaft.project.domain.IotUser;
@@ -31,6 +32,9 @@ public class PostController {
 
     @Autowired
     PostService postService;
+
+    @Autowired
+    CommentService commentService;
 
 
     @GetMapping("/myAsk")                                                          // 나의 문의사항 return
@@ -62,6 +66,25 @@ public class PostController {
         return postService.postDelete(pstSeq);
     }
 
+    @GetMapping("/admin/notice")              // 속성값 게시판 호출
+    @ResponseBody()
+    public List<PostData> noticeAll(){
+        return postService.findAll("공지사항");
+    }
+    @GetMapping("/admin/complain")              // 속성값 게시판 호출
+    @ResponseBody()
+    public List<PostData> ComplainPAll(){
+        return postService.findAll("불만사항");
+    }
+    @GetMapping("/admin/broken")              // 속성값 게시판 호출
+    @ResponseBody()
+    public List<PostData> BrokenAll(){
+        return postService.findAll("고장신고");
+    }
+
+
+
+
     @PostMapping("/get")
     public void test2(@RequestBody CommentData commentData){
 
@@ -84,13 +107,7 @@ public class PostController {
 
     }
 
-    @GetMapping("/notice/id")              // 속성값 게시판 호출
-    @ResponseBody()
-    public PostData noticeAll(){
-        List<PostData> postData = postService.findAll("공지사항");
-        PostData postData1 = postData.get(postData.size()-1);
-        return postData1;
-    }
+
 
 
 }

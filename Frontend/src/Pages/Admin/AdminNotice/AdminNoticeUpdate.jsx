@@ -19,15 +19,26 @@ import {useRecoilState} from "recoil";
 import {NoticeDetail} from "../../../atoms";
 import CreateAdminNotice from "../../../api/admin";
 import {fetchNoticeUpdate} from "../../../api/admin";
+import {storage} from "../../../firebase";
 
 export const AdminNoticeUpdate = () => {
     const [mode,setMode] = useRecoilState(Mode)
     const navigate = useNavigate()
     const [notice,setNotice] = useRecoilState(NoticeDetail)
     const [image, setImage] = useState({
-        image_file: "", // 나중에 image로직 알게되면 preview_URL default값으로 notice.file URL 넣기
-        preview_URL: "https://cdn-icons-png.flaticon.com/512/7715/7715867.png",
+        image_file: `${notice.pstImg}`, // 나중에 image로직 알게되면 preview_URL default값으로 notice.file URL 넣기
+        preview_URL: `${notice.pstImg}`,
     });
+    const [imageUrl, setImageUrl] = useState(`${notice.pstImg}`);
+    const [error, setError] = useState("");
+    const [progress, setProgress] = useState(100);
+    //
+    const [article, setArticle] = useState({
+        id : `${notice.id}`,
+        pstTitle : `${notice.pstTitle}`,
+        pstCtnt : `${notice.pstCtnt}`
+    })
+    console.log(imageUrl)
     // const [article, setArticle] = useState({
     //     title : "",
     //     content : "",
@@ -37,11 +48,12 @@ export const AdminNoticeUpdate = () => {
     // console.log(article)
 
     const onChangeArticle = (e) => {
-        setNotice({
-            ...notice,
+        console.log(e.target.name, e.target.value)
+        setArticle({
+            ...article,
             [e.target.name] : e.target.value
         })
-        console.log(notice)
+        console.log(article)
     }
 
     const [value, setValue] = useState('imageNotice');
@@ -84,27 +96,53 @@ export const AdminNoticeUpdate = () => {
     }, [])
 
     const updateNotice = async () => {
-        if(!notice.title){
+        if(!article.pstTitle){
             alert("제목을 입력해주세요.")
-        }else if(image.image_file && notice.content){
+        }else if(image.image_file && article.pstCtnt){
             alert("텍스트와 이미지는 동시에 작성할 수 없습니다.")
-        } else if (image.image_file || notice.content) {
-            const formData = new FormData()
-            formData.append('file', image.image_file);
+        } else if (image.image_file || !article.pstCtnt) {
+            // const formData = new FormData()
+            // formData.append('file', image.image_file);
             // await axios.post('/api/image/upload', formData);
-            console.log(formData)
+            // console.log(formData)
             // setArticle({...notice, file : image.image_file})
             // const createResponse = await CreateAdminNotice(notice);
             // await axios.post('http://localhost:8888/notices', {...notice, formData})
-            fetchNoticeUpdate({...notice, file : formData})
+            // fetchNoticeUpdate({...notice, file : formData})
             // fetchNoticeUpdate도 써보기
+            const storageRef = storage.ref("images/test/")
+            const imagesRef = storageRef.child(image.image_file.name)
+            const upLoadTask = imagesRef.put(image.image_file);
+            upLoadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    console.log("snapshot", snapshot);
+                    const percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log(percent + "% done");
+                    setProgress(percent);
+                },
+                (error) => {
+                    console.log("err", error);
+                    setError("파일 업로드에 실패했습니다." + error);
+                    setProgress(100); //진행중인 바를 삭제
+                },
+                () => {
+                    upLoadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                        console.log("File available at", downloadURL);
+                        setImageUrl(downloadURL);
+                        console.log(downloadURL)
+                        fetchNoticeUpdate({...article, pstImg : downloadURL})
+                        alert("서버에 등록이 완료되었습니다!");
+                        window.location.replace("/admin")
+                    });
+                }
+            );
+        }else if(!image.image_file && article.pstCtnt){
+            fetchNoticeUpdate({...article, pstImg : ''})
             alert("서버에 등록이 완료되었습니다!");
-            setImage({
-                image_file: "",
-                preview_URL: "https://cdn-icons-png.flaticon.com/512/7715/7715867.png",
-            });
-            setMode("공지사항 관리")
-        }else{
+            window.location.replace("/admin")
+        }
+        else{
             alert("사진이나 글을 등록하세요!")
         }
     }
@@ -114,31 +152,31 @@ export const AdminNoticeUpdate = () => {
     return (
         <React.Fragment>
             <Container maxWidth="xl">
-                <h2>공지사항 작성</h2>
+                <h2>공지사항 수정</h2>
                 <FormControl fullWidth>
-                    <Box>
-                        <FormLabel id="demo-controlled-radio-buttons-group">공지사항 종류</FormLabel>
-                        <RadioGroup
-                            aria-labelledby="demo-controlled-radio-buttons-group"
-                            name="controlled-radio-buttons-group"
-                            value={value}
-                            onChange={handleChange}
-                        >
-                            <FormControlLabel value="imageNotice" control={<Radio />} label="이미지 공지사항" />
-                            <FormControlLabel value="textNotice" control={<Radio />} label="텍스트 공지사항" />
-                        </RadioGroup>
-                    </Box>
+                    {/*<Box>*/}
+                    {/*    <FormLabel id="demo-controlled-radio-buttons-group">공지사항 종류</FormLabel>*/}
+                    {/*    <RadioGroup*/}
+                    {/*        aria-labelledby="demo-controlled-radio-buttons-group"*/}
+                    {/*        name="controlled-radio-buttons-group"*/}
+                    {/*        value={value}*/}
+                    {/*        onChange={handleChange}*/}
+                    {/*    >*/}
+                    {/*        <FormControlLabel value="imageNotice" control={<Radio />} label="이미지 공지사항" />*/}
+                    {/*        <FormControlLabel value="textNotice" control={<Radio />} label="텍스트 공지사항" />*/}
+                    {/*    </RadioGroup>*/}
+                    {/*</Box>*/}
                     <h3>제목</h3>
                     <TextField
                         fullWidth
                         placeholder="제목을 입력해주세요."
-                        name="title"
+                        name="pstTitle"
                         autoFocus
-                        value={notice.pstTitle}
+                        defaultValue={notice.pstTitle}
                         onChange={onChangeArticle}
                     ></TextField>
                     <h3>내용</h3>
-                    { value === "imageNotice" ? (
+                    { notice.pstImg ? (
                         <div className="uploader-wrapper">
                             <input type="file" accept="image/*"
                                    onChange={saveImage}
@@ -169,9 +207,9 @@ export const AdminNoticeUpdate = () => {
                         placeholder="내용을 입력해주세요."
                         multiline
                         rows={12}
-                        name="content"
+                        name="pstCtnt"
                         autoFocus
-                        value={notice.pstCtnt}
+                        defaultValue={notice.pstCtnt}
                         onChange={onChangeArticle}
                     ></TextField> ) }
                 </FormControl>

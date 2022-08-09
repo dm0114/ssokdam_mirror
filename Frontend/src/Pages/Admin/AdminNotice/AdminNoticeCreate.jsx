@@ -93,7 +93,7 @@ export const AdminNoticeCreate = () => {
             alert("제목을 입력해주세요.")
         }else if(image.image_file && article.content){
             alert("텍스트와 이미지는 동시에 작성할 수 없습니다.")
-        } else if (image.image_file || article.content) {
+        }else if (image.image_file && !article.content) {
             // const formData = new FormData()
             // console.log(image.image_file)
             // formData.append('pstImg', image.image_file);
@@ -104,7 +104,6 @@ export const AdminNoticeCreate = () => {
             const storageRef = storage.ref("images/test/")
             const imagesRef = storageRef.child(image.image_file.name)
             const upLoadTask = imagesRef.put(image.image_file);
-            // await axios.post(`${SERVER_URL}/post`, formData)
             upLoadTask.on(
                 "state_changed",
                 (snapshot) => {
@@ -123,18 +122,19 @@ export const AdminNoticeCreate = () => {
                         console.log("File available at", downloadURL);
                         setImageUrl(downloadURL);
                         CreateAdminNotice({...article, pstImg : downloadURL})
+                        alert("서버에 등록이 완료되었습니다!");
+                        setMode("공지사항 관리")
                     });
                 }
             );
             // CreateAdminNotice({...article, formData})
 
+        }else if(!image.image_file && article.content){
+            CreateAdminNotice({...article, pstImg : ''})
             alert("서버에 등록이 완료되었습니다!");
-            setImage({
-                image_file: "",
-                preview_URL: "https://cdn-icons-png.flaticon.com/512/7715/7715867.png",
-            });
             setMode("공지사항 관리")
-        }else{
+        }
+        else{
             alert("사진이나 글을 등록하세요!")
         }
     }
@@ -154,8 +154,23 @@ export const AdminNoticeCreate = () => {
                             value={value}
                             onChange={handleChange}
                         >
-                            <FormControlLabel value="imageNotice" control={<Radio />} label="이미지 공지사항" />
-                            <FormControlLabel value="textNotice" control={<Radio />} label="텍스트 공지사항" />
+                            <FormControlLabel value="imageNotice" control={<Radio />} onClick={() => {
+                                setArticle({
+                                    ...article,
+                                    content: ''
+                                })
+                            }} label="이미지 공지사항" />
+                            <FormControlLabel
+                                value="textNotice"
+                                control={<Radio />}
+                                label="텍스트 공지사항"
+                                onClick={() => {
+                                    setImage({
+                                        image_file: "",
+                                        preview_URL: "https://cdn-icons-png.flaticon.com/512/7715/7715867.png",
+                                    })
+                                }}
+                            />
                         </RadioGroup>
                     </Box>
                     <h3>제목</h3>

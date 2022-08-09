@@ -1,5 +1,6 @@
 package com.ssaft.project.Service;
 
+import com.ssaft.project.Function.Function;
 import com.ssaft.project.Repository.CommentDataRepository;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.Repository.PostDataRepository;
@@ -20,9 +21,9 @@ public class CommentService {
     @Autowired
     CommentDataRepository commentDataRepository;
     @Autowired
-    SecurityService securityService;
+    Function function;
     public Map cmtPush(int pstSeq,String token,CommentData commentData) {
-        String id = securityService.getSubJect(token);
+        String id = function.getSubJect(token);
         Optional<IotUser> user = iotUserRepository.findById(id);
         Optional<PostData> data2 = postDataRepository.findById(pstSeq);
         int cnt;
@@ -58,6 +59,18 @@ public class CommentService {
 
         commentDataRepository.delete(commentDataRepository.findById(cmtId).get());
         return map;
+    }
+
+    public List<CommentData> CommentAll(int pstSeq){
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ok", true);
+        Optional<PostData> postData = postDataRepository.findById(pstSeq);
+        List<CommentData> commentData = commentDataRepository.findByPostData(postData.get());
+        for(CommentData CD : commentData){
+            CD.setUserId(CD.getIotUser().getUserId());
+            CD.setPstSeq(CD.getPostData().getPstSeq());
+        }
+        return commentData;
     }
 }
 

@@ -1,6 +1,6 @@
 package com.ssaft.project;
 
-import com.ssaft.project.Service.SecurityService;
+import com.ssaft.project.Function.Function;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class DBjasypt {
     @Autowired
-    SecurityService securityService;
+    Function function;
 
     @Test
     void DB정보암호화() {
@@ -17,12 +17,12 @@ public class DBjasypt {
         String username = "swyou";
         String password = "qudrlxksdir1!";
 
-        String username2 = securityService.jasyptEncoding(username);
+        String username2 = function.jasyptEncoding(username);
 
-        System.out.println(securityService.jasyptEncoding(url));
+        System.out.println(function.jasyptEncoding(url));
         System.out.println(username2);
-        System.out.println(securityService.jasyptDecoding(username2));
-        System.out.println(securityService.jasyptEncoding(password));
+        System.out.println(function.jasyptDecoding(username2));
+        System.out.println(function.jasyptEncoding(password));
     }
 
     public String jasyptEncoding(String value) {

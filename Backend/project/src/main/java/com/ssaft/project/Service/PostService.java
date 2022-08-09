@@ -1,5 +1,6 @@
 package com.ssaft.project.Service;
 
+import com.ssaft.project.Function.Function;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.Repository.PostDataRepository;
 import com.ssaft.project.domain.IotUser;
@@ -17,7 +18,7 @@ public class PostService {
     PostDataRepository postDataRepository;
 
     @Autowired
-    SecurityService securityService;
+    Function function;
 
     @Autowired
     IotUserRepository iotUserRepository;
@@ -32,13 +33,13 @@ public class PostService {
     }
 
     public List<PostData> myAsk(String token){
-        String id = securityService.getSubJect(token);
+        String id = function.getSubJect(token);
         Optional<IotUser> iotUser =  iotUserRepository.findById(id);
         return postDataRepository.findByIotUser(iotUser.get());
     }
 
     public void postPush(String token, PostData postData){
-        String id = securityService.getSubJect(token);
+        String id = function.getSubJect(token);
         Optional<IotUser> iotUser =  iotUserRepository.findById(id);
         postData.setIotUser(iotUser.get());
         Date today = new Date();

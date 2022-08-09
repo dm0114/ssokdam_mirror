@@ -1,10 +1,10 @@
 package com.ssaft.project.controller;
 
+import com.ssaft.project.Function.Function;
 import com.ssaft.project.Repository.EmbeddedDataRepository;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.Repository.UseDataRepository;
 import com.ssaft.project.Service.EmbeddedService;
-import com.ssaft.project.Service.SecurityService;
 import com.ssaft.project.domain.EmbeddedData;
 import com.ssaft.project.domain.IotUser;
 import com.ssaft.project.domain.UseData;
@@ -31,7 +31,13 @@ public class EmbeddedController {
     UseDataRepository useDataRepository;
 
     @Autowired
-    SecurityService securityService;
+    Function function;
+
+    @GetMapping("/admin/checkDevice")              // 임베디드 기기정보 호출
+    @ResponseBody()
+    public List<EmbeddedData> embeddedAll(){
+        return embeddedService.findAll();
+    }
 
     @PostMapping("/embedded/emb")
     @ResponseBody
@@ -44,7 +50,7 @@ public class EmbeddedController {
      public void Qr(@RequestBody EmbeddedData user){
         System.out.println(user);
         Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(Integer.valueOf(user.getEmbId()));
-        String name = securityService.getSubJect(user.getToken());
+        String name = function.getSubJect(user.getToken());
          Optional<IotUser> iotUser =  iotUserRepository.findById(name);
          embeddedData.get().setIotUser(iotUser.get());
          embeddedData.get().setEmbQr("Y");

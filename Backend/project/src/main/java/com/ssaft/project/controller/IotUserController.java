@@ -1,6 +1,7 @@
 package com.ssaft.project.controller;
 
 import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.ssaft.project.Function.Function;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.Service.*;
 import com.ssaft.project.domain.EmbeddedData;
@@ -20,16 +21,15 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class IotUserController {
 
-    @Autowired
-    SecurityService securityService;   //Token 생성  // 암호화
+
     @Autowired
     IotUserService iotUserService;   // 유저관련 서비스
     @Autowired
     IotUserRepository iotUserRepository;   // jpa
+//    @Autowired
+//    IamportService iamportService;
     @Autowired
-    IamportService iamportService;
-    @Autowired
-    AdminService adminService;
+    Function function;
     @Autowired
     PostService postService;
     @Autowired
@@ -83,7 +83,7 @@ public class IotUserController {
     @ResponseBody
     public boolean singUpCheck(@RequestBody IotUser user)  {
         try {
-            if(iamportService.getIamport(user.getImp_uid()).containsKey("userPhone")){
+            if(function.getIamport(user.getImp_uid()).containsKey("userPhone")){
                 return true;
             } else{
                 return false;
@@ -94,40 +94,27 @@ public class IotUserController {
             throw new RuntimeException(e);
         }
     }
+
+    @PostMapping("/userPoint")
+    @ResponseBody
+    public Map pointpush(@RequestHeader String token, @RequestBody IotUser iotUser){
+        return  iotUserService.pointPush(token, iotUser);
+    }
+
     //*************************************** 관리자 **************************************//
     @PostMapping("/admin/login")       //관리자 로그인
     @ResponseBody()
     public Map adminLogin(@RequestBody IotUser iotUser){
-        return adminService.login(iotUser.getUserId(), iotUser.getUserPwd());
+        return iotUserService.amdinLogin(iotUser.getUserId(), iotUser.getUserPwd());
     }
 
     @PostMapping("/admin/make")             //관리자 등록
     @ResponseBody()
     public boolean makeAdmin(@RequestBody IotUser iotUser){
-        return adminService.makeAdmin(iotUser.getUserId());
+        return iotUserService.makeAdmin(iotUser.getUserId());
     }
 
-    @GetMapping("/admin/notice")              // 속성값 게시판 호출
-    @ResponseBody()
-    public List<PostData> noticeAll(){
-        return postService.findAll("공지사항");
-    }
-    @GetMapping("/admin/complain")              // 속성값 게시판 호출
-    @ResponseBody()
-    public List<PostData> ComplainPAll(){
-        return postService.findAll("불만사항");
-    }
-    @GetMapping("/admin/broken")              // 속성값 게시판 호출
-    @ResponseBody()
-    public List<PostData> BrokenAll(){
-        return postService.findAll("고장신고");
-    }
 
-    @GetMapping("/admin/checkDevice")              // 임베디드 기기정보 호출
-    @ResponseBody()
-    public List<EmbeddedData> embeddedAll(){
-        return embeddedService.findAll();
-    }
 
     @GetMapping("/admin")              // 관리자 메인 페이지
     @ResponseBody()
@@ -148,7 +135,7 @@ public class IotUserController {
     @ResponseBody
     public Map main(@RequestBody Map<String, Object> token){
         String token2 = (String) token.get("token");
-        String id = securityService.getSubJect(token2);
+        String id = function.getSubJect(token2);
         Optional<IotUser> user = iotUserRepository.findById(id);
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("userName", user.get().getUserName());
@@ -161,7 +148,7 @@ public class IotUserController {
     public Map mypage(@RequestHeader("token") String token){
         Map<String, Object> map = new LinkedHashMap<>();
         try {
-            String id = securityService.getSubJect(token);
+            String id = function.getSubJect(token);
             Optional<IotUser> user = iotUserRepository.findById(id);
             map.put("userName", user.get().getUserName());
             return map;
@@ -174,7 +161,7 @@ public class IotUserController {
 
     @GetMapping("/Refesh/token")
     public Map refreshToken(@RequestHeader("token") String token){
-        return securityService.refreshTokenCheck(token);
+        return function.refreshTokenCheck(token);
     }
 }
 

@@ -30,7 +30,7 @@ export default async function CreateAdminNotice({ title, content, pstImg }){
         }),
     })
     return response
-}; // Notice Create => todo => ready
+}; // Notice Create => do
 
 export async function fetchNotices(){
     // const URL = `${ADMIN_SERVER_URL}/exchange`;
@@ -41,24 +41,24 @@ export async function fetchNotices(){
     return response
 }; // Notice Read
 
-export async function fetchNoticeUpdate({ pstSeq, pstTitle, pstCtnt, file }){
-    const URL = `${ADMIN_SERVER_URL}/post/${pstSeq}`;
+export async function fetchNoticeUpdate({ id, pstTitle, pstCtnt, pstImg }){
+    const URL = `${SERVER_URL}/post/${id}`;
     // const URL = 'http://localhost:8888/notices'
     const response = await fetch(URL, {
         method: "PUT",
         headers: {
+            token : localStorage.getItem('access-token'),
             "Content-type": "application/json",
         },
         body: JSON.stringify({
-            token : localStorage.getItem('access-token'),
             pstTitle : pstTitle,
             pstCtnt : pstCtnt,
-            pstImg : file,
+            pstImg : pstImg,
             pstProp : "공지사항"
         }), // 백엔드에서 생성일시 update되는 순간 최신화
     })
     return response
-}; // Notice Update todo => ready
+}; // Notice Update todo => do
 
 export async function fetchNoticeDelete(id){
     const URL = `${SERVER_URL}/post/${id}`;
@@ -67,7 +67,7 @@ export async function fetchNoticeDelete(id){
         method: "DELETE",
     })
     return response
-}; // Notice DELETE todo => ready
+}; // Notice DELETE todo => do
 
 
 
@@ -80,6 +80,15 @@ export async function fetchComplains(){
     return response
 } // done
 
+export async function fetchComplainsDetail(id){
+    const URL = `${ADMIN_SERVER_URL}/complain/${id}`
+    let response = await fetch(URL, {
+        method : 'GET',
+    })
+    return response
+} // done
+
+
 export async function fetchBrokenDevice(){
     const URL = `${ADMIN_SERVER_URL}/broken`
     let response = await fetch(URL, {
@@ -88,53 +97,62 @@ export async function fetchBrokenDevice(){
     return response
 } // done
 
+export async function fetchBrokenDetail(id){
+    const URL = `${ADMIN_SERVER_URL}/broken/${id}`
+    let response = await fetch(URL, {
+        method : 'GET',
+    })
+    return response
+} // done
+
+
 export async function DeleteComplain(id){
-    const URL = `${ADMIN_SERVER_URL}/post/${id}`
+    const URL = `${SERVER_URL}/post/${id}`
     let response = await fetch(URL, {
         method : 'DELETE',
     })
     return response
-} // todo => ready
+} // todo => do
 
 
 export async function commentCreate({postId, cmtCtnt}){
-    const URL = `${ADMIN_SERVER_URL}/post/${postId}/comment`
+    const URL = `${SERVER_URL}/post/${postId}/comment`
     let response = await fetch(URL, {
         method : 'POST',
         headers: {
+            token : localStorage.getItem('access-token'),
             "Content-type": "application/json",
         },
         body: JSON.stringify({
-            token : localStorage.getItem('access-token'),
             cmtCtnt : cmtCtnt
         }),
     })
     return response
-} // todo => ready
+} // todo => done
 
 export async function commentUpdate({postId,cmtId,cmtCtnt}){
-    const URL = `${ADMIN_SERVER_URL}/post/${postId}/comment/${cmtId}`
+    const URL = `${SERVER_URL}/post/${postId}/comment/${cmtId}`
     let response = await fetch(URL, {
-        method : 'POST',
+        method : 'PUT',
         headers: {
             "Content-type": "application/json",
+            token : localStorage.getItem('access-token'),
         },
         body: JSON.stringify({
-            token : localStorage.getItem('access-token'),
             cmtCtnt : cmtCtnt
         }),
     })
     return response
-} // todo
+} // todo => done
 
 
 export async function commentDelete({postId, cmtId}){
-    const URL = `${ADMIN_SERVER_URL}/post/${postId}/comment/${cmtId}`
+    const URL = `${SERVER_URL}/post/${postId}/comment/${cmtId}`
     let response = await fetch(URL, {
         method : 'DELETE',
         })
     return response
-} // todo => ready
+} // todo => done
 
 
 
@@ -167,7 +185,7 @@ export async function AcceptExchange(id){
 } // todo => ready
 
 export async function DeleteExchange(id){
-    const URL = `${ADMIN_SERVER_URL}/exchange/${id}` // id리스트로
+    const URL = `${SERVER_URL}/exchange/${id}` // id리스트로
     const response = await fetch(URL, {
         method: "DELETE",
     })
@@ -184,23 +202,23 @@ export async function fetchUsers(){
     return response
 };
 
-export async function UpdateUser(id, newData){
-    const URL = `${ADMIN_SERVER_URL}/users/${id}` // id리스트로
-    const response = await fetch(URL, {
-        method: "PUT",
-        headers: {
-            "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-            newData : newData
-        }),
-
-    })
-    return response
-} // todo => 삭제
+// export async function UpdateUser(id, newData){
+//     const URL = `${ADMIN_SERVER_URL}/users/${id}` // id리스트로
+//     const response = await fetch(URL, {
+//         method: "PUT",
+//         headers: {
+//             "Content-type": "application/json",
+//         },
+//         body: JSON.stringify({
+//             newData : newData
+//         }),
+//
+//     })
+//     return response
+// } // todo => 삭제
 
 export async function DeleteUser(userId){
-    const URL = `${ADMIN_SERVER_URL}/users` // id리스트로
+    const URL = `${SERVER_URL}/users` // id리스트로
     const response = await fetch(URL, {
         method: "POST",
         body: JSON.stringify({
