@@ -79,8 +79,7 @@ export const AdminComplaintManagementDetail = () => {
 
     const deleteComplain = () => {
         DeleteComplain(postDetail.id)
-            .then((res) => console.log(res))
-        window.location.replace("/admin")
+            .then((res) => window.location.replace("/admin") )
     }
 
 
