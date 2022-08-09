@@ -21,12 +21,14 @@ import {Box} from "@mui/material";
 import { useTheme } from '@mui/material/styles';
 import {useState} from "react";
 import {ADMIN_SERVER_URL} from "../../../config";
-import {fetchBrokenDevice} from "../../../api/admin";
+import {DeleteComplain, fetchBrokenDevice} from "../../../api/admin";
 import {Mode} from "../../../atoms";
 import {PostDetail} from "../../../atoms";
 import {useRecoilState} from "recoil";
 import {AdminComplaintManagementDetail} from "./AdminComplaintManagementDetail";
 import Button from "@mui/material/Button";
+import {Status} from "../../../atoms";
+import {AdminBrokenDeviceManagementDetail} from "./AdminBrokenDeviceManagementDetail";
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -121,7 +123,7 @@ export const AdminBrokenDeviceManagement = () => {
     // 전체 글
     const [brokens,setBrokens] = useState([])
     // 글 Detail
-    const [status, setStatus] = useState(General)
+    const [status, setStatus] = useRecoilState(Status)
     const [id, setId] = useState(null);
     const [postDetail, setPostDetail] = useRecoilState(PostDetail)
     // pagination
@@ -156,6 +158,12 @@ export const AdminBrokenDeviceManagement = () => {
             }
         }
     }
+    const deleteBroken = (id) => {
+        DeleteComplain(id)
+            .then((res) => console.log(res))
+    }
+
+
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
@@ -201,7 +209,9 @@ export const AdminBrokenDeviceManagement = () => {
                                             }}>{broken.pstTitle}</StyledTableCell>
                                             <StyledTableCell align="center">{broken.userId}</StyledTableCell>
                                             <StyledTableCell align="center">{broken.pstDt}</StyledTableCell>
-                                            <StyledTableCell align="center">{broken.trash}</StyledTableCell>
+                                            <StyledTableCell align="center" onClick={() => {
+                                                deleteBroken(broken.id)
+                                            }}>{broken.trash}</StyledTableCell>
                                         </StyledTableRow>
                                     ))}
                                 </TableBody>
@@ -231,8 +241,8 @@ export const AdminBrokenDeviceManagement = () => {
                 </>
             ) : (
                 <>
-                    <AdminComplaintManagementDetail/>
-                    <Button variant="contained" onClick={() => {
+                    <AdminBrokenDeviceManagementDetail/>
+                    <Button variant="contained" sx={{ mx : 5 }} onClick={() => {
                         setStatus(General)
                     }}>
                         뒤로가기

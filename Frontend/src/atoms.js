@@ -28,6 +28,12 @@ export const Mode = atom({
   effects_UNSTABLE: [persistAtom],
 })
 
+export const Status = atom({
+  key : 'GENERAL',
+  default : "GENERAL",
+  effects_UNSTABLE: [persistAtom],
+})
+
 export const NoticeDetail = atom({
   key : 'noticeDetail',
   default : {
@@ -36,7 +42,7 @@ export const NoticeDetail = atom({
     pstTitle : "",
     pstCtnt : "",
     pstDt : "",
-    file : ""
+    pstImg : ""
   },
   effects_UNSTABLE: [persistAtom],
 })

@@ -80,7 +80,7 @@ export const AdminExchange = () => {
     const deleteExchange = () => {
         console.log(select)
         DeleteExchange(select)
-            .then((res) => console.log(res))
+            .then((res) => window.location.replace("/admin"))
     }
 
 

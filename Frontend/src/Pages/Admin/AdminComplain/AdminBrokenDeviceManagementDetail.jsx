@@ -17,8 +17,10 @@ import belu from "../../../picture/belu.png"
 import {userInfo} from "../../../atoms";
 import {CommentInputBox} from "../../../styles/AdminStyle";
 import {useState} from "react";
-import {commentCreate, commentUpdate, commentDelete} from "../../../api/admin";
-
+import {commentCreate, commentUpdate, commentDelete, DeleteComplain, fetchComplainsDetail} from "../../../api/admin";
+import {Status} from "../../../atoms";
+import {useEffect} from "react";
+import {fetchBrokenDetail} from "../../../api/admin";
 
 
 
@@ -26,21 +28,49 @@ export const AdminBrokenDeviceManagementDetail = () => {
     const [mode,setMode] = useRecoilState(Mode)
     const [postDetail, setPostDetail] = useRecoilState(PostDetail)
     const imgLink = belu
+    const [comments, setComments] = useState([])
+    const [content, setContent] = useState("")
+    const [status, setStatus] = useRecoilState(Status)
     const [myUserInfo, setMyUserInfo] = useRecoilState(userInfo)
     const [editId, setEditId] = useState(null);
 
-    const myCommentCreate = () => {
-        commentCreate()
-            .then((res)=> console.log(res))
+    useEffect(() => {
+        fetchBrokenDetail(postDetail.id)
+            .then((res) => {res.json().then((res) => {
+                for(let i=0; i < res.length; i++ ){
+                    res[i].id = res[i].pstSeq
+                    delete res[i].pstSeq
+                }
+                console.log(res)
+                setComments(res)
+            })})
+    }, []);
+
+
+    const onChangeComment = (e) => {
+        console.log(content)
+        setContent(e.target.value)
     }
 
-    const myCommentDelete = () => {
-        commentDelete()
-            .then((res) => console.log(res))
+    const myCommentCreate = () => {
+        commentCreate({postId : postDetail.id, cmtCtnt : content})
+            .then((res)=> window.location.replace("/admin"))
+    }
+
+    const myCommentDelete = (id) => {
+        commentDelete({postId : postDetail.id, cmtId : id})
+            .then((res) => window.location.replace("/admin"))
     }
     const myCommentEdit = () => {
-        commentUpdate()
+        commentUpdate({ postId : postDetail.id, cmtId : editId, cmtCtnt: content })
+            .then((res) => setEditId(null))
+            .then((res) => window.location.replace("/admin"))
+    }
+
+    const deleteComplain = () => {
+        DeleteComplain(postDetail.id)
             .then((res) => console.log(res))
+        window.location.replace("/admin")
     }
 
 
@@ -67,49 +97,64 @@ export const AdminBrokenDeviceManagementDetail = () => {
                 </FormControl>
 
                 <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginTop : '10px' }}>
-                    <Button color="error" variant="contained" sx={{ m : 1 }}>
+                    <Button color="error" variant="contained" sx={{ m : 1 }} onClick={() => {
+                        deleteComplain(postDetail.id)
+                    }}>
                         삭제
                     </Button>
                 </Box>
                 <Divider/>
                 <div style={{ padding: 14 }}>
                     {/*<h1>불만사항 답변</h1>*/}
-                    <Paper style={{ padding: "40px 20px" }}>
-                        <Grid container wrap="nowrap" spacing={2}>
-                            {/* comment 덩어리 */}
-                            <Grid item>
-                                <Avatar alt="Remy Sharp" src={belu} />
+                    { comments.length !== 0 ? (
+                        <Paper style={{ padding: "40px 20px" }}>
+                            <Grid container  wrap="nowrap" spacing={2} direction="column">
+                                {/* comment 덩어리 */}
+                                { comments?.map((comment) => (
+                                    <>
+                                        <Grid item>
+                                            <Avatar alt="Remy Sharp" src={belu} />
+                                        </Grid>
+                                        <Grid justifyContent="left" item xs zeroMinWidth>
+                                            <h4 style={{ margin: 0, textAlign: "left" }}>{ comment.userId } 관리자님</h4>
+                                            { comment.cmtSeq !== editId ? (
+                                                <p style={{ textAlign: "left" }}>
+                                                    {comment.cmtCtnt}
+                                                </p>
+                                            ) : (<TextField
+                                                sx={{ pt : 2 }}
+                                                fullWidth
+                                                multiline
+                                                rows = {5}
+                                                defaultValue={comment.cmtCtnt}
+                                                id="fullWidth"
+                                                onChange={onChangeComment}
+                                            />)  }
+                                            <p style={{ textAlign: "left", color: "gray" }}>
+                                                posted 1 minute ago
+                                            </p>
+                                            <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginTop : '10px' }}>
+                                                { comment.cmtSeq !== editId ? (
+                                                    <Button color="info" variant="contained" sx={{ margin : "0 5px" }} onClick={() => setEditId(comment.cmtSeq)}>
+                                                        수정
+                                                    </Button>
+                                                ) : (<Button color="info" variant="contained" sx={{ margin : "0 5px" }} onClick={() => myCommentEdit()}>
+                                                    수정완료
+                                                </Button>) }
+                                                <Button color="error" variant="contained" sx={{ margin : "0 5px" }} onClick={() => {
+                                                    myCommentDelete(comment.cmtSeq)
+                                                }}>
+                                                    삭제
+                                                </Button>
+                                            </Box>
+                                        </Grid>
+                                        <Divider/>
+                                    </>
+                                ))}
+                                {/* comment 덩어리 */}
                             </Grid>
-                            <Grid justifyContent="left" item xs zeroMinWidth>
-                                <h4 style={{ margin: 0, textAlign: "left" }}>{ myUserInfo.userName } 관리자님</h4>
-                                <p style={{ textAlign: "left" }}>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-                                    luctus ut est sed faucibus. Duis bibendum ac ex vehicula laoreet.
-                                    Suspendisse congue vulputate lobortis. Pellentesque at interdum
-                                    tortor. Quisque arcu quam, malesuada vel mauris et, posuere
-                                    sagittis ipsum. Aliquam ultricies a ligula nec faucibus. In elit
-                                    metus, efficitur lobortis nisi quis, molestie porttitor metus.
-                                    Pellentesque et neque risus. Aliquam vulputate, mauris vitae
-                                    tincidunt interdum, mauris mi vehicula urna, nec feugiat quam
-                                    lectus vitae ex.{" "}
-                                </p>
-                                <p style={{ textAlign: "left", color: "gray" }}>
-                                    posted 1 minute ago
-                                </p>
-                                <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginTop : '10px' }}>
-                                    <Button color="info" variant="contained" sx={{ margin : "0 5px" }}>
-                                        수정
-                                    </Button>
-                                    <Button color="error" variant="contained" sx={{ margin : "0 5px" }} onClick={() => {
-                                        myCommentDelete()
-                                    }}>
-                                        삭제
-                                    </Button>
-                                </Box>
-                            </Grid>
-                            {/* comment 덩어리 */}
-                        </Grid>
-                    </Paper>
+                        </Paper>
+                    ) : (<></>) }
                 </div>
                 <div style={{ padding: 14 }}>
                     <paper style={{ padding: "40px 20px" }}>
@@ -125,7 +170,9 @@ export const AdminBrokenDeviceManagementDetail = () => {
                                     multiline
                                     rows = {5}
                                     placeholder="답변 작성"
-                                    id="fullWidth" />
+                                    id="fullWidth"
+                                    onChange={onChangeComment}
+                                />
                                 <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginTop : '10px' }}>
                                     <Button color="primary" variant="contained" sx={{ margin : "0 5px" }} onClick={() => {
                                         myCommentCreate()
