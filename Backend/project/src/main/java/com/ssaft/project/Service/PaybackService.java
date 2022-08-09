@@ -1,5 +1,6 @@
 package com.ssaft.project.Service;
 
+import com.ssaft.project.Function.Function;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.Repository.PaybackDataRepository;
 import com.ssaft.project.domain.IotUser;
@@ -18,6 +19,8 @@ public class PaybackService {
 
     @Autowired
     IotUserRepository iotUserRepository;
+    @Autowired
+    Function function;
 
     public List<PaybackData> paybackAll(){
         List<PaybackData> paybackData = paybackDataRepository.findAll();
@@ -67,6 +70,16 @@ public class PaybackService {
             Optional<PaybackData> paybackData = paybackDataRepository.findById(Integer.valueOf(delete));
             paybackDataRepository.delete(paybackData.get());
         }
+        map.put("ok", true);
+        return map;
+    }
+
+    public Map paybackPush(String token, PaybackData paybackData){
+        String id = function.getSubJect(token);
+        Optional<IotUser> iotUser =  iotUserRepository.findById(id);
+        paybackData.setIotUser(iotUser.get());
+        paybackDataRepository.save(paybackData);
+        Map<String, Object> map = new LinkedHashMap<>();
         map.put("ok", true);
         return map;
     }

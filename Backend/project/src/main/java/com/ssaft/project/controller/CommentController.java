@@ -51,4 +51,15 @@ public class CommentController {
         return commentService.cmtDelete(cmtId);
     }
 
+    @GetMapping("/admin/complain/{id}")              // 속성값 게시판 호출
+    @ResponseBody()
+    public List<CommentData> ComplainComment(@PathVariable("id") int pstSeq){
+        return commentService.CommentAll(pstSeq);
+    }
+    @GetMapping("/admin/broken/{id}")              // 속성값 게시판 호출
+    @ResponseBody()
+    public List<CommentData> BrokenComment(@PathVariable("id") int pstSeq){
+        return commentService.CommentAll(pstSeq);
+    }
+
 }

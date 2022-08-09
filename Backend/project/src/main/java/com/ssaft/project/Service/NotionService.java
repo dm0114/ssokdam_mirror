@@ -1,6 +1,7 @@
 package com.ssaft.project.Service;
 
 
+import com.ssaft.project.Function.Function;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.Repository.NotionDataRepository;
 import com.ssaft.project.domain.IotUser;
@@ -17,12 +18,12 @@ public class NotionService {
     @Autowired
     NotionDataRepository notionDataRepository;
     @Autowired
-    SecurityService securityService;
+    Function function;
     @Autowired
     IotUserRepository iotUserRepository;
 
     public List<NotionData> userAll(String token){
-        String id = securityService.getSubJect(token);
+        String id = function.getSubJect(token);
         System.out.println(id);
         List<NotionData> notionData;
         try {

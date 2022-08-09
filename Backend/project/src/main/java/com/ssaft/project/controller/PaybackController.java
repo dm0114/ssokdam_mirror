@@ -35,5 +35,11 @@ public class PaybackController {
         return paybackService.paybackDelete(id);
     }
 
+    @PostMapping("/exchange")
+    @ResponseBody
+    public Map paybackPush(@RequestHeader String token, @RequestBody PaybackData paybackData){
+        return paybackService.paybackPush(token, paybackData);
+    }
+
 
 }
