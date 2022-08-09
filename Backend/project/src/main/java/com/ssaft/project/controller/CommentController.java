@@ -62,7 +62,7 @@ public class CommentController {
         return commentService.CommentAll(pstSeq);
     }
 
-    @GetMapping("/hahaha")              // 속성값 게시판 호출
+    @GetMapping("/hahahaha")              // 속성값 게시판 호출
     @ResponseBody()
     public String gigigi(){
         return "hahahahahaah";
