@@ -94,7 +94,6 @@ public class Function {
         Key signingKey = new SecretKeySpec(secretKeyBytes, signatureAlgorithm.getJcaName());
 
         return Jwts.builder()
-
                 .setSubject(subject)    //아이디 값 넣어주기
                 .signWith(signingKey, signatureAlgorithm)  // 키값
                 .setExpiration(new Date(System.currentTimeMillis() + expTime))

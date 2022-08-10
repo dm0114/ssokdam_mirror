@@ -30,7 +30,7 @@ public class IotUserService {
         Map<String, Object> map = new LinkedHashMap<>();
         if (iotuser != null) {
             if (function.jasyptDecoding(iotuser.get().getUserPwd()).equals(password)) {
-                token = function.creatToken(id, (1 * 1000 * 60));
+                token = function.creatToken(id, (60 * 1000 * 60));
                 map.put("Access_token", token);
                 String token2 = function.creatToken(id, (10800 * 1000 * 60));
                 iotuser.get().setUserRt(token2);
@@ -61,7 +61,7 @@ public class IotUserService {
         }
         Optional<IotUser> iotUser = iotUserRepository.findById(id);
         if (iotUser.get().getUserRt().equals(token)) {
-            String Accesstoken = function.creatToken(iotUser.get().getUserId(), (1 * 1000 * 60));
+            String Accesstoken = function.creatToken(iotUser.get().getUserId(), (60 * 1000 * 60));
             map.put("Access_token", Accesstoken);
         }
         return map;
