@@ -271,15 +271,9 @@ function SignUp() {
                                             <ButtonText>성인 인증 요청</ButtonText>
                                           </SubButton>
                                           <ButtonWrapper2>
-                                            {isReadyToSubmit ? (
                                             <MainButton width='100%' type='submit'>
                                                 <ButtonText>회원 가입</ButtonText>
                                             </MainButton>
-                                            ) : (
-                                            <NotReadyToSubmitButton>
-                                                <ButtonText>회원 가입</ButtonText>
-                                            </NotReadyToSubmitButton>
-                                            )}
                                           </ButtonWrapper2>
 
                                     </form>
