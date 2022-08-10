@@ -67,7 +67,7 @@ public class IotUserController {
         return iotUserService.changePw(user);
     }
 
-    @PostMapping("/users")                             // 회원 삭제
+    @DeleteMapping("/users/{id}")                             // 회원 삭제
     @ResponseBody
     public Map userDelete(@RequestBody List<String> id){
         return iotUserService.userDelete(id);
