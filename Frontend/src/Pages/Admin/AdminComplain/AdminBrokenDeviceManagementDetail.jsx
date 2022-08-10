@@ -69,7 +69,8 @@ export const AdminBrokenDeviceManagementDetail = () => {
 
     const deleteComplain = () => {
         DeleteComplain(postDetail.id)
-            .then((res) => window.location.replace("/admin") )
+            .then((res) => setStatus("GENERAL") )
+            .then((res) => window.location.replace("/admin"))
     }
 
 

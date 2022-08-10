@@ -59,9 +59,9 @@ public class EmbeddedController {
         embeddedService.qrCheck(embId);
     }
 
-     @GetMapping("/embedded/map")                 // 임베디드 기기 지역 체크
-     @ResponseBody
-     public List<Map<String, Object>> EmbeddedLoc(){
+    @GetMapping("/embedded/map")                 // 임베디드 기기 지역 체크
+    @ResponseBody
+    public List<Map<String, Object>> EmbeddedLoc(){
         return embeddedService.sendLoc();
      }
 

@@ -108,6 +108,22 @@ public class IotUserService {
         return map;
     }
 
+    public Map singupcheck(IotUser iotUser){
+        Map<String, Object> map = new LinkedHashMap<>();
+        try {
+            map = function.getIamport(iotUser.getImp_uid());
+            if(map.containsKey("message")){
+                map.put("ok", false);
+            }else{
+                map.put("ok", true);
+            }
+        } catch (IamportResponseException | IOException e) {
+            map.put("ok", false);
+            throw new RuntimeException(e);
+        }
+        return map;
+    }
+
     public Map singup(IotUser user) {          //회원가입
         String pwd = function.jasyptEncoding(user.getUserPwd());    //비밀번호 암호화
         user.setUserPwd(pwd);
@@ -117,16 +133,13 @@ public class IotUserService {
         try {
             map = function.getIamport(user.getImp_uid());
             System.out.println(map);
-        } catch (IamportResponseException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (IamportResponseException | IOException e) {
             throw new RuntimeException(e);
         }
         user.setUserPhone((String) map.get("userPhone"));
         user.setUserBirthDay((String) map.get("userBirthDay"));
         user.setUserName((String) map.get("userName"));
         map.clear();
-
 
         try {
             CheckId(user.getUserId());

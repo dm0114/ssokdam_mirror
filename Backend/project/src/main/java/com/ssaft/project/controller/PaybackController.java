@@ -22,12 +22,11 @@ public class PaybackController {
         return paybackService.exchange(pbSeq);
     }
 
-    @GetMapping("/admin/exchange")              // 환전 데이터 전부 호출
+    @GetMapping("/admin/exchange")              // 환전되지 않은 데이터 호춯
     @ResponseBody()
     public List<PaybackData> paybackDataAll(){
-        return paybackService.paybackAll();
+        return paybackService.paybackN();
     }
-
 
     @DeleteMapping("/exchange/{id}")
     @ResponseBody

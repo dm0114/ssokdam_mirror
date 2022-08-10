@@ -11,5 +11,4 @@ import java.util.List;
 public interface PaybackDataRepository extends JpaRepository<PaybackData, Integer> {
 
     public List<PaybackData> findByPbCheck(String YorN);
-
 }
