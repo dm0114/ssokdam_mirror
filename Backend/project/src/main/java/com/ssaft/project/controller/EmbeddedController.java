@@ -98,4 +98,10 @@ public class EmbeddedController {
     public void test3(@RequestBody UseData useData){
         useDataRepository.save(useData);
     }
+
+    @PutMapping("/embedded/{userId}")
+    @ResponseBody
+    public void embDtUpdate(@PathVariable("userId") String userId){
+        embeddedService.embDtUpdate(userId);
+    }
 }

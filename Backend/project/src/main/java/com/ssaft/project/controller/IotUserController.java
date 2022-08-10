@@ -101,6 +101,12 @@ public class IotUserController {
         return  iotUserService.pointPush(token, iotUser);
     }
 
+    @GetMapping("/refreshToken")
+    @ResponseBody
+    public Map RefreshToken(@RequestHeader String token){
+        return iotUserService.loginRefresh(token);
+    }
+
     //*************************************** 관리자 **************************************//
     @PostMapping("/admin/login")       //관리자 로그인
     @ResponseBody()

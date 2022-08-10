@@ -20,7 +20,7 @@ public class NotionController {
 
     @GetMapping("/alarm")
     @ResponseBody
-    public List<NotionData> userAll(@RequestHeader("token") String token){
+    public Object userAll(@RequestHeader("token") String token){
         System.out.println(token);
         return notionService.userAll(token);
     }

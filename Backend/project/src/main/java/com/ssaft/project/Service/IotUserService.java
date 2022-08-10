@@ -52,9 +52,13 @@ public class IotUserService {
     }
 
     public Map loginRefresh(String token) {
-        String id = function.getSubJect(token);
-        Optional<IotUser> iotUser = iotUserRepository.findById(id);
         Map<String, Object> map = new LinkedHashMap<>();
+        String id = function.getSubJect(token);
+        if(id.equals("토큰만료")){
+            map.put("ok", "토큰만료");
+            return map;
+        }
+        Optional<IotUser> iotUser = iotUserRepository.findById(id);
         if (iotUser.get().getUserRt().equals(token)) {
             String Accesstoken = function.creatToken(iotUser.get().getUserId(), (60 * 1000 * 60));
             map.put("Acess token", Accesstoken);
@@ -156,10 +160,13 @@ public class IotUserService {
 
     public Map pointPush(String token, IotUser iotUser){
         String id = function.getSubJect(token);
+        Map<String, Object> map = new LinkedHashMap<>();
+        if(id.equals("토큰만료")){
+            map.put("ok", "토큰만료");
+        }
         Optional<IotUser> realUser = iotUserRepository.findById(id);
         realUser.get().setUserPoint(realUser.get().getUserPoint()+iotUser.getUserPoint());
         iotUserRepository.save(realUser.get());
-        Map<String, Object> map = new LinkedHashMap<>();
         map.put("ok", true);
         return map;
     }

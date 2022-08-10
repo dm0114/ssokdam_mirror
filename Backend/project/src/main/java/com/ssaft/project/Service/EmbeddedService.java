@@ -1,5 +1,6 @@
 package com.ssaft.project.Service;
 
+import com.ssaft.project.Function.Function;
 import com.ssaft.project.Repository.EmbeddedDataRepository;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.domain.EmbeddedData;
@@ -17,6 +18,8 @@ public class EmbeddedService {
 
     @Autowired
     IotUserRepository iotUserRepository;
+    @Autowired
+    Function function;
 
     public void join(EmbeddedData embeddedData){
         Optional<IotUser> iotUser = iotUserRepository.findById(embeddedData.getUserId());
@@ -46,5 +49,15 @@ public class EmbeddedService {
 //            embeddedData.get(i).
 //        }
         return embeddedDataRepository.findAll();
+    }
+
+    public Map embDtUpdate(String userId){
+        Optional<IotUser> iotUser = iotUserRepository.findById(userId);
+        iotUser.get().setUserTime(Function.nowDate());
+        iotUser.get().setUserCnt(iotUser.get().getUserCnt()+1);
+        iotUserRepository.save(iotUser.get());
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ok", true);
+        return map;
     }
 }
