@@ -58,8 +58,11 @@ public class EmbeddedController {
 
      @PostMapping("/embedded/send")
      @ResponseBody
-     public void SensingSend(@RequestBody EmbeddedData sensing){
+     public void SensingSend(@RequestBody EmbeddedData sensing, String data){
+        System.out.println(data);
+        System.out.println(sensing);
         Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(sensing.getEmbId());
+        embeddedData.get().setIotUser(iotUserRepository.findById(sensing.getUserId()).get());
         embeddedData.get().setEmbFullTra(sensing.getEmbFullTra());
         embeddedData.get().setEmbFullCig(sensing.getEmbFullCig());
         embeddedData.get().setEmbLat(sensing.getEmbLat());
@@ -67,6 +70,8 @@ public class EmbeddedController {
          embeddedData.get().setEmbBat(sensing.getEmbBat());
          embeddedData.get().setEmbCnt(sensing.getEmbCnt());
          embeddedData.get().setEmbSta(sensing.getEmbSta());
+         embeddedData.get().setEmbQr(sensing.getEmbQr());
+         System.out.println(embeddedData.get());
          embeddedDataRepository.save(embeddedData.get());
      }
 
