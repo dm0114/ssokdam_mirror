@@ -9,7 +9,6 @@ export default async function FetchExchange(inputMoney) {
   }
 
   const response = await ApiPost.post(URL, data)
-  
-  console.log(response);
+
   return response.data
 }
