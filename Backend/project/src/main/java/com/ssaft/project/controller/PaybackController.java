@@ -16,7 +16,7 @@ public class PaybackController {
     @Autowired
     PaybackService paybackService;
 
-    @PutMapping("/exchange/{id}")        // 환전 승이
+    @PutMapping("/exchange/{id}")        // 환전 승인
     @ResponseBody
     public Map exchange(@PathVariable("id") String pbSeq){
         return paybackService.exchange(pbSeq);

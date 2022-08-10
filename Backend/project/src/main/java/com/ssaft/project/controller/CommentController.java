@@ -33,19 +33,19 @@ public class CommentController {
     @Autowired
     CommentService commentService;
 
-    @PostMapping("/post/{pstSeq}/comment")
+    @PostMapping("/post/{pstSeq}/comment")                      //답변 생성
     @ResponseBody
     public Map cmtPush(@PathVariable("pstSeq") int pstSeq, @RequestBody CommentData commentData, @RequestHeader String token){
         return commentService.cmtPush(pstSeq, token, commentData);
     }
 
-    @PutMapping("/post/{pstSeq}/comment/{cmtId}")
+    @PutMapping("/post/{pstSeq}/comment/{cmtId}")               // 답변 수정
     @ResponseBody
     public Map cmtEdit(@PathVariable("pstSeq") int pstSeq, @PathVariable("cmtId") int cmtId, @RequestBody CommentData commentData){
         return commentService.cmtEdit(pstSeq, cmtId, commentData);
     }
 
-    @DeleteMapping("/post/{pstSeq}/comment/{cmtId}")
+    @DeleteMapping("/post/{pstSeq}/comment/{cmtId}")                     // 답변 삭제
     @ResponseBody
     public Map cmtDelete(@PathVariable("pstSeq") int pstSeq, @PathVariable("cmtId") int cmtId){
         return commentService.cmtDelete(cmtId);

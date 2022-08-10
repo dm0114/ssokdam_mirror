@@ -76,10 +76,14 @@ public class PaybackService {
 
     public Map paybackPush(String token, PaybackData paybackData){
         String id = function.getSubJect(token);
+        Map<String, Object> map = new LinkedHashMap<>();
+        if(id.equals("토큰만료")){
+            map.put("ok", "토큰만료");
+            return map;
+        }
         Optional<IotUser> iotUser =  iotUserRepository.findById(id);
         paybackData.setIotUser(iotUser.get());
         paybackDataRepository.save(paybackData);
-        Map<String, Object> map = new LinkedHashMap<>();
         map.put("ok", true);
         return map;
     }

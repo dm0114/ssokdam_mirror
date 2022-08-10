@@ -26,7 +26,7 @@ export const AdminNoticeUpdate = () => {
     const navigate = useNavigate()
     const [notice,setNotice] = useRecoilState(NoticeDetail)
     const [image, setImage] = useState({
-        image_file: `${notice.pstImg}`, // 나중에 image로직 알게되면 preview_URL default값으로 notice.file URL 넣기
+        image_file: ``, // 나중에 image로직 알게되면 preview_URL default값으로 notice.file URL 넣기
         preview_URL: `${notice.pstImg}`,
     });
     const [imageUrl, setImageUrl] = useState(`${notice.pstImg}`);
@@ -38,7 +38,7 @@ export const AdminNoticeUpdate = () => {
         pstTitle : `${notice.pstTitle}`,
         pstCtnt : `${notice.pstCtnt}`
     })
-    console.log(imageUrl)
+    console.log(image.image_file)
     // const [article, setArticle] = useState({
     //     title : "",
     //     content : "",
@@ -100,6 +100,10 @@ export const AdminNoticeUpdate = () => {
             alert("제목을 입력해주세요.")
         }else if(image.image_file && article.pstCtnt){
             alert("텍스트와 이미지는 동시에 작성할 수 없습니다.")
+        }else if(!image.image_file && !article.pstCtnt){
+            fetchNoticeUpdate({...article, pstImg : `${notice.pstImg}`})
+            alert("서버에 등록이 완료되었습니다!");
+            window.location.replace("/admin")
         } else if (image.image_file || !article.pstCtnt) {
             // const formData = new FormData()
             // formData.append('file', image.image_file);
@@ -138,7 +142,7 @@ export const AdminNoticeUpdate = () => {
                 }
             );
         }else if(!image.image_file && article.pstCtnt){
-            fetchNoticeUpdate({...article, pstImg : ''})
+            fetchNoticeUpdate({...article, pstImg : ``})
             alert("서버에 등록이 완료되었습니다!");
             window.location.replace("/admin")
         }

@@ -279,7 +279,7 @@ export const AdminCheckDevice = () => {
                     style={{
                         // 지도의 크기
                         width: "100%",
-                        height: "30vh",
+                        height: "90%",
                         marginBottom : "20px",
                         zIndex : 0,
                         display: toggle === "map" ? "block" : "none",
@@ -352,7 +352,7 @@ export const AdminCheckDevice = () => {
             style={{
               display: toggle === "roadview" ? "block" : "none",
               width: "100%",
-              height: "100%",
+              height: "90%",
               zIndex: 100,
             }}
           >

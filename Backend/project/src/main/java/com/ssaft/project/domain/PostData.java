@@ -1,6 +1,7 @@
 package com.ssaft.project.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ssaft.project.Function.Function;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,7 +32,7 @@ public class PostData {
 
     @CreatedDate
     @Column(name = "pst_dt")
-    private String pstDt;
+    private String pstDt = Function.nowDate();
 
     @Column(name = "pst_title")
     private String pstTitle;

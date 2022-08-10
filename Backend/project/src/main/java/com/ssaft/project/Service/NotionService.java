@@ -22,10 +22,15 @@ public class NotionService {
     @Autowired
     IotUserRepository iotUserRepository;
 
-    public List<NotionData> userAll(String token){
+    public Object userAll(String token){
         String id = function.getSubJect(token);
-        System.out.println(id);
         List<NotionData> notionData;
+        if(id.equals("토큰만료")){
+            Map<String, Object> map = new LinkedHashMap<>();
+            map.put("ok", "토큰만료");
+            return map;
+        }
+        System.out.println(id);
         try {
             Optional<IotUser> iotUser = iotUserRepository.findById(id);
             notionData = notionDataRepository.findByIotUser(iotUser.get());

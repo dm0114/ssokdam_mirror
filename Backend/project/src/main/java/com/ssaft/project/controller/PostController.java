@@ -44,23 +44,20 @@ public class PostController {
         return postService.myAsk(token);
     }
 
-    @PostMapping("/post")
+    @PostMapping("/post")                                                   // 게시글 등록
     @ResponseBody
     public Map postPush(@RequestHeader("token") String token, @RequestBody PostData postData){
         System.out.println(postData.getFile());
-        postService.postPush(token, postData);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("ok", true);
-        return map;
+        return postService.postPush(token, postData);
     }
 
-    @PutMapping("/post/{pstSeq}")
+    @PutMapping("/post/{pstSeq}")                                         //게시글 수정
     @ResponseBody
     public Map postEdit(@PathVariable("pstSeq") int pstSeq, @RequestBody PostData postData){
         return postService.postEdit(pstSeq, postData);
     }
 
-    @DeleteMapping("/post/{pstSeq}")
+    @DeleteMapping("/post/{pstSeq}")                                       // 게시글 삭제
     @ResponseBody
     public Map postDelete(@PathVariable("pstSeq") int pstSeq){
         return postService.postDelete(pstSeq);
@@ -81,32 +78,6 @@ public class PostController {
     public List<PostData> BrokenAll(){
         return postService.findAll("고장신고");
     }
-
-
-
-
-    @PostMapping("/get")
-    public void test2(@RequestBody CommentData commentData){
-
-
-        Optional<IotUser> user = iotUserRepository.findById(commentData.getUserId());
-        Optional<PostData> data2 = postDataRepository.findById(commentData.getPstSeq());
-
-        List<CommentData> data  = getDataRepository.findByPostData(data2.get());
-        int cnt = data.size();
-        if(cnt!=0) {
-            cnt = data.get(cnt-1).getCmtSub() + 1;
-        }else{
-            cnt = cnt+1;
-        }
-
-        commentData.setIotUser(user.get());
-        commentData.setPostData(data2.get());
-        commentData.setCmtSub(cnt);
-        getDataRepository.save(commentData);
-
-    }
-
 
 
 
