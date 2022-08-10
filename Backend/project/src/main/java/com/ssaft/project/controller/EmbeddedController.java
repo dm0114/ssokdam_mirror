@@ -44,54 +44,22 @@ public class EmbeddedController {
         embeddedService.join(embeddedData);
      }
 
-     @PostMapping("/embedded/qr")
-     @ResponseBody
-     public void Qr(@RequestBody EmbeddedData user){
-        System.out.println(user);
-        Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(Integer.valueOf(user.getEmbId()));
-        String name = function.getSubJect(user.getToken());
-         Optional<IotUser> iotUser =  iotUserRepository.findById(name);
-         embeddedData.get().setIotUser(iotUser.get());
-         embeddedData.get().setEmbQr("Y");
-         embeddedDataRepository.save(embeddedData.get());
-     }
 
-     @PostMapping("/embedded/send")
+     @PostMapping("/embedded/send")     // 주기적 임베디드 센서값 업데이트
      @ResponseBody
      public void SensingSend(@RequestBody EmbeddedData sensing, String data){
         System.out.println(data);
         System.out.println(sensing);
-        Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(sensing.getEmbId());
-        embeddedData.get().setIotUser(iotUserRepository.findById(sensing.getUserId()).get());
-        embeddedData.get().setEmbFullTra(sensing.getEmbFullTra());
-        embeddedData.get().setEmbFullCig(sensing.getEmbFullCig());
-        embeddedData.get().setEmbLat(sensing.getEmbLat());
-        embeddedData.get().setEmbLng(sensing.getEmbLng());
-         embeddedData.get().setEmbBat(sensing.getEmbBat());
-         embeddedData.get().setEmbCnt(sensing.getEmbCnt());
-         embeddedData.get().setEmbSta(sensing.getEmbSta());
-         embeddedData.get().setEmbQr(sensing.getEmbQr());
-         System.out.println(embeddedData.get());
-         embeddedDataRepository.save(embeddedData.get());
+        embeddedService.embSensingUpdate(sensing);
      }
 
-    @GetMapping("/embedded/receive")
+    @GetMapping("/embedded/receive")             // qr 체크 확인 초단위 통신
     @ResponseBody
-    public Map receive(@RequestParam int embId){
-        Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(embId);
-        Map<String, Object> map = new LinkedHashMap<>();
-        if(embeddedData.get().getEmbQr().equals("Y")){
-            map.put("userId" , embeddedData.get().getIotUser().getUserId());
-            map.put("embQr" , embeddedData.get().getEmbQr());
-            /*embeddedData.get().setEmbQr("N");
-            embeddedDataRepository.save(embeddedData.get());*/
-            return map;
-        }
-        map.put("error", false);
-        return map;
+    public void receive(@RequestParam int embId){
+        embeddedService.qrCheck(embId);
     }
 
-     @GetMapping("/embedded/map")
+     @GetMapping("/embedded/map")                 // 임베디드 기기 지역 체크
      @ResponseBody
      public List<Map<String, Object>> EmbeddedLoc(){
         return embeddedService.sendLoc();
@@ -108,5 +76,18 @@ public class EmbeddedController {
     @ResponseBody
     public void embDtUpdate(@PathVariable("userId") String userId){
         embeddedService.embDtUpdate(userId);
+    }
+
+
+    @PostMapping("/embedded/qr")
+    @ResponseBody
+    public void Qr(@RequestBody EmbeddedData user){
+        System.out.println(user);
+        Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(Integer.valueOf(user.getEmbId()));
+        String name = function.getSubJect(user.getToken());
+        Optional<IotUser> iotUser =  iotUserRepository.findById(name);
+        embeddedData.get().setIotUser(iotUser.get());
+        embeddedData.get().setEmbQr("Y");
+        embeddedDataRepository.save(embeddedData.get());
     }
 }
