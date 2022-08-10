@@ -94,13 +94,6 @@ export const AdminNoticeCreate = () => {
         }else if(image.image_file && article.content){
             alert("텍스트와 이미지는 동시에 작성할 수 없습니다.")
         }else if (image.image_file && !article.content) {
-            // const formData = new FormData()
-            // console.log(image.image_file)
-            // formData.append('pstImg', image.image_file);
-            // await axios.post('/api/image/upload', formData);
-            // setArticle({...article, file : image.image_file})
-            // console.log(article)
-            // const createResponse = await CreateAdminNotice(article);
             const storageRef = storage.ref("images/test/")
             const imagesRef = storageRef.child(image.image_file.name)
             const upLoadTask = imagesRef.put(image.image_file);
@@ -127,8 +120,6 @@ export const AdminNoticeCreate = () => {
                     });
                 }
             );
-            // CreateAdminNotice({...article, formData})
-
         }else if(!image.image_file && article.content){
             CreateAdminNotice({...article, pstImg : ''})
             alert("서버에 등록이 완료되었습니다!");

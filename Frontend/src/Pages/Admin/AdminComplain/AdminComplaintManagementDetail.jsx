@@ -79,7 +79,8 @@ export const AdminComplaintManagementDetail = () => {
 
     const deleteComplain = () => {
         DeleteComplain(postDetail.id)
-            .then((res) => window.location.replace("/admin") )
+            .then((res) => setStatus("GENERAL") )
+            .then((res) => window.location.replace("/admin"))
     }
 
 
@@ -105,6 +106,9 @@ export const AdminComplaintManagementDetail = () => {
                                      { postDetail.pstCtnt }
                                  </Grid>
                              </Grid>
+                             <div className="img-wrapper">
+                                 <img src={postDetail.pstImg}/>
+                             </div>
                         </Box>
                         <Divider/>
                     </FormControl>

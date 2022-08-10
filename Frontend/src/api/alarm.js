@@ -1,20 +1,12 @@
-import axios from 'axios';
 import { SERVER_URL } from '../config';
+import Api from './customApi';
 
 export async function fetchAlarm() {
   const URL = `${SERVER_URL}/alarm`
 
-  const response = await fetch(URL, {
-    // method: 'get',
-    // withCredentials: true,
-    headers : {
-      token : localStorage.getItem("access-token")
-    },
+  const response = await Api(URL, {
+    method: 'get',
   })
-
-  // return response.data
-
-  const json = await response.json();
-  console.log(json);
-  return json
+  
+  return response.data
 }

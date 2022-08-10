@@ -12,7 +12,9 @@ export async function CreateComplaint(userInput) {
     body: JSON.stringify({
       pstTitle: userInput.pstTitle,
       pstCtnt: userInput.pstCtnt,
-      pstProp: userInput.pstType
+      pstProp: userInput.pstType,
+      pstImg: userInput.pstImg,
+      pstDumy : userInput.pstDumy
     }),
   })
   const json = await response.json()

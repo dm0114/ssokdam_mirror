@@ -98,7 +98,6 @@ function Login() {
               userCnt : res.userCnt,
               userImage: res.userImg,
             })
-            getCookieToken()
           }
         }).then(() => {
           setIsLogin(true)

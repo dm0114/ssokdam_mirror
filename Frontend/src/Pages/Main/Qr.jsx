@@ -14,15 +14,20 @@ import { userInfo } from '../../atoms'
 import {useRecoilState} from "recoil";
 import {useEffect} from "react";
 import { MainBackGround } from '../../styles/BackgroundStyle';
+import {IsComplain} from "../../atoms";
+import {ComplainDevice} from "../../atoms";
 
 function Qr(){
     const [qrscan, setQrscan] = useState('QR을 스캔해주세요.');
     const navigate = useNavigate();
     const [userInfo2, setUserInfo2] = useRecoilState(userInfo)
     const [screenSize, setScreenSize] = useState([window.innerWidth, window.innerHeight])
-    console.log(screenSize);
+    const [isComplain, setIsComplain] = useRecoilState(IsComplain)
+    const [complainDevice, setComplainDevice] = useRecoilState(ComplainDevice)
+
+    console.log(isComplain);
     const handleScan = data => {
-        if (data) {
+        if (data && !isComplain) {
             setQrscan(data)
             // 백엔드에 URL 보내기
             const fetchQr = async () => {
@@ -40,17 +45,13 @@ function Qr(){
                 }).then((res) => navigate('/'))
             }
             fetchQr()
-
-            // const deviceOpen =  async () => {
-            //     let response = await axios.post(URL, {
-            //         embId : parseInt(data),
-            //         token : localStorage.getItem('access-token')
-            //     }).then((res) => navigate('/'))
-            // }
-            // deviceOpen()
             console.log(data)
-        }
-    }
+        }else if( data && isComplain ){
+            const deviceNum = data.split("=")[1]
+            setComplainDevice(deviceNum)
+            setIsComplain(false)
+            history.back()
+    }}
     const handleError = err => {
         console.error(err)
     }
@@ -64,9 +65,11 @@ function Qr(){
     return (
             <MainBackGround>
                 <Box sx={{padding:'30px', justifyContent : 'center', alignItems:'center'}}>
-                    <Link to='/'>
-                        <ArrowBackIosIcon sx={{color : 'black'}}/>
-                    </Link>
+                    {/*<Link to='/'>*/}
+                        <ArrowBackIosIcon onClick={() => {
+                            history.back()
+                        }} sx={{color : 'black'}}/>
+                    {/*</Link>*/}
                 </Box>
                 <Box sx={{ display : 'flex', justifyContent : 'center', width: '100%'}}>
                     <h2>QR을 스캔해주세요.</h2>
