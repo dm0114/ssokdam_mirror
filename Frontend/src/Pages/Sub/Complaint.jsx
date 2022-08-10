@@ -277,7 +277,7 @@ const Complaint = () => {
         </IconButton>
         
         {isReadyToSubmit ? (
-          <MainButton width='100%' type='submit' onClick={() => submitComplaint(userInput)}>
+          <MainButton width='100%' onClick={() => submitComplaint(userInput)}>
             <ButtonText>제출하기</ButtonText>
           </MainButton>
         ) : (

@@ -2,7 +2,10 @@ import { SERVER_URL } from '../config';
 
 export async function CreateComplaint(userInput) {
   const URL = `${SERVER_URL}/post`
-  console.log(userInput);
+  
+  // const response = await ApiPost(URL, JSON.stringify(data))
+  
+
   const response = await fetch(URL, {
     method: "POST",
     headers: {

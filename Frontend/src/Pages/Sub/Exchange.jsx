@@ -48,7 +48,7 @@ const Exchange = () => {
     if (userPoint >= userInput) {
       const response = await FetchExchange(userInput)
       if (response.ok) {
-        alert('전환 성공!')
+        alert('전환 요청 완료!')
         navigate('/')
       } else {
         alert('포인트 전환에 실패했습니다.')
