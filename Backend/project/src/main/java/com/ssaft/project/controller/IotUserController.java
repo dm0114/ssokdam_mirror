@@ -69,7 +69,7 @@ public class IotUserController {
 
     @DeleteMapping("/users/{id}")                             // 회원 삭제
     @ResponseBody
-    public Map userDelete(@RequestBody List<String> id){
+    public Map userDelete(@PathVariable String id){
         return iotUserService.userDelete(id);
     }
 

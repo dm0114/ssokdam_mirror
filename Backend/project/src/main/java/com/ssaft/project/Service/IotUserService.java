@@ -143,9 +143,10 @@ public class IotUserService {
         }
     }
 
-    public Map userDelete(List<String> data){
-        for(String id : data){
-            iotUserRepository.delete(iotUserRepository.findById(id).get());
+    public Map userDelete(String data){
+        String[] id = data.split(",");
+        for(String Did : id){
+            iotUserRepository.delete(iotUserRepository.findById(Did).get());
         }
         Map<String ,Object> map = new LinkedHashMap<>();
         map.put("ok", true);
