@@ -158,12 +158,14 @@ const Complaint = () => {
   }
 
   useEffect(() => {
-    if (!(Object.values(userInput).includes(''))) {
+    if (!(Object.values(userInput).includes('')) && userInput.pstType === "불만사항") {
       setIsReadyToSubmit(true)
-    } else {
-      setIsReadyToSubmit(false)
+    } else if(!(Object.values({...userInput, pstDumy : complainDevice}).includes('')) && userInput.pstType === "고장신고"){
+      setIsReadyToSubmit(true)
+    }else{
+        setIsReadyToSubmit(false)
     }
-  }, [userInput])
+  }, [userInput, complainDevice])
 
   return (
     <ThemeProvider theme={MuiTheme}>
