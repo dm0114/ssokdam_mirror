@@ -127,6 +127,13 @@ public class IotUserController {
         return map;
     }
 
+    //*************************************** 관리자 **************************************//
+
+    @GetMapping("/accessToken")
+    @ResponseBody
+    public Map accessTokenCheck(@RequestHeader String token){
+        return iotUserService.accessTokenCheck(token);
+    }
 
 
 

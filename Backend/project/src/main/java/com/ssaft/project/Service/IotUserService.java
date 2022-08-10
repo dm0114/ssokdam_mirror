@@ -4,6 +4,7 @@ import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.ssaft.project.Function.Function;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.domain.IotUser;
+import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class IotUserService {
         Map<String, Object> map = new LinkedHashMap<>();
         if (iotuser != null) {
             if (function.jasyptDecoding(iotuser.get().getUserPwd()).equals(password)) {
-                token = function.creatToken(id, (60 * 1000 * 60));
+                token = function.creatToken(id, (1 * 1000 * 60));
                 map.put("Access_token", token);
                 token = function.creatToken(id, (10800 * 1000 * 60));
                 iotuser.get().setUserRt(token);
@@ -186,6 +187,16 @@ public class IotUserService {
         }
     }
 
+    public Map accessTokenCheck(String accesstoken){     //accesstoken 체크
+        Map<String, Object> map = new LinkedHashMap<>();
+        try {
+            String id = function.getSubJect(accesstoken);
+        } catch (JwtException e){
+            map.put("ok", false);
+        }
+        return map;
+    }
+
 
     public void CheckId(String id){                   // 회원가입 - 중복검사
         iotUserRepository.findById(id)
@@ -193,5 +204,7 @@ public class IotUserService {
                     throw new IllegalStateException("이미 존재하는 회원입니다.");
                 });
     }
+
+
 
 }

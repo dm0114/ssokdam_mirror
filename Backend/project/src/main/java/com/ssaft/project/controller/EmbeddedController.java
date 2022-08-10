@@ -24,7 +24,6 @@ public class EmbeddedController {
     IotUserRepository iotUserRepository;
     @Autowired
     EmbeddedService embeddedService;
-
     @Autowired
     EmbeddedDataRepository embeddedDataRepository;
     @Autowired
