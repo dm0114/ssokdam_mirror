@@ -96,6 +96,21 @@ const Complaint = () => {
     })
   }
   const submitComplaint = async (userInput) => {
+    if(!image.image_file){
+        CreateComplaint({...userInput, pstImg : "", pstDumy : complainDevice})
+            .then((res) => {
+                console.log(res)
+                setComplainDevice("")
+                setIsComplain("")
+                setComplainStatus("")
+                if (res.ok) {
+                    alert('작성 완료')
+                    navigate('/myAsk')
+                } else {
+                    alert('오류 발생')
+                }
+            })
+    }
     const storageRef = storage.ref("images/test/")
     const imagesRef = storageRef.child(image.image_file.name)
     const upLoadTask = imagesRef.put(image.image_file);
@@ -105,12 +120,9 @@ const Complaint = () => {
           console.log("snapshot", snapshot);
           const percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log(percent + "% done");
-          setProgress(percent);
         },
         (error) => {
           console.log("err", error);
-          setError("파일 업로드에 실패했습니다." + error);
-          setProgress(100); //진행중인 바를 삭제
         },
         () => {
           upLoadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
@@ -277,7 +289,7 @@ const Complaint = () => {
         </IconButton>
         
         {isReadyToSubmit ? (
-          <MainButton width='100%' type='submit' onClick={() => submitComplaint(userInput)}>
+          <MainButton width='100%' onClick={() => submitComplaint(userInput)}>
             <ButtonText>제출하기</ButtonText>
           </MainButton>
         ) : (

@@ -67,6 +67,7 @@ function Qr(){
                 <Box sx={{padding:'30px', justifyContent : 'center', alignItems:'center'}}>
                     {/*<Link to='/'>*/}
                         <ArrowBackIosIcon onClick={() => {
+                            setIsComplain(false)
                             history.back()
                         }} sx={{color : 'black'}}/>
                     {/*</Link>*/}

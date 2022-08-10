@@ -172,15 +172,15 @@ export async function fetchExchange(){
 }; // done
 
 export async function AcceptExchange(id){
-    const URL = `${ADMIN_SERVER_URL}/exchange` // id리스트로
+    const URL = `${SERVER_URL}/exchange/${id}` // id리스트로
     const response = await fetch(URL, {
-        method: "POST",
+        method: "PUT",
         headers: {
             "Content-type": "application/json",
         },
-        body: JSON.stringify({
-            id : id
-        }),
+        // body: JSON.stringify({
+        //     id : id
+        // }),
     })
     return response
 } // todo => ready
