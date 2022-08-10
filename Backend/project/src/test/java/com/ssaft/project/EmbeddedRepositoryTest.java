@@ -22,10 +22,11 @@ public class EmbeddedRepositoryTest {
     EmbeddedDataRepository embeddedDataRepository;
 
     @Test
-    public void 임베디드qr체크(){
+    public void 임베디드등록(){
         List<EmbeddedData> embeddedData = embeddedDataRepository.findAll();
         for(int i=0;i<embeddedData.size();i++){
             embeddedService.qrCheck(i);
         }
     }
+
 }
