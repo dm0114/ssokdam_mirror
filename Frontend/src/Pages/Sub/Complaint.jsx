@@ -44,7 +44,8 @@ const Complaint = () => {
   const submitComplaint = async (userInput) => {
     // create complaint 코드 수정
     const res = await CreateComplaint(userInput)
-    if (res.sucess === 'sucess') {
+    if (res.ok) {
+      alert('작성 완료')
       navigate('/myAsk')
     } else {
       alert('오류 발생')
@@ -87,8 +88,8 @@ const Complaint = () => {
               sx={{marginBottom: "24px"}}
               required
             >
-              <MenuItem value={"complaint"}>불편 사항</MenuItem>
-              <MenuItem value={"brokenQuesion"}>고장 신고</MenuItem>
+              <MenuItem value={"불만사항"}>불편 사항</MenuItem>
+              <MenuItem value={"고장신고"}>고장 신고</MenuItem>
             </Select>
           </FormControl>
 
