@@ -85,7 +85,6 @@ public class IotUserController {
         return iotUserService.singup(user);
     }
 
-
     @PostMapping("/userPoint")                  //포인트 적립
     @ResponseBody
     public Map pointpush(@RequestHeader String token, @RequestBody IotUser iotUser){

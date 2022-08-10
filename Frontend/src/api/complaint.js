@@ -1,22 +1,17 @@
 import { SERVER_URL } from '../config';
+import ApiPost from "./customApi";
 
 export async function CreateComplaint(userInput) {
   const URL = `${SERVER_URL}/post`
-  console.log(userInput);
-  const response = await fetch(URL, {
-    method: "POST",
-    headers: {
-      token : localStorage.getItem("access-token"),
-      "Content-type": "application/json",
-    },
-    body: JSON.stringify({
-      pstTitle: userInput.pstTitle,
-      pstCtnt: userInput.pstCtnt,
-      pstProp: userInput.pstType,
-      pstImg: userInput.pstImg,
-      pstDumy : userInput.pstDumy
-    }),
-  })
-  const json = await response.json()
-  return json
+  
+  const data = {
+    pstTitle: userInput.pstTitle,
+    pstCtnt: userInput.pstCtnt,
+    pstProp: userInput.pstType,
+    pstImg: userInput.pstImg,
+    pstDumy : userInput.pstDumy
+  }
+  const response = await ApiPost.post(URL, data)
+  
+  return response.data
 }
