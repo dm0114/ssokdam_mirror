@@ -32,15 +32,16 @@ public class IotUserService {
             if (function.jasyptDecoding(iotuser.get().getUserPwd()).equals(password)) {
                 token = function.creatToken(id, (1 * 1000 * 60));
                 map.put("Access_token", token);
-                token = function.creatToken(id, (10800 * 1000 * 60));
-                iotuser.get().setUserRt(token);
+                String token2 = function.creatToken(id, (10800 * 1000 * 60));
+                iotuser.get().setUserRt(token2);
                 iotUserRepository.save(iotuser.get());
-                map.put("Refresh_token", token);
+                map.put("Refresh_token", token2);
                 map.put("userName", iotuser.get().getUserName());
                 map.put("userEmail", iotuser.get().getUserEmail());
                 map.put("userPoint", iotuser.get().getUserPoint());
                 map.put("userCnt", iotuser.get().getUserCnt());
                 map.put("userImg", iotuser.get().getUserImg());
+                map.put("userTime", iotuser.get().getUserTime());
             } else {
                 map.put("message", "비밀번호가 틀렸습니다.");
             }
@@ -60,7 +61,7 @@ public class IotUserService {
         }
         Optional<IotUser> iotUser = iotUserRepository.findById(id);
         if (iotUser.get().getUserRt().equals(token)) {
-            String Accesstoken = function.creatToken(iotUser.get().getUserId(), (60 * 1000 * 60));
+            String Accesstoken = function.creatToken(iotUser.get().getUserId(), (1 * 1000 * 60));
             map.put("Access_token", Accesstoken);
         }
         return map;

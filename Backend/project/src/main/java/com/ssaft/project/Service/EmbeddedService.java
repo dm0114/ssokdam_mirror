@@ -69,7 +69,7 @@ public class EmbeddedService {
         embeddedData.get().setEmbFullCig(sensing.getEmbFullCig());
         embeddedData.get().setEmbLat(sensing.getEmbLat());
         embeddedData.get().setEmbLng(sensing.getEmbLng());
-        embeddedData.get().setEmbBat(sensing.getEmbBat());
+        embeddedData.get().setEmbBat(sensing.getEmbBat());  
         embeddedData.get().setEmbCnt(sensing.getEmbCnt());
         embeddedData.get().setEmbSta(sensing.getEmbSta());
         System.out.println(embeddedData.get());

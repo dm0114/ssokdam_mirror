@@ -38,7 +38,7 @@ public class PostService {
         return postDataRepository.findByIotUser(iotUser.get());
     }
 
-    public Map postPush(String token, PostData postData){            // 기기 등록
+    public Map postPush(String token, PostData postData){            // 게시글 등록
         String id = function.getSubJect(token);
         Map<String, Object> map = new LinkedHashMap<>();
         if(id.equals("토큰만료")){
