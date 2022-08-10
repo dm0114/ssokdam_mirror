@@ -79,26 +79,17 @@ public class IotUserController {
         return iotUserService.singup(user);
     }
 
-    @PostMapping("/signup/check")                          // 로그인 체크
-    @ResponseBody
-    public boolean singUpCheck(@RequestBody IotUser user)  {
-        try {
-            if(function.getIamport(user.getImp_uid()).containsKey("userPhone")){
-                return true;
-            } else{
-                return false;
-            }
-        } catch (IamportResponseException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @PostMapping("/userPoint")                  //포인트 적립
     @ResponseBody
     public Map pointpush(@RequestHeader String token, @RequestBody IotUser iotUser){
         return  iotUserService.pointPush(token, iotUser);
+    }
+
+    @GetMapping("/refreshToken")                  // 리프래쉬 토큰 체크
+    @ResponseBody
+    public Map RefreshToken(@RequestHeader String token){
+        return iotUserService.loginRefresh(token);
     }
 
     //*************************************** 관리자 **************************************//
@@ -127,69 +118,13 @@ public class IotUserController {
         return map;
     }
 
+    //*************************************** 관리자 **************************************//
 
-
-
-
-    @GetMapping("/myPage")
+    @GetMapping("/accessToken")
     @ResponseBody
-    public Map main(@RequestBody Map<String, Object> token){
-        String token2 = (String) token.get("token");
-        String id = function.getSubJect(token2);
-        Optional<IotUser> user = iotUserRepository.findById(id);
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("userName", user.get().getUserName());
-        return map;
+    public Map accessTokenCheck(@RequestHeader String token){
+        return iotUserService.accessTokenCheck(token);
     }
 
 
-
-    @GetMapping("/mypage/test")
-    public Map mypage(@RequestHeader("token") String token){
-        Map<String, Object> map = new LinkedHashMap<>();
-        try {
-            String id = function.getSubJect(token);
-            Optional<IotUser> user = iotUserRepository.findById(id);
-            map.put("userName", user.get().getUserName());
-            return map;
-        }catch(JwtException e){
-            System.out.println(e);
-            map.put("Error", "Access 토큰이 만료되었습니다.");
-            return map;
-        }
-    }
-
-    @GetMapping("/Refesh/token")
-    public Map refreshToken(@RequestHeader("token") String token){
-        return function.refreshTokenCheck(token);
-    }
 }
-
-
-
-
-
-
-
-
-   /* @GetMapping("/user/{uid}")
-    @ResponseBody
-    public Optional<IotUser> test2(@PathVariable String uid) {
-        System.out.println(uid);
-        Optional<IotUser> iotusers = iotUserRepository.findById(uid);
-        return iotusers;
-    }
-
-    @PostMapping("/singup")
-    public String Create(IotUser NewUser){
-        System.out.println(NewUser);
-        IotUser iotUser = new IotUser();
-        iotUser.setUser_id(NewUser.getUser_id());
-        iotUser.setUser_email(NewUser.getUser_email());
-        iotUser.setUser_pwd((NewUser.getUser_pwd()));
-        iotUser.setUser_birth_day(NewUser.getUser_birth_day());
-
-        iotUserService.join(iotUser);
-
-        return "redirect:/";
-    }*/

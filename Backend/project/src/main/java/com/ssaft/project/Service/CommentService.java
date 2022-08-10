@@ -24,6 +24,11 @@ public class CommentService {
     Function function;
     public Map cmtPush(int pstSeq,String token,CommentData commentData) {
         String id = function.getSubJect(token);
+        Map<String, Object> map = new LinkedHashMap<>();
+        if(id.equals("토큰만료")){
+            map.put("ok", "토큰만료");
+            return map;
+        }
         Optional<IotUser> user = iotUserRepository.findById(id);
         Optional<PostData> data2 = postDataRepository.findById(pstSeq);
         int cnt;
@@ -38,7 +43,7 @@ public class CommentService {
         commentData.setPostData(data2.get());
         commentData.setCmtSub(cnt);
         commentDataRepository.save(commentData);
-        Map<String, Object> map = new LinkedHashMap<>();
+
         map.put("ok", true);
         return map;
     }

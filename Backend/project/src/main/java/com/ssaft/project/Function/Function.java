@@ -94,7 +94,6 @@ public class Function {
         Key signingKey = new SecretKeySpec(secretKeyBytes, signatureAlgorithm.getJcaName());
 
         return Jwts.builder()
-
                 .setSubject(subject)    //아이디 값 넣어주기
                 .signWith(signingKey, signatureAlgorithm)  // 키값
                 .setExpiration(new Date(System.currentTimeMillis() + expTime))
@@ -103,13 +102,17 @@ public class Function {
 
     // 토큰 검증하는 메서드 boolean
     public String getSubJect(String token){
-        Claims claims = Jwts.parserBuilder()
-                // 페이로드에 담기는 정보
-                .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-        return claims.getSubject();
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    // 페이로드에 담기는 정보
+                    .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+            return claims.getSubject();
+        } catch (JwtException e){
+            return "토큰만료";
+        }
     }
 
     public Map refreshTokenCheck(String token){

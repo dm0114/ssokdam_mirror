@@ -1,10 +1,9 @@
-/*
 package com.ssaft.project;
 
 import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.ssaft.project.Function.Function;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.Service.IotUserService;
-import com.ssaft.project.Service.SecurityService;
 import com.ssaft.project.domain.IotUser;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,27 +30,26 @@ public class IotUserRepositoryTest {
     private  IotUserService iotUserService;
 
     @Autowired
-    SecurityService securityService;
+    Function function;
 
-*/
-/*    @AfterEach
-    public void afterEach(){
-        IotUser iotuser = new IotUser();
-        iotuser.setUserId("swyou");
-        iotUserRepository.delete(iotuser);
-    }*//*
+//    @AfterEach
+//    public void afterEach(){
+//        IotUser iotuser = new IotUser();
+//        iotuser.setUserId("swyou");
+//        iotUserRepository.delete(iotuser);
+//    }
 
 
 
     @Test
     public void 회원가입() throws Exception {
         IotUser iotuser = new IotUser();
-        iotuser.setUserId("swyou");
-        iotuser.setUserPwd(securityService.jasyptEncoding("1234"));
-        iotuser.setUserName("유승우");
-        iotuser.setUserPhone("010-5638-9909");
+        iotuser.setUserId("test4");
+        iotuser.setUserPwd(function.jasyptEncoding("test4"));
+        iotuser.setUserName("김도원");
+        iotuser.setUserPhone("01044444444");
         iotuser.setUserBirthDay("1997-11-04");
-        iotuser.setUserEmail("swyou1123@naver.com");
+        iotuser.setUserEmail("swyou4444@naver.com");
         iotUserRepository.save(iotuser);
     }
 
@@ -57,15 +57,15 @@ public class IotUserRepositoryTest {
     public void 아이디로_회원삭제() throws IamportResponseException, IOException {
         IotUser iotuser = new IotUser();
         iotuser.setUserId("swyou");
-        iotuser.setUserPwd("1234");
+        iotuser.setUserPwd(function.jasyptEncoding("test4"));
         iotuser.setUserName("유승우");
         iotuser.setUserPhone("010-5638-9909");
         iotuser.setUserBirthDay("1997-11-04");
         iotuser.setUserEmail("swyou1123@naver.com");
-        iotUserService.singup(iotuser);
+        iotUserRepository.save(iotuser);
 
         IotUser iotUser = new IotUser();
-        iotUser.setUserId("테스트아이디2");
+        iotUser.setUserId("swyou");
         iotUserRepository.delete(iotUser);
     }
 
@@ -73,33 +73,34 @@ public class IotUserRepositoryTest {
     public void 아이디로_중복검사() throws IamportResponseException, IOException {
         IotUser iotuser = new IotUser();
         iotuser.setUserId("swyou");
-        iotuser.setUserPwd("1234");
+        iotuser.setUserPwd(function.jasyptEncoding("test4"));
         iotuser.setUserName("유승우");
         iotuser.setUserPhone("010-5638-9909");
         iotuser.setUserBirthDay("1997-11-04");
         iotuser.setUserEmail("swyou1123@naver.com");
 
 
-        iotUserService.singup(iotuser);
+        iotUserRepository.save(iotuser);
         try{
-            iotUserService.singup(iotuser);
-            fail();
+            iotUserRepository.save(iotuser);
         }catch (IllegalStateException e){
             assertThat(e.getMessage()).isEqualTo("이미 존재하는 회원입니다.");
         }
-
+        IotUser iotUser = new IotUser();
+        iotUser.setUserId("swyou");
+        iotUserRepository.delete(iotUser);
     }
 
     @Test
     public void 로그인_성공and실패_테스트() throws IamportResponseException, IOException {
         IotUser iotuser = new IotUser();
         iotuser.setUserId("swyou");
-        iotuser.setUserPwd("1234");
+        iotuser.setUserPwd(function.jasyptEncoding("test4"));
         iotuser.setUserName("유승우");
         iotuser.setUserPhone("010-5638-9909");
         iotuser.setUserBirthDay("1997-11-04");
         iotuser.setUserEmail("swyou1123@naver.com");
-        iotUserService.singup(iotuser);
+        iotUserRepository.save(iotuser);
 
         iotUserService.login("swyou", "1234");
         try{
@@ -108,18 +109,25 @@ public class IotUserRepositoryTest {
         }catch (NoSuchElementException e){
             assertThat(e.getMessage()).isEqualTo("No value present");
         }
-
+        IotUser iotUser = new IotUser();
+        iotUser.setUserId("swyou");
+        iotUserRepository.delete(iotUser);
     }
-    */
-/*@Test
-    public void 이메일로_회원찾기(){
-        IotUser iotuser = new IotUser();
-        iotuser.setUser_email("swoyou1123@naver.com");
-        List<IotUser> result = iotUserRepository.findByuser_email("swoyou1123@naver.com");
-        if(result.size() == 0){
+
+    @Test
+    public void 회원아이디_비밀번호찾기(){
+        IotUser iotUser = new IotUser();
+        iotUser.setUserName("유승우");
+        iotUser.setUserPhone("01056389909");
+        Map<String, Object> map = new LinkedHashMap<>();
+        map = iotUserService.findId(iotUser);
+        if(map.containsKey("message")){
             fail();
         }
-    }*//*
-
+        iotUser.setUserId((String) map.get("userId"));
+        map = iotUserService.findPwd(iotUser);
+        if(map.containsKey("error")){
+            fail();
+        }
+    }
 }
-*/
