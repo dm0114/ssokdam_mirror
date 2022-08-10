@@ -218,12 +218,10 @@ export async function fetchUsers(){
 // } // todo => 삭제
 
 export async function DeleteUser(userId){
-    const URL = `${SERVER_URL}/users` // id리스트로
+    const URL = `${SERVER_URL}/users/${userId}` // id리스트로
+    console.log(URL)
     const response = await fetch(URL, {
-        method: "POST",
-        body: JSON.stringify({
-            userId : userId
-        }),
+        method: "DELETE",
     })
     return response
 } // todo => ready
