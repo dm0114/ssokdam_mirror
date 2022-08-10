@@ -53,6 +53,7 @@ import {
 import {
   NavBar
 } from '../Nav/NavBar'
+import { removeCookieToken } from "../../Cookie";
 
 const detailGo = (
   <ArrowForwardIosIcon/>
@@ -101,6 +102,7 @@ function Home(){
 
   const logout = () => {
     localStorage.removeItem('access-token')
+    removeCookieToken()
     setUserInfo2({
       userName : '',
       userEmail : '',

@@ -35,7 +35,7 @@ import {
 
 import fetchLogin from '../../api/login'
 
-
+import {setRefreshToken, getCookieToken} from '../../Cookie'
 
 function Login() {
   
@@ -89,7 +89,8 @@ function Login() {
           if ('message' in res) {
             throw new Error(alert('비밀번호가 틀렸습니다!'))  //비동기 진행 막기
           } else {
-            localStorage.setItem('access-token', res.Access_token);
+            localStorage.setItem('access-token', res.Access_token)
+            setRefreshToken(res.Refresh_token)
             setUserInfo2({
               userName : res.userName,
               userEmail : res.userEmail,
@@ -97,6 +98,7 @@ function Login() {
               userCnt : res.userCnt,
               userImage: res.userImg,
             })
+            getCookieToken()
           }
         }).then(() => {
           setIsLogin(true)
