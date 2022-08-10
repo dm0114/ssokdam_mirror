@@ -67,10 +67,10 @@ public class IotUserController {
         return iotUserService.changePw(user);
     }
 
-    @PostMapping("/users")
+    @DeleteMapping("/users/{id}")                             // 회원 삭제
     @ResponseBody
-    public Map userDelete(@RequestBody IotUser iotUser){
-        return iotUserService.userDelete(iotUser.getUserId());
+    public Map userDelete(@PathVariable("id") String id){
+        return iotUserService.userDelete(id);
     }
 
     @PostMapping("/signUp")                          //json  방식으로 로그인
@@ -95,7 +95,7 @@ public class IotUserController {
         }
     }
 
-    @PostMapping("/userPoint")
+    @PostMapping("/userPoint")                  //포인트 적립
     @ResponseBody
     public Map pointpush(@RequestHeader String token, @RequestBody IotUser iotUser){
         return  iotUserService.pointPush(token, iotUser);
