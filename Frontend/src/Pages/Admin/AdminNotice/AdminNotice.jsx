@@ -193,7 +193,7 @@ export const AdminNotice = () => {
         <>
             { status === "GENERAL" ? (
                 <>
-                    <h1 style={{ marginLeft : '30px' }}>공지 사항</h1>
+                    <h2 style={{ marginLeft : '30px' }}>공지 사항</h2>
                     <Box sx={{ display : "flex", flexDirection : 'column', width : '100%' }}>
                         <TableContainer sx={{ width : '100%', margin : '20px' }} component={Paper}>
                             <Table sx={{ minWidth: 700}} aria-label="customized table">

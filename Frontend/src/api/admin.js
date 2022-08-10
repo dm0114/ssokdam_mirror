@@ -108,6 +108,7 @@ export async function fetchBrokenDetail(id){
 
 export async function DeleteComplain(id){
     const URL = `${SERVER_URL}/post/${id}`
+    console.log(URL)
     let response = await fetch(URL, {
         method : 'DELETE',
     })

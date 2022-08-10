@@ -9,6 +9,17 @@ export const isLoginAtom = atom({
   effects_UNSTABLE: [persistAtom],
 })
 
+export const IsComplain = atom({
+  key: "isComplain",
+  default: false,
+  effects_UNSTABLE: [persistAtom],
+})
+
+export const ComplainDevice =  atom({
+  key: "ComplainDevice",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+})
 
 export const userInfo = atom({
   key : 'userInfo',
@@ -19,6 +30,12 @@ export const userInfo = atom({
     userCnt : '',
     userImage: '',
   },
+  effects_UNSTABLE: [persistAtom],
+})
+
+export const ComplaintStatus = atom({
+  key : 'complainStatus',
+  default : "",
   effects_UNSTABLE: [persistAtom],
 })
 
