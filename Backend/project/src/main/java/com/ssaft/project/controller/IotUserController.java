@@ -73,7 +73,13 @@ public class IotUserController {
         return iotUserService.userDelete(id);
     }
 
-    @PostMapping("/signUp")                          //json  방식으로 로그인
+    @PostMapping("/signup/check")                          //json  방식으로 로그인
+    @ResponseBody
+    public Map singUpCheck(@RequestBody IotUser user) {
+        return iotUserService.singupcheck(user);
+    }
+
+    @PostMapping("/signup")                          //json  방식으로 로그인
     @ResponseBody
     public Map singUp(@RequestBody IotUser user) {
         return iotUserService.singup(user);
