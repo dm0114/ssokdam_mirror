@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.fail;
@@ -64,6 +65,26 @@ public class PostDataRepositoryTest {
 
     @Test
     public void 각각속성게시판호출(){
-
+        List<PostData> postData = postService.findAll("공지사항");
+        for(PostData pD : postData){
+            if(pD.getPstProp().equals("공지사항")){
+            }else{
+                fail();
+            }
+        }
+        postData = postService.findAll("불만사항");
+        for(PostData pD : postData){
+            if(pD.getPstProp().equals("불만사항")){
+            }else{
+                fail();
+            }
+        }
+        postData = postService.findAll("고장신고");
+        for(PostData pD : postData){
+            if(pD.getPstProp().equals("고장신고")){
+            }else{
+                fail();
+            }
+        }
     }
 }

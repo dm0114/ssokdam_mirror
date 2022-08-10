@@ -12,4 +12,5 @@ public interface PaybackDataRepository extends JpaRepository<PaybackData, Intege
 
     public List<PaybackData> findByPbCheck(String YorN);
 
+
 }

@@ -87,4 +87,8 @@ public class PaybackService {
         map.put("ok", true);
         return map;
     }
+
+    public List<PaybackData> paybackN(){
+        return paybackDataRepository.findByPbCheck("N");
+    }
 }
