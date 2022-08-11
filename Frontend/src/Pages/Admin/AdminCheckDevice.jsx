@@ -85,8 +85,14 @@ export const AdminCheckDevice = () => {
   const [positions, setPositions] = useState([]);
   const [select, setSelection] = useState([])
   const [pathPosition, setPathPosition] = useState([])
-
   const rows = positions
+  console.log(pathPosition)
+  useEffect(() => {
+    if(pathPosition.length > 5){
+      pathPosition.pop()
+    }
+  }, [pathPosition]);
+
 
   useEffect(() => {
     const fetchDevice = async () => {
@@ -146,6 +152,7 @@ export const AdminCheckDevice = () => {
   }
 
 
+
   const EventMarkerContainer = ({ position, content }) => {
     const map = useMap();
     const [isVisible, setIsVisible] = useState(false);
@@ -156,10 +163,13 @@ export const AdminCheckDevice = () => {
         // @ts-ignore
         onClick={(marker) => {
           map.panTo(marker.getPosition());
+          console.log(position)
           setRoadViewPosition({
             lat: `${position.lat}`,
             lng: `${position.lng}`,
           });
+          console.log({ id : `${position.id}`, lat : `${position.lat}`, lng :`${position.lng}` })
+          setPathPosition(prevPathPosition => [...prevPathPosition, { id : `${position.id}`, lat : `${position.lat}`, lng :`${position.lng}` }])
         }}
         onMouseOver={() => setIsVisible(true)}
         onMouseOut={() => setIsVisible(false)}
@@ -178,6 +188,28 @@ export const AdminCheckDevice = () => {
       </MapMarker>
     );
   };
+
+  const MakePath = () => {
+    let path =''
+    if(pathPosition.length > 1){
+      path = ''
+    }else{
+      path = '-'
+    }
+    if(pathPosition.length === 0){
+     return <a onClick={() => alert("경로를 설정해주세요.")}>길찾기</a>
+    }
+    for(let i=0; i<pathPosition.length-1; i++){
+      if(i !== pathPosition.length-2){
+        path += `${pathPosition[i].lng},${pathPosition[i].lat},${pathPosition[i].id}번 디바이스:`
+      }else{
+        path += `${pathPosition[i].lng},${pathPosition[i].lat},${pathPosition[i].id}번 디바이스`
+      }
+      console.log(path)
+    }
+    return <a href={`https://map.naver.com/v5/directions/${state?.center.lng},${state?.center.lat},내위치/${pathPosition[pathPosition.length-1]?.lng},${pathPosition[pathPosition.length-1].lat},목적지/${path}/car?c=14121208.9388342,4181426.9377556,15,0,0,0,dh`}>길찾기</a>
+  }
+
 
   return (
     <React.Fragment>
@@ -239,7 +271,7 @@ export const AdminCheckDevice = () => {
                     {(
                         <MapMarker position={state.center}>
                             <div style={{ padding: "5px", color: "#000" }}>
-                                "당신의 위치!"
+                                현재 위치입니다.
                             </div>
                         </MapMarker>
                     )}
@@ -248,7 +280,7 @@ export const AdminCheckDevice = () => {
                           <MapMarker
                               // position={position.latlng}
                               position={{"lat" : `${position.embLat}`, "lng" :`${position.embLng}`}}
-                              key={position.embId}
+                              key={position.id}
                               image={{
                                   src: "https://cdn-icons-png.flaticon.com/512/999/999047.png", // 마커이미지의 주소입니다
                                   size: {
@@ -256,23 +288,23 @@ export const AdminCheckDevice = () => {
                                       height: 35
                                   },
                               }}
-                              title={`${position.embId}번 디바이스`}
-                              onClick={() => {setRoadViewPosition({
-                              "lat" : `${position.embLat}`, "lng" :`${position.embLng}`
-                              })}}
+                              title={`${position.id}번 디바이스`}
+                              onClick={() => {
+                                // setRoadViewPosition({"lat" : `${position.embLat}`, "lng" :`${position.embLng}`})
+                              }}
                           />
                           <EventMarkerContainer
                               key={index}
-                              position={{"lat" : `${position.embLat}`, "lng" :`${position.embLng}`}}
-                              content={`${position.embId}번 디바이스`}
+                              position={{"id" : `${position.id}`, "lat" : `${position.embLat}`, "lng" :`${position.embLng}`}}
+                              content={`${position.id}번 디바이스`}
                           />
                         </Box>
                       
                     )))}
                     {!!(state && roadViewPosition) ? (<button>
-                      <a href={`https://map.naver.com/v5/directions/${state?.center.lng},${state?.center.lat},내위치/${roadViewPosition?.lng},${roadViewPosition?.lat},목적지/-/car?c=14121208.9388342,4181426.9377556,15,0,0,0,dh`} target="_blank">
-                        길찾기
-                      </a>
+                      {/*<a href={`https://map.naver.com/v5/directions/${state?.center.lng},${state?.center.lat},내위치/${roadViewPosition?.lng},${roadViewPosition?.lat},목적지/-/car?c=14121208.9388342,4181426.9377556,15,0,0,0,dh`} target="_blank">*/}
+                      {/*  길찾기*/}
+                      {/*</a>*/}<MakePath/>
                     </button>) : (<></>) }
                     
                     {toggle === "map" && (
