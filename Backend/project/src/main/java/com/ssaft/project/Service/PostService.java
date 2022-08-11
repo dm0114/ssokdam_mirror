@@ -32,7 +32,7 @@ public class PostService {
         return postData;
     }
 
-    public List<PostData> myAsk(String token){
+    public List<PostData> myAsk(String token){                      // 내가 쓴 게시글 리턴
         String id = function.getSubJect(token);
         Optional<IotUser> iotUser =  iotUserRepository.findById(id);
         return postDataRepository.findByIotUser(iotUser.get());
@@ -66,7 +66,7 @@ public class PostService {
         }
         return map;
     }
-    public Map postDelete(int pstSeq){
+    public Map postDelete(int pstSeq){                              //게시글 삭제
         Map<String, Object> map = new LinkedHashMap<>();
         try{
             Optional<PostData> postData = postDataRepository.findById(pstSeq);
@@ -76,5 +76,12 @@ public class PostService {
             map.put("ok", false);
         }
         return map;
+    }
+
+    public PostData findLast(String notice){
+        PostData postData = postDataRepository.findTopByPstProp(notice);
+        System.out.println(postData);
+        Map<String, Object> map = new LinkedHashMap<>();
+        return postData;
     }
 }

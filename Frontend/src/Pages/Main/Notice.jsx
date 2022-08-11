@@ -21,6 +21,7 @@ const Notice = () => {
     ['noticeList'],
     async () => await fetchNotice()
   );
+  console.log(data)
 
   return (
     <SubLoginBackgroundView>
@@ -34,8 +35,8 @@ const Notice = () => {
           <MainText flex='3'>공지사항</MainText>
           <BinWrapper flex='1'></BinWrapper>
         </HeaderWrapper>
-      {data.pstTitle}<br/>
-      {data.pstCtnt}
+      {/* {data.pstTitle}<br/>
+      {data.pstCtnt} */}
       </Wrap>
     </SubLoginBackgroundView>
   )

@@ -1,5 +1,5 @@
 import { SERVER_URL } from '../config';
-import ApiPost from "./customApi";
+import Api from "./customApi";
 
 export async function CreateComplaint(userInput) {
   const URL = `${SERVER_URL}/post`
@@ -11,7 +11,11 @@ export async function CreateComplaint(userInput) {
     pstImg: userInput.pstImg,
     pstDumy : userInput.pstDumy
   }
-  const response = await ApiPost.post(URL, data)
+  const response = await Api.post(URL, data, {
+    headers: {
+      "Content-type": "application/json",
+    }
+  })
   
   return response.data
 }
