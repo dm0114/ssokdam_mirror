@@ -76,6 +76,9 @@ public class IotUser {
     @Transient
     private String Refresh_token;
 
+    @Transient
+    private boolean ok;
+
    /* @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private List<PostData> postDataList = new ArrayList<>();

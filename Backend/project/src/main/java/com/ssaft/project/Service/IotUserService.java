@@ -2,13 +2,16 @@ package com.ssaft.project.Service;
 
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.ssaft.project.Function.Function;
+import com.ssaft.project.Function.SMSFunction;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.domain.IotUser;
 import io.jsonwebtoken.JwtException;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.rmi.server.ServerNotActiveException;
 import java.util.*;
 
 @Service
@@ -23,6 +26,9 @@ public class IotUserService {
     @Autowired
     Function function;
 
+    @Autowired
+    SMSFunction smsFunction;
+
 
     public Object login(String id, String password) {    //로그인
         String token = "error";
@@ -36,6 +42,7 @@ public class IotUserService {
                 iotUserRepository.save(iotuser.get());
                 iotuser.get().setAccess_token(token);
                 iotuser.get().setRefresh_token(token2);
+                iotuser.get().setOk(true);
                 return iotuser.get();
             } else {
                 map.put("message", "비밀번호가 틀렸습니다.");
@@ -190,7 +197,7 @@ public class IotUserService {
         return  login(id, password);
     }
 
-    public Object userInfo(String token){
+    public Object userInfo(String token){                 // 토큰의 사용자 정보 리턴
         String id = function.getSubJect(token);
         Map<String, Object> map = new LinkedHashMap<>();
         if(id.equals("토큰만료")){
@@ -199,6 +206,12 @@ public class IotUserService {
         }
         Optional<IotUser> iotUser = iotUserRepository.findById(id);
         return iotUser.get();
+    }
+
+    public String phoneCheck(IotUser user) throws JSONException {
+        String result = function.numberGen(4,2);
+        smsFunction.sendSMS(user.getUserPhone(), result);
+        return result;
     }
 
 

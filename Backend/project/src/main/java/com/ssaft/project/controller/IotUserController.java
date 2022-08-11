@@ -8,6 +8,7 @@ import com.ssaft.project.domain.EmbeddedData;
 import com.ssaft.project.domain.IotUser;
 import com.ssaft.project.domain.PostData;
 import io.jsonwebtoken.JwtException;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,7 +49,6 @@ public class IotUserController {
     public Object jsonlogin(@RequestBody IotUser loginuser) {
         return iotUserService.login(loginuser.getUserId(), loginuser.getUserPwd());
     }
-
     @PostMapping("/login/findId")                          //아이디 찾기
     @ResponseBody
     public Map findId(@RequestBody IotUser user) {
@@ -59,6 +59,12 @@ public class IotUserController {
     @ResponseBody
     public Map findPwd(@RequestBody IotUser user) {
         return iotUserService.findPwd(user);
+    }
+
+    @PostMapping("/login/phone")                          //휴대폰 인증
+    @ResponseBody
+    public String checkPhone(@RequestBody IotUser user) throws JSONException {
+        return iotUserService.phoneCheck(user);
     }
 
     @PutMapping("/login/findPw/changePw")                          //json 방식으로 비밀번호 변경
@@ -96,6 +102,7 @@ public class IotUserController {
     public Object pointpush(@RequestHeader String token){
         return  iotUserService.userInfo(token);
     }
+
 
 
     @GetMapping("/refreshToken")                  // 리프래쉬 토큰 체크
