@@ -12,6 +12,8 @@ import { MapTypeId } from "react-kakao-maps-sdk";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { Roadview, RoadviewMarker } from "react-kakao-maps-sdk";
 import { useMap } from "react-kakao-maps-sdk";
+import { RegisterBroken} from "../../api/admin";
+import {ADMIN_SERVER_URL} from "../../config";
 
 // import {
 //   NaverMap,
@@ -29,14 +31,14 @@ const columns = [
     align: "center",
   },
   {
-    field: "lastUse",
-    headerName: "마지막 이용시간",
+    field: "embCnt",
+    headerName: "기기 사용횟수",
     flex: 1,
     headerAlign: "center",
     align: "center",
   },
   {
-    field: "batteryAmount",
+    field: "embBat",
     headerName: "배터리 양(%)",
     type: "number",
     headerAlign: "center",
@@ -44,7 +46,7 @@ const columns = [
     align: "center",
   },
   {
-    field: "trashAmount",
+    field: "embFullTra",
     headerName: "쓰레기통 양(%)",
     type: "number",
     flex: 1,
@@ -52,81 +54,20 @@ const columns = [
     headerAlign: "center",
   },
   {
-    field: "buttAmount",
+    field: "embFullCig",
     headerName: "꽁초 양(%)",
     type: "number",
     flex: 1,
     align: "center",
     headerAlign: "center",
-    // valueGetter: (params) =>
-    //     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-  },
-];
-
-const rows = [
-  {
-    id: 1,
-    lastUse: "2022-08-02 / 13:36",
-    batteryAmount: 30,
-    trashAmount: 30,
-    buttAmount: 59,
   },
   {
-    id: 2,
-    lastUse: "2022-08-05 / 13:36",
-    batteryAmount: 100,
-    trashAmount: 69,
-    buttAmount: 90,
-  },
-  {
-    id: 3,
-    lastUse: "2022-08-08 / 13:36",
-    batteryAmount: 20,
-    trashAmount: 30,
-    buttAmount: 32,
-  },
-  {
-    id: 4,
-    lastUse: "2022-08-10 / 13:36",
-    batteryAmount: 69,
-    trashAmount: 32,
-    buttAmount: 60,
-  },
-  {
-    id: 5,
-    lastUse: "2022-08-12 / 13:36",
-    batteryAmount: 99,
-    trashAmount: 78,
-    buttAmount: 24,
-  },
-  {
-    id: 6,
-    lastUse: "2022-08-06 / 13:36",
-    batteryAmount: 30,
-    trashAmount: 90,
-    buttAmount: 9,
-  },
-  {
-    id: 7,
-    lastUse: "2022-08-09 / 13:36",
-    batteryAmount: 40,
-    trashAmount: 43,
-    buttAmount: 80,
-  },
-  {
-    id: 8,
-    lastUse: "2022-08-10 / 13:50",
-    batteryAmount: 60,
-    trashAmount: 75,
-    buttAmount: 10,
-  },
-  {
-    id: 9,
-    lastUse: "2022-08-16 / 13:36",
-    batteryAmount: 30,
-    trashAmount: 87,
-    buttAmount: 0,
-  },
+    field: "embSta",
+    headerName: "고장여부",
+    flex : 1,
+    align: "center",
+    headerAlign: "center"
+  }
 ];
 
 export const AdminCheckDevice = () => {
@@ -142,22 +83,24 @@ export const AdminCheckDevice = () => {
   const [toggle, setToggle] = useState("map");
   const [mapTypeId, setMapTypeId] = useState();
   const [positions, setPositions] = useState([]);
-  console.log(state?.center.lng);
-  console.log(state?.center.lat);
-  console.log(roadViewPosition?.lng);
-  console.log(roadViewPosition?.lat);
-  console.log(roadViewPosition.lng);
-  console.log(roadViewPosition.lat);
-  
+  const [select, setSelection] = useState([])
+  const [pathPosition, setPathPosition] = useState([])
+
+  const rows = positions
+
   useEffect(() => {
     const fetchDevice = async () => {
-      const URL = `${SERVER_URL}/embedded/map`;
+      const URL = `${ADMIN_SERVER_URL}/checkDevice`;
       // const URL = "http://localhost:8888/positions"
       let response = await fetch(URL, {
         method: "GET",
       }).then((res) => {
         res.json().then((res) => {
           console.log(res);
+          for(let i=0; i < res.length; i++ ){
+            res[i].id = res[i].embId
+            delete res[i].embId
+          }
           setPositions(res);
         });
       });
@@ -196,6 +139,12 @@ export const AdminCheckDevice = () => {
       }));
     }
   }, []);
+
+  const registerBroken = () => {
+    RegisterBroken(select)
+        .then((res) => window.location.replace("/admin"))
+  }
+
 
   const EventMarkerContainer = ({ position, content }) => {
     const map = useMap();
@@ -414,15 +363,35 @@ export const AdminCheckDevice = () => {
           </ButtonGroup>
         </Box>
       </Container>
-      <div style={{ height: 400, width: "99%" }}>
+      <Box
+          sx={{
+            height: 400,
+            width: '99%',
+            '& .hot': {
+              backgroundColor: '#ff943975',
+              color: 'red',
+            },
+          }}
+      >
         <DataGrid
           rows={rows}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}
           checkboxSelection
+          onSelectionModelChange={(newSelection) => {
+            setSelection(newSelection)
+          }}
+          getRowClassName={(params) =>{
+          if(params.row.embSta === "Y"){
+            return 'hot'
+          }
+        }}
         />
-      </div>
+      </Box>
+      <Box sx={{ display : 'flex', justifyContent : 'flex-end', px : 3 }}>
+        <Button variant="contained" sx={{ m : 0.5 }} color="error" onClick={() => registerBroken()}>고장상태 변경</Button>
+      </Box>
     </React.Fragment>
   );
 };

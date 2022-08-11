@@ -8,6 +8,7 @@ import com.ssaft.project.domain.EmbeddedData;
 import com.ssaft.project.domain.IotUser;
 import com.ssaft.project.domain.PostData;
 import io.jsonwebtoken.JwtException;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,10 +46,9 @@ public class IotUserController {
 
     @PostMapping("/login")                                //로그인 기능
     @ResponseBody
-    public Map jsonlogin(@RequestBody IotUser loginuser) {
+    public Object jsonlogin(@RequestBody IotUser loginuser) {
         return iotUserService.login(loginuser.getUserId(), loginuser.getUserPwd());
     }
-
     @PostMapping("/login/findId")                          //아이디 찾기
     @ResponseBody
     public Map findId(@RequestBody IotUser user) {
@@ -59,6 +59,12 @@ public class IotUserController {
     @ResponseBody
     public Map findPwd(@RequestBody IotUser user) {
         return iotUserService.findPwd(user);
+    }
+
+    @PostMapping("/login/phone")                          //휴대폰 인증
+    @ResponseBody
+    public String checkPhone(@RequestBody IotUser user) throws JSONException {
+        return iotUserService.phoneCheck(user);
     }
 
     @PutMapping("/login/findPw/changePw")                          //json 방식으로 비밀번호 변경
@@ -73,13 +79,13 @@ public class IotUserController {
         return iotUserService.userDelete(id);
     }
 
-    @PostMapping("/signup/check")                          //json  방식으로 로그인
+    @PostMapping("/signup/check")                          // 로그인 성인체크
     @ResponseBody
     public Map singUpCheck(@RequestBody IotUser user) {
         return iotUserService.singupcheck(user);
     }
 
-    @PostMapping("/signup")                          //json  방식으로 로그인
+    @PostMapping("/signup")                          // 회원가입 버튼
     @ResponseBody
     public Map singUp(@RequestBody IotUser user) {
         return iotUserService.singup(user);
@@ -91,6 +97,14 @@ public class IotUserController {
         return  iotUserService.pointPush(token, iotUser);
     }
 
+    @GetMapping("/userinfo")                  //마이페이지 및 포인트
+    @ResponseBody
+    public Object pointpush(@RequestHeader String token){
+        return  iotUserService.userInfo(token);
+    }
+
+
+
     @GetMapping("/refreshToken")                  // 리프래쉬 토큰 체크
     @ResponseBody
     public Map RefreshToken(@RequestHeader String token){
@@ -100,7 +114,7 @@ public class IotUserController {
     //*************************************** 관리자 **************************************//
     @PostMapping("/admin/login")       //관리자 로그인
     @ResponseBody()
-    public Map adminLogin(@RequestBody IotUser iotUser){
+    public Object adminLogin(@RequestBody IotUser iotUser){
         return iotUserService.amdinLogin(iotUser.getUserId(), iotUser.getUserPwd());
     }
 

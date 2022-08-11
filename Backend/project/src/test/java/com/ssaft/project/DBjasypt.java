@@ -17,12 +17,18 @@ public class DBjasypt {
         String username = "swyou";
         String password = "qudrlxksdir1!";
 
-        String username2 = function.jasyptEncoding(username);
+        String accessKey = "j4byR0Dz2ZWgoRgh07VR";                     	// 네이버 클라우드 플랫폼 회원에게 발급되는 개인 인증키			// Access Key : https://www.ncloud.com/mypage/manage/info > 인증키 관리 > Access Key ID
+        String secretKey = "WY1AhLT9iWipVeLs9ru9Y1c66t9RELJJjZKTYzE1";  // 2차 인증을 위해 서비스마다 할당되는 service secret key	// Service Key : https://www.ncloud.com/mypage/manage/info > 인증키 관리 > Access Key ID
+        String serviceId = "ncp:sms:kr:260201597605:ssokdam";
 
+        String username2 = function.jasyptEncoding(username);
         System.out.println(function.jasyptEncoding(url));
         System.out.println(username2);
         System.out.println(function.jasyptDecoding(username2));
         System.out.println(function.jasyptEncoding(password));
+        System.out.println(function.jasyptEncoding(accessKey));
+        System.out.println(function.jasyptEncoding(secretKey));
+        System.out.println(function.jasyptEncoding(serviceId));
     }
 
     public String jasyptEncoding(String value) {

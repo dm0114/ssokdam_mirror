@@ -17,10 +17,10 @@ import belu from "../../../picture/belu.png"
 import {userInfo} from "../../../atoms";
 import {CommentInputBox} from "../../../styles/AdminStyle";
 import {useState} from "react";
-import {commentCreate, commentUpdate, commentDelete, DeleteComplain, fetchComplainsDetail} from "../../../api/admin";
+import {commentCreate, commentUpdate, commentDelete, DeleteComplain, fetchComplainsDetail, RegisterBroken} from "../../../api/admin";
 import {Status} from "../../../atoms";
 import {useEffect} from "react";
-import {fetchBrokenDetail} from "../../../api/admin";
+import {fetchBrokenDetail, fetchDeviceDetailStatus} from "../../../api/admin";
 
 
 
@@ -33,6 +33,7 @@ export const AdminBrokenDeviceManagementDetail = () => {
     const [status, setStatus] = useRecoilState(Status)
     const [myUserInfo, setMyUserInfo] = useRecoilState(userInfo)
     const [editId, setEditId] = useState(null);
+    const [deviceStatus, setDeviceStatus] = useState("")
 
     useEffect(() => {
         fetchBrokenDetail(postDetail.id)
@@ -45,6 +46,16 @@ export const AdminBrokenDeviceManagementDetail = () => {
                 setComments(res)
             })})
     }, []);
+
+    useEffect(() => {
+        fetchDeviceDetailStatus(postDetail.pstDumy)
+            .then((res) => {res.json().then((res)=>{
+                console.log(res)
+                setDeviceStatus(res[0].embSta)
+            })})
+    }, []);
+
+
 
 
     const onChangeComment = (e) => {
@@ -73,11 +84,22 @@ export const AdminBrokenDeviceManagementDetail = () => {
             .then((res) => window.location.replace("/admin"))
     }
 
+    const registerBroken = (id) => {
+        RegisterBroken(id)
+            .then((res) => window.location.replace("/admin"))
+    }
+
 
     return (
         <React.Fragment>
             <Container maxWidth="xl">
-                <h2>불만사항 상세</h2>
+                <h2>고장신고 상세</h2>
+                <h4><span style={{ color : "red" }}>{ postDetail.pstDumy }</span>번 디바이스 고장신고</h4>
+                { deviceStatus === "N" ? (
+                    <Button variant="contained" color="error" onClick={() => registerBroken(postDetail.pstDumy)}>고장등록</Button>
+                ) : (
+                    <Button variant="contained" color="error" onClick={() => registerBroken(postDetail.pstDumy)}>고장해제</Button>
+                ) }
                 <FormControl fullWidth>
                     <h3>제목</h3>
                     <Typography sx={{ marginLeft : '10px', marginBottom : '10px' }} component="h2" variant="h3" >

@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "tb_embedded")
 @Getter @Setter
 @Entity
-@ToString(exclude = "qrData")
+@ToString
 @NoArgsConstructor
 public class EmbeddedData {
     @Id
@@ -40,7 +40,7 @@ public class EmbeddedData {
     private String embCnt;
 
     @Column(name = "emb_sta")
-    @ColumnDefault("Y")
+    @ColumnDefault("N")
     private String embSta;
 
     @Column(name = "emb_dumy")

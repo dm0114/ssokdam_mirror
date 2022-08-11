@@ -78,7 +78,7 @@ public class EmbeddedService {
         return map;
     }
 
-    public void  qrCheck(int embId){
+    public Map qrCheck(int embId){
         Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(embId);
         Map<String, Object> map = new LinkedHashMap<>();
         if(embeddedData.get().getEmbQr().equals("Y")){
@@ -86,11 +86,14 @@ public class EmbeddedService {
             map.put("embQr" , embeddedData.get().getEmbQr());
             /*embeddedData.get().setEmbQr("N");
             embeddedDataRepository.save(embeddedData.get()*/
+        }else {
+            map.put("error", false);
         }
-        map.put("error", false);
+        return map;
+
     }
 
-    public Map<String, Object> changeState(String id){
+    public Map<String, Object> changeState(String id){             // Y 는 N 으로 N은 Y로
         String[] embId = id.split(",");
         for(String ED : embId){
             Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(Integer.valueOf(ED));
@@ -104,5 +107,14 @@ public class EmbeddedService {
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("ok", true);
         return map;
+    }
+
+    public List<EmbeddedData> embeddedStatus(String id){
+        String[] embId = id.split(",");
+        List<EmbeddedData> LED = new ArrayList<>();
+        for(String ED : embId){
+            LED.add(embeddedDataRepository.findById(Integer.valueOf(ED)).get());
+        }
+        return LED;
     }
 }
