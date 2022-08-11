@@ -45,7 +45,7 @@ public class IotUserController {
 
     @PostMapping("/login")                                //로그인 기능
     @ResponseBody
-    public Map jsonlogin(@RequestBody IotUser loginuser) {
+    public Object jsonlogin(@RequestBody IotUser loginuser) {
         return iotUserService.login(loginuser.getUserId(), loginuser.getUserPwd());
     }
 
@@ -91,7 +91,7 @@ public class IotUserController {
         return  iotUserService.pointPush(token, iotUser);
     }
 
-    @PostMapping("/userinfo")                  //마이페이지 및 포인트
+    @GetMapping("/userinfo")                  //마이페이지 및 포인트
     @ResponseBody
     public Object pointpush(@RequestHeader String token){
         return  iotUserService.userInfo(token);
@@ -107,7 +107,7 @@ public class IotUserController {
     //*************************************** 관리자 **************************************//
     @PostMapping("/admin/login")       //관리자 로그인
     @ResponseBody()
-    public Map adminLogin(@RequestBody IotUser iotUser){
+    public Object adminLogin(@RequestBody IotUser iotUser){
         return iotUserService.amdinLogin(iotUser.getUserId(), iotUser.getUserPwd());
     }
 

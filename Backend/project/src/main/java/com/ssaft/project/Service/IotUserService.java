@@ -24,24 +24,19 @@ public class IotUserService {
     Function function;
 
 
-    public Map login(String id, String password) {    //로그인
+    public Object login(String id, String password) {    //로그인
         String token = "error";
         Optional<IotUser> iotuser = iotUserRepository.findById(id);
         Map<String, Object> map = new LinkedHashMap<>();
         if (iotuser != null) {
             if (function.jasyptDecoding(iotuser.get().getUserPwd()).equals(password)) {
                 token = function.creatToken(id, (60 * 1000 * 60));
-                map.put("Access_token", token);
                 String token2 = function.creatToken(id, (10800 * 1000 * 60));
                 iotuser.get().setUserRt(token2);
                 iotUserRepository.save(iotuser.get());
-                map.put("Refresh_token", token2);
-                map.put("userName", iotuser.get().getUserName());
-                map.put("userEmail", iotuser.get().getUserEmail());
-                map.put("userPoint", iotuser.get().getUserPoint());
-                map.put("userCnt", iotuser.get().getUserCnt());
-                map.put("userImg", iotuser.get().getUserImg());
-                map.put("userTime", iotuser.get().getUserTime());
+                iotuser.get().setAccess_token(token);
+                iotuser.get().setRefresh_token(token2);
+                return iotuser.get();
             } else {
                 map.put("message", "비밀번호가 틀렸습니다.");
             }
@@ -185,16 +180,14 @@ public class IotUserService {
         return map;
     }
 
-    public Map amdinLogin(String id, String password){ // 관리자 로그인
+    public Object amdinLogin(String id, String password){ // 관리자 로그인
         Optional<IotUser> iotUser = iotUserRepository.findById(id);
         Map<String, Object> map = new LinkedHashMap<>();
         if(iotUser.get().getUserAdmin().equals("N")){
             map.put("ok", false);
             return map;
         }
-        map =  login(id, password);
-        map.put("ok", true);
-        return map;
+        return  login(id, password);
     }
 
     public Object userInfo(String token){
@@ -205,7 +198,7 @@ public class IotUserService {
             return map;
         }
         Optional<IotUser> iotUser = iotUserRepository.findById(id);
-        return iotUser;
+        return iotUser.get();
     }
 
 
