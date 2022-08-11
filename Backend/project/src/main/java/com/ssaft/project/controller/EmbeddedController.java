@@ -96,4 +96,10 @@ public class EmbeddedController {
     public Map<String, Object> changeState(@PathVariable("id") String id){
         return embeddedService.changeState(id);
     }
+
+    @GetMapping("/devices/{id}")
+    @ResponseBody
+    public List<EmbeddedData> deviceStatus(@PathVariable("id") String id){
+        return embeddedService.embeddedStatus(id);
+    }
 }

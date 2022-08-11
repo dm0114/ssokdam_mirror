@@ -90,7 +90,7 @@ public class EmbeddedService {
         map.put("error", false);
     }
 
-    public Map<String, Object> changeState(String id){
+    public Map<String, Object> changeState(String id){             // Y 는 N 으로 N은 Y로
         String[] embId = id.split(",");
         for(String ED : embId){
             Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(Integer.valueOf(ED));
@@ -104,5 +104,14 @@ public class EmbeddedService {
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("ok", true);
         return map;
+    }
+
+    public List<EmbeddedData> embeddedStatus(String id){
+        String[] embId = id.split(",");
+        List<EmbeddedData> LED = new ArrayList<>();
+        for(String ED : embId){
+            LED.add(embeddedDataRepository.findById(Integer.valueOf(ED)).get());
+        }
+        return LED;
     }
 }
