@@ -1,4 +1,3 @@
-/*
 package com.ssaft.project.Function;
 
 import org.springframework.stereotype.Service;
@@ -20,17 +19,17 @@ import javax.crypto.spec.SecretKeySpec;
 
 @Service
 public class SMSFunction {
-    public class sens_sms_v2 {
+    public static class sens_sms_v2 {
 
-        public static void main(String[] args) {
-            String hostNameUrl = "https://sens.apigw.ntruss.com";     		// 호스트 URL
-            String requestUrl= "/sms/v2/services/";                   		// 요청 URL
-            String requestUrlType = "/messages";                      		// 요청 URL
-            String accessKey = "";                     						// 네이버 클라우드 플랫폼 회원에게 발급되는 개인 인증키
-            String secretKey = "";  										// 2차 인증을 위해 서비스마다 할당되는 service secret
-            String serviceId = "";        									// 프로젝트에 할당된 SMS 서비스 ID
-            String method = "POST";											// 요청 method
-            String timestamp = Long.toString(System.currentTimeMillis()); 	// current timestamp (epoch)
+        public static void main(String[] args) throws JSONException {
+            String hostNameUrl = "https://sens.apigw.ntruss.com";            // 호스트 URL
+            String requestUrl = "/sms/v2/services/";                        // 요청 URL
+            String requestUrlType = "/messages";                            // 요청 URL
+            String accessKey = "";                                            // 네이버 클라우드 플랫폼 회원에게 발급되는 개인 인증키
+            String secretKey = "";                                        // 2차 인증을 위해 서비스마다 할당되는 service secret
+            String serviceId = "";                                            // 프로젝트에 할당된 SMS 서비스 ID
+            String method = "POST";                                            // 요청 method
+            String timestamp = Long.toString(System.currentTimeMillis());    // current timestamp (epoch)
             requestUrl += serviceId + requestUrlType;
             String apiUrl = hostNameUrl + requestUrl;
 
@@ -38,23 +37,23 @@ public class SMSFunction {
 
             JSONObject bodyJson = new JSONObject();
             JSONObject toJson = new JSONObject();
-            JSONArray  toArr = new JSONArray();
+            JSONArray toArr = new JSONArray();
 
-            toJson.put("subject","");				// 메시지 제목 * LMS Type에서만 사용할 수 있습니다.
-            toJson.put("content","");				// 메시지 내용 * Type별로 최대 byte 제한이 다릅니다.* SMS: 80byte / LMS: 2000byte
-            toJson.put("to","");					// 수신번호 목록  * 최대 50개까지 한번에 전송할 수 있습니다.
-            toArr.add(toJson);
+            toJson.put("subject", "");                // 메시지 제목 * LMS Type에서만 사용할 수 있습니다.
+            toJson.put("content", "");                // 메시지 내용 * Type별로 최대 byte 제한이 다릅니다.* SMS: 80byte / LMS: 2000byte
+            toJson.put("to", "");                    // 수신번호 목록  * 최대 50개까지 한번에 전송할 수 있습니다.
+            toArr.put(toJson);
 
-            bodyJson.put("type","");				// 메시지 Type (sms | lms)
-            bodyJson.put("contentType","");			// 메시지 내용 Type (AD | COMM) * AD: 광고용, COMM: 일반용 (default: COMM) * 광고용 메시지 발송 시 불법 스팸 방지를 위한 정보통신망법 (제 50조)가 적용됩니다.
-            bodyJson.put("countryCode","82");		// 국가 전화번호
-            bodyJson.put("from","");				// 발신번호 * 사전에 인증/등록된 번호만 사용할 수 있습니다.
-            bodyJson.put("subject","");				// 메시지 제목 * LMS Type에서만 사용할 수 있습니다.
-            bodyJson.put("content","");				// 메시지 내용 * Type별로 최대 byte 제한이 다릅니다.* SMS: 80byte / LMS: 2000byte
+            bodyJson.put("type", "");                // 메시지 Type (sms | lms)
+            bodyJson.put("contentType", "");            // 메시지 내용 Type (AD | COMM) * AD: 광고용, COMM: 일반용 (default: COMM) * 광고용 메시지 발송 시 불법 스팸 방지를 위한 정보통신망법 (제 50조)가 적용됩니다.
+            bodyJson.put("countryCode", "82");        // 국가 전화번호
+            bodyJson.put("from", "");                // 발신번호 * 사전에 인증/등록된 번호만 사용할 수 있습니다.
+            bodyJson.put("subject", "");                // 메시지 제목 * LMS Type에서만 사용할 수 있습니다.
+            bodyJson.put("content", "");                // 메시지 내용 * Type별로 최대 byte 제한이 다릅니다.* SMS: 80byte / LMS: 2000byte
             bodyJson.put("messages", toArr);
 
 
-            String body = bodyJson.toJSONString();
+            String body = bodyJson.toString();
 
             System.out.println(body);
 
@@ -62,7 +61,7 @@ public class SMSFunction {
 
                 URL url = new URL(apiUrl);
 
-                HttpURLConnection con = (HttpURLConnection)url.openConnection();
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setUseCaches(false);
                 con.setDoOutput(true);
                 con.setDoInput(true);
@@ -80,8 +79,8 @@ public class SMSFunction {
 
                 int responseCode = con.getResponseCode();
                 BufferedReader br;
-                System.out.println("responseCode" +" " + responseCode);
-                if(responseCode==202) { // 정상 호출
+                System.out.println("responseCode" + " " + responseCode);
+                if (responseCode == 202) { // 정상 호출
                     br = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 } else {  // 에러 발생
                     br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
@@ -135,34 +134,4 @@ public class SMSFunction {
         }
 
     }
-    public String makeSignature(Long time) throws UnsupportedEncodingException, InvalidKeyException, NoSuchAlgorithmException {
-        String space = " ";					// one space
-        String newLine = "\n";					// new line
-        String method = "POST";					// method
-        String url = "/sms/v2/services/"+applicationNaverSENS.getServiceid()+"/messages";	// url (include query string)
-        String timestamp = time.toString();			// current timestamp (epoch)
-        String accessKey = applicationNaverSENS.getAccesskey();			// access key id (from portal or Sub Account)
-        String secretKey = applicationNaverSENS.getSecretkey();
-
-        String message = new StringBuilder()
-                .append(method)
-                .append(space)
-                .append(url)
-                .append(newLine)
-                .append(timestamp)
-                .append(newLine)
-                .append(accessKey)
-                .toString();
-
-        SecretKeySpec signingKey = new SecretKeySpec(secretKey.getBytes("UTF-8"), "HmacSHA256");
-        Mac mac = Mac.getInstance("HmacSHA256");
-        mac.init(signingKey);
-
-        byte[] rawHmac = mac.doFinal(message.getBytes("UTF-8"));
-        String encodeBase64String = Base64.encodeBase64String(rawHmac);
-
-        return encodeBase64String;
-    }
-    출처: https://koogood.tistory.com/27 [개발자 되버리기:티스토리]
 }
-*/
