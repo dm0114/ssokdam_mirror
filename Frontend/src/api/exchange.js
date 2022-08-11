@@ -1,5 +1,5 @@
 import { SERVER_URL } from "../config";
-import ApiPost from "./customApi";
+import Api from "./customApi";
 
 export default async function FetchExchange(inputMoney) {
   const URL = `${SERVER_URL}/exchange`
@@ -8,7 +8,11 @@ export default async function FetchExchange(inputMoney) {
     pbMoney: inputMoney,
   }
 
-  const response = await ApiPost.post(URL, data)
+  const response = await Api.post(URL, data, {
+    headers: {
+      "Content-type": "application/json",
+    }
+  })
 
   return response.data
 }
