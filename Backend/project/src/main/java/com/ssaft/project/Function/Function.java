@@ -143,7 +143,7 @@ public class Function {
         return pbeEnc.decrypt(value);
     }
 
-    public static String numberGen(int len, int dupCd ) {
+    public String numberGen(int len, int dupCd ) {
 
         Random rand = new Random();
         String numStr = ""; //난수가 저장될 변수

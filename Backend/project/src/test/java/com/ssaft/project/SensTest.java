@@ -1,5 +1,6 @@
 package com.ssaft.project;
 
+import com.ssaft.project.Function.Function;
 import com.ssaft.project.Function.SMSFunction;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
@@ -13,9 +14,11 @@ import org.springframework.test.annotation.Commit;
 public class SensTest {
     @Autowired
     SMSFunction smsFunction;
+    @Autowired
+    Function function;
 
     @Test
     public void 핸드폰sms테스트() throws JSONException {
-        smsFunction.sendSMS("01056389909");
+        smsFunction.sendSMS("01056389909", function.numberGen(4,2));
     }
 }
