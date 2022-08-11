@@ -49,7 +49,10 @@ export const AdminBrokenDeviceManagementDetail = () => {
 
     useEffect(() => {
         fetchDeviceDetailStatus(postDetail.pstDumy)
-            .then((res) => console.log(res))
+            .then((res) => {res.json().then((res)=>{
+                console.log(res)
+                setDeviceStatus(res[0].embSta)
+            })})
     }, []);
 
 
@@ -92,7 +95,11 @@ export const AdminBrokenDeviceManagementDetail = () => {
             <Container maxWidth="xl">
                 <h2>고장신고 상세</h2>
                 <h4><span style={{ color : "red" }}>{ postDetail.pstDumy }</span>번 디바이스 고장신고</h4>
-                <Button variant="contained" color="error" onClick={() => registerBroken(postDetail.pstDumy)}>고장등록</Button>
+                { deviceStatus === "N" ? (
+                    <Button variant="contained" color="error" onClick={() => registerBroken(postDetail.pstDumy)}>고장등록</Button>
+                ) : (
+                    <Button variant="contained" color="error" onClick={() => registerBroken(postDetail.pstDumy)}>고장해제</Button>
+                ) }
                 <FormControl fullWidth>
                     <h3>제목</h3>
                     <Typography sx={{ marginLeft : '10px', marginBottom : '10px' }} component="h2" variant="h3" >
