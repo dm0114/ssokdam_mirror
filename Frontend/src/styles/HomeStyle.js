@@ -4,6 +4,8 @@ export const MainWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  box-shadow: ${props => props.bs};
 `
 export const MainTextContainerWrapper = styled.div`
   display: flex;
@@ -14,10 +16,17 @@ export const MainContainer = styled.div`
   flex: ${props => props.flexNum};
   justify-content: ${props => props.jc};
 `
+
+export const NameText = styled.p`
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+`
+
 export const MainText = styled.p`
   margin: 0;
-  font-size: ${props => props.theme.fonts.sCoreDream24Bold.size};
-  font-weight: ${props => props.theme.fonts.sCoreDream24Bold.weight};
+  font-size: 20px;
+  font-weight: 700;
   line-height: ${props => props.theme.fonts.sCoreDream24Bold.lineHeight};
 `
 export const MainIcon = styled.p`
@@ -28,7 +37,7 @@ export const MainIcon = styled.p`
 export const MiddleText = styled.p`
   z-index: 99;
   width: 120px;
-  margin: 36px auto 32px 24px;
+  margin: 24px auto 0px 0px;
     
   font-size: 40px;
   font-weight: 600;
@@ -56,7 +65,7 @@ export const Notice = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  border: 1px solid rgba(0,0,255,0.1);
+  border: 1px solid rgba(0,0,0,0.1);
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
@@ -91,7 +100,7 @@ export const QrMapButton = styled.div`
 
   text-decoration: none;
 
-  border: 1px solid rgba(0,0,255,0.1);
+  border: 1px solid rgba(0,0,0,0.1);
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 `;
 export const QrMapSubText = styled.p`
@@ -128,7 +137,7 @@ export const Point = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  border: 1px solid rgba(0,0,255,0.1);
+  border: 1px solid rgba(0,0,0,0.1);
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
@@ -154,16 +163,16 @@ export const PointImg = styled.img`
 export const Service = styled.div`
   width: 100%;
   height: 16vw;
-  border-radius: 10px;  
   padding: 16px;
   background-color: ${props => props.theme.colors.white};
 
-  border: 1px solid rgba(0,0,255,0.1);
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: ${props => props.br};
 
   display: flex;
+/*   
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 `;
 export const ServiceVector = styled.img`
   height: 28px;

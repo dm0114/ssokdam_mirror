@@ -1,16 +1,13 @@
 import { SERVER_URL } from '../config';
+import Api from './customApi';
 
 export async function fetchMyAsk() {
   const URL = `${SERVER_URL}/myAsk`
-
-  const response = await fetch(URL, {
-    headers : {
+  
+  const response = await Api(URL, {
+    headers: {
       token : localStorage.getItem("access-token")
     },
   })
-  
-  console.log(response);
-  const json = await response.json();
-  console.log(json);
-  return json
+  return response.data
 }

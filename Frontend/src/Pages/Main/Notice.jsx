@@ -35,8 +35,11 @@ const Notice = () => {
           <MainText flex='3'>공지사항</MainText>
           <BinWrapper flex='1'></BinWrapper>
         </HeaderWrapper>
-      {/* {data.pstTitle}<br/>
-      {data.pstCtnt} */}
+        {data?.pstTitle}<br/>
+        {data?.pstDt}<hr/>
+        {data?.pstImg ? <img src={data?.pstImg}/> : <>{data?.pstCtnt}</> }
+        
+      
       </Wrap>
     </SubLoginBackgroundView>
   )

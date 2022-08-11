@@ -24,10 +24,31 @@ import { AlarmMainText, AlarmSubText } from "../../styles/AlarmStyle";
 import Avatar from "@mui/material/Avatar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
+import { useQuery } from '@tanstack/react-query';
+import { fetchMyAskDetail } from '../../api/myAskDetail';
+
+
 const MyAskDetail = () => {
   let { id } = useParams();
   const { state } = useLocation();
-  console.log(state);
+  const { isSuccess, isLoading, data } = useQuery(
+    ['myAskDetail'],
+    async () => await fetchMyAskDetail(id)
+  );
+
+  const commentList = data?.map((cmt, index) => (
+    <BinWrapper key={index}>
+      <BinWrapper>
+        <ContentWrapper>
+          <AlarmMainText>{cmt.userId} | {cmt.cmtCtnt}</AlarmMainText>
+        </ContentWrapper>
+        <ContentWrapper>
+          <AlarmSubText>{state.pstDt}</AlarmSubText>
+        </ContentWrapper>
+      </BinWrapper>
+      <ContentDivider />
+    </BinWrapper>
+  ));
 
   return (
     <SubBackgroundView>
@@ -68,15 +89,7 @@ const MyAskDetail = () => {
       <TitleWrapper>
         <TitleText>답변</TitleText>
         <TitleDivider />
-        <BinWrapper>
-          <ContentWrapper>
-            <AlarmMainText>{state.pstTitle}</AlarmMainText>
-          </ContentWrapper>
-          <ContentWrapper>
-            <AlarmSubText>{state.pstDt}</AlarmSubText>
-          </ContentWrapper>
-        </BinWrapper>
-        <ContentDivider />
+        {commentList}
       </TitleWrapper>
     </SubBackgroundView>
   );

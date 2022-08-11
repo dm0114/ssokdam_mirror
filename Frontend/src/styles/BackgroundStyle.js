@@ -18,11 +18,17 @@ export const MainBackGround = styled.div`
 export const TopBackGround = styled.div`
   background-color: ${(props) => props.theme.colors.darkTurquoise};
   width: 100%;
-  height: 30vh;
-  border-radius: 0px 0px 20px 20px;
+  height: 25vh;
+  border-radius: 20px 20px 20px 20px;
   z-index: 10;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 
+  display: flex;
+  justify-items: center;
+
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box; /* Opera/IE 8+ */
 `
 
 export const SubBackGround = styled.div`
@@ -31,7 +37,7 @@ export const SubBackGround = styled.div`
   width: 100%;
   height: 100%;
 
-  padding: 32px 0 0 0;
+  padding: 32px 0 24px 0;
 
   border-radius: ${props => props.borderRadius};
 
@@ -44,13 +50,16 @@ export const BinWrapper = styled.div`
   flex: ${props => props.flex};
 
   width: 100%;
+  height: ${props => props.height};
   padding-top: ${props => props.pt};
+  margin-top: ${props => props.mt};
   margin-bottom: ${props => props.mb};
   padding-left: ${props => props.pl};
   padding-right: ${props => props.pr};
   background-color: ${props => props.bgColor};
 
   display: ${props => props.display};
+  flex-direction: ${props => props.fd};
   justify-content: ${props => props.jc};
   align-items: ${props => props.ai};
   
