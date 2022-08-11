@@ -8,7 +8,7 @@ import { getCookieToken } from "../Cookie";
 // refresh 만료 => 로그인 페이지 리디렉션
 // 로그인 필요한 기능은 모두 axios로 처리, 나머지는 fetch
 
-const Api = axios.create({
+export const Api = axios.create({
   headers: {
     token : localStorage.getItem("access-token")
   },
@@ -17,7 +17,7 @@ const Api = axios.create({
   timeout: 10000,
 });
 
-const ApiPost = axios.create({
+export const ApiPost = axios.create({
   headers: {
     token : localStorage.getItem("access-token"),
     "Content-type": "application/json",
@@ -46,6 +46,7 @@ Api.interceptors.response.use( async (response) => {
     console.log('토큰 만료 후 재요청');
 
     // 새로운 accessToken으로 재요청
+    originalRequest.headers.token(localStorage.getItem("access-token"))
     return originalRequest
 
   } else {

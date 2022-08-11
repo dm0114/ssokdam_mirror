@@ -12,6 +12,7 @@ import { MapTypeId } from "react-kakao-maps-sdk";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { Roadview, RoadviewMarker } from "react-kakao-maps-sdk";
 import { useMap } from "react-kakao-maps-sdk";
+import { RegisterBroken} from "../../api/admin";
 
 // import {
 //   NaverMap,
@@ -196,6 +197,16 @@ export const AdminCheckDevice = () => {
       }));
     }
   }, []);
+
+  const registerBroken = (id) => {
+    RegisterBroken(id)
+        .then((res) => window.location.replace("/admin"))
+  }
+
+  const cancelBroken = (id) => {
+    CancelBroken(id)
+        .then((res) => window.location.replace("/admin"))
+  }
 
   const EventMarkerContainer = ({ position, content }) => {
     const map = useMap();
@@ -423,6 +434,10 @@ export const AdminCheckDevice = () => {
           checkboxSelection
         />
       </div>
+      <Box sx={{ display : 'flex', justifyContent : 'flex-end', px : 3 }}>
+        <Button variant="contained" sx={{ m : 0.5 }} color="error" onClick={() => registerBroken()}>고장 등록</Button>
+        <Button variant="contained" sx={{ m : 0.5 }} color="primary" onClick={() => cancelBroken()}>고장 해제</Button>
+      </Box>
     </React.Fragment>
   );
 };

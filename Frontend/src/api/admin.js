@@ -105,6 +105,13 @@ export async function fetchBrokenDetail(id){
     return response
 } // done
 
+export async function fetchDeviceDetailStatus(id){
+    const URL =`${SERVER_URL}/devices/${id}`
+    let response = await fetch(URL, {
+        method : 'GET'
+    })
+    return response
+}
 
 export async function DeleteComplain(id){
     const URL = `${SERVER_URL}/post/${id}`
@@ -154,6 +161,28 @@ export async function commentDelete({postId, cmtId}){
         })
     return response
 } // todo => done
+// --------------------------------------
+export async function RegisterBroken(id){
+    const URL = `${SERVER_URL}/devices/${id}`
+    let response = await fetch(URL, {
+        method : 'PUT',
+        headers: {
+            "Content-type": "application/json",
+        },
+    })
+    return response
+}
+//
+// export async function CancelBroken(id){
+//     const URL = `${SERVER_URL}/devices/${id}`
+//     let response = await fetch(URL, {
+//         method : 'PUT',
+//         headers: {
+//             "Content-type": "application/json",
+//         },
+//     })
+//     return response
+// }
 
 
 
@@ -178,9 +207,6 @@ export async function AcceptExchange(id){
         headers: {
             "Content-type": "application/json",
         },
-        // body: JSON.stringify({
-        //     id : id
-        // }),
     })
     return response
 } // todo => ready
@@ -202,6 +228,8 @@ export async function fetchUsers(){
     })
     return response
 };
+
+
 
 // export async function UpdateUser(id, newData){
 //     const URL = `${ADMIN_SERVER_URL}/users/${id}` // id리스트로
