@@ -90,4 +90,10 @@ public class EmbeddedController {
         embeddedData.get().setEmbQr("Y");
         embeddedDataRepository.save(embeddedData.get());
     }
+
+    @PutMapping("/devices/{id}")
+    @ResponseBody
+    public Map<String, Object> changeState(@PathVariable("id") String id){
+        return embeddedService.changeState(id);
+    }
 }

@@ -1,3 +1,4 @@
+/*
 package com.ssaft.project.Function;
 
 import org.springframework.stereotype.Service;
@@ -51,7 +52,6 @@ public class SMSFunction {
 
         return encodeBase64String;
     }
-    /*
      * https://api.ncloud-docs.com/docs/ko/ai-application-service-sens-smsv2
         {
             "type":"(SMS | LMS | MMS)",
@@ -77,7 +77,8 @@ public class SMSFunction {
             "reserveTimeZone": "string",
             "scheduleCode": "string"
         }
-     */
+     
+
     private void sendSMS() {
         String hostNameUrl = "https://sens.apigw.ntruss.com";     		// 호스트 URL
         String requestUrl= "/sms/v2/services/";                   		// 요청 URL
@@ -155,3 +156,4 @@ public class SMSFunction {
         }
     }
 }
+*/
