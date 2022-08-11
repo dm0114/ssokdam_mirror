@@ -55,8 +55,8 @@ public class EmbeddedController {
 
     @GetMapping("/embedded/receive")             // qr 체크 확인 초단위 통신
     @ResponseBody
-    public void receive(@RequestParam int embId){
-        embeddedService.qrCheck(embId);
+    public Map receive(@RequestParam int embId){
+        return embeddedService.qrCheck(embId);
     }
 
     @GetMapping("/embedded/map")                 // 임베디드 기기 지역 체크
