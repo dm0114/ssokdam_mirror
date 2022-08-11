@@ -73,13 +73,13 @@ public class IotUserController {
         return iotUserService.userDelete(id);
     }
 
-    @PostMapping("/signup/check")                          //json  방식으로 로그인
+    @PostMapping("/signup/check")                          // 로그인 성인체크
     @ResponseBody
     public Map singUpCheck(@RequestBody IotUser user) {
         return iotUserService.singupcheck(user);
     }
 
-    @PostMapping("/signup")                          //json  방식으로 로그인
+    @PostMapping("/signup")                          // 회원가입 버튼
     @ResponseBody
     public Map singUp(@RequestBody IotUser user) {
         return iotUserService.singup(user);
@@ -90,6 +90,13 @@ public class IotUserController {
     public Map pointpush(@RequestHeader String token, @RequestBody IotUser iotUser){
         return  iotUserService.pointPush(token, iotUser);
     }
+
+    @PostMapping("/userinfo")                  //마이페이지 및 포인트
+    @ResponseBody
+    public Object pointpush(@RequestHeader String token){
+        return  iotUserService.userInfo(token);
+    }
+
 
     @GetMapping("/refreshToken")                  // 리프래쉬 토큰 체크
     @ResponseBody

@@ -55,8 +55,8 @@ public class EmbeddedController {
 
     @GetMapping("/embedded/receive")             // qr 체크 확인 초단위 통신
     @ResponseBody
-    public void receive(@RequestParam int embId){
-        embeddedService.qrCheck(embId);
+    public Map receive(@RequestParam int embId){
+        return embeddedService.qrCheck(embId);
     }
 
     @GetMapping("/embedded/map")                 // 임베디드 기기 지역 체크
@@ -79,6 +79,18 @@ public class EmbeddedController {
     }
 
 
+    @PutMapping("/devices/{id}")
+    @ResponseBody
+    public Map<String, Object> changeState(@PathVariable("id") String id){
+        return embeddedService.changeState(id);
+    }
+
+    @GetMapping("/devices/{id}")
+    @ResponseBody
+    public List<EmbeddedData> deviceStatus(@PathVariable("id") String id){
+        return embeddedService.embeddedStatus(id);
+    }
+
     @PostMapping("/embedded/qr")
     @ResponseBody
     public void Qr(@RequestBody EmbeddedData user){
@@ -89,11 +101,5 @@ public class EmbeddedController {
         embeddedData.get().setIotUser(iotUser.get());
         embeddedData.get().setEmbQr("Y");
         embeddedDataRepository.save(embeddedData.get());
-    }
-
-    @PutMapping("/devices/{id}")
-    @ResponseBody
-    public Map<String, Object> changeState(@PathVariable("id") String id){
-        return embeddedService.changeState(id);
     }
 }

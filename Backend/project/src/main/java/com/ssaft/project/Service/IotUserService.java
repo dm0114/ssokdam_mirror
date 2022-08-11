@@ -197,6 +197,21 @@ public class IotUserService {
         return map;
     }
 
+    public Object userInfo(String token){
+        String id = function.getSubJect(token);
+        Map<String, Object> map = new LinkedHashMap<>();
+        if(id.equals("토큰만료")){
+            map.put("ok", "토큰만료");
+            return map;
+        }
+        Optional<IotUser> iotUser = iotUserRepository.findById(id);
+        return iotUser;
+    }
+
+
+
+
+
     public boolean makeAdmin(String id){         //관리자 생성
         try {
             Optional<IotUser> iotUser = iotUserRepository.findById(id);
