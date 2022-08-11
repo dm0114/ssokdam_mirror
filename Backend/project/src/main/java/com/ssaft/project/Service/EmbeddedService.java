@@ -8,7 +8,6 @@ import com.ssaft.project.domain.IotUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.MalformedParameterizedTypeException;
 import java.util.*;
 
 @Service
@@ -89,5 +88,21 @@ public class EmbeddedService {
             embeddedDataRepository.save(embeddedData.get()*/
         }
         map.put("error", false);
+    }
+
+    public Map<String, Object> changeState(String id){
+        String[] embId = id.split(",");
+        for(String ED : embId){
+            Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(Integer.valueOf(ED));
+            if(embeddedData.get().getEmbSta().equals("Y")) {
+                embeddedData.get().setEmbSta("N");
+            }else{
+                embeddedData.get().setEmbSta("Y");
+            }
+            embeddedDataRepository.save(embeddedData.get());
+        }
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("ok", true);
+        return map;
     }
 }

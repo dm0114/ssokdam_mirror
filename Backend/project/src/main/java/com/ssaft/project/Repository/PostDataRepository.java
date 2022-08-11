@@ -17,4 +17,6 @@ public interface PostDataRepository  extends JpaRepository<PostData, Integer> {
 
     public List<PostData> findByIotUser(IotUser id);
 
+    public PostData findTopByPstProp(String prop);
+
 }
