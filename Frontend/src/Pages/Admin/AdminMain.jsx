@@ -14,10 +14,12 @@ import {SERVER_URL} from "../../config";
 import {useState} from "react";
 import { useEffect }  from "react";
 import {fetchGeneralInfo} from "../../api/admin";
-
+import {Mode} from "../../atoms";
+import {useRecoilState} from "recoil";
 
 export const AdminMain = () => {
     const [generalInfo, setGeneralInfo] = useState({})
+    const [mode, setMode] = useRecoilState(Mode)
 
     useEffect(() => {
         fetchGeneralInfo()
@@ -50,14 +52,18 @@ export const AdminMain = () => {
         <React.Fragment>
             <AdminMainGround>
                 <FullwidthBox>
-                    <ComponentBox>
+                    <ComponentBox  onClick={() => {
+                        setMode("포인트 전환")
+                    }} style={{ cursor : 'pointer' }}>
                         <AdminMainImg alt="" src="https://cdn-icons-png.flaticon.com/512/7715/7715867.png"></AdminMainImg>
                         <TextBox>
                             <span>지급 요청</span>
                             <span style={{ fontWeight : 'bold' }}>{ generalInfo.exchangeLth } 건</span>
                         </TextBox>
                     </ComponentBox>
-                    <ComponentBox>
+                    <ComponentBox onClick={() => {
+                        setMode("포인트 전환")
+                    }} style={{ cursor : 'pointer' }}>
                         <AdminMainImg alt="" src="https://cdn-icons-png.flaticon.com/512/3135/3135706.png"></AdminMainImg>
                         <TextBox>
                             <span>지급된 금액</span>
@@ -73,7 +79,9 @@ export const AdminMain = () => {
                     </ComponentBox>
                 </FullwidthBox>
                 <FullwidthBox>
-                    <ComponentBox>
+                    <ComponentBox onClick={() => {
+                        setMode("접수된 불만 사항")
+                    }} style={{ cursor : 'pointer' }}>
                         <TextBox>
                             <span style={{ fontWeight : 'bold', textAlign : 'center' }}>{ generalInfo.complain ?
                                 generalInfo.complain.length : null
@@ -81,7 +89,11 @@ export const AdminMain = () => {
                             <span style={{ textAlign : 'center' }}>문의 사항</span>
                         </TextBox>
                     </ComponentBox>
-                    <ComponentBox>
+                    <ComponentBox
+                        onClick={() => {
+                            setMode("접수된 고장 신고")
+                        }} style={{ cursor : 'pointer' }}
+                    >
                         <TextBox>
                             <span style={{ fontWeight : 'bold',textAlign : 'center' }}>{ generalInfo.Broken ?
                                 generalInfo.Broken.length : null
@@ -89,13 +101,21 @@ export const AdminMain = () => {
                             <span>고장 신고</span>
                         </TextBox>
                     </ComponentBox>
-                    <ComponentBox>
+                    <ComponentBox
+                        onClick={() => {
+                            setMode("기기 정보 확인")
+                        }} style={{ cursor : 'pointer' }}
+                    >
                         <TextBox>
                             <span style={{ fontWeight : 'bold',textAlign : 'center' }}>0</span>
                             <span>디바이스 알림</span>
                         </TextBox>
                     </ComponentBox>
-                    <ComponentBox>
+                    <ComponentBox
+                        onClick={() => {
+                            setMode("기기 정보 확인")
+                        }} style={{ cursor : 'pointer' }}
+                    >
                         <TextBox>
                             <span style={{ fontWeight : 'bold',textAlign : 'center' }}>0</span>
                             <span>문제 디바이스</span>
@@ -104,7 +124,9 @@ export const AdminMain = () => {
                 </FullwidthBox>
                     <h2 style={{ marginLeft : '20px', marginTop : '25px', marginBottom : '10px'}}>접수된 불만 사항</h2>
                     <ArticleWrapper style={{ backgroundColor : 'white' , marginTop : '0px', marginRight : '20px' }}>
-                        <IconBox>
+                        <IconBox onClick={() => {
+                            setMode("접수된 불만 사항")
+                        }} style={{ cursor : 'pointer' }}>
                             <AddIcon></AddIcon>
                         </IconBox>
                         {complains}
@@ -114,7 +136,11 @@ export const AdminMain = () => {
                     </ArticleWrapper>
                 <h2 style={{ marginLeft : '20px', marginTop : '25px', marginBottom : '10px'}}>접수된 고장 신고</h2>
                 <ArticleWrapper style={{ backgroundColor : 'white' , marginTop : '0px', marginRight : '20px' }}>
-                        <IconBox>
+                        <IconBox
+                            onClick={() => {
+                                setMode("접수된 고장 신고")
+                            }} style={{ cursor : 'pointer' }}
+                        >
                             <AddIcon></AddIcon>
                         </IconBox>
                     {brokens}
