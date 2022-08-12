@@ -5,7 +5,6 @@ import com.ssaft.project.Function.Function;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.Service.IotUserService;
 import com.ssaft.project.domain.IotUser;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +14,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -132,5 +132,12 @@ public class IotUserRepositoryTest {
         if(map.containsKey("error")){
             fail();
         }
+    }
+
+    @Test
+    public void ahffk(){
+        Optional<IotUser> iotUser = iotUserRepository.findById("admin");
+        iotUser.get().setUserPhone("01055555555");
+        iotUserRepository.save(iotUser.get());
     }
 }

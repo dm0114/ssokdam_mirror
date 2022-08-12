@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmbeddedDataRepository extends JpaRepository<EmbeddedData, Integer> {
+    public Long countByEmbSta(String data);
 }

@@ -56,7 +56,7 @@ public class PaybackService {
             System.out.println(data);
             Optional<PaybackData> paybackData = paybackDataRepository.findById(Integer.valueOf(data));
             paybackData.get().setPbCheck("Y");
-            Optional<IotUser> iotUser = iotUserRepository.findById(paybackData.get().getUserId());
+            Optional<IotUser> iotUser = iotUserRepository.findById(paybackData.get().getIotUser().getUserId());
             iotUser.get().setUserPoint(iotUser.get().getUserPoint()-paybackData.get().getPbMoney());
             iotUserRepository.save(iotUser.get());
             paybackDataRepository.save(paybackData.get());
@@ -92,6 +92,10 @@ public class PaybackService {
     }
 
     public List<PaybackData> paybackN(){
+        List<PaybackData> paybackData = paybackDataRepository.findByPbCheck("N");
+        for(PaybackData pD : paybackData){
+            pD.setUserId(pD.getIotUser().getUserId());
+        }
         return paybackDataRepository.findByPbCheck("N");
     }
 }

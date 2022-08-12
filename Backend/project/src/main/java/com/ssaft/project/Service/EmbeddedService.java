@@ -42,13 +42,22 @@ public class EmbeddedService {
         return List;
     };
 
-    public List<EmbeddedData> findAll(){
+    public List<EmbeddedData> findAll(){                        // 모든 임베디드 기기 정보
         List<EmbeddedData> embeddedData = embeddedDataRepository.findAll();
 //        for(int i=0;i<embeddedData.size();i++){
 //            embeddedData.get(i).setUserId(embeddedData.get(i).getIotUser().getUserId());
 //            embeddedData.get(i).
 //        }
         return embeddedDataRepository.findAll();
+    }
+
+    public int findBroken(){
+        return Math.toIntExact(embeddedDataRepository.countByEmbSta("Y"));
+    }
+
+    public int findWarning(){
+        List<EmbeddedData> embeddedData = embeddedDataRepository.findAll();
+        return 1;
     }
 
     public Map embDtUpdate(String userId){                                 // 임베디드에서 담배 성공한 유저의 최근 핀 시간 체크
@@ -116,5 +125,15 @@ public class EmbeddedService {
             LED.add(embeddedDataRepository.findById(Integer.valueOf(ED)).get());
         }
         return LED;
+    }
+
+    public void userQrCheck(EmbeddedData user){
+        System.out.println(user);
+        Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(Integer.valueOf(user.getEmbId()));
+        String name = function.getSubJect(user.getToken());
+        Optional<IotUser> iotUser =  iotUserRepository.findById(name);
+        embeddedData.get().setIotUser(iotUser.get());
+        embeddedData.get().setEmbQr("Y");
+        embeddedDataRepository.save(embeddedData.get());
     }
 }

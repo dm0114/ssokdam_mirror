@@ -76,7 +76,7 @@ export const AdminUserManagement = () => {
 
     const deleteUsers = () => {
         DeleteUser(select)
-            .then((res) => console.log(res))
+            .then((res) => window.location.replace("/admin"))
     }
 
 

@@ -28,6 +28,10 @@ import {AdminComplaintManagementDetail} from "./AdminComplaintManagementDetail";
 import Button from "@mui/material/Button";
 import {DeleteComplain} from "../../../api/admin";
 import {Status} from "../../../atoms";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 function TablePaginationActions(props) {
     const theme = useTheme();
@@ -192,13 +196,45 @@ export const AdminComplaintManagement = () => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
+
+    const FilterButton = () => {
+        const [age, setAge] = useState('');
+        console.log(age)
+
+        const handleChange = (event) => {
+            setAge(event.target.value);
+        };
+
+        return (
+            <Box sx={{ minWidth: 120 }}>
+                <FormControl size="small" fullWidth>
+                    <Select
+                        value={age}
+                        displayEmpty
+                        onChange={handleChange}
+                        inputProps={{ 'aria-label': 'Without label' }}
+                    >
+                        <MenuItem value="">
+                            미처리
+                        </MenuItem>
+                        <MenuItem value={"accept"}>처리</MenuItem>
+                        <MenuItem value={"all"}>전체</MenuItem>
+                    </Select>
+                </FormControl>
+            </Box>
+        );
+    }
+
+
     return (
         <React.Fragment>
             { status === General ? (
                 <>
-                    <h2 style={{ marginLeft : '30px' }}>접수된 불만 사항</h2>
+                    <h2 style={{ marginLeft : '30px', marginBottom : '0px' }}>접수된 불만 사항</h2>
+                    <Box sx={{ display : 'flex', justifyContent : 'flex-end', pr : 2 }}>
+                        <FilterButton />
+                    </Box>
                     <Box sx={{ display : 'flex', flexDirection : 'column', width : '100%' }}>
-
                     <TableContainer sx={{ width : '100%', margin : '20px' }} component={Paper}>
                         <Table sx={{ minWidth: 700}} aria-label="customized table">
                             <TableHead>

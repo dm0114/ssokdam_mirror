@@ -67,10 +67,10 @@ public class IotUserController {
         return iotUserService.phoneCheck(user);
     }
 
-    @GetMapping("/login/phone/{token}")                          //휴대폰 인증
+    @GetMapping("/login/phone/{number}")                          //휴대폰 인증
     @ResponseBody
-    public Map<String, Object> phoneCertification(@PathVariable("token") String token) {
-        return iotUserService.phoneCertification(token);
+    public Map<String, Object> phoneCertification(@PathVariable("number") String number, @RequestHeader String token) {
+        return iotUserService.phoneCertification(token, number);
     }
 
     @PostMapping("/login/account")                          // 계좌번호 인증
@@ -144,6 +144,8 @@ public class IotUserController {
         Map<String , Object> map = new LinkedHashMap<>();
         map.put("exchangeLth" , paybackService.findNcnt());
         map.put("exchangeMoney" , paybackService.findYmoney());
+        map.put("deviceBroken", embeddedService.findBroken());
+        map.put("deviceWarning", embeddedService.findWarning());
         map.put("complain" , postService.findAll("불만사항"));
         map.put("Broken" , postService.findAll("고장신고"));
         return map;

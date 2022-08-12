@@ -1,9 +1,11 @@
 package com.ssaft.project.domain;
 
+import com.ssaft.project.Function.Function;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 
@@ -13,6 +15,7 @@ import javax.persistence.*;
 @ToString
 @NoArgsConstructor
 public class UseData {
+
     @Id
     @Column(name = "use_cnt")
     private int useCnt;
@@ -25,8 +28,11 @@ public class UseData {
     @JoinColumn(name = "emb_id", updatable = false)
     private EmbeddedData embeddedData;
 
+    @Column(name = "use_check")
+    private String useCheck;
+
     @Column(name = "use_time")
-    private String userTime;
+    private String useTime = Function.nowDate();
 
     @Column(name = "use_dumy")
     private String useDumy;
@@ -35,5 +41,5 @@ public class UseData {
     private String userId;
 
     @Transient
-    private String embId;
+    private int embId;
 }
