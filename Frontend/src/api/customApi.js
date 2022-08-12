@@ -13,7 +13,6 @@ export const Api = axios.create({
 });
 
 Api.interceptors.response.use( async (response) => {
-  console.log(response)
   if (Object.keys(response.data).includes('ok') && response.data.ok === '토큰만료') {
     const originalRequest = response.config
     const refreshToken = await getCookieToken();
@@ -33,11 +32,9 @@ Api.interceptors.response.use( async (response) => {
     // 새로운 accessToken으로 재요청
     originalRequest.headers.token = localStorage.getItem("access-token")
     return Api(originalRequest)
-
-  } else {
-    console.log('토큰 유지 중');
-    return response
   }
+  
+  return response
 })
 
 export default Api;

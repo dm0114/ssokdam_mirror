@@ -15,6 +15,5 @@ export default async function FetchExchange(inputMoney) {
     }
   })
 
-  console.log(response)
   return response.data
 }
