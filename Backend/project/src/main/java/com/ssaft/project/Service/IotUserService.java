@@ -208,10 +208,40 @@ public class IotUserService {
         return iotUser.get();
     }
 
-    public String phoneCheck(IotUser user) throws JSONException {
-        String result = function.numberGen(4,2);
-        smsFunction.sendSMS(user.getUserPhone(), result);
-        return result;
+    public Map<String, Object> phoneCheck(IotUser user) throws JSONException {           // 핸드폰 인증 토큰 생성 및 sms 문자 보내기
+        Map<String, Object> map = new LinkedHashMap<>();
+        if(iotUserRepository.findByUserPhone(user.getUserPhone())){
+            String result = function.numberGen(4,2);
+            smsFunction.sendSMS(user.getUserPhone(), result);
+            map.put("ok" , result);
+            return map;
+        }else {
+            map.put("ok", false);
+            return map;
+        }
+    }
+
+    public Map<String, Object> phoneCertification(String token){             // 핸드폰 인증 번호 확인
+        String number = function.getSubJect(token);
+        Map<String, Object> map = new LinkedHashMap<>();
+        if(number.equals("토큰만료")){
+            map.put("ok", "토큰만료");
+            return map;
+        }
+        map.put("ok", true);
+        return map;
+    }
+
+    public Map<String, Object> accountCertification(IotUser iotUser) throws IamportResponseException, IOException {             // 계좌 확인
+        Map<String, Object> map = new LinkedHashMap<>();
+        map = function.getIamport(iotUser.getImp_uid());
+        String name = (String) map.get("userName");
+        if(name.equals(iotUser.getUserName())){
+            map.put("ok", true);
+        }else{
+            map.put("ok", false);
+        }
+        return map;
     }
 
 

@@ -63,8 +63,20 @@ public class IotUserController {
 
     @PostMapping("/login/phone")                          //휴대폰 인증
     @ResponseBody
-    public String checkPhone(@RequestBody IotUser user) throws JSONException {
+    public Map<String, Object> checkPhone(@RequestBody IotUser user) throws JSONException {
         return iotUserService.phoneCheck(user);
+    }
+
+    @GetMapping("/login/phone/{token}")                          //휴대폰 인증
+    @ResponseBody
+    public Map<String, Object> phoneCertification(@PathVariable("token") String token) {
+        return iotUserService.phoneCertification(token);
+    }
+
+    @PostMapping("/login/account")                          // 계좌번호 인증
+    @ResponseBody
+    public Map<String, Object> accountCertification(@RequestBody IotUser user) throws IamportResponseException, IOException {
+        return iotUserService.accountCertification(user);
     }
 
     @PutMapping("/login/findPw/changePw")                          //json 방식으로 비밀번호 변경

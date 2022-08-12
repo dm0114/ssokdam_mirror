@@ -6,6 +6,7 @@ import AdminSideBar from "./components/AdminSideBar";
 import {useRecoilValue} from "recoil";
 import { userInfo } from '../../atoms'
 import {createTheme, ThemeProvider} from "@mui/material/styles";
+import {useNavigate} from "react-router-dom";
 
 
 const theme = createTheme(
@@ -35,6 +36,7 @@ const theme = createTheme(
 
 function AdminHome(){
     const adminInfo = useRecoilValue(userInfo)
+    // if(adminInfo.is)
 
     return (
         <ThemeProvider theme={theme}>

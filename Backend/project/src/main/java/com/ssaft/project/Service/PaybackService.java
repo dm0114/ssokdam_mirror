@@ -56,6 +56,9 @@ public class PaybackService {
             System.out.println(data);
             Optional<PaybackData> paybackData = paybackDataRepository.findById(Integer.valueOf(data));
             paybackData.get().setPbCheck("Y");
+            Optional<IotUser> iotUser = iotUserRepository.findById(paybackData.get().getUserId());
+            iotUser.get().setUserPoint(iotUser.get().getUserPoint()-paybackData.get().getPbMoney());
+            iotUserRepository.save(iotUser.get());
             paybackDataRepository.save(paybackData.get());
         }
         Map<String, Object> map = new LinkedHashMap<>();
