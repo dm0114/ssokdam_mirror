@@ -42,6 +42,7 @@ function SignUp() {
     const [bankNumber, setBankNumber] = useState("")
     const [accountNumber, setAccountNumber] = useState('')
     const [userInfo2, setUserInfo2] = useRecoilState(userInfo)
+    const [isAccount, setIsAccount] = useState(false)
     const banks1 = [
         ["국민은행","004"],["기업은행","003"],["신한은행","088"]
     ]
@@ -139,42 +140,39 @@ function SignUp() {
     const submit = async (values) => {
         console.log(values);
         const {userEmail, userId, userPwd} = values;
-        try {
-            // await axios.post(URL, {   userEmail : userEmail,   userId : userId,   userPwd
-            // : userPwd,   imp_uid : `${impUid}` }) .then((res) => {   console.log(res)
-            // alert("회원가입이 완료 되었습니다.") })
+        if(isAccount) {
             const fetchsubmit = async () => {
-                const URL =  `${SERVER_URL}/signup`
-                await fetch(URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify(
-                        {userEmail: userEmail, userId: userId, userPwd: userPwd, imp_uid: `${impUid}`}
-                    )
-                }).then((res) => {
-                    if (res.ok) {
-                        res
-                            .json()
-                            .then((res) => {
-                                localStorage.setItem('access-token', res.Access_token)
-                                setUserInfo2(
-                                    {userName: res.userName, userEmail: res.userEmail, userPoint: res.userPoint, userCnt: res.userCnt, userImage: res.userImg}
-                                )
-                            })
-                            setTimeout(() => {
-                              navigate("/");
-                          }, 2000);
-                    } else {
-                        alert("성인이 아니거나 성인인증을 하지 않으셨습니다.")
+                    const URL =  `${SERVER_URL}/signup`
+                    await fetch(URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-type': 'application/json'
+                        },
+                        body: JSON.stringify(
+                            {userEmail: userEmail, userId: userId, userPwd: userPwd, imp_uid: `${impUid}`, userAccount : `${accountNumber}`}
+                        )
+                    }).then((res) => {
+                        if (res.ok) {
+                            res.json()
+                                .then((res) => {
+                                    console.log(res)
+                                    localStorage.setItem('access-token', res.Access_token)
+                                    setUserInfo2(
+                                        {userName: res.userName, userEmail: res.userEmail, userPoint: res.userPoint, userCnt: res.userCnt, userImage: res.userImg}
+                                    )
+                                })
+                                setTimeout(() => {
+                                  navigate("/");
+                              }, 2000);
+                        } else {
+                            alert("성인이 아니거나 성인인증을 하지 않으셨습니다.")
+                        }
                     }
-                }).catch((e) => alert('서버와의 통신이 원활하지 않습니다.'))
-            }
+                    ).catch((e) => alert('서버와의 통신이 원활하지 않습니다.'))
+                }
             fetchsubmit()
-;
-        } catch (e) {
-            alert("서버와 연결되지 않았습니다.")
+        } else  {
+            alert("계좌인증을 해주세요.")
             console.log("안왔어")
 
         }
@@ -205,7 +203,10 @@ function SignUp() {
         )
             .then((res) => AccountCheck({ userName : res.data.response.bank_holder, impUid : impUid })
                 .then((res) => res.json().then((res) => {
-                    console.log(res)
+                    if(res.ok){
+                        alert("계좌인증이 되었습니다!")
+                        setIsAccount(true)
+                    }
                 })))
             .catch((error) => {
             /**
