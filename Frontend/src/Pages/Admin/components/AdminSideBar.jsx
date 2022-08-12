@@ -87,7 +87,7 @@ function AdminSideBar(props) {
                 <Typography component="h2" variant="h6" style={{ cursor: 'pointer' }} onClick={(e) => {
                     onModeHandling("관리자 메인")
                 }}>
-                 에코원
+                 쏙담
                 </Typography>
             </Box>
             <Divider />
