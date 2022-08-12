@@ -3,7 +3,6 @@ package com.ssaft.project.Function;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.ssaft.project.Repository.IotUserRepository;
-import com.ssaft.project.Service.IamportService;
 import com.ssaft.project.domain.IotUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -37,7 +36,6 @@ public class Function {
 
     private static final String SECRET_KEY = "111dsfsdfasadfadassdadasdasdasasdadsasdasdsfdasfasfdffasds234";
 
-    private IamportService api;
     LocalDate now = LocalDate.now();
 
     public static String nowDate(){

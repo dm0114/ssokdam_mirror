@@ -5,13 +5,13 @@ import com.ssaft.project.Function.Function;
 import com.ssaft.project.Function.SMSFunction;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.domain.IotUser;
+import com.ssaft.project.domain.UseData;
 import io.jsonwebtoken.JwtException;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.rmi.server.ServerNotActiveException;
 import java.util.*;
 
 @Service
@@ -242,6 +242,14 @@ public class IotUserService {
             map.put("ok", false);
         }
         return map;
+    }
+
+    public void cigPush(String id){
+        Optional<IotUser> iotUser = iotUserRepository.findById(id);
+        iotUser.get().setUserPoint(iotUser.get().getUserPoint()+25);
+        iotUser.get().setUserTime(Function.nowDate());
+        iotUser.get().setUserCnt(iotUser.get().getUserCnt()+1);
+        iotUserRepository.save(iotUser.get());
     }
 
 

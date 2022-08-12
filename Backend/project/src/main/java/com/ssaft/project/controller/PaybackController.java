@@ -28,7 +28,7 @@ public class PaybackController {
         return paybackService.paybackN();
     }
 
-    @DeleteMapping("/exchange/{id}")
+    @DeleteMapping("/exchange/{id}")             // 삭제
     @ResponseBody
     public Map paybackDelete(@PathVariable("id") String id){
         return paybackService.paybackDelete(id);

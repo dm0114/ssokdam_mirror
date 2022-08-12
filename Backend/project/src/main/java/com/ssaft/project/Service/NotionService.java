@@ -44,14 +44,17 @@ public class NotionService {
         return notionData;
     }
 
-    public void notionPush(NotionData notionData){
-        notionData.setIotUser(iotUserRepository.findById(notionData.getUserId()).get());
-        Date today = new Date();
-        Locale currentLocale = new Locale("KOREAN", "KOREA");
-        String pattern = "yyyy-MM-dd HH:mm:ss"; //hhmmss로 시간,분,초만 뽑기도 가능
-        SimpleDateFormat formatter = new SimpleDateFormat(pattern,
-                currentLocale);
-        notionData.setNotDt(formatter.format(today));
+    public void notionPush(String id, String type, int money){
+        NotionData notionData = new NotionData();
+        notionData.setIotUser(iotUserRepository.findById(id).get());
+        notionData.setNotDt(Function.nowDate());
+        if(type.equals("cig")){
+            notionData.setNotCtnt("포인트 적립");
+            notionData.setNotMoney(money);
+        }else{
+            notionData.setNotCtnt("환전");
+            notionData.setNotMoney(money);
+        }
         notionDataRepository.save(notionData);
     }
 }
