@@ -50,6 +50,7 @@ public class IotUserRepositoryTest {
         iotuser.setUserPhone("01044444444");
         iotuser.setUserBirthDay("1997-11-04");
         iotuser.setUserEmail("swyou4444@naver.com");
+        iotuser.setUserAccount("94450200079014");
         iotUserRepository.save(iotuser);
     }
 
@@ -62,6 +63,7 @@ public class IotUserRepositoryTest {
         iotuser.setUserPhone("010-5638-9909");
         iotuser.setUserBirthDay("1997-11-04");
         iotuser.setUserEmail("swyou1123@naver.com");
+        iotuser.setUserAccount("94450200079014");
         iotUserRepository.save(iotuser);
 
         IotUser iotUser = new IotUser();
@@ -78,7 +80,7 @@ public class IotUserRepositoryTest {
         iotuser.setUserPhone("010-5638-9909");
         iotuser.setUserBirthDay("1997-11-04");
         iotuser.setUserEmail("swyou1123@naver.com");
-
+        iotuser.setUserAccount("94450200079014");
 
         iotUserRepository.save(iotuser);
         try{
@@ -100,6 +102,7 @@ public class IotUserRepositoryTest {
         iotuser.setUserPhone("010-5638-9909");
         iotuser.setUserBirthDay("1997-11-04");
         iotuser.setUserEmail("swyou1123@naver.com");
+        iotuser.setUserAccount("94450200079014");
         iotUserRepository.save(iotuser);
 
         iotUserService.login("swyou", "1234");

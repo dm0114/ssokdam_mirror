@@ -33,6 +33,9 @@ public class IotUser {
     @Column(name = "user_birth_day")
     private String userBirthDay;
 
+    @Column(name = "user_account")
+    private String userAccount;
+
     @Column(name = "user_email")
     private String userEmail;
 

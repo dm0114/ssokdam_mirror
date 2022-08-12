@@ -19,6 +19,6 @@ public class SensTest {
 
     @Test
     public void 핸드폰sms테스트() throws JSONException {
-        smsFunction.sendSMS("01056389909", function.numberGen(4,2));
+//        smsFunction.sendSMS("01056389909", function.numberGen(4,2));
     }
 }
