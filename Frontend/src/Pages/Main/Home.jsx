@@ -48,7 +48,9 @@ import {
 
   MiddleText,
   Footer,
-  NameText
+  NameText,
+  SubNotice,
+  SubNoticeText
 } from "../../styles/HomeStyle";
 
 import {
@@ -98,7 +100,7 @@ function Home(){
   const [notice, setNotice] = useState("")
   const navigate = useNavigate()
   const [userInfo2, setUserInfo2] = useRecoilState(userInfo)
-  // console.log(userInfo2);
+
 
   const logout = () => {
     localStorage.removeItem('access-token')
@@ -135,9 +137,11 @@ function Home(){
     <ThemeProvider theme={theme}>
       <MainBackGround bgColor="#fff">
 
-        <BinWrapper display="flex" fd="row" pt="52px" pl="24px" pr="24px">
+        <BinWrapper>
+          <TopBackGround>
+            <BinWrapper display="flex" fd="row" pt="60px" pl="24px" pr="24px">
           <NameText>
-          {localStorage.getItem("access-token") ? (<>{ userInfo2.userName } 님</>) : (<>로그인 해주세요</>) }
+          {localStorage.getItem("access-token") ? (<>{ userInfo2.userName } 님이</>) : (<></>) }
           </NameText>
 
           <MainContainer flexNum="1" jc="flex-end">
@@ -170,18 +174,16 @@ function Home(){
                       </MainIcon>
 
                   </MainContainer>
-        </BinWrapper>
-
-        <BinWrapper pt="16px" pl="24px" pr="24px">
-          <TopBackGround>
-            <BinWrapper display="flex" fd="column" pl="24px" mt="auto" mb="auto">
+            </BinWrapper>
+            
+            <BinWrapper display="flex" fd="column" pl="24px" mt="8px" mb="auto">
                 <MainContainer flexNum="3">
                     { localStorage.getItem("access-token") ? (
-                      <MainText>
+                      <NameText>
                         바다를 지켜준 횟수
-                      </MainText>)
+                      </NameText>)
                       : (<MainText>
-                        EcoWon과 <br/><br/>바다를 지켜주세요
+                        쏙담과 <br/><br/>바다를 지켜주세요
                       </MainText>)  
                     }
                 </MainContainer>
@@ -192,14 +194,30 @@ function Home(){
             
 
           </TopBackGround>
-          <BinWrapper pl="24px" pr="24px" mt="32px">
-              <TimeController>
-                <Typography component="h4" variant="h6">
-                  다음 이용까지
-                </Typography>
-                { (sec < 10) ?  <h3 style={{ margin : 0 }}>{ min } : 0{ sec }</h3>  : <h3 style={{ margin : 0 }}>{ min } : { sec }</h3> } 
-              </TimeController>
+
+          <BinWrapper display="flex" ai="center" jc="center" pl="24px" pr="24px" mt="32px">
+            <BinWrapper display="flex" fd="column" ai="center" jc="center">
+            <SubNoticeText>다음 이용까지</SubNoticeText>
+              <SubNotice>
+                <TimeController >
+                  { (sec < 10) ?  <h4 style={{ margin : 0 }}>{ min } : 0{ sec }</h4>  : <h4 style={{ margin : 0 }}>{ min } : { sec }</h4> } 
+                </TimeController>
+              </SubNotice>
             </BinWrapper>
+
+            <img
+              alt=""
+              src="https://static.overlay-tech.com/assets/4754c232-09de-4793-b61f-0f83dcdf791f.svg"
+              width="10px"
+            />
+                  
+            <BinWrapper display="flex" fd="column" ai="center" jc="center">
+            <SubNoticeText>나의 포인트</SubNoticeText>
+              <SubNotice>
+                {userInfo2?.userPoint}점
+              </SubNotice>
+            </BinWrapper>
+          </BinWrapper>
         </BinWrapper>
 
           {/* <MiddleBackground>
@@ -207,6 +225,12 @@ function Home(){
           </MiddleBackground> */}
 
         <SubBackGround>              
+            <BinWrapper pl="24px" pr="24px" mb="16px">
+              <Notice message={ notice } action={ detailGo } onClick={() => navigate('/notice')} br="10px">
+                <NoticeText>공지사항 📢</NoticeText>
+                <ChevronRight alt="" src="https://static.overlay-tech.com/assets/cdd4539a-7fd6-46c2-96bc-dbee9bd4530c.svg"/>
+              </Notice>
+            </BinWrapper>
 
             <BinWrapper pl="24px" pr="24px" mb="16px">
               <MainWrapper>
@@ -255,14 +279,6 @@ function Home(){
                 </Service>
               </MainWrapper>
             </BinWrapper>
-
-            <BinWrapper pl="24px" pr="24px" mb="16px">
-              <Notice message={ notice } action={ detailGo } onClick={() => navigate('/notice')}>
-                <NoticeText>공지사항 📢</NoticeText>
-                <ChevronRight alt="" src="https://static.overlay-tech.com/assets/cdd4539a-7fd6-46c2-96bc-dbee9bd4530c.svg"/>
-              </Notice>
-            </BinWrapper>
-
         </SubBackGround>
         <Footer>
           ⓒ EcoWon 2022

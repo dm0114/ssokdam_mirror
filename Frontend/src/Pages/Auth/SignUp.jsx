@@ -8,6 +8,9 @@ import {userInfo} from '../../atoms'
 import * as Yup from "yup";
 import {Formik} from "formik";
 import {ToastContainer} from "react-toastify"
+import {Button} from "@mui/material";
+import axios from "axios";
+import AccountCheck from "../../api/signup";
 
 import {
     SubLoginBackgroundView,
@@ -31,11 +34,20 @@ import { ThemeProvider } from '@mui/material/styles';
 
 
 
+
 function SignUp() {
+    const queryString = require('query-string')
     const [impUid, setImpUid] = useState('')
     const [isReadyToSubmit, setIsReadyToSubmit] = useState(false)
-
+    const [bankNumber, setBankNumber] = useState("")
+    const [accountNumber, setAccountNumber] = useState('')
     const [userInfo2, setUserInfo2] = useRecoilState(userInfo)
+    const banks1 = [
+        ["국민은행","004"],["기업은행","003"],["신한은행","088"]
+    ]
+    const banks2 = [
+        ["농협은행","011"],["카카오뱅크","090"],["광주은행","034"]
+    ]
     
     function onClickCertification(){
       const { IMP } = window; // 생략 가능
@@ -60,7 +72,7 @@ function SignUp() {
             } = response;
 
             if (success) {
-                const {imp_uid } = response;
+                const { imp_uid } = response;
 
                 const fetchCertification = async () => {
                     const url =  `${SERVER_URL}/signup/check`
@@ -71,6 +83,7 @@ function SignUp() {
                         },
                         body: JSON.stringify({imp_uid: `${imp_uid}`})
                     }).then((res) => {
+                        console.log(res)
                         if (!res.ok) {
                             alert('성인이 아닙니다!')
                         }
@@ -167,6 +180,68 @@ function SignUp() {
         }
     };
 
+
+    const onChangeHandle = (e) => {
+        setAccountNumber(e.target.value)
+    }
+    async function checkBankHolder(
+        accessToken,
+        { bankCode, bankAccountNumber },
+    ) {
+        // get 요청이므로 querystring으로 넘겨준다.
+        const query = queryString.stringify({
+            bank_code: bankCode,
+            bank_num: bankAccountNumber,
+            // token : accessToken
+        });
+
+        return axios.get(
+            `https://api.iamport.kr/vbanks/holder?${query}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`, // 인증 요청이므로 헤더에 토큰을 넘겨준다.
+                },
+            },
+        )
+            .then((res) => AccountCheck({ userName : res.data.response.bank_holder, impUid : impUid })
+                .then((res) => res.json().then((res) => {
+                    console.log(res)
+                })))
+            .catch((error) => {
+            /**
+             * handling iamport error
+             */
+            const clientErrors = [400, 404];
+
+            // 400, 404 에러는 유저가 값을 누락한 경우이므로 다른 에러 클래스로 처리한다.
+            if (clientErrors.includes(error.response.status)) {
+                throw new Error(error.response.data.message, 400);
+            }
+
+            throw new Error('iamport api 에러');
+        });
+    }
+
+    const bankAccept = () => {
+        if(!impUid){
+            alert("성인인증을 먼저 해주세요!")
+        }else{
+            axios({
+                url: "https://api.iamport.kr/users/getToken",
+                method: "post", // POST method
+                headers: { "Content-Type": "application/json" }, // "Content-Type": "application/json"
+                data: {
+                    imp_key: "8270742312861075", // REST API키
+                    imp_secret: "dAjR0eNuEcBlF2m3jpbVAwgBg9A80aOR85pyfLpweaRqnpnynReBHOM4jTp2lvJb7Vh3XhzZOc1tjoo4" // REST API Secret
+                }
+            }) // token받아옴
+                .then((res) => {
+                    checkBankHolder(res.data.response.access_token, { bankCode : bankNumber, bankAccountNumber : accountNumber })
+                })
+        }
+    }
+
+
     return (
         <ThemeProvider theme={MuiTheme}>
             <SubLoginBackgroundView>
@@ -207,7 +282,44 @@ function SignUp() {
                                 <Box>
                                     <ToastContainer/>
                                     <form onSubmit={handleSubmit} autoComplete="off">
-
+                                        <Box>
+                                            <Box sx={{ display : 'flex'}}>
+                                                { banks1.map((bank) => (
+                                                    <Button style={{ backgroundColor : 'rgba(217,217,217,1)', color : 'black' }}
+                                                            variant="contained"
+                                                            onClick={() => {
+                                                        setBankNumber(bank[1])
+                                                            }}
+                                                            sx={{ flex : 1, m : 0.25 }}
+                                                    >{bank[0]}</Button>
+                                                ))}
+                                            </Box>
+                                            <Box sx={{ display : 'flex' }}>
+                                                { banks2.map((bank) => (
+                                                    <Button style={{ backgroundColor : 'rgba(217,217,217,1)', color : 'black' }}
+                                                            variant="contained"
+                                                            onClick={() => {
+                                                                setBankNumber(bank[1])
+                                                            }}
+                                                            sx={{ flex : 1, m : 0.25 }}
+                                                    >{bank[0]}</Button>
+                                                ))}
+                                            </Box>
+                                        <Box sx={{ display : 'flex', m : 1 }}>
+                                            <TextField
+                                                onChange={onChangeHandle}
+                                                variant="standard"
+                                                fullWidth
+                                                sx={{
+                                                    mx : 1,
+                                                    flex : 5,
+                                                }}
+                                                color="black"
+                                            ></TextField>
+                                            <Button variant="contained" sx={{ flex : 2 }} style={{ backgroundColor : '#CBF7FF', color : 'black' }} onClick={() => {
+                                                bankAccept()
+                                            }}>계좌인증</Button>
+                                        </Box>
                                         <TextField
                                             value={values.userId}
                                             name="userId"
@@ -224,6 +336,7 @@ function SignUp() {
                                                 my: 4
                                             }}
                                             color="black"/>
+                                        </Box>
 
                                         <TextField value={values.userPwd} name="userPwd" type="password" onChange={handleChange}
                                             error={!!errors.userPwd}
@@ -272,17 +385,14 @@ function SignUp() {
                                             >
                                             <ButtonText>성인 인증 요청</ButtonText>
                                           </SubButton>
-
-
-
+                                        <MainButton width='100%' type='submit'>
+                                            <ButtonText>회원 가입</ButtonText>
+                                        </MainButton>
                                     </form>
                                 </Box>
                             )
                         }
                     </Formik>
-                    <MainButton width='100%' type='submit'>
-                        <ButtonText>회원 가입</ButtonText>
-                    </MainButton>
                 </Box>
                 
             </SubLoginBackgroundView>
