@@ -24,8 +24,6 @@ public class NotionController {
         System.out.println(token);
         return notionService.userAll(token);
     }
-
-
     @PostMapping("/notion/push")
     @ResponseBody
     public void notionPush(@RequestBody NotionData notionData){
