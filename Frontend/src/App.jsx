@@ -71,7 +71,7 @@ function App() {
           {/* Admin */}
           <Route exact path='/adminLogin' element={<AdminLogin/>} />
           <Route exact path='/admin' element={<AdminHome/>} />
-          <Route exact path='/admin/notice/create' element={<AdminNoticeCreate/>} />
+          {/*<Route exact path='/admin/notice/create' element={<AdminNoticeCreate/>} />*/}
           {/*<Route path='/admin/checkDevice' element={<AdminCheckDevice/>} />*/}
           {/*<Route path='/admin/complaintManagement' element={<AdminComplaintManagement/>} />*/}
           {/*<Route path='/admin/brokenDeviceManagement' element={<AdminBrokenDeviceManagement/>} />*/}

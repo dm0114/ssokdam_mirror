@@ -106,9 +106,11 @@ export const AdminComplaintManagementDetail = () => {
                                      { postDetail.pstCtnt }
                                  </Grid>
                              </Grid>
-                             <div className="img-wrapper">
-                                 <img src={postDetail.pstImg}/>
-                             </div>
+                             { postDetail.pstImg ? (
+                                 <div className="img-wrapper">
+                                     <img style={{  width: '500px' , height: '500px', objectFit : "cover" }} src={postDetail.pstImg}/>
+                                 </div>
+                             ) : (<></>) }
                         </Box>
                         <Divider/>
                     </FormControl>

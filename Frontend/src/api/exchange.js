@@ -11,8 +11,10 @@ export default async function FetchExchange(inputMoney) {
   const response = await Api.post(URL, data, {
     headers: {
       "Content-type": "application/json",
+      token : localStorage.getItem("access-token")
     }
   })
 
+  console.log(response)
   return response.data
 }

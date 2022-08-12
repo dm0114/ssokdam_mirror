@@ -69,7 +69,7 @@ export default function AdminLogin() {
                 resUserInfomation.json().then((res) => {
                     console.log(res)
                     if(res.ok && !('message' in res)){ // 관리자이고 비밀번호도 맞음
-                        localStorage.setItem('access-token', res.Access_token);
+                        localStorage.setItem('access-token', res.access_token);
                         setUserInfo2({
                             userName : res.userName,
                             userEmail : res.userEmail,

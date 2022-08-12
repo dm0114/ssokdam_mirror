@@ -16,9 +16,18 @@ import { SubInnerText } from "../../styles/MyPageStyle"
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import {userInfo} from '../../atoms'
 import {useRecoilValue} from 'recoil'
+import fetchUserInfo from '../../api/fetchUserInfo';
+import { useEffect, useState } from 'react';
 
 export const MyPage = () => {
+    const [fetchedUserInfo, setFetchedUserInfo] = useState()
     const userInfo2 = useRecoilValue(userInfo)
+    
+    useEffect(() => {
+        fetchUserInfo()
+    })
+    
+
     
     return (<> {
         localStorage.getItem('access-token')

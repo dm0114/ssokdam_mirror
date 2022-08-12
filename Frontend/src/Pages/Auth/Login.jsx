@@ -89,7 +89,7 @@ function Login() {
           if ('message' in res) {
             throw new Error(alert('비밀번호가 틀렸습니다!'))  //비동기 진행 막기
           } else {
-            localStorage.setItem('access-token', res.Access_token)
+            localStorage.setItem('access-token', res.access_token)
             setRefreshToken(res.Refresh_token)
             setUserInfo2({
               userName : res.userName,

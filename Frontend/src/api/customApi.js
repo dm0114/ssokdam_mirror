@@ -32,7 +32,6 @@ Api.interceptors.response.use( async (response) => {
 
     // 새로운 accessToken으로 재요청
     originalRequest.headers.token = localStorage.getItem("access-token")
-    console.log(originalRequest)
     return Api(originalRequest)
 
   } else {

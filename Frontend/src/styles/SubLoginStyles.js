@@ -128,15 +128,6 @@ export const ButtonText = styled.p `
   line-height: ${props => props.theme.fonts.sCoreDream16Regular.lineHeight};
 `;
 
-
-export const ButtonWrapper2 = styled.div`
-  position: absolute;
-  width: 87.5%;
-  margin-left: auto;
-  margin-right: auto;
-  bottom: 32px;
-`
-
 export const NotReadyToSubmitButton = styled.div`
   width: 100%;
   height: 40px;

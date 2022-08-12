@@ -187,7 +187,9 @@ function SignUp() {
                     sx={{
                         display: 'flex',
                         flexDirection: 'column',
-                        flex: '1'
+                        flex: '1',
+                        height: '80vh',
+                        justifyContent: 'space-between',
                     }}>
                     <Formik
                         initialValues={{
@@ -270,17 +272,17 @@ function SignUp() {
                                             >
                                             <ButtonText>성인 인증 요청</ButtonText>
                                           </SubButton>
-                                          <ButtonWrapper2>
-                                            <MainButton width='100%' type='submit'>
-                                                <ButtonText>회원 가입</ButtonText>
-                                            </MainButton>
-                                          </ButtonWrapper2>
+
+
 
                                     </form>
                                 </Box>
                             )
                         }
                     </Formik>
+                    <MainButton width='100%' type='submit'>
+                        <ButtonText>회원 가입</ButtonText>
+                    </MainButton>
                 </Box>
                 
             </SubLoginBackgroundView>

@@ -15,7 +15,7 @@ import {fetchUsers, UpdateUser, DeleteUser } from "../../api/admin";
 
 const columns = [
     { field: 'id', headerName: '아이디', flex : 1, headerAlign: 'center', align: "center",  editable: true },
-    { field: 'userPwd', headerName: '비밀번호', flex : 1, headerAlign: 'center',align: "center",  editable: true },
+    { field: 'userName', headerName: '회원이름', flex : 1, headerAlign: 'center',align: "center",  editable: true },
     { field: 'userBirthDay', headerName: '생년월일', type : 'dateTime' ,headerAlign: 'center', flex : 1, align: "center", editable: true },
     {
         field: 'userPoint',
