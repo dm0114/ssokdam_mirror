@@ -190,24 +190,20 @@ export const AdminCheckDevice = () => {
   };
 
   const MakePath = () => {
+    if(pathPosition.length === 1){
+      return  <a href={`https://map.naver.com/v5/directions/${state?.center.lng},${state?.center.lat},내위치/${pathPosition[0]?.lng},${pathPosition[0].lat},목적지/-/car?c=14121208.9388342,4181426.9377556,15,0,0,0,dh`}>길찾기</a>
+    }else if(pathPosition.length === 0){
+      return <a onClick={() => alert("경로를 설정해주세요.")}>길찾기</a>
+    }
     let path =''
-    if(pathPosition.length > 1){
-      path = ''
-    }else{
-      path = '-'
-    }
-    if(pathPosition.length === 0){
-     return <a onClick={() => alert("경로를 설정해주세요.")}>길찾기</a>
-    }
     for(let i=0; i<pathPosition.length-1; i++){
-      if(i !== pathPosition.length-2){
-        path += `${pathPosition[i].lng},${pathPosition[i].lat},${pathPosition[i].id}번 디바이스:`
-      }else{
-        path += `${pathPosition[i].lng},${pathPosition[i].lat},${pathPosition[i].id}번 디바이스`
-      }
-      console.log(path)
+      path += `${pathPosition[i].lng},${pathPosition[i].lat},${pathPosition[i].id}번 디바이스:`
     }
-    return <a href={`https://map.naver.com/v5/directions/${state?.center.lng},${state?.center.lat},내위치/${pathPosition[pathPosition.length-1]?.lng},${pathPosition[pathPosition.length-1].lat},목적지/${path}/car?c=14121208.9388342,4181426.9377556,15,0,0,0,dh`}>길찾기</a>
+    path = path.slice(0,-1)
+    console.log(path)
+    return (
+        <a href={`https://map.naver.com/v5/directions/${state?.center.lng},${state?.center.lat},내위치/${pathPosition[pathPosition.length-1]?.lng},${pathPosition[pathPosition.length-1].lat},목적지/${path}/car?c=14121208.9388342,4181426.9377556,15,0,0,0,dh`}>길찾기</a>
+    )
   }
 
 
