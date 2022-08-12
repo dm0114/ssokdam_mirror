@@ -58,12 +58,14 @@ export const Notice = styled.div`
   width: 100%;
   background-color: ${props => props.theme.colors.white};
 
-  border-radius: 10px;
+  border-radius: ${props => props.br};
   padding: 12px 16px 12px 16px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  margin-bottom: ${props => props.mb};
 
   border: 1px solid rgba(0,0,0,0.1);
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
@@ -72,6 +74,7 @@ export const Notice = styled.div`
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
   box-sizing: border-box; /* Opera/IE 8+ */
 `;
+
 export const NoticeText = styled.p`
   margin: 0px;
   font-size: ${props => props.theme.fonts.sCoreDream14Regular.size};
@@ -82,6 +85,38 @@ export const ChevronRight = styled.img`
   height: 18px;
 `;
 
+
+// SubNotice
+export const SubNotice = styled.div`
+  width: 100%;
+  background-color: ${props => props.theme.colors.white};
+
+  padding: 12px 0px 12px 0px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: ${props => props.mt};
+  margin-bottom: ${props => props.mb};
+
+  font-weight: 600;
+
+  border-right: ${props => props.borderRight};
+  /* border-radius: 50px; */
+  /* border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; */
+
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box; /* Opera/IE 8+ */
+
+`;
+
+export const SubNoticeText = styled.p`
+  font-size: 14px;
+  margin-bottom: auto;
+`
 
 
 // Map and QR Button
