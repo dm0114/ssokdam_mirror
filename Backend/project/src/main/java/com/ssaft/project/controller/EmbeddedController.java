@@ -94,12 +94,6 @@ public class EmbeddedController {
     @PostMapping("/embedded/qr")
     @ResponseBody
     public void Qr(@RequestBody EmbeddedData user){
-        System.out.println(user);
-        Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(Integer.valueOf(user.getEmbId()));
-        String name = function.getSubJect(user.getToken());
-        Optional<IotUser> iotUser =  iotUserRepository.findById(name);
-        embeddedData.get().setIotUser(iotUser.get());
-        embeddedData.get().setEmbQr("Y");
-        embeddedDataRepository.save(embeddedData.get());
+        embeddedService.userQrCheck(user);
     }
 }

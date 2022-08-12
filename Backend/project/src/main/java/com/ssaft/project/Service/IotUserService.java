@@ -5,7 +5,6 @@ import com.ssaft.project.Function.Function;
 import com.ssaft.project.Function.SMSFunction;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.domain.IotUser;
-import com.ssaft.project.domain.UseData;
 import io.jsonwebtoken.JwtException;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -210,25 +209,28 @@ public class IotUserService {
 
     public Map<String, Object> phoneCheck(IotUser user) throws JSONException {           // 핸드폰 인증 토큰 생성 및 sms 문자 보내기
         Map<String, Object> map = new LinkedHashMap<>();
-        if(iotUserRepository.findByUserPhone(user.getUserPhone())){
-            String result = function.numberGen(4,2);
+        try {
+            IotUser iotUser = iotUserRepository.findByUserPhone(user.getUserPhone());
+            String result = function.numberGen(4, 2);
             smsFunction.sendSMS(user.getUserPhone(), result);
-            map.put("ok" , result);
-            return map;
-        }else {
+            String token = function.creatToken(result, (3 * 1000 * 60));
+            map.put("Phone_token", token);
+        }catch (NoSuchElementException e){
             map.put("ok", false);
-            return map;
         }
+            return map;
     }
 
-    public Map<String, Object> phoneCertification(String token){             // 핸드폰 인증 번호 확인
-        String number = function.getSubJect(token);
+    public Map<String, Object> phoneCertification(String token, String number){             // 핸드폰 인증 번호 확인
+        String Phone_token = function.getSubJect(token);
         Map<String, Object> map = new LinkedHashMap<>();
-        if(number.equals("토큰만료")){
+        if(Phone_token.equals("토큰만료")){
             map.put("ok", "토큰만료");
             return map;
         }
-        map.put("ok", true);
+        if(Phone_token.equals(number)){
+            map.put("ok", true);
+        }
         return map;
     }
 

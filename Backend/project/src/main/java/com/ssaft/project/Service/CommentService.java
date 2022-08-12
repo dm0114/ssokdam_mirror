@@ -42,6 +42,8 @@ public class CommentService {
         commentData.setIotUser(user.get());
         commentData.setPostData(data2.get());
         commentData.setCmtSub(cnt);
+        data2.get().setPstCheck("Y");
+        postDataRepository.save(data2.get());
         commentDataRepository.save(commentData);
 
         map.put("ok", true);
