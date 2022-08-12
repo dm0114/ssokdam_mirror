@@ -171,10 +171,8 @@ function SignUp() {
                     ).catch((e) => alert('서버와의 통신이 원활하지 않습니다.'))
                 }
             fetchsubmit()
-        } else  {
+        } else if(!isAccount && impUid){
             alert("계좌인증을 해주세요.")
-            console.log("안왔어")
-
         }
     };
 
@@ -206,6 +204,7 @@ function SignUp() {
                     if(res.ok){
                         alert("계좌인증이 되었습니다!")
                         setIsAccount(true)
+                    }else{
                     }
                 })))
             .catch((error) => {
@@ -216,6 +215,7 @@ function SignUp() {
 
             // 400, 404 에러는 유저가 값을 누락한 경우이므로 다른 에러 클래스로 처리한다.
             if (clientErrors.includes(error.response.status)) {
+                alert("계좌정보가 맞지 않습니다.")
                 throw new Error(error.response.data.message, 400);
             }
 
