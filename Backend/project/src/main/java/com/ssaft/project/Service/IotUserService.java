@@ -35,7 +35,7 @@ public class IotUserService {
         Map<String, Object> map = new LinkedHashMap<>();
         if (iotuser != null) {
             if (function.jasyptDecoding(iotuser.get().getUserPwd()).equals(password)) {
-                token = function.creatToken(id, (60 * 1000 * 60));
+                token = function.creatToken(id, (1 * 1000 * 30));
                 String token2 = function.creatToken(id, (10800 * 1000 * 60));
                 iotuser.get().setUserRt(token2);
                 iotUserRepository.save(iotuser.get());
