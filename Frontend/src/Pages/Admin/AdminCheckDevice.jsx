@@ -85,10 +85,12 @@ export const AdminCheckDevice = () => {
   const [positions, setPositions] = useState([]);
   const [select, setSelection] = useState([])
   const [pathPosition, setPathPosition] = useState([])
+  const [pathInfo, setPathInfo] = useState("")
   const rows = positions
+  console.log(pathInfo)
   console.log(pathPosition)
   useEffect(() => {
-    if(pathPosition.length > 5){
+    if(pathPosition.length > 6){
       pathPosition.pop()
     }
   }, [pathPosition]);
@@ -191,16 +193,23 @@ export const AdminCheckDevice = () => {
 
   const MakePath = () => {
     if(pathPosition.length === 1){
+      let pathGoing = `${pathPosition[0].id}번 디바이스`
+      setPathInfo(pathGoing)
       return  <a href={`https://map.naver.com/v5/directions/${state?.center.lng},${state?.center.lat},내위치/${pathPosition[0]?.lng},${pathPosition[0].lat},목적지/-/car?c=14121208.9388342,4181426.9377556,15,0,0,0,dh`}>길찾기</a>
     }else if(pathPosition.length === 0){
       return <a onClick={() => alert("경로를 설정해주세요.")}>길찾기</a>
     }
     let path =''
+    let pathGoing = ``
     for(let i=0; i<pathPosition.length-1; i++){
+      pathGoing += (`${pathPosition[i].id}번 디바이스 => `)
       path += `${pathPosition[i].lng},${pathPosition[i].lat},${pathPosition[i].id}번 디바이스:`
     }
     path = path.slice(0,-1)
+    pathGoing += `${pathPosition.at(-1).id}번 디바이스`
     console.log(path)
+    console.log(pathGoing)
+    setPathInfo(pathGoing)
     return (
         <a href={`https://map.naver.com/v5/directions/${state?.center.lng},${state?.center.lat},내위치/${pathPosition[pathPosition.length-1]?.lng},${pathPosition[pathPosition.length-1].lat},목적지/${path}/car?c=14121208.9388342,4181426.9377556,15,0,0,0,dh`}>길찾기</a>
     )
@@ -212,45 +221,6 @@ export const AdminCheckDevice = () => {
       <h3 style={{ marginLeft: "25px", marginBottom: "5px" }}>지도</h3>
       <Container sx={{ marginTop: "0px" }} maxWidth="xxl">
         <div style={{ width: "100%", height: "400px", position: "relative" }}>
-          {/* <RenderAfterNavermapsLoaded
-            ncpClientId={"q0l4kvoi7w"}
-            // 네이버 클라우드에서 받은 client id를 적어야 한다.
-            // 필자는 환경변수 이용
-            error={<p>Maps Load Error</p>}
-            loading={<p>Maps Loading...</p>}
-          >
-            <NaverMap
-              mapDivId={"react-naver-map"}
-              style={{
-                width: "100%",
-                height: "50vh",
-              }}
-              defaultCenter={{ lat: 35.293, lng: 126.910738 }}
-              defaultZoom={10}
-            >
-              {positions?.map((position, index) => (
-                <Marker
-                  key={index}
-                  position={{
-                    lat: position?.embLat,
-                    lng: position?.embLng,
-                  }}
-                />
-              ))}
-
-              <Polyline
-                path={[
-                  { lat: positions[0]?.embLat, lng: positions[0]?.embLng },
-                  { lat: positions[1]?.embLat, lng: positions[1]?.embLng },
-                ]}
-                // clickable // 사용자 인터랙션을 받기 위해 clickable을 true로 설정합니다.
-                strokeColor={"#5347AA"}
-                strokeStyle={"solid"}
-                strokeOpacity={0.8}
-                strokeWeight={5}
-              />
-            </NaverMap>
-          </RenderAfterNavermapsLoaded> */}
           <Map // 지도를 표시할 Container
                     center={state.center}
                     style={{
@@ -390,13 +360,19 @@ export const AdminCheckDevice = () => {
             </Button>
           </ButtonGroup>
         </Box>
+        <h4>수거 경로 : { pathInfo }</h4>
+        <h4>로드뷰 : { pathPosition.length === 0 ? '' : `${pathPosition.at(-1).id}번 디바이스` }</h4>
       </Container>
       <Box
           sx={{
             height: 400,
             width: '99%',
-            '& .hot': {
-              backgroundColor: '#ff943975',
+            '& .warning': {
+              backgroundColor: '#fff9c4',
+              color: '#1a3e72',
+            },
+            '& .broken': {
+              backgroundColor: '#ffcdd2',
               color: 'red',
             },
           }}
@@ -412,7 +388,9 @@ export const AdminCheckDevice = () => {
           }}
           getRowClassName={(params) =>{
           if(params.row.embSta === "Y"){
-            return 'hot'
+            return 'broken'
+          }else if(params.row.embDumy === "bad"){
+            return 'warning'
           }
         }}
         />
