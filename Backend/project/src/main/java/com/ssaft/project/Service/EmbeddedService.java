@@ -61,8 +61,8 @@ public class EmbeddedService {
         for(EmbeddedData ED : embeddedData){
             if(embeddedWarningCheck(ED)) {
                 cnt++;
-                embeddedDataRepository.save(ED);
             }
+            embeddedDataRepository.save(ED);
         }
         return cnt;
     }
