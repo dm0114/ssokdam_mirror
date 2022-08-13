@@ -4,13 +4,15 @@ import com.ssaft.project.Function.Function;
 import com.ssaft.project.Repository.EmbeddedDataRepository;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.Repository.UseDataRepository;
+import com.ssaft.project.domain.IotUser;
 import com.ssaft.project.domain.UseData;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class UseService {
@@ -49,7 +51,20 @@ public class UseService {
             map.put("ok", "토큰만료");
             return map;
         }
-        
+        Optional<IotUser> iotUser = iotUserRepository.findById(id);
+        UseData useData = new UseData();
+        useData.setIotUser(iotUser.get());
+        useData.setUseDumy("N");
+        try {
+            UseData uD = useDataRepository.findByIotUserAndUseDumy(iotUser.get(), "N");
+            System.out.println(uD);
+            map.put("ok", uD.getUseCheck());
+            uD.setUseDumy("Y");
+            useDataRepository.save(uD);
+        }catch (NullPointerException e){
+            map.put("ok", 'P');
+        }
+
 
         return map;
     }

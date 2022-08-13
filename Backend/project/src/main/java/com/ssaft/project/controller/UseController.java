@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Controller
 @RequestMapping("/api")
 public class UseController {
@@ -22,8 +24,8 @@ public class UseController {
 
     @GetMapping("/use")
     @ResponseBody
-    public void useGet(@RequestHeader String token){
-        useService.useCheck(token);
+    public Map useGet(@RequestHeader String token){
+        return useService.useCheck(token);
     }
 
 }
