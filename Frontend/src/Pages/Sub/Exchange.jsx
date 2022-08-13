@@ -26,19 +26,33 @@ import {
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { TextField } from '@mui/material';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { userInfo } from '../../atoms';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import FetchExchange from '../../api/exchange';
+import fetchUserInfo from '../../api/fetchUserInfo';
 
 
 const Exchange = () => {
   const navigate = useNavigate()
 
-  const userInfo2 = useRecoilValue(userInfo)
+  const [userInfo2, setUserInfo2] = useRecoilState(userInfo)
   const [userPoint, setUserPoint] = useState(userInfo2.userPoint)
   const [userInput, setUserInput] = useState(0)
+
+  useEffect(() => {
+    const response = fetchUserInfo()
+    response.then((res) => {
+      const newObject = {
+        ...userInfo2,
+        userPoint: res.userPoint,
+        userCnt: res.userCnt,
+        userTime: res.userTime
+      }
+      setUserInfo2(newObject)
+    })
+  }, [])  
 
   const onChangePoint = (e) => {
     setUserInput(e.target.value);

@@ -114,7 +114,7 @@ export const SubNotice = styled.div`
 `;
 
 export const SubNoticeText = styled.p`
-  font-size: 14px;
+  font-size: 16px;
   margin-bottom: auto;
 `
 

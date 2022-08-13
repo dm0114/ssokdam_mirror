@@ -26,6 +26,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 import { useQuery } from '@tanstack/react-query';
 import { fetchMyAskDetail } from '../../api/myAskDetail';
+import { userInfo } from '../../atoms';
 
 
 const MyAskDetail = () => {
@@ -35,6 +36,8 @@ const MyAskDetail = () => {
     ['myAskDetail'],
     async () => await fetchMyAskDetail(id)
   );
+
+  console.log(state);
 
   const commentList = data?.map((cmt, index) => (
     <BinWrapper key={index}>
@@ -80,16 +83,16 @@ const MyAskDetail = () => {
         </TitleWrapper>
       </Wrap>
 
-      <Avatar
-        alt="Remy Sharp"
+      {state.pstImg? (<img
         src={`${state.pstImg}`}
-        sx={{ width: 200, height: 200 }}
-      />
+        style={{ width: 200, height: 200, margin: "auto"}}
+      />) : (<BinWrapper pt="120px"></BinWrapper>)}
+      
 
       <TitleWrapper>
         <TitleText>답변</TitleText>
         <TitleDivider />
-        {commentList}
+        {commentList ? (<>{commentList}</>) : (<>답변이 등록되지 않았습니다!</>)}
       </TitleWrapper>
     </SubBackgroundView>
   );

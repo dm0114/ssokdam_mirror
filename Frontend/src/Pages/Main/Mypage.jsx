@@ -15,17 +15,27 @@ import { SubInnerText } from "../../styles/MyPageStyle"
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import {userInfo} from '../../atoms'
-import {useRecoilValue} from 'recoil'
+import {useRecoilState} from 'recoil'
 import fetchUserInfo from '../../api/fetchUserInfo';
 import { useEffect, useState } from 'react';
 
 export const MyPage = () => {
     const [fetchedUserInfo, setFetchedUserInfo] = useState()
-    const userInfo2 = useRecoilValue(userInfo)
+    const [userInfo2, setUserInfo2] = useRecoilState(userInfo)
     
     useEffect(() => {
-        fetchUserInfo()
-    })
+      const response = fetchUserInfo()
+      response.then((res) => {
+        const newObject = {
+          ...userInfo2,
+          userPoint: res.userPoint,
+          userCnt: res.userCnt,
+          userTime: res.userTime,
+          userImage: res.userImg
+        }
+        setUserInfo2(newObject)
+      })
+    }, [])
     
 
     
