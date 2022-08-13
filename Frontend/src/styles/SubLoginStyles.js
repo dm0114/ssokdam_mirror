@@ -114,7 +114,28 @@ export const SubButton = styled.button`
   border: 0px;
   border-radius: 5px;
 
+  @keyframes buttonAnimation2 {
+    0% {
+      width: 100%;
+      height: 40px;
+    }
+    50% {
+      width: 97%;
+      height: 35px;
+    }
+    100% {
+      width: 100%;
+      height: 40px;
+    }
+  }
+
+  
   :active {
+    animation: buttonAnimation2;
+    animation-duration: 0.25s;
+
+    margin-left: auto;
+    margin-right: auto;
     background-color: #808080;
   }
 `
@@ -135,7 +156,7 @@ export const NotReadyToSubmitButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${props => props.theme.colors.silver};
+  background-color: ${props => props.theme.colors.gainsboro};
   
   border: 0px;
   border-radius: 5px;

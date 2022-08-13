@@ -6,54 +6,87 @@ import {
   Vector,
   MainText,
   HeaderWrapper,
+  NotReadyToSubmitButton,
 
 } from '../../styles/SubLoginStyles';
-
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import TextField from '@mui/material/TextField';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { BinWrapper } from '../../styles/BackgroundStyle';
+import { Link, useLocation } from 'react-router-dom';
+import { MuiTheme } from '../../styles/MuiTheme';
+import { useState, useEffect } from 'react';
+import ChangePwd from '../../api/changePw';
+
 
 
 const FindPassword = () => {
-  const theme = createTheme({
-    palette: {
-      black: {
-        main: '#212121',
-      }
-    },
-    typography: {
-        fontFamily: [
-          '-apple-system',
-          'SCoreDream',
-          'BlinkMacSystemFont',
-          '"Segoe UI"',
-          'Roboto',
-          '"Helvetica Neue"',
-          'Arial',
-          'sans-serif',
-          '"Apple Color Emoji"',
-          '"Segoe UI Emoji"',
-          '"Segoe UI Symbol"',
-        ].join(','),
-      },
+  const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
+  const { state } = useLocation();
+
+  const [inputData, setInputData] = useState({
+    userPwd: "",
+    userPwd2: "",
   });
 
+  
+  const onChangeInputData = (e) => {
+    setInputData({
+      ...inputData,
+      [e.target.id]: e.target.value,
+    });
+  };
+  
+  useEffect(() => {
+    if (!Object.values(inputData).includes("")) {
+      setIsReadyToSubmit(true);
+    } else {
+      setIsReadyToSubmit(false);
+    }
+  }, [inputData]);
+
+  const onSubmitAccount = async () => {
+    const response = await ChangePwd(inputData.userPwd, state);
+    console.log(response);
+    if (response.ok === true) {
+      navigate('/login')
+    } else {
+      alert('죄송합니다. 로직을 처리하던 도중에 에러가 발생했습니다. 다시 시도해주세요.')
+    }
+  };
+
   return (
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={MuiTheme}>
           <SubLoginBackgroundView>
               <Wrap>
-                  <HeaderWrapper>
-                      <Vector
-                          alt=""
-                          src="https://static.overlay-tech.com/assets/897d620b-7272-4e3f-b46a-7d57d097eecd.svg"/>
-                      <MainText>비밀번호 찾기</MainText>
-                  </HeaderWrapper>
+                <HeaderWrapper>
+                  <BinWrapper flex="1">
+                    <Link to="/login">
+                      <ArrowBackIosIcon color="black" />
+                    </Link>
+                  </BinWrapper>
+                  <MainText flex="3">비밀번호 변경</MainText>
+                  <BinWrapper flex="1"></BinWrapper>
+                </HeaderWrapper>
                   
-                      <TextField id="standard-basic" label="변경할 비밀번호" variant="standard" fullWidth sx={ { my:2 } } color="black" />
-                      <TextField id="standard-basic" label="비밀번호 확인" variant="standard" fullWidth sx={ { my:2 } } color="black" />
+                      <TextField id="userPwd" label="변경할 비밀번호" variant="standard" fullWidth sx={ { my:2 } } color="black" onChange={onChangeInputData} />
+                      <TextField id="userPwd2" label="비밀번호 확인" variant="standard" fullWidth sx={ { my:2 } } color="black" onChange={onChangeInputData} />
               </Wrap>
-              <MainButton>
-                  <ButtonText>비밀번호 변경</ButtonText>
-              </MainButton>
+              {isReadyToSubmit ? (
+                <MainButton
+                  width="100%"
+                  type="submit"
+                  onClick={() => {
+                    onSubmitAccount(inputData)
+                  }}
+                >
+                  <ButtonText>비밀번호 찾기</ButtonText>
+                </MainButton>
+              ) : (
+                <NotReadyToSubmitButton>
+                  <ButtonText>비밀번호 찾기</ButtonText>
+                </NotReadyToSubmitButton>
+              )}
           </SubLoginBackgroundView>
       </ThemeProvider>
   );
