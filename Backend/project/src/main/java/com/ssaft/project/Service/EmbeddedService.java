@@ -59,8 +59,10 @@ public class EmbeddedService {
         List<EmbeddedData> embeddedData = embeddedDataRepository.findAll();
         int cnt = 0;
         for(EmbeddedData ED : embeddedData){
-            if(embeddedWarningCheck(ED))
+            if(embeddedWarningCheck(ED)) {
                 cnt++;
+                embeddedDataRepository.save(ED);
+            }
         }
         return cnt;
     }
