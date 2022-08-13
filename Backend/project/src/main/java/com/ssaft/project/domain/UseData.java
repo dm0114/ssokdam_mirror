@@ -35,7 +35,7 @@ public class UseData {
     private String useTime = Function.nowDate();
 
     @Column(name = "use_dumy")
-    private String useDumy;
+    private String useDumy = "N";
 
     @Transient
     private String userId;

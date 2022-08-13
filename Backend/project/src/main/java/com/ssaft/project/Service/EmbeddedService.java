@@ -57,7 +57,23 @@ public class EmbeddedService {
 
     public int findWarning(){
         List<EmbeddedData> embeddedData = embeddedDataRepository.findAll();
-        return 1;
+        int cnt = 0;
+        for(EmbeddedData ED : embeddedData){
+            if(embeddedWarningCheck(ED)) {
+                cnt++;
+            }
+            embeddedDataRepository.save(ED);
+        }
+        return cnt;
+    }
+    public boolean embeddedWarningCheck(EmbeddedData embeddedData){
+        if(embeddedData.getEmbFullCig() >= 80 || embeddedData.getEmbFullTra() >=80 || embeddedData.getEmbBat() <=10){
+            embeddedData.setEmbDumy("bad");
+            return true;
+        }else{
+            embeddedData.setEmbDumy("good");
+            return false;
+        }
     }
 
     public Map embDtUpdate(String userId){                                 // 임베디드에서 담배 성공한 유저의 최근 핀 시간 체크
