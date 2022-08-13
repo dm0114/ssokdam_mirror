@@ -230,6 +230,8 @@ public class IotUserService {
         }
         if(Phone_token.equals(number)){
             map.put("ok", true);
+        }else{
+            map.put("ok", false);
         }
         return map;
     }
