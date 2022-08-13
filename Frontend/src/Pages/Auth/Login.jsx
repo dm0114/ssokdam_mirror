@@ -122,7 +122,7 @@ function Login() {
           <h2 style={{ fontWeight: "400", marginBottom: "10px" }}>
             아름다운 흡연 습관
           </h2>
-          <h1 style={{ fontWeight: "bold", marginTop: "0px" }}>에코원</h1>
+          <h1 style={{ fontWeight: "bold", marginTop: "0px" }}>쏙담</h1>
         </MainTextWrapper>
 
         <SubBackGround height="50vh" borderRadius="20px 20px 0px 0px">
@@ -176,7 +176,7 @@ function Login() {
               >
                 <ButtonText>로그인</ButtonText>
               </MainButton>
-              <SubButton onClick={() => navigate('/signup')}>
+              <SubButton onClick={() => navigate('/signup1')}>
                 <ButtonText>
                     회원가입
                 </ButtonText>

@@ -14,19 +14,16 @@ import {
   TitleDivider,
   ContentDivider,
   ContentWrapper,
-  ContentText,
-  ContentVector,
 } from "../../styles/TitleStyle";
 
 import { BinWrapper } from "../../styles/BackgroundStyle";
 import { AlarmMainText, AlarmSubText } from "../../styles/AlarmStyle";
 
-import Avatar from "@mui/material/Avatar";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 import { useQuery } from '@tanstack/react-query';
 import { fetchMyAskDetail } from '../../api/myAskDetail';
-import { userInfo } from '../../atoms';
+
 
 
 const MyAskDetail = () => {

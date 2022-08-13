@@ -89,12 +89,12 @@ public class IotUserService {
         try {
             Optional<IotUser> iotUser = iotUserRepository.findById(user.getUserId());
             if (iotUser.get().getUserPhone().equals(user.getUserPhone())) {
-                map.put("userPwd", function.jasyptDecoding(iotUser.get().getUserPwd()));
+                map.put("ok", true);
                 return map;
             }
-            map.put("error", "휴대폰 번호가 틀렸습니다.");
+            map.put("ok", false);
         }catch (NoSuchElementException e){
-            map.put("error", "존재하지 않는 회원입니다.");
+            map.put("ok", false);
         }
         return map;
     }
@@ -230,6 +230,8 @@ public class IotUserService {
         }
         if(Phone_token.equals(number)){
             map.put("ok", true);
+        }else{
+            map.put("ok", false);
         }
         return map;
     }

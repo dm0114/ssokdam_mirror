@@ -22,10 +22,10 @@ public class EmbeddedData {
     private IotUser iotUser;
 
     @Column(name = "emb_full_tra")
-    private String embFullTra;
+    private int embFullTra;
 
     @Column(name = "emb_full_cig")
-    private String embFullCig;
+    private int embFullCig;
 
     @Column(name = "emb_lat")
     private String embLat;
@@ -34,7 +34,7 @@ public class EmbeddedData {
     private String embLng;
 
     @Column(name = "emb_bat")
-    private String embBat;
+    private int embBat;
 
     @Column(name = "emb_cnt")
     private String embCnt;

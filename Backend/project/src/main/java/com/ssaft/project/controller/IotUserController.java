@@ -79,7 +79,7 @@ public class IotUserController {
         return iotUserService.accountCertification(user);
     }
 
-    @PutMapping("/login/findPw/changePw")                          //json 방식으로 비밀번호 변경
+    @PutMapping("/login/changePwd")                          // 비밀번호 변경
     @ResponseBody
     public Map changePw(@RequestBody IotUser user) {
         return iotUserService.changePw(user);

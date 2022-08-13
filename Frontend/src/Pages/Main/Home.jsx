@@ -100,7 +100,7 @@ function Home(){
   const [notice, setNotice] = useState("")
   const navigate = useNavigate()
   const [userInfo2, setUserInfo2] = useRecoilState(userInfo)
-
+  
 
   const logout = () => {
     localStorage.removeItem('access-token')

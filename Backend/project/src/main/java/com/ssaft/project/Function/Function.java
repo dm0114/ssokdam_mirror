@@ -107,6 +107,7 @@ public class Function {
                     .getBody();
             return claims.getSubject();
         } catch (JwtException e){
+            System.out.println(e);
             return "토큰만료";
         }
     }
