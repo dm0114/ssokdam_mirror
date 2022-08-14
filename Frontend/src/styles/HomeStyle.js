@@ -136,7 +136,7 @@ export const QrMapButton = styled.div`
   text-decoration: none;
 
   border: 1px solid rgba(0,0,0,0.1);
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;  
 `;
 export const QrMapSubText = styled.p`
   flex: 1;
@@ -228,3 +228,26 @@ export const Footer = styled.p`
   font-size: 8px;
   font-weight: 400;
 ` 
+
+
+export const MiddleImg = styled.img`
+  height: 150px;
+
+  @keyframes buttonAnimation3 {
+    25% {
+      transform: translateY(10px);
+    }
+    50% {
+      transform: translateY(0px);
+    }
+    75% {
+      transform: translateY(10px);
+    }
+    100% {
+
+    }
+  }
+
+  animation: buttonAnimation3;
+  animation-duration: 0.75s;
+`

@@ -5,12 +5,13 @@ import {
   Route
 } from "react-router-dom"
 import GlobalStyle from './styles/GlobalStyle';
-// import Loading from './Pages/Loading.jsx'
 import Login from './Pages/Auth/Login'
 import FindId from './Pages/Auth/FindId';
 import FindPw from './Pages/Auth/FindPw';
-import SignUp from './Pages/Auth/SignUp.jsx'
+import SignUp1 from './Pages/Auth/SignUp1.jsx'
+import SignUp2 from './Pages/Auth/SignUp2.jsx'
 import ChangePw from './Pages/Auth/ChangePw';
+import Loading from "./Pages/Loading";
 
 import EcoMap from "./Pages/Main/EcoMap";
 import Home from './Pages/Main/Home'
@@ -53,6 +54,7 @@ function App() {
           <Route exact path='/map' element={ <EcoMap/>} />
           <Route exact path='/qr' element={<Qr/>} />
           <Route exact path='/notice' element={<Notice/>} />
+          <Route exact path='/loading' element={<Loading/>} />
           
           <Route exact path='/serviceInfo' element={<ServiceInfo/>} />
           <Route exact path='/serviceCenter' element={<ServiceCenter/>} />
@@ -66,7 +68,8 @@ function App() {
           <Route exact path='/login' element={<Login/>} />
           <Route exact path='/login/findId' element={<FindId/>} />
           <Route exact path='/login/findPw' element={<FindPw/>} />
-          <Route exact path='/signup' element={<SignUp/>} />
+          <Route exact path='/signup1' element={<SignUp1/>} />
+          <Route exact path='/signup2' element={<SignUp2/>} />
           <Route exact path='/login/changePw' element={<ChangePw/>} />
           {/* Admin */}
           <Route exact path='/adminLogin' element={<AdminLogin/>} />

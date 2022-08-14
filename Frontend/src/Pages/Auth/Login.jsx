@@ -11,7 +11,7 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-
+import { MuiTheme } from '../../styles/MuiTheme';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 import {
@@ -38,29 +38,6 @@ import fetchLogin from '../../api/login'
 import {setRefreshToken, getCookieToken} from '../../Cookie'
 
 function Login() {
-  
-  const theme = createTheme({
-    palette: {
-      black: {
-        main: "#212121",
-      },
-    },
-    typography: {
-      fontFamily: [
-        "-apple-system",
-        "SCoreDream",
-        "BlinkMacSystemFont",
-        '"Segoe UI"',
-        "Roboto",
-        '"Helvetica Neue"',
-        "Arial",
-        "sans-serif",
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(","),
-    },
-  });
 
   // 계정
   const navigate = useNavigate();
@@ -90,13 +67,14 @@ function Login() {
             throw new Error(alert('비밀번호가 틀렸습니다!'))  //비동기 진행 막기
           } else {
             localStorage.setItem('access-token', res.access_token)
-            setRefreshToken(res.Refresh_token)
+            setRefreshToken(res.refresh_token)
             setUserInfo2({
               userName : res.userName,
               userEmail : res.userEmail,
               userPoint : res.userPoint,
               userCnt : res.userCnt,
               userImage: res.userImg,
+              userTime : res.userTime,
             })
           }
         }).then(() => {
@@ -110,7 +88,7 @@ function Login() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={MuiTheme}>
       <MainBackGround bgColor="#CBF7FF">
         <BinWrapper pt="52px" pl="24px">
           <Link to="/">
@@ -122,7 +100,7 @@ function Login() {
           <h2 style={{ fontWeight: "400", marginBottom: "10px" }}>
             아름다운 흡연 습관
           </h2>
-          <h1 style={{ fontWeight: "bold", marginTop: "0px" }}>에코원</h1>
+          <h1 style={{ fontWeight: "bold", marginTop: "0px" }}>쏙담</h1>
         </MainTextWrapper>
 
         <SubBackGround height="50vh" borderRadius="20px 20px 0px 0px">
@@ -176,7 +154,7 @@ function Login() {
               >
                 <ButtonText>로그인</ButtonText>
               </MainButton>
-              <SubButton onClick={() => navigate('/signup')}>
+              <SubButton onClick={() => navigate('/signup1')}>
                 <ButtonText>
                     회원가입
                 </ButtonText>

@@ -1,4 +1,5 @@
 import {Link, Navigate} from 'react-router-dom'
+import { MuiTheme } from '../../styles/MuiTheme';
 
 import {SubBackgroundView, Wrap, MainText, HeaderWrapper} from '../../styles/SubLoginStyles';
 import {
@@ -18,6 +19,7 @@ import {userInfo} from '../../atoms'
 import {useRecoilState} from 'recoil'
 import fetchUserInfo from '../../api/fetchUserInfo';
 import { useEffect, useState } from 'react';
+import { ThemeProvider } from '@mui/material';
 
 export const MyPage = () => {
     const [fetchedUserInfo, setFetchedUserInfo] = useState()
@@ -36,11 +38,9 @@ export const MyPage = () => {
         setUserInfo2(newObject)
       })
     }, [])
-    
 
-    
-    return (<> {
-        localStorage.getItem('access-token')
+    return (<ThemeProvider theme={MuiTheme}> {
+        (localStorage.getItem('access-token') !== 'undefined' && localStorage.getItem('access-token') !== null)
             ? (
                 <SubBackgroundView>
                     <Wrap>
@@ -55,8 +55,7 @@ export const MyPage = () => {
                         </HeaderWrapper>
                     </Wrap>
                     <TitleWrapper>
-                        <TitleText>프로필</TitleText>
-                        <TitleDivider/>
+                    <ContentDivider/>
                         <ContentWrapper>
                             <ContentText>이미지</ContentText>
                             <SubInnerText>{userInfo2.userImage}</SubInnerText>
@@ -83,8 +82,7 @@ export const MyPage = () => {
             </TitleWrapper>
 
             <TitleWrapper>
-                <TitleText>나의 기여</TitleText>
-                <TitleDivider/>
+                <ContentDivider/>
                 <ContentWrapper>
                     <ContentText>포인트</ContentText>
                     <SubInnerText>{userInfo2.userPoint}</SubInnerText>
@@ -106,7 +104,7 @@ export const MyPage = () => {
         </SubBackgroundView>
             )
             : (<Navigate to="/login"/>)
-    }</>
+    }</ThemeProvider>
     );  
   }
   

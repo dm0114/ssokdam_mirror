@@ -42,7 +42,7 @@ function Qr(){
                         embId: parseInt(data),
                         token: localStorage.getItem('access-token')
                     })
-                }).then((res) => navigate('/'))
+                }).then((res) => navigate('/loading'))
             }
             fetchQr()
             console.log(data)

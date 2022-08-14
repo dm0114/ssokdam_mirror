@@ -1,5 +1,7 @@
 import {Link, useNavigate} from 'react-router-dom'
+import Loading from '../Loading/Loading'
 
+import { MuiTheme } from '../../styles/MuiTheme';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import {
   SubBackgroundView,
@@ -22,38 +24,41 @@ import {
 import {
     BinWrapper,
 } from "../../styles/BackgroundStyle";
+import { ThemeProvider } from '@mui/material';
 
 
 
 const ServiceInfo = () => {
   const navigate = useNavigate()
   return (
-    <SubBackgroundView>
-       <Wrap>
-        <HeaderWrapper mb="48px">
-            <BinWrapper flex="1">
-                <Link to="/">
-                    <ArrowBackIosIcon color="black"/>
-                </Link>
-            </BinWrapper>
-            <MainText flex="3">서비스 안내</MainText>
-            <BinWrapper flex="1"></BinWrapper>
-        </HeaderWrapper>
-      </Wrap>
+    <ThemeProvider theme={MuiTheme}>
+        <SubBackgroundView>
+        <Wrap>
+            <HeaderWrapper mb="48px">
+                <BinWrapper flex="1">
+                    <Link to="/">
+                        <ArrowBackIosIcon color="black"/>
+                    </Link>
+                </BinWrapper>
+                <MainText flex="3">서비스 안내</MainText>
+                <BinWrapper flex="1"></BinWrapper>
+            </HeaderWrapper>
+        </Wrap>
 
-        <TitleWrapper>
-            <TitleText>서비스 안내</TitleText>
-            <TitleDivider />
-            <ContentWrapper onClick={() => navigate('/frequentlyQuestion')}>
-                <ContentText>자주 묻는 질문</ContentText>
-                    <ContentVector
-                        alt=""
-                        src="https://static.overlay-tech.com/assets/8baf2001-760e-444e-9536-318352b328b5.svg"
-                    />
-            </ContentWrapper>
-            <ContentDivider />
-        </TitleWrapper>
-    </SubBackgroundView>
+            <TitleWrapper>
+            <ContentDivider/>
+                <ContentWrapper onClick={() => navigate('/frequentlyQuestion')}>
+                    <ContentText>자주 묻는 질문</ContentText>
+                        <ContentVector
+                            alt=""
+                            src="https://static.overlay-tech.com/assets/8baf2001-760e-444e-9536-318352b328b5.svg"
+                        />
+                </ContentWrapper>
+                <ContentDivider />
+            </TitleWrapper>
+            <Loading></Loading>
+        </SubBackgroundView>
+    </ThemeProvider>
 );  
 }
 

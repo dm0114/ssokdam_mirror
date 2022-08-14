@@ -13,9 +13,13 @@ export const Api = axios.create({
 });
 
 Api.interceptors.response.use( async (response) => {
+  if (!(localStorage.getItem("access-token") === 'undefined' || getCookieToken() === 'undefined')) {
+  console.log(response)
+  console.log(getCookieToken())
   if (Object.keys(response.data).includes('ok') && response.data.ok === '토큰만료') {
     const originalRequest = response.config
     const refreshToken = await getCookieToken();
+    console.log(refreshToken)
     
     // refresh-token으로 access-token 요청
     const {data} = await axios.get(
@@ -26,6 +30,7 @@ Api.interceptors.response.use( async (response) => {
         },
       }
     );
+    console.log(data)
     localStorage.setItem('access-token', data.Access_token)
     console.log('토큰 만료 후 재요청');
 
@@ -34,7 +39,7 @@ Api.interceptors.response.use( async (response) => {
     return Api(originalRequest)
   }
   
-  return response
+  return response}
 })
 
 export default Api;

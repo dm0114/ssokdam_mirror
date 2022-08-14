@@ -14,6 +14,8 @@ import { Roadview, RoadviewMarker } from "react-kakao-maps-sdk";
 import { useMap } from "react-kakao-maps-sdk";
 import { RegisterBroken} from "../../api/admin";
 import {ADMIN_SERVER_URL} from "../../config";
+import {MapLink} from "../../styles/AdminStyle";
+import EastIcon from '@mui/icons-material/East';
 
 // import {
 //   NaverMap,
@@ -85,10 +87,12 @@ export const AdminCheckDevice = () => {
   const [positions, setPositions] = useState([]);
   const [select, setSelection] = useState([])
   const [pathPosition, setPathPosition] = useState([])
+  const [pathInfo, setPathInfo] = useState("")
   const rows = positions
+  console.log(pathInfo)
   console.log(pathPosition)
   useEffect(() => {
-    if(pathPosition.length > 5){
+    if(pathPosition.length > 6){
       pathPosition.pop()
     }
   }, [pathPosition]);
@@ -191,18 +195,25 @@ export const AdminCheckDevice = () => {
 
   const MakePath = () => {
     if(pathPosition.length === 1){
-      return  <a href={`https://map.naver.com/v5/directions/${state?.center.lng},${state?.center.lat},내위치/${pathPosition[0]?.lng},${pathPosition[0].lat},목적지/-/car?c=14121208.9388342,4181426.9377556,15,0,0,0,dh`}>길찾기</a>
+      let pathGoing = `${pathPosition[0].id}번 디바이스`
+      setPathInfo(pathGoing)
+      return  <a style={{ textDecoration : 'none', color : 'white' }} href={`https://map.naver.com/v5/directions/${state?.center.lng},${state?.center.lat},내위치/${pathPosition[0]?.lng},${pathPosition[0].lat},목적지/-/car?c=14121208.9388342,4181426.9377556,15,0,0,0,dh`}>길찾기</a>
     }else if(pathPosition.length === 0){
-      return <a onClick={() => alert("경로를 설정해주세요.")}>길찾기</a>
+      return <a style={{ textDecoration : 'none', color : 'white' }} onClick={() => alert("경로를 설정해주세요.")}>길찾기</a>
     }
     let path =''
+    let pathGoing = ``
     for(let i=0; i<pathPosition.length-1; i++){
+      pathGoing += (`${pathPosition[i].id}번 디바이스 => `)
       path += `${pathPosition[i].lng},${pathPosition[i].lat},${pathPosition[i].id}번 디바이스:`
     }
     path = path.slice(0,-1)
+    pathGoing += `${pathPosition.at(-1).id}번 디바이스`
     console.log(path)
+    console.log(pathGoing)
+    setPathInfo(pathGoing)
     return (
-        <a href={`https://map.naver.com/v5/directions/${state?.center.lng},${state?.center.lat},내위치/${pathPosition[pathPosition.length-1]?.lng},${pathPosition[pathPosition.length-1].lat},목적지/${path}/car?c=14121208.9388342,4181426.9377556,15,0,0,0,dh`}>길찾기</a>
+        <a style={{ textDecoration : 'none', color : 'white' }} href={`https://map.naver.com/v5/directions/${state?.center.lng},${state?.center.lat},내위치/${pathPosition[pathPosition.length-1]?.lng},${pathPosition[pathPosition.length-1].lat},목적지/${path}/car?c=14121208.9388342,4181426.9377556,15,0,0,0,dh`}>길찾기</a>
     )
   }
 
@@ -212,45 +223,6 @@ export const AdminCheckDevice = () => {
       <h3 style={{ marginLeft: "25px", marginBottom: "5px" }}>지도</h3>
       <Container sx={{ marginTop: "0px" }} maxWidth="xxl">
         <div style={{ width: "100%", height: "400px", position: "relative" }}>
-          {/* <RenderAfterNavermapsLoaded
-            ncpClientId={"q0l4kvoi7w"}
-            // 네이버 클라우드에서 받은 client id를 적어야 한다.
-            // 필자는 환경변수 이용
-            error={<p>Maps Load Error</p>}
-            loading={<p>Maps Loading...</p>}
-          >
-            <NaverMap
-              mapDivId={"react-naver-map"}
-              style={{
-                width: "100%",
-                height: "50vh",
-              }}
-              defaultCenter={{ lat: 35.293, lng: 126.910738 }}
-              defaultZoom={10}
-            >
-              {positions?.map((position, index) => (
-                <Marker
-                  key={index}
-                  position={{
-                    lat: position?.embLat,
-                    lng: position?.embLng,
-                  }}
-                />
-              ))}
-
-              <Polyline
-                path={[
-                  { lat: positions[0]?.embLat, lng: positions[0]?.embLng },
-                  { lat: positions[1]?.embLat, lng: positions[1]?.embLng },
-                ]}
-                // clickable // 사용자 인터랙션을 받기 위해 clickable을 true로 설정합니다.
-                strokeColor={"#5347AA"}
-                strokeStyle={"solid"}
-                strokeOpacity={0.8}
-                strokeWeight={5}
-              />
-            </NaverMap>
-          </RenderAfterNavermapsLoaded> */}
           <Map // 지도를 표시할 Container
                     center={state.center}
                     style={{
@@ -297,32 +269,31 @@ export const AdminCheckDevice = () => {
                         </Box>
                       
                     )))}
-                    {!!(state && roadViewPosition) ? (<button>
-                      {/*<a href={`https://map.naver.com/v5/directions/${state?.center.lng},${state?.center.lat},내위치/${roadViewPosition?.lng},${roadViewPosition?.lat},목적지/-/car?c=14121208.9388342,4181426.9377556,15,0,0,0,dh`} target="_blank">*/}
-                      {/*  길찾기*/}
-                      {/*</a>*/}<MakePath/>
-                    </button>) : (<></>) }
+                    {!!(state && toggle === "map") ? (
+                      <Button variant="contained"><MakePath/></Button>
+                    ) : (<></>) }
                     
                     {toggle === "map" && (
-                        <input
-                            style={{
-                                position: "relative",
-                                top: "5px",
-                                left: "5px",
-                                zIndex: 30,
-                                borderRadius : '30px',
-                                backgroundColor : '#546e7a',
-                                color : 'white',
-                                cursor : 'pointer'
-                            }}
+                        <Button
+                            // sx={{
+                            //     position: "relative",
+                            //     top: "5px",
+                            //     left: "5px",
+                            //     zIndex: 30,
+                            //     borderRadius : '30px',
+                            //     backgroundColor : '#546e7a',
+                            //     color : 'white',
+                            //     cursor : 'pointer'
+                            // }}
+                            sx={{ ml : 1 }}
+                            variant="contained"
                             type="button"
                             onClick={() => setToggle("roadview")}
                             title="로드뷰 보기"
                             value="로드뷰"
-                        />
+                        >로드뷰</Button>
                     )}
                     {mapTypeId && <MapTypeId type={mapTypeId}/>}
-                
                 </Map>
           <Roadview // 로드뷰를 표시할 Container
             position={{ ...roadViewPosition, radius: 50 }}
@@ -335,22 +306,17 @@ export const AdminCheckDevice = () => {
           >
             <RoadviewMarker position={roadViewPosition} />
             {toggle === "roadview" && (
-              <input
-                style={{
-                  position: "relative",
-                  top: "5px",
-                  left: "5px",
-                  zIndex: 200,
-                  borderRadius: "30px",
-                  backgroundColor: "#546e7a",
-                  color: "white",
-                  cursor: "pointer",
-                }}
-                type="button"
-                onClick={() => setToggle("map")}
-                title="지도 보기"
-                value="지도"
-              />
+                <>
+                <Button variant="contained" sx={{ mt : 1 }}><MakePath/></Button>
+                <Button
+                  variant="contained"
+                  sx={{ mt : 1, ml : 1 }}
+                  type="button"
+                  onClick={() => setToggle("map")}
+                  title="지도 보기"
+                  value="지도"
+                >지도</Button>
+                </>
             )}
           </Roadview>
         </div>
@@ -390,13 +356,23 @@ export const AdminCheckDevice = () => {
             </Button>
           </ButtonGroup>
         </Box>
+        <h4>수거 경로 : { pathInfo }</h4>
+        <h4 style={{ marginBottom : '0px' }} >로드뷰 : { pathPosition.length === 0 ? '' : `${pathPosition.at(-1).id}번 디바이스` }</h4>
+        <Button variant="contained" sx={{ m : 1, ml : 0 }} color="info" onClick={() => {
+          setPathPosition([])
+          setPathInfo('')
+        }}>경로 초기화</Button>
       </Container>
       <Box
           sx={{
             height: 400,
             width: '99%',
-            '& .hot': {
-              backgroundColor: '#ff943975',
+            '& .warning': {
+              backgroundColor: '#fff9c4',
+              color: '#1a3e72',
+            },
+            '& .broken': {
+              backgroundColor: '#ffcdd2',
               color: 'red',
             },
           }}
@@ -412,7 +388,9 @@ export const AdminCheckDevice = () => {
           }}
           getRowClassName={(params) =>{
           if(params.row.embSta === "Y"){
-            return 'hot'
+            return 'broken'
+          }else if(params.row.embDumy === "bad"){
+            return 'warning'
           }
         }}
         />
