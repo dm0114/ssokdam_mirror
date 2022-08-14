@@ -32,9 +32,7 @@ import { ThemeProvider } from '@mui/material/styles';
 
 // props => imp_uid & accountNumber
 function SignUp2() {
-  const { datas } = useLocation();
-  console.log(1)
-  console.log( datas );
+  const { state } = useLocation();
 
   const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
   const [userInfo2, setUserInfo2] = useRecoilState(userInfo);
@@ -67,7 +65,6 @@ function SignUp2() {
   });
 
   const submit = async (values) => {
-    console.log(values);
     const { userEmail, userId, userPwd } = values;
 
     const fetchsubmit = async () => {
@@ -82,7 +79,8 @@ function SignUp2() {
           userId: userId,
           userPwd: userPwd,
           imp_uid: `${impUid}`,
-          userAccount: `${accountNumber}`,
+          userAccount: `${datas.accountNumber}`,
+          userBankNumber: `${datas.bankNumber}`,
         }),
       })
         .then((res) => {
@@ -127,16 +125,8 @@ function SignUp2() {
           </HeaderWrapper>
         </Wrap>
 
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            flex: '1',
-            height: '80vh',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Formik
+
+        <Formik
             initialValues={{
               userEmail: '',
               userId: '',
@@ -146,12 +136,13 @@ function SignUp2() {
             validationSchema={validationSchema}
             onSubmit={submit}
             validateOnMount={true}
+            style={{display: "flex"}}
           >
             {(
               { values, handleSubmit, handleChange, errors } // console.log(values)
             ) => (
-              <Box>
-                <form onSubmit={handleSubmit} autoComplete='off'>
+              <Box style={{width: "100%", height: "100%"}}>
+                <form onSubmit={handleSubmit} autoComplete='off' style={{height: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
                   <Box>
                     <TextField
                       value={values.userId}
@@ -168,64 +159,63 @@ function SignUp2() {
                       }}
                       color='black'
                     />
+
+                    <TextField
+                      value={values.userPwd}
+                      name='userPwd'
+                      type='password'
+                      onChange={handleChange}
+                      error={!!errors.userPwd}
+                      helperText={!!!!errors.userPwd ? errors.userPwd : ' '}
+                      id='pw'
+                      label='비밀번호'
+                      variant='standard'
+                      fullWidth
+                      color='black'
+                    />
+
+                    <TextField
+                      value={values.userPwd2}
+                      name='userPwd2'
+                      type='password'
+                      onChange={handleChange}
+                      error={!!errors.userPwd2}
+                      helperText={!!errors.userPwd2 ? errors.userPwd2 : ' '}
+                      id='pw2'
+                      label='비밀번호 확인'
+                      variant='standard'
+                      fullWidth
+                      sx={{
+                        marginBottom: '32px',
+                      }}
+                      color='black'
+                    />
+
+                    <TextField
+                      value={values.userEmail}
+                      name='userEmail'
+                      onChange={handleChange}
+                      type='email'
+                      error={!!errors.userEmail}
+                      helperText={!!errors.userEmail ? errors.userEmail : ' '}
+                      id='email'
+                      label='이메일'
+                      variant='standard'
+                      fullWidth
+                      sx={{
+                        marginBottom: '32px',
+                      }}
+                      color='black'
+                    />
                   </Box>
-
-                  <TextField
-                    value={values.userPwd}
-                    name='userPwd'
-                    type='password'
-                    onChange={handleChange}
-                    error={!!errors.userPwd}
-                    helperText={!!!!errors.userPwd ? errors.userPwd : ' '}
-                    id='pw'
-                    label='비밀번호'
-                    variant='standard'
-                    fullWidth
-                    color='black'
-                  />
-
-                  <TextField
-                    value={values.userPwd2}
-                    name='userPwd2'
-                    type='password'
-                    onChange={handleChange}
-                    error={!!errors.userPwd2}
-                    helperText={!!errors.userPwd2 ? errors.userPwd2 : ' '}
-                    id='pw2'
-                    label='비밀번호 확인'
-                    variant='standard'
-                    fullWidth
-                    sx={{
-                      marginBottom: '32px',
-                    }}
-                    color='black'
-                  />
-
-                  <TextField
-                    value={values.userEmail}
-                    name='userEmail'
-                    onChange={handleChange}
-                    type='email'
-                    error={!!errors.userEmail}
-                    helperText={!!errors.userEmail ? errors.userEmail : ' '}
-                    id='email'
-                    label='이메일'
-                    variant='standard'
-                    fullWidth
-                    sx={{
-                      marginBottom: '32px',
-                    }}
-                    color='black'
-                  />
-
                   <MainButton width='100%' type='submit'>
                     <ButtonText>회원 가입</ButtonText>
                   </MainButton>
                 </form>
               </Box>
             )}
-          </Formik>
-        </Box>
+        </Formik>
+
       </SubLoginBackgroundView>
     </ThemeProvider>
   );

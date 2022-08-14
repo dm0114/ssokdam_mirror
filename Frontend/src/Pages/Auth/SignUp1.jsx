@@ -290,7 +290,7 @@ const SignUp1 = () => {
             width='100%'
             type='submit'
             onClick={() => {
-              navigate('/signUp2', { state: ask });
+              navigate('/signUp2', { state: datas });
             }}
           >
             <ButtonText>다음 단계로</ButtonText>
