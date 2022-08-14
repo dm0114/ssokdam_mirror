@@ -13,6 +13,7 @@ export async function CreateComplaint(userInput) {
   }
   const response = await Api.post(URL, data, {
     headers: {
+      token : localStorage.getItem('access-token'),
       "Content-type": "application/json",
     }
   })

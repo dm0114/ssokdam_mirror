@@ -88,4 +88,16 @@ export const ImgWrapper = styled.div`
   margin: 0px 0 20px 0;
 `
 
+export const MapLink = styled.a`
+  position: relative;
+  top : 5px;
+  left : 5px;
+  margin-right: 5px;
+  border-radius: 30px;
+  z-index: 200;
+  background-color: #546e7a;
+  color : white;
+  cursor: pointer;
+`
+
 

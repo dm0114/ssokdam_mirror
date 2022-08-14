@@ -133,17 +133,12 @@ export const AdminComplaintManagement = () => {
     // pagination
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    // display complain
+    const [displays, setDisplaies] = useState([])
+    // filter process
+    const [process, setProcess] = useState("");
 
 
-    function createData(id, pstTitle, userId, pstDt, trash) {
-        return { id, pstTitle, userId, pstDt, trash };
-    }
-
-    const rows = [
-        complains.map((complain) => {
-            return createData(complain.id ,complain.pstTitle, complain.userId, complain.pstDt,<DeleteIcon/>)
-        })
-    ];
 
     useEffect(() => {
         // const fetchComplains = async () => {
@@ -166,15 +161,44 @@ export const AdminComplaintManagement = () => {
                     delete res[i].pstSeq
                 }
                 console.log(res)
+                setDisplaies(res.filter(complain => complain.pstCheck === "N"))
                 setComplains(res)
             })})
     }, []);
 
+    const handleChange = (event) => {
+        console.log(process)
+        setProcess(event.target.value);
+    };
+    useEffect(() => {
+        // console.log("머임")
+        if(process === ""){
+            console.log("")
+            setDisplaies(complains.filter(complain => complain.pstCheck === "N"))
+        }else if(process === "accept"){
+            setDisplaies(complains.filter(complain => complain.pstCheck === "Y"))
+        }else if(process === "all"){
+            setDisplaies(complains)
+        }
+        console.log(displays)
+    } ,[process])
+    console.log(displays)
+    function createData(id, pstTitle, userId, pstDt, trash) {
+        return { id, pstTitle, userId, pstDt, trash };
+    }
+
+    const rows = [
+        displays.map((display) => {
+            return createData(display.id ,display.pstTitle, display.userId, display.pstDt,<DeleteIcon/>)
+        })
+    ];
+
+
     if(status === Detail){
         // notices돌면서 id와 같은것 정보 가져옴
-        for(let i=0; i<complains.length; i++){
-            if(complains[i].id === id){
-                setPostDetail(complains[i])
+        for(let i=0; i<displays.length; i++){
+            if(displays[i].id === id){
+                setPostDetail(displays[i])
             }
         }
     }
@@ -197,33 +221,6 @@ export const AdminComplaintManagement = () => {
         setPage(0);
     };
 
-    const FilterButton = () => {
-        const [age, setAge] = useState('');
-        console.log(age)
-
-        const handleChange = (event) => {
-            setAge(event.target.value);
-        };
-
-        return (
-            <Box sx={{ minWidth: 120 }}>
-                <FormControl size="small" fullWidth>
-                    <Select
-                        value={age}
-                        displayEmpty
-                        onChange={handleChange}
-                        inputProps={{ 'aria-label': 'Without label' }}
-                    >
-                        <MenuItem value="">
-                            미처리
-                        </MenuItem>
-                        <MenuItem value={"accept"}>처리</MenuItem>
-                        <MenuItem value={"all"}>전체</MenuItem>
-                    </Select>
-                </FormControl>
-            </Box>
-        );
-    }
 
 
     return (
@@ -232,7 +229,22 @@ export const AdminComplaintManagement = () => {
                 <>
                     <h2 style={{ marginLeft : '30px', marginBottom : '0px' }}>접수된 불만 사항</h2>
                     <Box sx={{ display : 'flex', justifyContent : 'flex-end', pr : 2 }}>
-                        <FilterButton />
+                        <Box sx={{ minWidth: 120 }}>
+                            <FormControl size="small" fullWidth>
+                                <Select
+                                    value={process}
+                                    displayEmpty
+                                    onChange={handleChange}
+                                    inputProps={{ 'aria-label': 'Without label' }}
+                                >
+                                    <MenuItem value={""}>
+                                        미처리
+                                    </MenuItem>
+                                    <MenuItem value={"accept"}>처리</MenuItem>
+                                    <MenuItem value={"all"}>전체</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
                     </Box>
                     <Box sx={{ display : 'flex', flexDirection : 'column', width : '100%' }}>
                     <TableContainer sx={{ width : '100%', margin : '20px' }} component={Paper}>
@@ -250,21 +262,21 @@ export const AdminComplaintManagement = () => {
                                 {(rowsPerPage > 0
                                         ? rows[0].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                         : rows[0]
-                                ).map((complain,index) => (
-                                    <StyledTableRow key={complain.id}>
-                                        <StyledTableCell align="center" component="th" scope="complain">
+                                ).map((display,index) => (
+                                    <StyledTableRow key={display.id}>
+                                        <StyledTableCell align="center" component="th" scope="display">
                                             { index + 1 }
                                         </StyledTableCell>
                                         <StyledTableCell onClick={() => {
-                                            console.log(complain.id)
-                                            setId(complain.id)
+                                            console.log(display.id)
+                                            setId(display.id)
                                             setStatus(Detail)
-                                        }} align="center">{complain.pstTitle}</StyledTableCell>
-                                        <StyledTableCell align="center">{complain.userId}</StyledTableCell>
-                                        <StyledTableCell align="center">{complain.pstDt}</StyledTableCell>
+                                        }} align="center">{display.pstTitle}</StyledTableCell>
+                                        <StyledTableCell align="center">{display.userId}</StyledTableCell>
+                                        <StyledTableCell align="center">{display.pstDt}</StyledTableCell>
                                         <StyledTableCell align="center" onClick={() => {
-                                            deleteComplain(complain.id)
-                                        }}>{complain.trash}</StyledTableCell>
+                                            deleteComplain(display.id)
+                                        }}>{display.trash}</StyledTableCell>
                                     </StyledTableRow>
                                 ))}
                             </TableBody>

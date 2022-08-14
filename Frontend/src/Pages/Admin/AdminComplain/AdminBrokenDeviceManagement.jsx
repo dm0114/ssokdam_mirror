@@ -132,6 +132,10 @@ export const AdminBrokenDeviceManagement = () => {
     // pagination
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [process, setProcess] = useState('');
+    // display
+    const [displays, setDisplaies] = useState([])
+
     useEffect(() => {
         fetchBrokenDevice()
             .then((res) => {res.json().then((res) => {
@@ -140,24 +144,39 @@ export const AdminBrokenDeviceManagement = () => {
                     res[i].id = res[i].pstSeq
                     delete res[i].pstSeq
                 }
+                setDisplaies(res.filter(complain => complain.pstCheck === "N"))
                 setBrokens(res)
             })})
     }, []);
+
+    useEffect(() => {
+        // console.log("머임")
+        if(process === ""){
+            console.log("")
+            setDisplaies(brokens.filter(complain => complain.pstCheck === "N"))
+        }else if(process === "accept"){
+            setDisplaies(brokens.filter(complain => complain.pstCheck === "Y"))
+        }else if(process === "all"){
+            setDisplaies(brokens)
+        }
+        console.log(displays)
+    } ,[process])
+
     function createData(id, pstTitle, userId, pstDt, trash) {
         return { id, pstTitle, userId, pstDt, trash };
     }
 
     const rows = [
-        brokens.map((broken,index) => {
-            return createData(broken.id ,broken.pstTitle, broken.userId, broken.pstDt,<DeleteIcon/>)
+        displays.map((display,index) => {
+            return createData(display.id ,display.pstTitle, display.userId, display.pstDt,<DeleteIcon/>)
         })
     ];
 
     if(status === Detail){
         // notices돌면서 id와 같은것 정보 가져옴
-        for(let i=0; i<brokens.length; i++){
-            if(brokens[i].id === id){
-                setPostDetail(brokens[i])
+        for(let i=0; i<displays.length; i++){
+            if(displays[i].id === id){
+                setPostDetail(displays[i])
             }
         }
     }
@@ -180,33 +199,10 @@ export const AdminBrokenDeviceManagement = () => {
         setPage(0);
     };
 
-    const FilterButton = () => {
-        const [age, setAge] = useState('');
-        console.log(age)
+    const handleChange = (event) => {
+        setProcess(event.target.value);
+    };
 
-        const handleChange = (event) => {
-            setAge(event.target.value);
-        };
-
-        return (
-            <Box sx={{ minWidth: 120 }}>
-                <FormControl size="small" fullWidth>
-                    <Select
-                        value={age}
-                        displayEmpty
-                        onChange={handleChange}
-                        inputProps={{ 'aria-label': 'Without label' }}
-                    >
-                        <MenuItem value="">
-                            미처리
-                        </MenuItem>
-                        <MenuItem value={"accept"}>처리</MenuItem>
-                        <MenuItem value={"all"}>전체</MenuItem>
-                    </Select>
-                </FormControl>
-            </Box>
-        );
-    }
 
     return (
         <React.Fragment>
@@ -214,7 +210,22 @@ export const AdminBrokenDeviceManagement = () => {
                 <>
                     <h2 style={{ marginLeft : '30px', marginBottom : '0px' }}>접수된 고장 신고</h2>
                     <Box sx={{ display : 'flex', justifyContent : 'flex-end', pr : 2 }}>
-                        <FilterButton />
+                        <Box sx={{ minWidth: 120 }}>
+                            <FormControl size="small" fullWidth>
+                                <Select
+                                    value={process}
+                                    displayEmpty
+                                    onChange={handleChange}
+                                    inputProps={{ 'aria-label': 'Without label' }}
+                                >
+                                    <MenuItem value="">
+                                        미처리
+                                    </MenuItem>
+                                    <MenuItem value={"accept"}>처리</MenuItem>
+                                    <MenuItem value={"all"}>전체</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
                     </Box>
                     <Box sx={{ display : 'flex', flexDirection : 'column', width : "100%" }}>
                         <TableContainer sx={{ width : '100%', margin : '20px' }} component={Paper}>
@@ -232,20 +243,20 @@ export const AdminBrokenDeviceManagement = () => {
                                     {(rowsPerPage > 0
                                             ? rows[0].slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                             : rows[0]
-                                    ).map((broken, index) => (
-                                        <StyledTableRow key={broken.id}>
-                                            <StyledTableCell align="center" component="th" scope="broken">
+                                    ).map((display, index) => (
+                                        <StyledTableRow key={display.id}>
+                                            <StyledTableCell align="center" component="th" scope="display">
                                                 {index + 1}
                                             </StyledTableCell>
                                             <StyledTableCell align="center" onClick={() => {
-                                                setId(broken.id)
+                                                setId(display.id)
                                                 setStatus(Detail)
-                                            }}>{broken.pstTitle}</StyledTableCell>
-                                            <StyledTableCell align="center">{broken.userId}</StyledTableCell>
-                                            <StyledTableCell align="center">{broken.pstDt}</StyledTableCell>
+                                            }}>{display.pstTitle}</StyledTableCell>
+                                            <StyledTableCell align="center">{display.userId}</StyledTableCell>
+                                            <StyledTableCell align="center">{display.pstDt}</StyledTableCell>
                                             <StyledTableCell align="center" onClick={() => {
-                                                deleteBroken(broken.id)
-                                            }}>{broken.trash}</StyledTableCell>
+                                                deleteBroken(display.id)
+                                            }}>{display.trash}</StyledTableCell>
                                         </StyledTableRow>
                                     ))}
                                 </TableBody>

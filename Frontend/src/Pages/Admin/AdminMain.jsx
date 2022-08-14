@@ -84,9 +84,9 @@ export const AdminMain = () => {
                     }} style={{ cursor : 'pointer' }}>
                         <TextBox>
                             <span style={{ fontWeight : 'bold', textAlign : 'center' }}>{ generalInfo.complain ?
-                                generalInfo.complain.length : null
+                                generalInfo.complain.filter(compl => compl.pstCheck === "N").length : null
                             }</span>
-                            <span style={{ textAlign : 'center' }}>문의 사항</span>
+                            <span style={{ textAlign : 'center' }}>미처리 불만사항</span>
                         </TextBox>
                     </ComponentBox>
                     <ComponentBox
@@ -98,7 +98,7 @@ export const AdminMain = () => {
                             <span style={{ fontWeight : 'bold',textAlign : 'center' }}>{ generalInfo.Broken ?
                                 generalInfo.Broken.length : null
                             }</span>
-                            <span>고장 신고</span>
+                            <span>미처리 고장신고</span>
                         </TextBox>
                     </ComponentBox>
                     <ComponentBox
@@ -107,7 +107,7 @@ export const AdminMain = () => {
                         }} style={{ cursor : 'pointer' }}
                     >
                         <TextBox>
-                            <span style={{ fontWeight : 'bold',textAlign : 'center' }}>0</span>
+                            <span style={{ fontWeight : 'bold',textAlign : 'center' }}>{ generalInfo.deviceWarning }</span>
                             <span>디바이스 알림</span>
                         </TextBox>
                     </ComponentBox>
@@ -117,7 +117,7 @@ export const AdminMain = () => {
                         }} style={{ cursor : 'pointer' }}
                     >
                         <TextBox>
-                            <span style={{ fontWeight : 'bold',textAlign : 'center' }}>0</span>
+                            <span style={{ fontWeight : 'bold',textAlign : 'center' }}>{ generalInfo.deviceBroken }</span>
                             <span>문제 디바이스</span>
                         </TextBox>
                     </ComponentBox>

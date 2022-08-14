@@ -74,7 +74,7 @@ export const AdminExchange = () => {
     const acceptExchange = () => {
         console.log(select)
         AcceptExchange(select)
-            .then((res) => console.log(res))
+            .then((res) => window.location.replace("/admin"))
     }
 
     const deleteExchange = () => {
