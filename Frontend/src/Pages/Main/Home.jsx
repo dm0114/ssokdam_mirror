@@ -64,14 +64,7 @@ function Home() {
   const [userLevel, setUserLevel] = useState(1);
   const navigate = useNavigate();
   const [userInfo2, setUserInfo2] = useRecoilState(userInfo);
-  const time = useRef(firstTime());
-  const [min, setMin] = useState(parseInt(time/60));
-  const [sec, setSec] = useState((parseInt(time))%60);
-  console.log(typeof min,typeof sec)
-  const [isTimeOut,setIsTimeOut] = useState(false)
-  const timerId = useRef(null);
-  const [userNow,setUserNow] = useState("");
-  const [notice, setNotice] = useState('');
+
 
   // const [time, setTime] = useState("00:00")
 
@@ -90,6 +83,14 @@ function Home() {
     return diffTime
   }
 
+    const time = useRef(firstTime());
+    const [min, setMin] = useState(parseInt(time/60));
+    const [sec, setSec] = useState((parseInt(time))%60);
+    console.log(typeof min,typeof sec)
+    const [isTimeOut,setIsTimeOut] = useState(false)
+    const timerId = useRef(null);
+    const [userNow,setUserNow] = useState("");
+    const [notice, setNotice] = useState('');
   // useEffect(() => {
   //   // const now = new Date()
   //   const now = new Date('2022-08-13 15:05:58')

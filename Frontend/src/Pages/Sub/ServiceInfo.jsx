@@ -47,6 +47,14 @@ const ServiceInfo = () => {
 
             <TitleWrapper>
             <ContentDivider/>
+                <ContentWrapper onClick={() => navigate('/serviceIntroduction')}>
+                    <ContentText>서비스 소개</ContentText>
+                        <ContentVector
+                            alt=""
+                            src="https://static.overlay-tech.com/assets/8baf2001-760e-444e-9536-318352b328b5.svg"
+                        />
+                </ContentWrapper>
+                <ContentDivider />
                 <ContentWrapper onClick={() => navigate('/frequentlyQuestion')}>
                     <ContentText>자주 묻는 질문</ContentText>
                         <ContentVector
@@ -56,7 +64,6 @@ const ServiceInfo = () => {
                 </ContentWrapper>
                 <ContentDivider />
             </TitleWrapper>
-            <Loading></Loading>
         </SubBackgroundView>
     </ThemeProvider>
 );  
