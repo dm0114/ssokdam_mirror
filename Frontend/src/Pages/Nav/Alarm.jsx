@@ -26,6 +26,7 @@ import { userInfo } from "../../atoms";
 import { useRecoilValue } from "recoil";
 import { fetchAlarm } from '../../api/alarm';
 import { useQuery } from '@tanstack/react-query';
+import Loading from '../Loading/Loading';
 
 export const Alarm = () => {
   const userInfo2 = useRecoilValue(userInfo);
@@ -45,8 +46,9 @@ export const Alarm = () => {
 
   return (
     <>
+    {(localStorage.getItem('access-token') !== 'undefined') ? (<>
       {userInfo2 ? (
-        isLoading ? (<>Loading...</>) : (<SubBackgroundView>
+        isLoading ? (<Loading/>) : (<SubBackgroundView>
           <Wrap>
             <HeaderWrapper mb="48px">
               <BinWrapper flex="1">
@@ -65,7 +67,7 @@ export const Alarm = () => {
         
       ) : (
         <Navigate to="/login" />
-      )}
+      )}</>) : (<Navigate to="/login"/>)}
     </>
   );
 };

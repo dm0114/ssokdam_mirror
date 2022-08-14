@@ -228,3 +228,26 @@ export const Footer = styled.p`
   font-size: 8px;
   font-weight: 400;
 ` 
+
+
+export const MiddleImg = styled.img`
+  height: 150px;
+
+  @keyframes buttonAnimation3 {
+    25% {
+      transform: translateY(10px);
+    }
+    50% {
+      transform: translateY(0px);
+    }
+    75% {
+      transform: translateY(10px);
+    }
+    100% {
+
+    }
+  }
+
+  animation: buttonAnimation3;
+  animation-duration: 0.75s;
+`

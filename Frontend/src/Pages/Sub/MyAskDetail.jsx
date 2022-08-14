@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, useParams, useLocation } from "react-router-dom";
+import React from 'react';
+import { Link, useParams, useLocation, Navigate } from 'react-router-dom';
 import { MuiTheme } from '../../styles/MuiTheme';
 
 import {
@@ -7,7 +7,7 @@ import {
   Wrap,
   MainText,
   HeaderWrapper,
-} from "../../styles/SubLoginStyles";
+} from '../../styles/SubLoginStyles';
 
 import {
   TitleWrapper,
@@ -15,18 +15,16 @@ import {
   TitleDivider,
   ContentDivider,
   ContentWrapper,
-} from "../../styles/TitleStyle";
+} from '../../styles/TitleStyle';
 
-import { BinWrapper } from "../../styles/BackgroundStyle";
-import { AlarmMainText, AlarmSubText } from "../../styles/AlarmStyle";
+import { BinWrapper } from '../../styles/BackgroundStyle';
+import { AlarmMainText, AlarmSubText } from '../../styles/AlarmStyle';
 
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 import { useQuery } from '@tanstack/react-query';
 import { fetchMyAskDetail } from '../../api/myAskDetail';
 import { ThemeProvider } from '@mui/material';
-
-
 
 const MyAskDetail = () => {
   let { id } = useParams();
@@ -42,7 +40,9 @@ const MyAskDetail = () => {
     <BinWrapper key={index}>
       <BinWrapper>
         <ContentWrapper>
-          <AlarmMainText>{cmt.userId} | {cmt.cmtCtnt}</AlarmMainText>
+          <AlarmMainText>
+            {cmt.userId} | {cmt.cmtCtnt}
+          </AlarmMainText>
         </ContentWrapper>
         <ContentWrapper>
           <AlarmSubText>{state.pstDt}</AlarmSubText>
@@ -54,49 +54,60 @@ const MyAskDetail = () => {
 
   return (
     <ThemeProvider theme={MuiTheme}>
-      <SubBackgroundView>
-        <Wrap>
-          <HeaderWrapper mb="48px">
-            <BinWrapper flex="1">
-              <Link to="/serviceCenter">
-                <ArrowBackIosIcon color="black" />
-              </Link>
-            </BinWrapper>
-            <MainText flex="3">나의 문의 내역</MainText>
-            <BinWrapper flex="1"></BinWrapper>
-          </HeaderWrapper>
+      {localStorage.getItem('access-token') !== 'undefined' &&
+      localStorage.getItem('access-token') !== null ? (
+        <SubBackgroundView>
+          <Wrap>
+            <HeaderWrapper mb='48px'>
+              <BinWrapper flex='1'>
+                <Link to='/serviceCenter'>
+                  <ArrowBackIosIcon color='black' />
+                </Link>
+              </BinWrapper>
+              <MainText flex='3'>나의 문의 내역</MainText>
+              <BinWrapper flex='1'></BinWrapper>
+            </HeaderWrapper>
+            <TitleWrapper>
+              <BinWrapper>
+                <ContentWrapper>
+                  <AlarmMainText>{state.pstTitle}</AlarmMainText>
+                </ContentWrapper>
+                <ContentWrapper>
+                  <AlarmSubText>{state.pstDt}</AlarmSubText>
+                </ContentWrapper>
+              </BinWrapper>
+              <TitleDivider />
+              <BinWrapper>
+                <ContentWrapper>
+                  <AlarmMainText>{state.pstCtnt}</AlarmMainText>
+                </ContentWrapper>
+              </BinWrapper>
+            </TitleWrapper>
+          </Wrap>
+
+          {state.pstImg ? (
+            <img
+              src={`${state.pstImg}`}
+              style={{ width: 200, height: 200, margin: 'auto' }}
+            />
+          ) : (
+            <BinWrapper pt='120px'></BinWrapper>
+          )}
+
           <TitleWrapper>
-            <BinWrapper>
-              <ContentWrapper>
-                <AlarmMainText>{state.pstTitle}</AlarmMainText>
-              </ContentWrapper>
-              <ContentWrapper>
-                <AlarmSubText>{state.pstDt}</AlarmSubText>
-              </ContentWrapper>
-            </BinWrapper>
+            <TitleText>답변</TitleText>
             <TitleDivider />
-            <BinWrapper>
-              <ContentWrapper>
-                <AlarmMainText>{state.pstCtnt}</AlarmMainText>
-              </ContentWrapper>
-            </BinWrapper>
+            {commentList ? (
+              <>{commentList}</>
+            ) : (
+              <>답변이 등록되지 않았습니다!</>
+            )}
           </TitleWrapper>
-        </Wrap>
-
-        {state.pstImg? (<img
-          src={`${state.pstImg}`}
-          style={{ width: 200, height: 200, margin: "auto"}}
-        />) : (<BinWrapper pt="120px"></BinWrapper>)}
-        
-
-        <TitleWrapper>
-          <TitleText>답변</TitleText>
-          <TitleDivider />
-          {commentList ? (<>{commentList}</>) : (<>답변이 등록되지 않았습니다!</>)}
-        </TitleWrapper>
-      </SubBackgroundView>
+        </SubBackgroundView>
+      ) : (
+        <Navigate to='/login' />
+      )}
     </ThemeProvider>
   );
 };
-
 export default MyAskDetail;

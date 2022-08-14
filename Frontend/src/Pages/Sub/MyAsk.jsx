@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import { MuiTheme } from '../../styles/MuiTheme';
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -19,6 +19,8 @@ import {
   ContentText,
   ContentVector,
 } from '../../styles/TitleStyle';
+
+import Loading from '../Loading/Loading'
 
 import { BinWrapper } from '../../styles/BackgroundStyle';
 
@@ -54,27 +56,28 @@ const MyAsk = () => {
 
   return (
     <ThemeProvider theme={MuiTheme}>
-      {isLoading ? (
-        <>Loading...</>
+      {localStorage.getItem('access-token') !== 'undefined' && localStorage.getItem('access-token') !== null ? (
+         isLoading ? ( <Loading></Loading>) : (
+          <SubBackgroundView>
+            <Wrap>
+              <HeaderWrapper mb='48px'>
+                <BinWrapper flex='1'>
+                  <Link to='/serviceCenter'>
+                    <ArrowBackIosIcon color="black" />
+                  </Link>
+                </BinWrapper>
+                <MainText flex='3'>나의 문의 내역</MainText>
+                <BinWrapper flex='1'></BinWrapper>
+              </HeaderWrapper>
+              <ContentDivider />
+            </Wrap>
+            {askList}
+          </SubBackgroundView>
+        )
       ) : (
-        <SubBackgroundView>
-          <Wrap>
-            <HeaderWrapper mb='48px'>
-              <BinWrapper flex='1'>
-                <Link to='/serviceCenter'>
-                  <ArrowBackIosIcon color="black" />
-                </Link>
-              </BinWrapper>
-              <MainText flex='3'>나의 문의 내역</MainText>
-              <BinWrapper flex='1'></BinWrapper>
-            </HeaderWrapper>
-            <ContentDivider />
-          </Wrap>
-          {askList}
-        </SubBackgroundView>
+        <Navigate to='/login' />
       )}
     </ThemeProvider>
   );
 };
-
 export default MyAsk;

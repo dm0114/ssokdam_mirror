@@ -38,11 +38,9 @@ export const MyPage = () => {
         setUserInfo2(newObject)
       })
     }, [])
-    
 
-    
     return (<ThemeProvider theme={MuiTheme}> {
-        localStorage.getItem('access-token')
+        (localStorage.getItem('access-token') !== 'undefined' && localStorage.getItem('access-token') !== null)
             ? (
                 <SubBackgroundView>
                     <Wrap>

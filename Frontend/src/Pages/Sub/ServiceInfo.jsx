@@ -1,4 +1,5 @@
 import {Link, useNavigate} from 'react-router-dom'
+import Loading from '../Loading/Loading'
 
 import { MuiTheme } from '../../styles/MuiTheme';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -55,6 +56,7 @@ const ServiceInfo = () => {
                 </ContentWrapper>
                 <ContentDivider />
             </TitleWrapper>
+            <Loading></Loading>
         </SubBackgroundView>
     </ThemeProvider>
 );  
