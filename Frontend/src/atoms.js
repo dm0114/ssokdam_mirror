@@ -29,6 +29,7 @@ export const userInfo = atom({
     userPoint : '',
     userCnt : '',
     userImage: '',
+    userTime : '',
   },
   effects_UNSTABLE: [persistAtom],
 })

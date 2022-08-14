@@ -112,9 +112,11 @@ export const AdminBrokenDeviceManagementDetail = () => {
                     {/*        <img src={postDetail.preview_URL}/>*/}
                     {/*    </div>*/}
                     {/*</div>*/}
-                    <div className="img-wrapper">
-                        <img src={postDetail.pstImg}/>
-                    </div>
+                    { postDetail.pstImg ? (
+                        <div className="img-wrapper">
+                            <img style={{  width: '500px' , height: '500px', objectFit : "cover" }}  src={postDetail.pstImg}/>
+                        </div>
+                    ) : (<></>) }
                     <Typography>
                         { postDetail.pstCtnt }
                     </Typography>
