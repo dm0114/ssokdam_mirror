@@ -229,25 +229,29 @@ function Home() {
               <SubNoticeText>다음 이용까지</SubNoticeText>
               <SubNotice>
                 <TimeController>
-                  { isTimeOut ? (
-                      <h4 style={{ margin : 0 }}>이용가능</h4>
-                  ) : (
+                  { localStorage.getItem('access-token') ? (
                       <>
-                        { isNaN(min) && isNaN(sec) ? (
-                            <h4 style={{ margin : 0 }}>Loading...</h4>
-                        ) : (<>
-                          {sec < 10 ? (
-                              <h4 style={{ margin: 0 }}>
-                                {min} : 0{sec}
-                              </h4>
+                        { isTimeOut ? (
+                              <h4 style={{ margin : 0 }}>이용가능</h4>
                           ) : (
-                              <h4 style={{ margin: 0 }}>
-                                {min} : {sec}
-                              </h4>
-                          )}
-                        </>)}
+                              <>
+                                { isNaN(min) && isNaN(sec) ? (
+                                    <h4 style={{ margin : 0 }}>Loading...</h4>
+                                ) : (<>
+                                  {sec < 10 ? (
+                                      <h4 style={{ margin: 0 }}>
+                                        {min} : 0{sec}
+                                      </h4>
+                                  ) : (
+                                      <h4 style={{ margin: 0 }}>
+                                        {min} : {sec}
+                                      </h4>
+                                  )}
+                                </>)}
+                              </>
+                          ) }
                       </>
-                  ) }
+                  ) : (<h4 style={{ margin : 0 }}>-</h4>)}
                 </TimeController>
               </SubNotice>
             </BinWrapper>
@@ -260,7 +264,12 @@ function Home() {
 
             <BinWrapper display='flex' fd='column' ai='center' jc='center'>
               <SubNoticeText>나의 포인트</SubNoticeText>
-              <SubNotice>{userInfo2?.userPoint}점</SubNotice>
+              { localStorage.getItem('access-token') ? (
+                  <SubNotice>{userInfo2?.userPoint}점</SubNotice>
+              ) : (
+                  <SubNotice>-</SubNotice>
+              ) }
+
             </BinWrapper>
           </BinWrapper>
         </BinWrapper>

@@ -23,7 +23,7 @@ import {
 } from '../../styles/SubLoginStyles';
 import { BinWrapper } from '../../styles/BackgroundStyle';
 import { MuiTheme } from '../../styles/MuiTheme';
-
+import {SignUpData} from "../../atoms";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -33,7 +33,7 @@ import { ThemeProvider } from '@mui/material/styles';
 // props => imp_uid & accountNumber
 function SignUp2() {
   const { state } = useLocation();
-
+  const [datas,setDatas] = useRecoilState(SignUpData)
   const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
   const [userInfo2, setUserInfo2] = useRecoilState(userInfo);
   
@@ -78,9 +78,9 @@ function SignUp2() {
           userEmail: userEmail,
           userId: userId,
           userPwd: userPwd,
-          imp_uid: `${impUid}`,
+          imp_uid: `${datas.impUid}`,
           userAccount: `${datas.accountNumber}`,
-          userBankNumber: `${datas.bankNumber}`,
+          userBanknumber: `${datas.bankNumber}`,
         }),
       })
         .then((res) => {
@@ -95,6 +95,11 @@ function SignUp2() {
                 userCnt: res.userCnt,
                 userImage: res.userImg,
               });
+              setDatas({
+                impUid : "",
+                accountNumber: "",
+                bankNumber: "",
+              })
             });
             setTimeout(() => {
               navigate('/');

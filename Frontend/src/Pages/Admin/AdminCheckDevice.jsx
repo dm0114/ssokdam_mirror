@@ -194,17 +194,18 @@ export const AdminCheckDevice = () => {
   };
 
   const MakePath = () => {
+    let path =''
+    let pathGoing = ``
     if(pathPosition.length === 1){
       let pathGoing = `${pathPosition[0].id}번 디바이스`
       setPathInfo(pathGoing)
       return  <a style={{ textDecoration : 'none', color : 'white' }} href={`https://map.naver.com/v5/directions/${state?.center.lng},${state?.center.lat},내위치/${pathPosition[0]?.lng},${pathPosition[0].lat},목적지/-/car?c=14121208.9388342,4181426.9377556,15,0,0,0,dh`}>길찾기</a>
     }else if(pathPosition.length === 0){
+      setPathInfo(pathGoing)
       return <a style={{ textDecoration : 'none', color : 'white' }} onClick={() => alert("경로를 설정해주세요.")}>길찾기</a>
     }
-    let path =''
-    let pathGoing = ``
     for(let i=0; i<pathPosition.length-1; i++){
-      pathGoing += (`${pathPosition[i].id}번 디바이스 => `)
+      pathGoing += (`${pathPosition[i].id}번 디바이스 → `)
       path += `${pathPosition[i].lng},${pathPosition[i].lat},${pathPosition[i].id}번 디바이스:`
     }
     path = path.slice(0,-1)
@@ -358,10 +359,15 @@ export const AdminCheckDevice = () => {
         </Box>
         <h4>수거 경로 : { pathInfo }</h4>
         <h4 style={{ marginBottom : '0px' }} >로드뷰 : { pathPosition.length === 0 ? '' : `${pathPosition.at(-1).id}번 디바이스` }</h4>
-        <Button variant="contained" sx={{ m : 1, ml : 0 }} color="info" onClick={() => {
+        <Button variant="contained" sx={{ m : 1, ml : 0 }} color="error" onClick={() => {
           setPathPosition([])
           setPathInfo('')
         }}>경로 초기화</Button>
+        <Button variant="contained" sx={{ m : 1, ml : 0 }} color="info" onClick={() => {
+          pathPosition.splice(-1,1)
+          console.log(pathPosition)
+          setPathPosition([...pathPosition])
+        }}>경로 한칸뒤로</Button>
       </Container>
       <Box
           sx={{
