@@ -21,7 +21,6 @@ import { Button, InputAdornment } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { ThemeProvider } from '@mui/material/styles';
-import {SignUpData} from "../../atoms";
 import {useRecoilState} from "recoil";
 
 
@@ -37,7 +36,7 @@ const SignUp1 = () => {
     setIsActive(tmp);
   };
 
-  const [datas, setDatas] = useRecoilState(SignUpData);
+  const [datas, setDatas] = useState({})
   const [impUid, setImpUid] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
   const [bankNumber, setBankNumber] = useState('');
@@ -290,7 +289,7 @@ const SignUp1 = () => {
           <MainButton
             width='100%'
             type='submit'
-            onClick={(datas) => {
+            onClick={() => {
               navigate('/signUp2', { state: datas });
             }}
           >

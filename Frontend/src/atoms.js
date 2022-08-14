@@ -78,13 +78,3 @@ export const PostDetail = atom({
   effects_UNSTABLE: [persistAtom],
   // 나중에 comment도 와야함
 })
-
-export const SignUpData = atom({
-  key : 'signupData',
-  default : {
-    impUid : "",
-    accountNumber: "",
-    bankNumber: "",
-  },
-  effects_UNSTABLE: [persistAtom],
-})

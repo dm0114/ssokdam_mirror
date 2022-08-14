@@ -33,7 +33,6 @@ import { ThemeProvider } from '@mui/material/styles';
 // props => imp_uid & accountNumber
 function SignUp2() {
   const { state } = useLocation();
-  const [datas,setDatas] = useRecoilState(SignUpData)
   const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
   const [userInfo2, setUserInfo2] = useRecoilState(userInfo);
   
@@ -78,9 +77,9 @@ function SignUp2() {
           userEmail: userEmail,
           userId: userId,
           userPwd: userPwd,
-          imp_uid: `${datas.impUid}`,
-          userAccount: `${datas.accountNumber}`,
-          userBanknumber: `${datas.bankNumber}`,
+          imp_uid: `${state.impUid}`,
+          userAccount: `${state.accountNumber}`,
+          userBanknumber: `${state.bankNumber}`,
         }),
       })
         .then((res) => {
@@ -95,11 +94,11 @@ function SignUp2() {
                 userCnt: res.userCnt,
                 userImage: res.userImg,
               });
-              setDatas({
-                impUid : "",
-                accountNumber: "",
-                bankNumber: "",
-              })
+              // setDatas({
+              //   impUid : "",
+              //   accountNumber: "",
+              //   bankNumber: "",
+              // })
             });
             setTimeout(() => {
               navigate('/');
