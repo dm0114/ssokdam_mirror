@@ -36,6 +36,10 @@ public class IotUser {
     @Column(name = "user_account")
     private String userAccount;
 
+    @Column(name = "user_banknumber")
+    @ColumnDefault("")
+    private String userBanknumber;
+
     @Column(name = "user_email")
     private String userEmail;
 
@@ -66,9 +70,10 @@ public class IotUser {
     @ColumnDefault("")
     private String userRt;
 
-    @Column(name = "user_bankNumber")
+
+    @Column(name = "user_dumy")
     @ColumnDefault("")
-    private String userBankNumber;
+    private String userDumy;
 
     @Transient
     private String imp_uid;
