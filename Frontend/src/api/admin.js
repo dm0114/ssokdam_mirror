@@ -172,20 +172,6 @@ export async function RegisterBroken(id){
     })
     return response
 }
-//
-// export async function CancelBroken(id){
-//     const URL = `${SERVER_URL}/devices/${id}`
-//     let response = await fetch(URL, {
-//         method : 'PUT',
-//         headers: {
-//             "Content-type": "application/json",
-//         },
-//     })
-//     return response
-// }
-
-
-
 
 
 
@@ -229,22 +215,6 @@ export async function fetchUsers(){
     return response
 };
 
-
-
-// export async function UpdateUser(id, newData){
-//     const URL = `${ADMIN_SERVER_URL}/users/${id}` // id리스트로
-//     const response = await fetch(URL, {
-//         method: "PUT",
-//         headers: {
-//             "Content-type": "application/json",
-//         },
-//         body: JSON.stringify({
-//             newData : newData
-//         }),
-//
-//     })
-//     return response
-// } // todo => 삭제
 
 export async function DeleteUser(userId){
     const URL = `${SERVER_URL}/users/${userId}` // id리스트로

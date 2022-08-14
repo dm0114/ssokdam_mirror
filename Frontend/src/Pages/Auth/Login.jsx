@@ -97,6 +97,7 @@ function Login() {
               userPoint : res.userPoint,
               userCnt : res.userCnt,
               userImage: res.userImg,
+              userTime : res.userTime,
             })
           }
         }).then(() => {

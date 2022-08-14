@@ -81,15 +81,48 @@ function Home() {
       ].join(','),
     },
   });
-  const [min, setMin] = useState(40);
-  const [sec, setSec] = useState(0);
-  const time = useRef(2400);
-  const timerId = useRef(null);
-  // const [time, setTime] = useState("00:00")
 
-  const [notice, setNotice] = useState('');
+  // const [time, setTime] = useState("00:00")
+  // 시간 계산
+  const firstTime = () => {
+    const now = new Date()
+    console.log(now)
+    const lastUse = userInfo2.userTime
+    const end = new Date(lastUse)
+    console.log(end)
+    let diffTime = parseInt((now - end)/1000)
+    console.log(diffTime)
+    if(diffTime > 2400){
+      diffTime = 0
+    }
+    return diffTime
+  }
   const navigate = useNavigate();
   const [userInfo2, setUserInfo2] = useRecoilState(userInfo);
+  const time = useRef(firstTime());
+  const [min, setMin] = useState(parseInt(time/60));
+  const [sec, setSec] = useState((parseInt(time))%60);
+  console.log(typeof min,typeof sec)
+  const [isTimeOut,setIsTimeOut] = useState(false)
+  const timerId = useRef(null);
+  const [userNow,setUserNow] = useState("");
+  const [notice, setNotice] = useState('');
+
+  // useEffect(() => {
+  //   // const now = new Date()
+  //   const now = new Date('2022-08-13 15:05:58')
+  //   console.log(now)
+  //   console.log(now.getTime()) // 현재시간
+  //   const lastUse = userInfo2.userTime
+  //   console.log(lastUse)
+  //   const end = new Date(lastUse)
+  //   console.log(end.getTime())
+  //   const diffTime = parseInt((now - end)/1000)
+  //   // time = parseInt(diffTime / 1000)
+  //   console.log(diffTime) // 시간 초
+  //   // let time = useRef(diffTime)
+  //   console.log(time)
+  // },[])
 
   const logout = () => {
     localStorage.removeItem('access-token');
@@ -107,6 +140,7 @@ function Home() {
     timerId.current = setInterval(() => {
       setMin(parseInt(time.current / 60));
       setSec(time.current % 60);
+      // console.log(time)
       time.current -= 1;
     }, 1000);
     return () => clearInterval(timerId.current);
@@ -115,6 +149,7 @@ function Home() {
   useEffect(() => {
     if (time.current <= 0) {
       console.log('time out');
+      setIsTimeOut(true)
       clearInterval(timerId.current);
     }
   }, [sec]);
@@ -194,15 +229,25 @@ function Home() {
               <SubNoticeText>다음 이용까지</SubNoticeText>
               <SubNotice>
                 <TimeController>
-                  {sec < 10 ? (
-                    <h4 style={{ margin: 0 }}>
-                      {min} : 0{sec}
-                    </h4>
+                  { isTimeOut ? (
+                      <h4 style={{ margin : 0 }}>이용가능</h4>
                   ) : (
-                    <h4 style={{ margin: 0 }}>
-                      {min} : {sec}
-                    </h4>
-                  )}
+                      <>
+                        { isNaN(min) && isNaN(sec) ? (
+                            <h4 style={{ margin : 0 }}>Loading...</h4>
+                        ) : (<>
+                          {sec < 10 ? (
+                              <h4 style={{ margin: 0 }}>
+                                {min} : 0{sec}
+                              </h4>
+                          ) : (
+                              <h4 style={{ margin: 0 }}>
+                                {min} : {sec}
+                              </h4>
+                          )}
+                        </>)}
+                      </>
+                  ) }
                 </TimeController>
               </SubNotice>
             </BinWrapper>
