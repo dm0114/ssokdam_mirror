@@ -252,6 +252,7 @@ public class IotUserService {
         Optional<IotUser> iotUser = iotUserRepository.findById(id);
         iotUser.get().setUserPoint(iotUser.get().getUserPoint()+25);
         iotUser.get().setUserTime(Function.nowDate());
+        System.out.println(Function.nowDate());
         iotUser.get().setUserCnt(iotUser.get().getUserCnt()+1);
         iotUserRepository.save(iotUser.get());
     }

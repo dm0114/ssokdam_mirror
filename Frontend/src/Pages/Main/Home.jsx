@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { MuiTheme } from '../../styles/MuiTheme';
 
 import { Typography } from '@mui/material';
 import { useState, useEffect, useRef } from 'react';
@@ -48,6 +49,7 @@ import {
   NameText,
   SubNotice,
   SubNoticeText,
+  MiddleImg,
 } from '../../styles/HomeStyle';
 
 import { NavBar } from '../Nav/NavBar';
@@ -59,30 +61,13 @@ const detailGo = <ArrowForwardIosIcon />;
 // };
 
 function Home() {
-  const theme = createTheme({
-    palette: {
-      black: {
-        main: '#212121',
-      },
-    },
-    typography: {
-      fontFamily: [
-        '-apple-system',
-        'SCoreDream',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Roboto',
-        '"Helvetica Neue"',
-        'Arial',
-        'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(','),
-    },
-  });
+  const [userLevel, setUserLevel] = useState(1);
+  const navigate = useNavigate();
+  const [userInfo2, setUserInfo2] = useRecoilState(userInfo);
+
 
   // const [time, setTime] = useState("00:00")
+
   // 시간 계산
   const firstTime = () => {
     const now = new Date()
@@ -97,17 +82,15 @@ function Home() {
     }
     return diffTime
   }
-  const navigate = useNavigate();
-  const [userInfo2, setUserInfo2] = useRecoilState(userInfo);
-  const time = useRef(firstTime());
-  const [min, setMin] = useState(parseInt(time/60));
-  const [sec, setSec] = useState((parseInt(time))%60);
-  console.log(typeof min,typeof sec)
-  const [isTimeOut,setIsTimeOut] = useState(false)
-  const timerId = useRef(null);
-  const [userNow,setUserNow] = useState("");
-  const [notice, setNotice] = useState('');
 
+    const time = useRef(firstTime());
+    const [min, setMin] = useState(parseInt(time/60));
+    const [sec, setSec] = useState((parseInt(time))%60);
+    console.log(typeof min,typeof sec)
+    const [isTimeOut,setIsTimeOut] = useState(false)
+    const timerId = useRef(null);
+    const [userNow,setUserNow] = useState("");
+    const [notice, setNotice] = useState('');
   // useEffect(() => {
   //   // const now = new Date()
   //   const now = new Date('2022-08-13 15:05:58')
@@ -154,14 +137,26 @@ function Home() {
     }
   }, [sec]);
 
+  useEffect(() => {
+    if (userInfo2.userCnt === '') {
+      setUserLevel('https://i.postimg.cc/bJ0xx4Tk/1.gif')
+    } else if (userInfo2.userCnt <= 20) {
+      setUserLevel('https://i.postimg.cc/BZg5X9tG/2.gif')
+    } else if (userInfo2.userCnt <= 40) {
+      setUserLevel('https://i.postimg.cc/0jc73mhN/3.gif')
+    } else {
+      setUserLevel('https://i.postimg.cc/6q9dYzjS/4.gif')
+    }
+  }, [userInfo2.userCnt])
+
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={MuiTheme}>
       <MainBackGround bgColor='#fff'>
         <BinWrapper>
           <TopBackGround>
             <BinWrapper display='flex' fd='row' pt='60px' pl='24px' pr='24px'>
               <NameText>
-                {localStorage.getItem('access-token') ? (
+                {(localStorage.getItem('access-token') !== 'undefined' && localStorage.getItem('access-token') !== null) ? (
                   <>{userInfo2.userName} 님이</>
                 ) : (
                   <></>
@@ -169,7 +164,7 @@ function Home() {
               </NameText>
 
               <MainContainer flexNum='1' jc='flex-end'>
-                {localStorage.getItem('access-token') ? (
+                {(localStorage.getItem('access-token') !== 'undefined' && localStorage.getItem('access-token') !== null) ? (
                   <>
                     {/* <MainIcon>
                           <Link to='/myPage'>
@@ -199,21 +194,26 @@ function Home() {
               </MainContainer>
             </BinWrapper>
 
-            <BinWrapper display='flex' fd='column' pl='24px' mt='8px' mb='auto'>
-              <MainContainer flexNum='3'>
-                {localStorage.getItem('access-token') ? (
-                  <NameText>바다를 지켜준 횟수</NameText>
-                ) : (
-                  <MainText>
-                    쏙담과 <br />
-                    <br />
-                    바다를 지켜주세요
-                  </MainText>
-                )}
-              </MainContainer>
-              {localStorage.getItem('access-token') ? (
-                <MiddleText>{userInfo2.userCnt}회</MiddleText>
-              ) : null}
+            <BinWrapper display='flex' fd='row' pl='24px' mt='8px' mb="24px">
+              <BinWrapper>
+                <MainContainer flexNum='3'>
+                  {(localStorage.getItem('access-token') !== 'undefined' && localStorage.getItem('access-token') !== null) ? (
+                    <NameText>바다를 지켜준 횟수</NameText>
+                  ) : (
+                    <MainText>
+                      쏙담과 <br />
+                      <br />
+                      바다를 지켜주세요
+                    </MainText>
+                  )}
+                </MainContainer>
+                {(localStorage.getItem('access-token') !== 'undefined' && localStorage.getItem('access-token') !== null) ? (
+                  <MiddleText>{userInfo2.userCnt}회</MiddleText>
+                ) : null}
+              </BinWrapper>
+              <BinWrapper display="flex" fd="row-reverse" ai="" pr="24px" pt="24px">
+                <MiddleImg src={`${userLevel}`} alt="" />
+              </BinWrapper>
             </BinWrapper>
           </TopBackGround>
 

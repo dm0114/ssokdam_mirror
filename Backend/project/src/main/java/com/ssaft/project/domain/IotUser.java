@@ -36,6 +36,10 @@ public class IotUser {
     @Column(name = "user_account")
     private String userAccount;
 
+    @Column(name = "user_banknumber")
+    @ColumnDefault("")
+    private String userBanknumber;
+
     @Column(name = "user_email")
     private String userEmail;
 
@@ -60,11 +64,12 @@ public class IotUser {
 
     @Column(name = "user_time")
     @ColumnDefault("")
-    private String userTime;
+    private String userTime = "2022-01-01 00:00:00";
 
     @Column(name = "user_rt")
     @ColumnDefault("")
     private String userRt;
+
 
     @Column(name = "user_dumy")
     @ColumnDefault("")

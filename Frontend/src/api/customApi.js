@@ -13,11 +13,7 @@ export const Api = axios.create({
 });
 
 Api.interceptors.response.use( async (response) => {
-  console.log(getCookieToken() === 'undefined');
-  if (localStorage.getItem("access-token") === 'undefined' || getCookieToken() === 'undefined') {
-    alert('로그인이 필요합니다!')
-    window.location.href = 'http://localhost:3000/login';
-  } else {
+  if (!(localStorage.getItem("access-token") === 'undefined' || getCookieToken() === 'undefined')) {
   console.log(response)
   console.log(getCookieToken())
   if (Object.keys(response.data).includes('ok') && response.data.ok === '토큰만료') {

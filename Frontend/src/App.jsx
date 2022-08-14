@@ -12,6 +12,8 @@ import SignUp1 from './Pages/Auth/SignUp1.jsx'
 import SignUp2 from './Pages/Auth/SignUp2.jsx'
 import ChangePw from './Pages/Auth/ChangePw';
 import Loading from "./Pages/Loading";
+import Loading2 from "./Pages/Loading/Loading";
+import Complete from "./Pages/Loading/Complete";
 
 import EcoMap from "./Pages/Main/EcoMap";
 import Home from './Pages/Main/Home'
@@ -22,6 +24,7 @@ import Notice from './Pages/Main/Notice'
 import Exchange from './Pages/Sub/Exchange'
 import ServiceInfo from './Pages/Sub/ServiceInfo'
 import ServiceCenter from './Pages/Sub/ServiceCenter'
+import ServiceIntroduction from './Pages/Sub/ServiceIntroduction'
 import MyAsk from './Pages/Sub/MyAsk'
 import MyAskDetail from './Pages/Sub/MyAskDetail'
 import Complaint from './Pages/Sub/Complaint'
@@ -55,6 +58,8 @@ function App() {
           <Route exact path='/qr' element={<Qr/>} />
           <Route exact path='/notice' element={<Notice/>} />
           <Route exact path='/loading' element={<Loading/>} />
+          <Route exact path='/loading2' element={<Loading2/>} />
+          <Route exact path='/complete' element={<Complete/>} />
           
           <Route exact path='/serviceInfo' element={<ServiceInfo/>} />
           <Route exact path='/serviceCenter' element={<ServiceCenter/>} />
@@ -63,6 +68,7 @@ function App() {
           <Route exact path="/myAsk/:id" element={<MyAskDetail/>} />
           <Route exact path='/exchange' element={<Exchange/>} />
           <Route exact path='/complaint' element={<Complaint/>} />
+          <Route exact path='/serviceIntroduction' element={<ServiceIntroduction/>} />
           {/* <Route exact path='/brokenDeviceReport' element={<BrokenDeviceReport/>} /> */}
           {/* ClientAuth */}
           <Route exact path='/login' element={<Login/>} />
