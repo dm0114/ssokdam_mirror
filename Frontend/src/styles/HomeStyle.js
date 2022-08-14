@@ -136,7 +136,7 @@ export const QrMapButton = styled.div`
   text-decoration: none;
 
   border: 1px solid rgba(0,0,0,0.1);
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;  
 `;
 export const QrMapSubText = styled.p`
   flex: 1;

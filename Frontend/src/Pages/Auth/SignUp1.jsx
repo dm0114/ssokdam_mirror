@@ -91,7 +91,6 @@ const SignUp1 = () => {
 
         setImpUid(imp_uid); // 아임포트 성인인증이 되면 imp_uid를 ImpUid에 저장
         console.log(imp_uid);
-        alert('본인인증 성공');
       } else {
         alert(`본인인증 실패: ${error_msg}`);
       }
@@ -289,7 +288,7 @@ const SignUp1 = () => {
           <MainButton
             width='100%'
             type='submit'
-            onClick={() => {
+            onClick={(datas) => {
               navigate('/signUp2', { state: datas });
             }}
           >
