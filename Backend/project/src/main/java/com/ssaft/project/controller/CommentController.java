@@ -65,7 +65,7 @@ public class CommentController {
     @GetMapping("/hi")              // 속성값 게시판 호출
     @ResponseBody()
     public String gigigi(){
-        return "hi";
+        return Function.nowDate();
     }
 
 }
