@@ -11,7 +11,7 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-
+import { MuiTheme } from '../../styles/MuiTheme';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 import {
@@ -38,29 +38,6 @@ import fetchLogin from '../../api/login'
 import {setRefreshToken, getCookieToken} from '../../Cookie'
 
 function Login() {
-  
-  const theme = createTheme({
-    palette: {
-      black: {
-        main: "#212121",
-      },
-    },
-    typography: {
-      fontFamily: [
-        "-apple-system",
-        "SCoreDream",
-        "BlinkMacSystemFont",
-        '"Segoe UI"',
-        "Roboto",
-        '"Helvetica Neue"',
-        "Arial",
-        "sans-serif",
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(","),
-    },
-  });
 
   // 계정
   const navigate = useNavigate();
@@ -110,7 +87,7 @@ function Login() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={MuiTheme}>
       <MainBackGround bgColor="#CBF7FF">
         <BinWrapper pt="52px" pl="24px">
           <Link to="/">

@@ -1,5 +1,6 @@
 import {Link, useNavigate} from 'react-router-dom'
 
+import { MuiTheme } from '../../styles/MuiTheme';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import {
   SubBackgroundView,
@@ -42,8 +43,7 @@ const FrequentlyQuestion = () => {
       </Wrap>
 
         <TitleWrapper>
-            <TitleText>자주 묻는 질문</TitleText>
-            <TitleDivider />
+        <ContentDivider/>
             <ContentWrapper onClick={() => navigate('/')}>
                 <ContentText>1. 인증 번호가 문자가 오지 않습니다.</ContentText>
                     <ContentVector
