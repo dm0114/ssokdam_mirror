@@ -32,7 +32,8 @@ function Qr(){
             // 백엔드에 URL 보내기
             const fetchQr = async () => {
                 const deviceNum2 = data.split("=")[1]
-                const URL = `${NONEAPI_URL}/embedded/qr`
+                console.log(deviceNum2)
+                const URL = `${NONEAPI_URL}/api/embedded/qr`
                 await fetch(URL, {
                     method: 'POST',
                     headers: {
