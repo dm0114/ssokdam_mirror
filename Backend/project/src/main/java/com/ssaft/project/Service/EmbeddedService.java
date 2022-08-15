@@ -109,8 +109,8 @@ public class EmbeddedService {
         if(embeddedData.get().getEmbQr().equals("Y")){
             map.put("userId" , embeddedData.get().getIotUser().getUserId());
             map.put("embQr" , embeddedData.get().getEmbQr());
-            /*embeddedData.get().setEmbQr("N");
-            embeddedDataRepository.save(embeddedData.get()*/
+            embeddedData.get().setEmbQr("N");
+            embeddedDataRepository.save(embeddedData.get());
         }else {
             map.put("error", false);
         }
