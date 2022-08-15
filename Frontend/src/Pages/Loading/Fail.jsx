@@ -1,12 +1,20 @@
 import { ThemeProvider } from '@mui/material';
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import { BinWrapper, MainBackGround } from '../../styles/BackgroundStyle'
 import { MuiTheme } from '../../styles/MuiTheme';
 import { HeaderWrapper, SubBackgroundView, Wrap, MainText} from '../../styles/SubLoginStyles';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
-const Complete = () => {
+const Fail = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setTimeout(() => {
+      navigate('/');
+    }, 3000);
+  }, []);
+
   return (
     <ThemeProvider theme={MuiTheme}>
       <SubBackgroundView>
@@ -17,7 +25,7 @@ const Complete = () => {
                         <ArrowBackIosIcon color="black"/>
                     </Link>
                 </BinWrapper>
-                <MainText flex="3">수거 성공!</MainText>
+                <MainText flex="3">수거 실패!</MainText>
                 <BinWrapper flex="1"></BinWrapper>
             </HeaderWrapper>
         </Wrap>
@@ -36,6 +44,6 @@ const Complete = () => {
   )
 }
 
-export default Complete
+export default Fail
 
 
