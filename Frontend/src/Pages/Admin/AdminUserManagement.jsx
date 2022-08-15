@@ -14,9 +14,9 @@ import axios from "axios";
 import {fetchUsers, UpdateUser, DeleteUser } from "../../api/admin";
 
 const columns = [
-    { field: 'id', headerName: '아이디', flex : 1, headerAlign: 'center', align: "center",  editable: true },
-    { field: 'userName', headerName: '회원이름', flex : 1, headerAlign: 'center',align: "center",  editable: true },
-    { field: 'userBirthDay', headerName: '생년월일', type : 'dateTime' ,headerAlign: 'center', flex : 1, align: "center", editable: true },
+    { field: 'id', headerName: '아이디', flex : 1, headerAlign: 'center', align: "center"},
+    { field: 'userName', headerName: '회원이름', flex : 1, headerAlign: 'center',align: "center"},
+    { field: 'userAccount', headerName: '계좌번호',headerAlign: 'center', flex : 1, align: "center"},
     {
         field: 'userPoint',
         headerName: '포인트',
@@ -24,7 +24,6 @@ const columns = [
         flex : 1,
         align: "center",
         headerAlign: 'center',
-        editable: true
     },
     {
         field: 'userEmail',
@@ -33,9 +32,6 @@ const columns = [
         flex : 1,
         align: "center",
         headerAlign: 'center',
-        editable: true
-        // valueGetter: (params) =>
-        //     `${params.row.firstName || ''} ${params.row.lastName || ''}`,
     },
 ];
 

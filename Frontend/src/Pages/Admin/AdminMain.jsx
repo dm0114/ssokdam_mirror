@@ -73,8 +73,8 @@ export const AdminMain = () => {
                     <ComponentBox>
                         <AdminMainImg alt="" src="https://cdn-icons-png.flaticon.com/512/2562/2562050.png"></AdminMainImg>
                         <TextBox>
-                            <span>수거된 꽁초</span>
-                            <span style={{ fontWeight : 'bold' }}>0 kg</span>
+                            <span>회원 수</span>
+                            <span style={{ fontWeight : 'bold' }}>{ generalInfo.userCnt }</span>
                         </TextBox>
                     </ComponentBox>
                 </FullwidthBox>

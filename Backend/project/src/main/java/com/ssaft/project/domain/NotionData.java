@@ -1,6 +1,7 @@
 package com.ssaft.project.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ssaft.project.Function.Function;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,13 +26,16 @@ public class NotionData {
     private IotUser iotUser;
 
     @Column(name = "not_dt")
-    private String notDt;
+    private String notDt = Function.nowDate();
 
     @Column(name = "not_ctnt")
     private String notCtnt;
 
     @Column(name = "not_money")
     private int notMoney;
+
+    @Column(name = "not_check")
+    private String notCheck = "N";
 
     @Transient
     private String userId;

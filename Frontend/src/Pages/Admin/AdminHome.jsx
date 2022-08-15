@@ -37,7 +37,7 @@ const theme = createTheme(
 function AdminHome(){
     const adminInfo = useRecoilValue(userInfo)
     const navigator = useNavigate()
-    if(adminInfo.userAdmin === "N"){
+    if(adminInfo.userAdmin === "N" || !localStorage.getItem("access-token")){
         alert('관리자가 아닙니다!')
         navigator('/adminLogin')
     }
