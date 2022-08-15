@@ -231,7 +231,7 @@ public class IotUserService {
             List<IotUser> iotUser = iotUserRepository.findByUserPhone(user.getUserPhone());
             if(iotUser.size()==0) throw new NoSuchElementException();
             String result = function.numberGen(4, 2);
-//            smsFunction.sendSMS(user.getUserPhone(), result);
+            smsFunction.sendSMS(user.getUserPhone(), result);
             String token = function.creatToken(result, (3 * 1000 * 60));
             map.put("Phone_token", token);
         }catch (NoSuchElementException e){
