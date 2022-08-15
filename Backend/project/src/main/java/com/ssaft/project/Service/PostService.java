@@ -1,8 +1,10 @@
 package com.ssaft.project.Service;
 
 import com.ssaft.project.Function.Function;
+import com.ssaft.project.Repository.CommentDataRepository;
 import com.ssaft.project.Repository.IotUserRepository;
 import com.ssaft.project.Repository.PostDataRepository;
+import com.ssaft.project.domain.CommentData;
 import com.ssaft.project.domain.IotUser;
 import com.ssaft.project.domain.PostData;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ public class PostService {
     @Autowired
     PostDataRepository postDataRepository;
 
+    @Autowired
+    CommentDataRepository commentDataRepository;
     @Autowired
     Function function;
 
@@ -70,7 +74,12 @@ public class PostService {
         Map<String, Object> map = new LinkedHashMap<>();
         try{
             Optional<PostData> postData = postDataRepository.findById(pstSeq);
+            List<CommentData> commentDataList = commentDataRepository.findByPostData(postData.get());
+            for(CommentData CD : commentDataList){
+                commentDataRepository.delete(CD);
+            }
             postDataRepository.delete(postData.get());
+
             map.put("ok", true);
         } catch (NoSuchElementException e){
             map.put("ok", false);
