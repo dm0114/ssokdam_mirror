@@ -272,6 +272,10 @@ public class IotUserService {
         iotUserRepository.save(iotUser.get());
     }
 
+    public int allUserCnt(){
+        return (int) iotUserRepository.count();
+    }
+
 
 
 
