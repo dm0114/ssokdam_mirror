@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.NonUniqueResultException;
 import java.io.IOException;
 import java.util.*;
 
@@ -227,7 +228,8 @@ public class IotUserService {
     public Map<String, Object> phoneCheck(IotUser user) throws JSONException {           // 핸드폰 인증 토큰 생성 및 sms 문자 보내기
         Map<String, Object> map = new LinkedHashMap<>();
         try {
-            IotUser iotUser = iotUserRepository.findByUserPhone(user.getUserPhone());
+            List<IotUser> iotUser = iotUserRepository.findByUserPhone(user.getUserPhone());
+            if(iotUser.size()==0) throw new NoSuchElementException();
             String result = function.numberGen(4, 2);
             smsFunction.sendSMS(user.getUserPhone(), result);
             String token = function.creatToken(result, (3 * 1000 * 60));

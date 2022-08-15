@@ -109,8 +109,8 @@ public class EmbeddedService {
         if(embeddedData.get().getEmbQr().equals("Y")){
             map.put("userId" , embeddedData.get().getIotUser().getUserId());
             map.put("embQr" , embeddedData.get().getEmbQr());
-            /*embeddedData.get().setEmbQr("N");
-            embeddedDataRepository.save(embeddedData.get()*/
+            embeddedData.get().setEmbQr("N");
+            embeddedDataRepository.save(embeddedData.get());
         }else {
             map.put("error", false);
         }
@@ -145,7 +145,7 @@ public class EmbeddedService {
 
     public void userQrCheck(EmbeddedData user){
         System.out.println(user);
-        Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(Integer.valueOf(user.getEmbId()));
+        Optional<EmbeddedData> embeddedData = embeddedDataRepository.findById(user.getEmbId());
         String name = function.getSubJect(user.getToken());
         Optional<IotUser> iotUser =  iotUserRepository.findById(name);
         embeddedData.get().setIotUser(iotUser.get());
