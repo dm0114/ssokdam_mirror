@@ -15,3 +15,14 @@ export default async function AccountCheck({userName, impUid}){
     })
     return response
 }
+
+export const fetchAccountCerti = async () => {
+    const url = `${SERVER_URL}/signup1/check`
+    const response = await fetch(url, {
+        method : 'GET',
+        headers : {
+            'Content-type': 'application/json',
+        }
+    })
+    return response
+}

@@ -127,6 +127,7 @@ const SignUp1 = () => {
               alert('계좌인증이 되었습니다!');
               setIsAccount(true);
             } else {
+              alert('계좌정보가 맞지 않습니다.')
             }
           })
         )

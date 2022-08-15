@@ -65,6 +65,9 @@ export const AdminExchange = () => {
                     res[i].id = res[i].pbSeq
                     delete res[i].pbSeq
                 }
+                res.reverse((a,b) => {
+                    return a.id - b.id
+                })
                 console.log(res)
                 setExchanges(res)
             })))
