@@ -26,5 +26,6 @@ export async function checkCertNum(phoneToken, userCertNum) {
       token: phoneToken
     }
   })
-  return response
+  const json = response.json()
+  return json
 }
