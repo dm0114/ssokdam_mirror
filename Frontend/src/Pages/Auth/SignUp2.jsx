@@ -85,26 +85,25 @@ function SignUp2() {
         .then((res) => {
           if (res.ok) {
             res.json().then((res) => {
-              console.log(res);
-              localStorage.setItem('access-token', res.Access_token);
-              setUserInfo2({
-                userName: res.userName,
-                userEmail: res.userEmail,
-                userPoint: res.userPoint,
-                userCnt: res.userCnt,
-                userImage: res.userImg,
-                userTime : res.userTime,
-                userAdmin : res.userAdmin
-              });
-              // setDatas({
-              //   impUid : "",
-              //   accountNumber: "",
-              //   bankNumber: "",
-              // })
+              if (Object.keys(res).includes('message')) {
+                console.log(res.message.message)
+                alert(res.message.message)
+              } else {                
+                localStorage.setItem('access-token', res.Access_token);
+                setUserInfo2({
+                  userName: res.userName,
+                  userEmail: res.userEmail,
+                  userPoint: res.userPoint,
+                  userCnt: res.userCnt,
+                  userImage: res.userImg,
+                  userTime : res.userTime,
+                  userAdmin : res.userAdmin
+                });
+                setTimeout(() => {
+                  navigate('/');
+                }, 2000);
+              }
             });
-            setTimeout(() => {
-              navigate('/');
-            }, 2000);
           } else {
             alert('성인이 아니거나 성인인증을 하지 않으셨습니다.');
           }

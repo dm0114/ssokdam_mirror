@@ -81,7 +81,12 @@ const FindId = () => {
   const [phoneToken, setPhoneToken] = useState('')
   const fetchCertificationNumber = async () => {
     const response = await fetchCertNum(inputData.userPhone)
-    setPhoneToken(response.Phone_token)
+    console.log(response)
+    if (response.ok === false) {
+      alert('등록되지 않은 번호입니다!')
+    } else {
+      setPhoneToken(response.Phone_token)
+    }
   }
 
   
