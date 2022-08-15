@@ -9,6 +9,21 @@ export async function fetchAlarm() {
       token : localStorage.getItem("access-token")
     },
   })
-  
+  response.data.reverse((a,b) => {
+    return a.notSeq - b.notSeq
+  })
+  console.log(response.data)
   return response.data
 }
+
+// export async function AlarmReading(id){
+//   const URL = `${SERVER_URL}/alarm/${id}`
+//
+//   const response = await fetch(URL, {
+//     method : 'PUT',
+//     headers : {
+//       token : localStorage.getItem("access-token")
+//     }
+//   })
+//   return response
+// }
