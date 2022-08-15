@@ -2,8 +2,11 @@ package com.ssaft.project.Service;
 
 import com.ssaft.project.Function.Function;
 import com.ssaft.project.Repository.IotUserRepository;
+import com.ssaft.project.Repository.NotionDataRepository;
 import com.ssaft.project.Repository.PaybackDataRepository;
+import com.ssaft.project.domain.CommentData;
 import com.ssaft.project.domain.IotUser;
+import com.ssaft.project.domain.NotionData;
 import com.ssaft.project.domain.PaybackData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,9 @@ public class PaybackService {
 
     @Autowired
     IotUserRepository iotUserRepository;
+
+    @Autowired
+    NotionDataRepository notionDataRepository;
     @Autowired
     Function function;
 
@@ -60,6 +66,11 @@ public class PaybackService {
             iotUser.get().setUserPoint(iotUser.get().getUserPoint()-paybackData.get().getPbMoney());
             iotUserRepository.save(iotUser.get());
             paybackDataRepository.save(paybackData.get());
+            NotionData notionData = new NotionData();
+            notionData.setIotUser(iotUser.get());
+            notionData.setNotCtnt("환전");
+            notionData.setNotMoney(paybackData.get().getPbMoney());
+            notionDataRepository.save(notionData);
         }
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("ok", true);
