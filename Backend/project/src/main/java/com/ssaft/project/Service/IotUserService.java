@@ -84,7 +84,7 @@ public class IotUserService {
 
     }
 
-    public Map findPwd(IotUser user) {
+    public Map<String, Object> findPwd(IotUser user) {
         Map<String, Object> map = new LinkedHashMap<>();
         try {
             Optional<IotUser> iotUser = iotUserRepository.findById(user.getUserId());
@@ -155,6 +155,7 @@ public class IotUserService {
             map.put("userPoint", user.getUserPoint());
             map.put("userCnt", user.getUserCnt());
             map.put("userImg", user.getUserImg());
+            map.put("userTime", user.getUserTime());
             return map;
         }catch (IllegalStateException e) {
 
