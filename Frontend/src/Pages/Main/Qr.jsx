@@ -31,7 +31,7 @@ function Qr(){
             setQrscan(data)
             // 백엔드에 URL 보내기
             const fetchQr = async () => {
-                
+                const deviceNum2 = data.split("=")[1]
                 const URL = `${NONEAPI_URL}/embedded/qr`
                 await fetch(URL, {
                     method: 'POST',
@@ -39,7 +39,7 @@ function Qr(){
                         'Content-type': 'application/json'
                     },
                     body: JSON.stringify({
-                        embId: parseInt(data),
+                        embId: parseInt(deviceNum2),
                         token: localStorage.getItem('access-token')
                     })
                 }).then((res) => navigate('/loading2'))

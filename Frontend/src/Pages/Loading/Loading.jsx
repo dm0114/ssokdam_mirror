@@ -1,32 +1,68 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { fetchUseState } from '../../api/Loading';
 import { BinWrapper, MainBackGround } from '../../styles/BackgroundStyle'
 
 const Loading = () => {
   const navigate = useNavigate();
+  const [embedStatus, setEmbedStatus] = useState('');
 
+  
   useEffect(() => {
-    let isCigar = setInterval(() => {
+    let isCigar = setInterval(fetchApi, 2000);
+    let timer = setTimeout(timeOut, 10000);
+    function timeOut() {
+      clearInterval(isCigar)
+      navigate('/')
+    }
+  
+    function fetchApi() {
       fetchUseState().then((res) => {
         res.json().then((res) => {
-          console.log(res.ok)
-          if (res.ok === 'Y') {
-            clearInterval(isCigar);
+          console.log(res.ok);
+          if (res.ok === "Y") {
+            clearTimeout(timer)
+            clearInterval(isCigar)
             navigate('/complete');
-          } else if (res.ok === 'N') {
-            clearInterval(isCigar);
+          } 
+          else if (res.ok === "N") {
+            clearTimeout(timer)
+            clearInterval(isCigar)
+            navigate('/fail');
+          } 
+          else if (res.ok === "X") {
+            clearTimeout(timer)
+            clearInterval(isCigar)
             navigate('/fail');
           }
         });
       });
-    }, 1000);
+    }
+  }, [])
+ 
 
-    setTimeout(() => {
-      clearInterval(isCigar);
-      navigate('/fail');
-    }, 10000);
-  }, []);
+
+  // useEffect(() => {
+  //   console.log(embedStatus)
+  //   if (embedStatus === 'Y') {
+  //     clearTimeout(timer)
+  //     clearInterval(isCigar);
+  //     console.log(embedStatus)
+  //     navigate('/complete');
+  //   } 
+  //   else if (embedStatus === 'N') {
+  //     clearTimeout(timer)
+  //     clearInterval(isCigar);
+  //     console.log(embedStatus)
+  //     navigate('/fail');
+  //   } 
+  //   else if (embedStatus === 'X') {
+  //     clearTimeout(timer)
+  //     clearInterval(isCigar);
+  //     console.log(embedStatus)
+  //     navigate('/fail');
+  //   }
+  // }, [embedStatus]);
 
   return (
     <MainBackGround>
