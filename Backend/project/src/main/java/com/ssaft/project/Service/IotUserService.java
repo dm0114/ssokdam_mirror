@@ -129,6 +129,14 @@ public class IotUserService {
         String pwd = function.jasyptEncoding(user.getUserPwd());    //비밀번호 암호화
         user.setUserPwd(pwd);
 
+        if(user.getUserBanknumber().equals("004")) user.setUserAccount("국민 "+user.getUserAccount());
+        if(user.getUserBanknumber().equals("034")) user.setUserAccount("광주 "+user.getUserAccount());
+        if(user.getUserBanknumber().equals("030")) user.setUserAccount("기업 "+user.getUserAccount());
+        if(user.getUserBanknumber().equals("090")) user.setUserAccount("카카오 "+user.getUserAccount());
+        if(user.getUserBanknumber().equals("011")) user.setUserAccount("농협 "+user.getUserAccount());
+        if(user.getUserBanknumber().equals("088")) user.setUserAccount("신한 "+user.getUserAccount());
+
+
         Map<String ,Object> map = new LinkedHashMap<>();
 
         try {
@@ -262,6 +270,10 @@ public class IotUserService {
         System.out.println(Function.nowDate());
         iotUser.get().setUserCnt(iotUser.get().getUserCnt()+1);
         iotUserRepository.save(iotUser.get());
+    }
+
+    public int allUserCnt(){
+        return (int) iotUserRepository.count();
     }
 
 
