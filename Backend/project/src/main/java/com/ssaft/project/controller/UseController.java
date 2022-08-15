@@ -27,10 +27,6 @@ public class UseController {
     @GetMapping("/use")
     @ResponseBody
     public Map useGet(@RequestHeader String token){
-         LocalDateTime now = LocalDateTime.now();
-        System.out.println(now); // 2021-12-02T18:19:36.897421300
-        String formatedNow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-       System.out.println(formatedNow);
         return useService.useCheck(token);
     }
 
