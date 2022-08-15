@@ -14,6 +14,7 @@ import ChangePw from './Pages/Auth/ChangePw';
 import Loading from "./Pages/Loading";
 import Loading2 from "./Pages/Loading/Loading";
 import Complete from "./Pages/Loading/Complete";
+import Fail from "./Pages/Loading/Fail";
 
 import EcoMap from "./Pages/Main/EcoMap";
 import Home from './Pages/Main/Home'
@@ -60,6 +61,7 @@ function App() {
           <Route exact path='/loading' element={<Loading/>} />
           <Route exact path='/loading2' element={<Loading2/>} />
           <Route exact path='/complete' element={<Complete/>} />
+          <Route exact path='/fail' element={<Fail/>} />
           
           <Route exact path='/serviceInfo' element={<ServiceInfo/>} />
           <Route exact path='/serviceCenter' element={<ServiceCenter/>} />
