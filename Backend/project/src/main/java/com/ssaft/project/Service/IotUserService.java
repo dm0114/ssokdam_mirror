@@ -239,12 +239,18 @@ public class IotUserService {
     public Map<String, Object> accountCertification(IotUser iotUser) throws IamportResponseException, IOException {             // 계좌 확인
         Map<String, Object> map = new LinkedHashMap<>();
         map = function.getIamport(iotUser.getImp_uid());
-        String name = (String) map.get("userName");
-        if(name.equals(iotUser.getUserName())){
-            map.put("ok", true);
-        }else{
+        String phoneName = (String) map.get("userName");
+        try {
+            String accountName = function.getAccountName(iotUser);
+            if(phoneName.equals(accountName)){
+                map.put("ok", true);
+            }else{
+                map.put("ok", false);
+            }
+        }catch (Exception e){
             map.put("ok", false);
         }
+
         return map;
     }
 
