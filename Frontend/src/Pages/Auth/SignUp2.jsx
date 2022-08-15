@@ -93,6 +93,8 @@ function SignUp2() {
                 userPoint: res.userPoint,
                 userCnt: res.userCnt,
                 userImage: res.userImg,
+                userTime : res.userTime,
+                userAdmin : res.userAdmin
               });
               // setDatas({
               //   impUid : "",

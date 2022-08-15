@@ -84,10 +84,16 @@ function AdminSideBar(props) {
     const drawer = (
         <div>
             <Box sx={{ display : 'flex', justifyContent : "center", alignItems : "center", height : '64px'}} >
-                <Typography component="h2" variant="h6" style={{ cursor: 'pointer' }} onClick={(e) => {
+                <Typography component="h2"
+                            variant="h6"
+                            style={{ cursor: 'pointer',
+                                fontFamily : 'Gugi',
+                                fontSize : '1.5rem'
+                }}
+                            onClick={(e) => {
                     onModeHandling("관리자 메인")
                 }}>
-                 쏙담
+                 쏙담 <span style={{ fontFamily : 'SCoreDream' }}>관리자</span>
                 </Typography>
             </Box>
             <Divider />

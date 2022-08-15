@@ -22,6 +22,7 @@ import TextField from '@mui/material/TextField';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { ThemeProvider } from '@mui/material/styles';
 import {useRecoilState} from "recoil";
+import {fetchAccountCerti} from "../../api/signup";
 
 
 const SignUp1 = () => {
@@ -127,6 +128,7 @@ const SignUp1 = () => {
               alert('계좌인증이 되었습니다!');
               setIsAccount(true);
             } else {
+              alert('계좌정보가 맞지 않습니다.')
             }
           })
         )
@@ -150,23 +152,34 @@ const SignUp1 = () => {
     if (!impUid) {
       alert('성인인증을 먼저 해주세요!');
     } else {
-      axios({
-        url: 'https://api.iamport.kr/users/getToken',
-        method: 'post', // POST method
-        headers: { 'Content-Type': 'application/json' }, // "Content-Type": "application/json"
-        withCredentials: true,
-        data: {
-          imp_key: '8270742312861075', // REST API키
-          imp_secret:
-            'dAjR0eNuEcBlF2m3jpbVAwgBg9A80aOR85pyfLpweaRqnpnynReBHOM4jTp2lvJb7Vh3XhzZOc1tjoo4', // REST API Secret
-        },
-      }) // token받아옴
-        .then((res) => {
-          checkBankHolder(res.data.response.access_token, {
-            bankCode: bankNumber,
-            bankAccountNumber: accountNumber,
-          });
-        });
+      // axios({
+      //   url: 'https://api.iamport.kr/users/getToken',
+      //   method: 'post', // POST method
+      //   headers: { 'Content-Type': 'application/json' }, // "Content-Type": "application/json"
+      //   withCredentials: true,
+      //   data: {
+      //     imp_key: '8270742312861075', // REST API키
+      //     imp_secret:
+      //       'dAjR0eNuEcBlF2m3jpbVAwgBg9A80aOR85pyfLpweaRqnpnynReBHOM4jTp2lvJb7Vh3XhzZOc1tjoo4', // REST API Secret
+      //   },
+      // }) // token받아옴
+      //   .then((res) => {
+      //     checkBankHolder(res.data.response.access_token, {
+      //       bankCode: bankNumber,
+      //       bankAccountNumber: accountNumber,
+      //     });
+      //   });
+      fetchAccountCerti({ impUid : impUid, accountNumber : accountNumber, bankNumber : bankNumber  })
+          .then((res) => {res.json().then((res) => {
+            console.log(res)
+            if (res.ok) {
+              alert('계좌인증이 되었습니다!');
+              setIsAccount(true);
+            } else {
+              alert('계좌정보가 맞지 않습니다.')
+            }
+          })})
+
     }
   };
 

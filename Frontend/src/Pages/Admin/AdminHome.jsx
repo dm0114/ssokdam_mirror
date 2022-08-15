@@ -36,7 +36,11 @@ const theme = createTheme(
 
 function AdminHome(){
     const adminInfo = useRecoilValue(userInfo)
-    // if(adminInfo.is)
+    const navigator = useNavigate()
+    if(adminInfo.userAdmin === "N"){
+        alert('관리자가 아닙니다!')
+        navigator('/adminLogin')
+    }
 
     return (
         <ThemeProvider theme={theme}>

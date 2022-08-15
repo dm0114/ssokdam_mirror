@@ -76,6 +76,8 @@ export default function AdminLogin() {
                             userPoint : res.userPoint,
                             userCnt : res.userCnt,
                             userImage: res.userImg,
+                            userTime : res.userTime,
+                            userAdmin : res.userAdmin,
                         }) 
                         setIsLogin(true)
                         navigate('/admin')
