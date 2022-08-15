@@ -7,26 +7,36 @@ const Loading = () => {
   const navigate = useNavigate();
   const [embedStatus, setEmbedStatus] = useState('');
 
-  
+  let flag = true
   useEffect(() => {
+    let count = 1
     let isCigar = setInterval(() => {
-      fetchUseState().then((res) => {
-        res.json().then((res) => {
-          console.log(res.ok);
-          if (res.ok === "Y") {
-            clearInterval(isCigar)
-            navigate('/complete');
-          } 
-          else if (res.ok === "N") {
-            clearInterval(isCigar)
-            navigate('/fail');
-          } 
-          else if (res.ok === "X") {
-            clearInterval(isCigar)
-            navigate('/fail');
-          }
+      if (flag) {
+        fetchUseState().then((res) => {
+          res.json().then((res) => {
+            console.log(res.ok);
+            if (res.ok === "Y") {
+              clearInterval(isCigar)
+              flag = false
+              navigate('/complete');
+            } 
+            else if (res.ok === "N") {
+              clearInterval(isCigar)
+              flag = false
+              navigate('/fail');
+            } 
+            else if (res.ok === "X") {
+              clearInterval(isCigar)
+              flag = false
+              navigate('/fail');
+            }
+          });
+        if (count++ === 5 && flag) {
+          clearInterval(isCigar)
+          navigate('/fail')
+        }
         });
-      });
+      }
     }, 2000);
   }, [])
  
