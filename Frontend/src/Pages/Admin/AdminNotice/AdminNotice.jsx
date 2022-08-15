@@ -154,6 +154,9 @@ export const AdminNotice = () => {
                     res[i].id = res[i].pstSeq
                     delete res[i].pstSeq
                 }
+                res.reverse((a,b) => {
+                    return a.id - b.id
+                })
                 setNotices(res)
             })))
     }, []);

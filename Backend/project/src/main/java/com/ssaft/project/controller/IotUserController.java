@@ -91,7 +91,7 @@ public class IotUserController {
         return iotUserService.userDelete(id);
     }
 
-    @PostMapping("/signup/check")                          // 로그인 성인체크
+    @PostMapping("/signup/check")                          // 회원가입 성인체크
     @ResponseBody
     public Map singUpCheck(@RequestBody IotUser user) {
         return iotUserService.singupcheck(user);
@@ -146,6 +146,7 @@ public class IotUserController {
         map.put("exchangeMoney" , paybackService.findYmoney());
         map.put("deviceBroken", embeddedService.findBroken());
         map.put("deviceWarning", embeddedService.findWarning());
+        map.put("userCnt", iotUserService.allUserCnt());
         map.put("complain" , postService.findAll("불만사항"));
         map.put("Broken" , postService.findAll("고장신고"));
         return map;

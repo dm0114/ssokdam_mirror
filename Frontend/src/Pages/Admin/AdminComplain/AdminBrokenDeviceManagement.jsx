@@ -144,6 +144,10 @@ export const AdminBrokenDeviceManagement = () => {
                     res[i].id = res[i].pstSeq
                     delete res[i].pstSeq
                 }
+                res.reverse((a,b) => {
+                    return a.id - b.id
+                })
+                console.log(res)
                 setDisplaies(res.filter(complain => complain.pstCheck === "N"))
                 setBrokens(res)
             })})

@@ -34,6 +34,9 @@ const MyAsk = () => {
   const { isSuccess, isLoading, data } = useQuery(
     ['myAskList'],
     async () => await fetchMyAsk()
+        .then((res) =>  res.reverse((a,b) => {
+          return a.pstSeq - b.pstSeq
+        }))
   );
 
   const askList = data?.map((ask, index) => (

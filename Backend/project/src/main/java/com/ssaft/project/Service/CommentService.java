@@ -60,14 +60,13 @@ public class CommentService {
 
         return map;
     }
-    public Map cmtDelete(int cmtId){
+    public Map cmtDelete(int pstSeq,int cmtSeq){
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("ok", true);
-        Optional<CommentData> commentData = commentDataRepository.findById(cmtId);
-        Optional<PostData> postData = postDataRepository.findById(commentData.get().getPstSeq());
+        Optional<CommentData> commentData = commentDataRepository.findById(cmtSeq);
+        Optional<PostData> postData = postDataRepository.findById(pstSeq);
         postData.get().setPstCheck("N");
         postDataRepository.save(postData.get());
-
         commentDataRepository.delete(commentData.get());
         return map;
     }

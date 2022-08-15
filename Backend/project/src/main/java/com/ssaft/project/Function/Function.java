@@ -12,20 +12,22 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.UnknownHostException;
 import java.security.Key;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
-import com.siot.IamportRestClient.IamportClient;
-import com.siot.IamportRestClient.exception.IamportResponseException;
-import org.springframework.stereotype.Service;
-
 import javax.crypto.spec.SecretKeySpec;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
 import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -55,7 +57,6 @@ public class Function {
         String phone = client.certificationByImpUid(uid).getResponse().getPhone();
         String name = client.certificationByImpUid(uid).getResponse().getName();
 
-
         System.out.println(phone);
         String birth2[] = birth.split(" ");
 
@@ -77,6 +78,10 @@ public class Function {
 
             return map;
         }
+    }
+
+    public String getIamportAccount(){
+        return "1";
     }
 
     public String creatToken(String subject, long expTime){
@@ -167,5 +172,100 @@ public class Function {
             }
         }
         return numStr;
+    }
+
+    public String getAccountName(IotUser user) throws Exception {
+        String[] data = new String[10];
+        IamportClient client = new IamportClient("8270742312861075", "dAjR0eNuEcBlF2m3jpbVAwgBg9A80aOR85pyfLpweaRqnpnynReBHOM4jTp2lvJb7Vh3XhzZOc1tjoo4");
+        String token = client.getAuth().getResponse().getToken();
+        System.out.println(token);
+        String urlString = "https://api.iamport.kr/vbanks/holder?bank_code="+user.getUserBanknumber()+"&bank_num="+user.getUserAccount()+"&_token="+token;
+        String line = null;
+        InputStream in = null;
+        BufferedReader reader = null;
+        HttpsURLConnection httpsConn = null;
+
+        try {
+            // Get HTTPS URL connection
+            URL url = new URL(urlString);
+            httpsConn = (HttpsURLConnection) url.openConnection();
+
+            // Set Hostname verification
+            httpsConn.setHostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String hostname, SSLSession session) {
+                    // Ignore host name verification. It always returns true.
+                    return true;
+                }
+            });
+
+            // Input setting
+            httpsConn.setDoInput(true);
+            // Output setting
+            //httpsConn.setDoOutput(true);
+            // Caches setting
+            httpsConn.setUseCaches(false);
+            // Read Timeout Setting
+            httpsConn.setReadTimeout(1000);
+            // Connection Timeout setting
+            httpsConn.setConnectTimeout(1000);
+            // Method Setting(GET/POST)
+            httpsConn.setRequestMethod("GET");
+            // Header Setting
+
+
+            int responseCode = httpsConn.getResponseCode();
+            System.out.println("응답코드 : " + responseCode);
+            System.out.println("응답메세지 : " + httpsConn.getResponseMessage());
+
+            // SSL setting
+            SSLContext context = SSLContext.getInstance("TLS");
+            context.init(null, null, null); // No validation for now
+            httpsConn.setSSLSocketFactory(context.getSocketFactory());
+
+            // Connect to host
+            httpsConn.connect();
+            httpsConn.setInstanceFollowRedirects(true);
+
+            // Print response from host
+            if (responseCode == HttpsURLConnection.HTTP_OK) { // 정상 호출 200
+                in = httpsConn.getInputStream();
+            } else { // 에러 발생
+                in = httpsConn.getErrorStream();
+            }
+            reader = new BufferedReader(new InputStreamReader(in));
+            while ((line = reader.readLine()) != null) {
+                data = line.split("\"");
+                System.out.printf("%s\n", line);
+            }
+
+            reader.close();
+        } catch (UnknownHostException e) {
+            System.out.println("UnknownHostException : " + e);
+        } catch (MalformedURLException e) {
+            System.out.println(urlString + " is not a URL I understand");
+        } catch (IOException e) {
+            System.out.println("IOException :" + e);
+        } catch (Exception e) {
+            System.out.println("error : " + e);
+        } finally {
+            if (reader != null) {
+                reader.close();
+            }
+            if (httpsConn != null) {
+                httpsConn.disconnect();
+            }
+        }
+        String name = data[9];
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < name.length(); i++) {
+            if ('\\' == name.charAt(i) && 'u' == name.charAt(i + 1)) {
+                Character r = (char) Integer.parseInt(name.substring(i + 2, i + 6), 16);
+                sb.append(r);       i += 5;
+            } else {
+                sb.append(name.charAt(i));
+            }
+        }
+        return sb.toString();
     }
 }

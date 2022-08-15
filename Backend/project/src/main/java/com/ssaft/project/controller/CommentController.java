@@ -48,7 +48,7 @@ public class CommentController {
     @DeleteMapping("/post/{pstSeq}/comment/{cmtId}")                     // 답변 삭제
     @ResponseBody
     public Map cmtDelete(@PathVariable("pstSeq") int pstSeq, @PathVariable("cmtId") int cmtId){
-        return commentService.cmtDelete(cmtId);
+        return commentService.cmtDelete(pstSeq, cmtId);
     }
 
     @GetMapping("/admin/complain/{id}")              // 속성값 게시판 호출
