@@ -85,6 +85,9 @@ public class IotUser {
     private String Refresh_token;
 
     @Transient
+    private String notCheck;
+
+    @Transient
     private boolean ok;
 
    /* @OneToMany(fetch = FetchType.LAZY)

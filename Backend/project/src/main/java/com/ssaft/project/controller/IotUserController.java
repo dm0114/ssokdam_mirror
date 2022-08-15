@@ -27,8 +27,7 @@ public class IotUserController {
     IotUserService iotUserService;   // 유저관련 서비스
     @Autowired
     IotUserRepository iotUserRepository;   // jpa
-//    @Autowired
-//    IamportService iamportService;
+
     @Autowired
     Function function;
     @Autowired

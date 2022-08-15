@@ -37,6 +37,10 @@ public class NotionService {
 
             for(NotionData nD : notionData){
                 nD.setUserId(nD.getIotUser().getUserId());
+                if(nD.getNotCheck().equals("N")){
+                    nD.setNotCheck("Y");
+                    notionDataRepository.save(nD);
+                }
             }
         }catch (NoSuchElementException e){
             throw new IllegalStateException(e);
@@ -56,5 +60,19 @@ public class NotionService {
             notionData.setNotMoney(money);
         }
         notionDataRepository.save(notionData);
+    }
+
+    public boolean notionCheck(String id){
+        try {
+            List<NotionData> notionData = notionDataRepository.findByNotCheckAndIotUser("N", iotUserRepository.findById(id).get());
+            System.out.println(notionData.size());
+            if(notionData.size()==0){
+                return false;
+            }else{
+                return true;
+            }
+        }catch (NoSuchElementException e){
+            return false;
+        }
     }
 }

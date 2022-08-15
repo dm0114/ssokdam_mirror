@@ -28,6 +28,9 @@ public class IotUserService {
     @Autowired
     SMSFunction smsFunction;
 
+    @Autowired
+    NotionService notionService;
+
 
     public Object login(String id, String password) {    //로그인
         String token = "error";
@@ -42,6 +45,11 @@ public class IotUserService {
                 iotuser.get().setAccess_token(token);
                 iotuser.get().setRefresh_token(token2);
                 iotuser.get().setOk(true);
+                if(notionService.notionCheck(id)){
+                    iotuser.get().setNotCheck("Y");
+                }else{
+                    iotuser.get().setNotCheck("N");
+                }
                 return iotuser.get();
             } else {
                 map.put("message", "비밀번호가 틀렸습니다.");
