@@ -64,14 +64,7 @@ function Home() {
   const [userLevel, setUserLevel] = useState(1);
   const navigate = useNavigate();
   const [userInfo2, setUserInfo2] = useRecoilState(userInfo);
-  const time = useRef(firstTime());
-  const [min, setMin] = useState(parseInt(time/60));
-  const [sec, setSec] = useState((parseInt(time))%60);
-  console.log(typeof min,typeof sec)
-  const [isTimeOut,setIsTimeOut] = useState(false)
-  const timerId = useRef(null);
-  const [userNow,setUserNow] = useState("");
-  const [notice, setNotice] = useState('');
+
 
   // const [time, setTime] = useState("00:00")
 
@@ -90,6 +83,14 @@ function Home() {
     return diffTime
   }
 
+    const time = useRef(firstTime());
+    const [min, setMin] = useState(parseInt(time/60));
+    const [sec, setSec] = useState((parseInt(time))%60);
+    console.log(typeof min,typeof sec)
+    const [isTimeOut,setIsTimeOut] = useState(false)
+    const timerId = useRef(null);
+    const [userNow,setUserNow] = useState("");
+    const [notice, setNotice] = useState('');
   // useEffect(() => {
   //   // const now = new Date()
   //   const now = new Date('2022-08-13 15:05:58')
@@ -228,25 +229,29 @@ function Home() {
               <SubNoticeText>다음 이용까지</SubNoticeText>
               <SubNotice>
                 <TimeController>
-                  { isTimeOut ? (
-                      <h4 style={{ margin : 0 }}>이용가능</h4>
-                  ) : (
+                  { localStorage.getItem('access-token') ? (
                       <>
-                        { isNaN(min) && isNaN(sec) ? (
-                            <h4 style={{ margin : 0 }}>Loading...</h4>
-                        ) : (<>
-                          {sec < 10 ? (
-                              <h4 style={{ margin: 0 }}>
-                                {min} : 0{sec}
-                              </h4>
+                        { isTimeOut ? (
+                              <h4 style={{ margin : 0 }}>이용가능</h4>
                           ) : (
-                              <h4 style={{ margin: 0 }}>
-                                {min} : {sec}
-                              </h4>
-                          )}
-                        </>)}
+                              <>
+                                { isNaN(min) && isNaN(sec) ? (
+                                    <h4 style={{ margin : 0 }}>Loading...</h4>
+                                ) : (<>
+                                  {sec < 10 ? (
+                                      <h4 style={{ margin: 0 }}>
+                                        {min} : 0{sec}
+                                      </h4>
+                                  ) : (
+                                      <h4 style={{ margin: 0 }}>
+                                        {min} : {sec}
+                                      </h4>
+                                  )}
+                                </>)}
+                              </>
+                          ) }
                       </>
-                  ) }
+                  ) : (<h4 style={{ margin : 0 }}>-</h4>)}
                 </TimeController>
               </SubNotice>
             </BinWrapper>
@@ -259,7 +264,12 @@ function Home() {
 
             <BinWrapper display='flex' fd='column' ai='center' jc='center'>
               <SubNoticeText>나의 포인트</SubNoticeText>
-              <SubNotice>{userInfo2?.userPoint}점</SubNotice>
+              { localStorage.getItem('access-token') ? (
+                  <SubNotice>{userInfo2?.userPoint}점</SubNotice>
+              ) : (
+                  <SubNotice>-</SubNotice>
+              ) }
+
             </BinWrapper>
           </BinWrapper>
         </BinWrapper>

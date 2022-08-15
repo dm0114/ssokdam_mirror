@@ -13,7 +13,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import TextField from '@mui/material/TextField';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { BinWrapper } from '../../styles/BackgroundStyle';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { MuiTheme } from '../../styles/MuiTheme';
 import { useState, useEffect } from 'react';
 import ChangePwd from '../../api/changePw';
@@ -21,8 +21,10 @@ import ChangePwd from '../../api/changePw';
 
 
 const FindPassword = () => {
+  const navigate = useNavigate()
   const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
   const { state } = useLocation();
+  console.log(state);
 
   const [inputData, setInputData] = useState({
     userPwd: "",
@@ -49,6 +51,7 @@ const FindPassword = () => {
     const response = await ChangePwd(inputData.userPwd, state);
     console.log(response);
     if (response.ok === true) {
+      alert('비밀번호 변경에 성공했습니다!')
       navigate('/login')
     } else {
       alert('죄송합니다. 로직을 처리하던 도중에 에러가 발생했습니다. 다시 시도해주세요.')
@@ -60,10 +63,8 @@ const FindPassword = () => {
           <SubLoginBackgroundView>
               <Wrap>
                 <HeaderWrapper>
-                  <BinWrapper flex="1">
-                    <Link to="/login">
+                  <BinWrapper flex="1" onClick={() => navigate(-1)}>
                       <ArrowBackIosIcon color="black" />
-                    </Link>
                   </BinWrapper>
                   <MainText flex="3">비밀번호 변경</MainText>
                   <BinWrapper flex="1"></BinWrapper>
@@ -80,11 +81,11 @@ const FindPassword = () => {
                     onSubmitAccount(inputData)
                   }}
                 >
-                  <ButtonText>비밀번호 찾기</ButtonText>
+                  <ButtonText>비밀번호 변경</ButtonText>
                 </MainButton>
               ) : (
                 <NotReadyToSubmitButton>
-                  <ButtonText>비밀번호 찾기</ButtonText>
+                  <ButtonText>비밀번호 변경</ButtonText>
                 </NotReadyToSubmitButton>
               )}
           </SubLoginBackgroundView>

@@ -1,5 +1,5 @@
-import React from 'react'
-import {Link, useNavigate} from "react-router-dom";
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import {
   SubLoginBackgroundView,
@@ -9,40 +9,54 @@ import {
   MainButton,
   ButtonText,
 } from '../../styles/SubLoginStyles';
-import {BinWrapper} from "../../styles/BackgroundStyle";
+import { BinWrapper } from '../../styles/BackgroundStyle';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useQuery } from '@tanstack/react-query';
 import { fetchNotice } from '../../api/notice';
-
+import { MuiTheme } from '../../styles/MuiTheme';
+import { ThemeProvider } from '@mui/material';
+import { ContentDivider, ContentWrapper } from '../../styles/TitleStyle';
+import { AlarmMainText, AlarmSubText } from '../../styles/AlarmStyle';
 
 const Notice = () => {
-
   const { isSuccess, isLoading, data } = useQuery(
     ['noticeList'],
     async () => await fetchNotice()
   );
-  console.log(data)
+  console.log(data);
 
   return (
-    <SubLoginBackgroundView>
-      <Wrap>
-        <HeaderWrapper>
-          <BinWrapper flex='1'>
-            <Link to='/'>
-              <ArrowBackIosIcon color='black' />
-            </Link>
-          </BinWrapper>
-          <MainText flex='3'>공지사항</MainText>
-          <BinWrapper flex='1'></BinWrapper>
-        </HeaderWrapper>
-        {data?.pstTitle}<br/>
-        {data?.pstDt}<hr/>
-        {data?.pstImg ? <img src={data?.pstImg}/> : <>{data?.pstCtnt}</> }
-        
-      
-      </Wrap>
-    </SubLoginBackgroundView>
-  )
-}
+    <ThemeProvider theme={MuiTheme}>
+      <SubLoginBackgroundView>
+        <Wrap>
+          <HeaderWrapper>
+            <BinWrapper flex='1'>
+              <Link to='/'>
+                <ArrowBackIosIcon color='black' />
+              </Link>
+            </BinWrapper>
+            <MainText flex='3'>공지사항</MainText>
+            <BinWrapper flex='1'></BinWrapper>
+          </HeaderWrapper>
 
-export default Notice
+          <ContentWrapper>
+            <AlarmMainText>
+              {data?.pstTitle}
+              <br />
+            </AlarmMainText>
+          </ContentWrapper>
+          <ContentWrapper>
+            <AlarmSubText>
+              {data?.pstDt}
+            </AlarmSubText>
+          </ContentWrapper>
+          <ContentDivider/>
+
+          {data?.pstImg ? <img src={data?.pstImg} /> : <>{data?.pstCtnt}</>}
+        </Wrap>
+      </SubLoginBackgroundView>
+    </ThemeProvider>
+  );
+};
+
+export default Notice;

@@ -1,4 +1,4 @@
-import {Link, Navigate} from 'react-router-dom'
+import {Link, Navigate, useNavigate} from 'react-router-dom'
 import { MuiTheme } from '../../styles/MuiTheme';
 
 import {SubBackgroundView, Wrap, MainText, HeaderWrapper} from '../../styles/SubLoginStyles';
@@ -22,6 +22,7 @@ import { useEffect, useState } from 'react';
 import { ThemeProvider } from '@mui/material';
 
 export const MyPage = () => {
+    const navigate = useNavigate()
     const [fetchedUserInfo, setFetchedUserInfo] = useState()
     const [userInfo2, setUserInfo2] = useRecoilState(userInfo)
     
@@ -71,7 +72,7 @@ export const MyPage = () => {
                 </ContentWrapper>
                 <ContentDivider/>
 
-                <ContentWrapper>
+                <ContentWrapper onClick={() => navigate('/login/changePw')}>
                     <ContentText>비밀번호</ContentText>
                     <SubInnerText>비밀번호 변경</SubInnerText>
                     <ContentVector
@@ -83,7 +84,7 @@ export const MyPage = () => {
 
             <TitleWrapper>
                 <ContentDivider/>
-                <ContentWrapper>
+                <ContentWrapper onClick={() => navigate('/exchange')}>
                     <ContentText>포인트</ContentText>
                     <SubInnerText>{userInfo2.userPoint}</SubInnerText>
                     <ContentVector
@@ -95,9 +96,6 @@ export const MyPage = () => {
                 <ContentWrapper>
                     <ContentText>바다를 지킨 횟수</ContentText>
                     <SubInnerText>{userInfo2.userCnt}</SubInnerText>
-                    <ContentVector
-                        alt=""
-                        src="https://static.overlay-tech.com/assets/8baf2001-760e-444e-9536-318352b328b5.svg"/>
                 </ContentWrapper>
                 <ContentDivider/>
             </TitleWrapper>

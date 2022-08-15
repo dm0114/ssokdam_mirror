@@ -66,12 +66,17 @@ export const FindPw = () => {
 
   const [phoneToken, setPhoneToken] = useState('')
   const fetchCertificationNumber = async () => {
-    const response = await fetchCertNum(inputData.userPhone)
-    setPhoneToken(response.Phone_token)
+    await fetchCertNum(inputData.userPhone)
+      .then((res) => {
+      setPhoneToken(res.Phone_token)
+    }
+  )
+    
   }
 
   const checkCertificationNumber = async () => {
     const response = await checkCertNum(phoneToken, inputData.userCertNum)
+    console.log(response)
     if (response.ok === true) {
       alert('인증이 완료되었습니다!')
       setApproved(true)
@@ -82,14 +87,12 @@ export const FindPw = () => {
   
   const onSubmitAccount = async () => {
     const response = await FetchFindPw(inputData);
-    console.log(response);
     if (response.ok === true) {
       navigate('/login/changePw', { state: inputData.userId })
     } else {
       alert('가입되지 않은 회원이거나, 휴대폰 번호를 확인해주세요')
     }
   };
-
 
   return (
     <ThemeProvider theme={MuiTheme}>

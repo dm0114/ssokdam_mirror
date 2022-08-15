@@ -7,20 +7,24 @@ export async function fetchCertNum(userPhone) {
   const data = {
     userPhone: userPhone
   }
+  const response = await fetch(URL, {
+    method: 'POST',
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
   
-  const response = await Api.post(URL, data)
-  console.log(response.data)
-  return response.data
+  const json = await response.json()
+  return json
 }
 
 export async function checkCertNum(phoneToken, userCertNum) {
   const URL = `${SERVER_URL}/login/phone/${userCertNum}`
-  
-  const response = await Api.get(URL, {
+  const response = await fetch(URL, {
     headers: {
       token: phoneToken
     }
   })
-  console.log(response.data)
-  return response.data
+  return response
 }

@@ -21,6 +21,7 @@ import { Button, InputAdornment } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { ThemeProvider } from '@mui/material/styles';
+import {useRecoilState} from "recoil";
 
 
 const SignUp1 = () => {
@@ -35,7 +36,7 @@ const SignUp1 = () => {
     setIsActive(tmp);
   };
 
-  const [datas, setDatas] = useState({});
+  const [datas, setDatas] = useState({})
   const [impUid, setImpUid] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
   const [bankNumber, setBankNumber] = useState('');
@@ -153,6 +154,7 @@ const SignUp1 = () => {
         url: 'https://api.iamport.kr/users/getToken',
         method: 'post', // POST method
         headers: { 'Content-Type': 'application/json' }, // "Content-Type": "application/json"
+        withCredentials: true,
         data: {
           imp_key: '8270742312861075', // REST API키
           imp_secret:
@@ -288,7 +290,7 @@ const SignUp1 = () => {
           <MainButton
             width='100%'
             type='submit'
-            onClick={(datas) => {
+            onClick={() => {
               navigate('/signUp2', { state: datas });
             }}
           >
