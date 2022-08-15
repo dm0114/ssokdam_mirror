@@ -16,13 +16,19 @@ export default async function AccountCheck({userName, impUid}){
     return response
 }
 
-export const fetchAccountCerti = async () => {
-    const url = `${SERVER_URL}/signup1/check`
+export const fetchAccountCerti = async ({impUid, accountNumber,bankNumber}) => {
+    const url = `${SERVER_URL}/login/account`
     const response = await fetch(url, {
-        method : 'GET',
+        method : 'POST',
         headers : {
             'Content-type': 'application/json',
-        }
+        },
+        body : JSON.stringify({
+            imp_uid : impUid,
+            userAccount : accountNumber,
+            userBanknumber : bankNumber
+            }
+        )
     })
     return response
 }

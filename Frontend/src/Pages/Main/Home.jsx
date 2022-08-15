@@ -75,7 +75,7 @@ function Home() {
     const lastUse = userInfo2.userTime
     const end = new Date(lastUse)
     console.log(end)
-    let diffTime = parseInt((now - end)/1000)
+    let diffTime = 2400 - parseInt((now - end)/1000)
     console.log(diffTime)
     if(diffTime > 2400){
       diffTime = 0
@@ -116,6 +116,8 @@ function Home() {
       userPoint: '',
       userCnt: '',
       userImage: '',
+      userTime : '',
+      userAdmin : '',
     });
   };
 
