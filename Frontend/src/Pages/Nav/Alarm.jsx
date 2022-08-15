@@ -26,7 +26,7 @@ import { userInfo } from "../../atoms";
 import { useRecoilValue } from "recoil";
 import { fetchAlarm } from '../../api/alarm';
 import { useQuery } from '@tanstack/react-query';
-import Loading from '../Loading/Loading';
+import Loading from '../Loading';
 
 export const Alarm = () => {
   const userInfo2 = useRecoilValue(userInfo);

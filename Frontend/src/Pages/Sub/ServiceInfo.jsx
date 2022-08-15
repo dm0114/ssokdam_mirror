@@ -1,5 +1,5 @@
 import {Link, useNavigate} from 'react-router-dom'
-import Loading from '../Loading/Loading'
+import Loading from '../Loading'
 
 import { MuiTheme } from '../../styles/MuiTheme';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';

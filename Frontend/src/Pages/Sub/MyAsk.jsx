@@ -20,7 +20,7 @@ import {
   ContentVector,
 } from '../../styles/TitleStyle';
 
-import Loading from '../Loading/Loading'
+import Loading from '../Loading'
 
 import { BinWrapper } from '../../styles/BackgroundStyle';
 

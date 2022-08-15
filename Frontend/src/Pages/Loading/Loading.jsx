@@ -9,60 +9,27 @@ const Loading = () => {
 
   
   useEffect(() => {
-    let isCigar = setInterval(fetchApi, 2000);
-    let timer = setTimeout(timeOut, 10000);
-    function timeOut() {
-      clearInterval(isCigar)
-      navigate('/')
-    }
-  
-    function fetchApi() {
+    let isCigar = setInterval(() => {
       fetchUseState().then((res) => {
         res.json().then((res) => {
           console.log(res.ok);
           if (res.ok === "Y") {
-            clearTimeout(timer)
             clearInterval(isCigar)
             navigate('/complete');
           } 
           else if (res.ok === "N") {
-            clearTimeout(timer)
             clearInterval(isCigar)
             navigate('/fail');
           } 
           else if (res.ok === "X") {
-            clearTimeout(timer)
             clearInterval(isCigar)
             navigate('/fail');
           }
         });
       });
-    }
+    }, 2000);
   }, [])
  
-
-
-  // useEffect(() => {
-  //   console.log(embedStatus)
-  //   if (embedStatus === 'Y') {
-  //     clearTimeout(timer)
-  //     clearInterval(isCigar);
-  //     console.log(embedStatus)
-  //     navigate('/complete');
-  //   } 
-  //   else if (embedStatus === 'N') {
-  //     clearTimeout(timer)
-  //     clearInterval(isCigar);
-  //     console.log(embedStatus)
-  //     navigate('/fail');
-  //   } 
-  //   else if (embedStatus === 'X') {
-  //     clearTimeout(timer)
-  //     clearInterval(isCigar);
-  //     console.log(embedStatus)
-  //     navigate('/fail');
-  //   }
-  // }, [embedStatus]);
 
   return (
     <MainBackGround>
