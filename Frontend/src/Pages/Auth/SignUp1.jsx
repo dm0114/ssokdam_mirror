@@ -154,6 +154,7 @@ const SignUp1 = () => {
         url: 'https://api.iamport.kr/users/getToken',
         method: 'post', // POST method
         headers: { 'Content-Type': 'application/json' }, // "Content-Type": "application/json"
+        withCredentials: true,
         data: {
           imp_key: '8270742312861075', // REST API키
           imp_secret:

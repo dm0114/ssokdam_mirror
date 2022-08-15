@@ -24,6 +24,7 @@ const FindPassword = () => {
   const navigate = useNavigate()
   const [isReadyToSubmit, setIsReadyToSubmit] = useState(false);
   const { state } = useLocation();
+  console.log(state);
 
   const [inputData, setInputData] = useState({
     userPwd: "",
@@ -50,6 +51,7 @@ const FindPassword = () => {
     const response = await ChangePwd(inputData.userPwd, state);
     console.log(response);
     if (response.ok === true) {
+      alert('비밀번호 변경에 성공했습니다!')
       navigate('/login')
     } else {
       alert('죄송합니다. 로직을 처리하던 도중에 에러가 발생했습니다. 다시 시도해주세요.')
