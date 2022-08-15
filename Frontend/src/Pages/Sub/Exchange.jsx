@@ -76,10 +76,8 @@ const Exchange = () => {
         <SubLoginBackgroundView>
           <Wrap>
             <HeaderWrapper>
-              <BinWrapper flex='1'>
-                <Link to='/'>
+              <BinWrapper flex='1' onClick={() => navigate(-1)}>
                   <ArrowBackIosIcon color='black' />
-                </Link>
               </BinWrapper>
               <MainText flex='3'>포인트 전환</MainText>
               <BinWrapper flex='1'></BinWrapper>

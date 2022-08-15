@@ -89,6 +89,7 @@ export const FindPw = () => {
       alert('가입되지 않은 회원이거나, 휴대폰 번호를 확인해주세요')
     }
   };
+  console.log(inputData.userId)
 
 
   return (

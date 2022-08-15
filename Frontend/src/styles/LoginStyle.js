@@ -41,3 +41,10 @@ export const ButtonWrapper = styled.div`
   padding: 0px, 24px, 0px, 24px;
   color: gainsboro;
 `
+
+export const MainLogoText = styled.h1`
+  
+  font-family: 'Gugi', cursive;
+  /* font-weight: bold; */
+  margin-top: 0px;
+`
