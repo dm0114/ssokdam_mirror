@@ -15,6 +15,6 @@ public interface IotUserRepository extends JpaRepository<IotUser, String> {
 
     public IotUser findByUserRt(String token);
 
-    public IotUser findByUserPhone(String phone);
+    public List<IotUser> findByUserPhone(String phone);
 
 }
