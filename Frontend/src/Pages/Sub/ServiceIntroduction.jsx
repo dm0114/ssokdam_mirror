@@ -28,6 +28,7 @@ import { MuiTheme } from '../../styles/MuiTheme';
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { ThemeProvider } from '@mui/material';
+import HorizontalLinearStepper from '../Admin/components/Stepper';
 
 
 const ServiceIntroduction = () => {
@@ -45,7 +46,8 @@ const ServiceIntroduction = () => {
               <BinWrapper flex="1"></BinWrapper>
           </HeaderWrapper>
       </Wrap>
-
+      
+      <HorizontalLinearStepper></HorizontalLinearStepper>
         쏙담은 이런 서비스 입니다.
         <img src="https://i.postimg.cc/B67CnbTb/1.jpg" alt="main-belu-min" style={{width: "100%"}}/>      
       </SubBackgroundView>
