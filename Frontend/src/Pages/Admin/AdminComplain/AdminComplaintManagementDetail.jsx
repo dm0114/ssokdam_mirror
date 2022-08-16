@@ -100,7 +100,7 @@ export const AdminComplaintManagementDetail = () => {
                             {/*        <img src={postDetail.preview_URL}/>*/}
                             {/*    </div>*/}
                             {/*</div>*/}
-                         <Box style={{ padding: "20px 20px" }}>
+                         <Box style={{ padding: "20px 20px", minHeight : '500px' }}>
                              <Grid container wrap="nowrap" spacing={2}>
                                  <Grid item>
                                      { postDetail.pstCtnt }
@@ -108,7 +108,7 @@ export const AdminComplaintManagementDetail = () => {
                              </Grid>
                              { postDetail.pstImg ? (
                                  <div className="img-wrapper">
-                                     <img style={{  width: '500px' , height: '500px', objectFit : "cover" }} src={postDetail.pstImg}/>
+                                     <img style={{  width: '500px' , height: '500px', objectFit : "contain" }} src={postDetail.pstImg}/>
                                  </div>
                              ) : (<></>) }
                         </Box>

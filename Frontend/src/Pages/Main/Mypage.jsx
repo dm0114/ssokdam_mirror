@@ -26,7 +26,6 @@ import {CreateComplaint} from "../../api/complaint";
 import {ChangeProfileImage} from "../../api/mypage";
 import {storage} from "../../firebase";
 import {IconButton} from "@mui/material";
-
 export const MyPage = () => {
     const navigate = useNavigate()
     const [fetchedUserInfo, setFetchedUserInfo] = useState()
