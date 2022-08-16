@@ -56,7 +56,7 @@ const Exchange = () => {
   };
 
   const onSubmitPoint = async () => {
-    if (userPoint >= userInput) {
+    if (userPoint >= userInput && userInput > 5000 ) {
       const response = await FetchExchange(userInput);
       if (response.ok) {
         alert('전환 요청 완료!');
@@ -65,7 +65,7 @@ const Exchange = () => {
         alert('포인트 전환에 실패했습니다.');
       }
     } else {
-      alert('포인트가 부족합니다');
+      alert('포인트가 부족하거나 5000포인트 미만으로 입력하셨습니다.');
     }
   };
 

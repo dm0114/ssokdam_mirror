@@ -13,6 +13,7 @@ import { userInfo } from '../../atoms';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
+import Badge from '@mui/material/Badge';
 import { recoilPersist } from 'recoil-persist';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 
@@ -51,6 +52,7 @@ import {
   SubNoticeText,
   MiddleImg,
 } from '../../styles/HomeStyle';
+import fetchUserInfo, {FetchUserInfo} from "../../api/fetchUserInfo";
 
 import { NavBar } from '../Nav/NavBar';
 import { getCookieToken, removeCookieToken } from '../../Cookie';
@@ -64,6 +66,23 @@ function Home() {
   const [userLevel, setUserLevel] = useState(1);
   const navigate = useNavigate();
   const [userInfo2, setUserInfo2] = useRecoilState(userInfo);
+
+  useEffect(() => {
+    const response = fetchUserInfo()
+    response.then((res) => {
+      console.log(res)
+      const newObject = {
+        ...userInfo2,
+        userPoint: res.userPoint,
+        userCnt: res.userCnt,
+        userTime: res.userTime,
+        userImage: res.userImg,
+        notCheck : res.notCheck
+      }
+      console.log(newObject)
+      setUserInfo2(newObject)
+    })
+  }, [])
 
 
   // const [time, setTime] = useState("00:00")
@@ -118,6 +137,7 @@ function Home() {
       userImage: '',
       userTime : '',
       userAdmin : '',
+      notCheck : '',
     });
   };
 
@@ -176,11 +196,21 @@ function Home() {
                     <MainIcon>
                       <LogoutIcon onClick={logout} />
                     </MainIcon>
-                    <MainIcon>
-                      <Link to='/alarm'>
-                        <NotificationsNoneIcon color='black' />
-                      </Link>
-                    </MainIcon>
+                    { userInfo2.notCheck === "Y" ? (
+                        <Badge color="error" variant="dot">
+                          <MainIcon>
+                            <Link to='/alarm'>
+                              <NotificationsNoneIcon color='black' />
+                            </Link>
+                          </MainIcon>
+                        </Badge>
+                    ) : (
+                        <MainIcon>
+                          <Link to='/alarm'>
+                            <NotificationsNoneIcon color='black' />
+                          </Link>
+                        </MainIcon>
+                    ) }
                   </>
                 ) : (
                   <MainIcon>

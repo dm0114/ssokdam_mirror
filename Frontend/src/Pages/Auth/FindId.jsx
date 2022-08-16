@@ -48,15 +48,6 @@ const FindId = () => {
     });
   };
 
-  const [isReadyToSubmit, setIsReadyToSubmit] = useState(false)
-  useEffect(() => {
-    if (!(Object.values(inputData).includes('')) && approved) {
-      setIsReadyToSubmit(true)
-    } else {
-      setIsReadyToSubmit(false)
-    }
-  }, [inputData])
-
   const [resData, setResData] = useState('')
   const onSubmitAccount = async () => {
     const resUserInfomation = await FetchFindId(inputData);
@@ -81,19 +72,35 @@ const FindId = () => {
   const [phoneToken, setPhoneToken] = useState('')
   const fetchCertificationNumber = async () => {
     const response = await fetchCertNum(inputData.userPhone)
-    setPhoneToken(response.Phone_token)
+    console.log(response)
+    if (response.ok === true) {
+      alert('등록되지 않은 번호입니다!')
+    } else {
+      setPhoneToken(response.Phone_token)
+    }
   }
 
   
   const checkCertificationNumber = async () => {
-    const response = await checkCertNum(phoneToken, inputData.userCertNum)
+    const response = await checkCertNum(phoneToken, inputData.userCertNum);
     if (response.ok === true) {
-      alert('인증이 완료되었습니다!')
       setApproved(true)
+      alert('인증이 완료되었습니다!');
     } else {
-      alert('인증 번호가 일치하지 않습니다!')
+      alert('인증 번호가 일치하지 않습니다!');
     }
+    
   }
+
+
+  const [isReadyToSubmit, setIsReadyToSubmit] = useState(false)
+  useEffect(() => {
+    if (!(Object.values(inputData).includes(''))) {
+      setIsReadyToSubmit(true)
+    } else {
+      setIsReadyToSubmit(false)
+    }
+  }, [inputData])
 
 
   const [open, setOpen] = useState(false);

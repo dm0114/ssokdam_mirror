@@ -76,10 +76,9 @@ export const FindPw = () => {
 
   const checkCertificationNumber = async () => {
     const response = await checkCertNum(phoneToken, inputData.userCertNum)
-    console.log(response)
     if (response.ok === true) {
-      alert('인증이 완료되었습니다!')
       setApproved(true)
+      alert('인증이 완료되었습니다!')
     } else {
       alert('인증 번호가 일치하지 않습니다!')
     }
