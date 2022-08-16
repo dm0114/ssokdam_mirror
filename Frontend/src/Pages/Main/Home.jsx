@@ -415,7 +415,7 @@ function Home() {
             </MainWrapper>
           </BinWrapper>
         </SubBackGround>
-        <Footer>ⓒ EcoWon 2022</Footer>
+        <Footer>ⓒ 쏙담 2022</Footer>
       </MainBackGround>
     </ThemeProvider>
   );
