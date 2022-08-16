@@ -30,7 +30,7 @@ export const TitleDivider = styled.hr`
 export const ContentDivider = styled.hr`
     width: 100%;
     border: 0;
-    height: 0.1px;
+    height: 1px;
     background: #ddd;
 `
 
