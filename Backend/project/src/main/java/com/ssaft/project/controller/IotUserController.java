@@ -114,6 +114,12 @@ public class IotUserController {
         return  iotUserService.userInfo(token);
     }
 
+    @PutMapping("/mypage/image")
+    @ResponseBody
+    public Map<String, Object> changeUserImage(@RequestHeader String token, @RequestBody IotUser iotUser){
+        return iotUserService.changeUserImage(token, iotUser);
+    }
+
 
 
     @GetMapping("/refreshToken")                  // 리프래쉬 토큰 체크

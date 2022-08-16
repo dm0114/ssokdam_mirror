@@ -293,6 +293,19 @@ public class IotUserService {
         return (int) iotUserRepository.count();
     }
 
+    public Map changeUserImage(String token, IotUser image){
+        String id = function.getSubJect(token);
+        Map<String, Object> map = new LinkedHashMap<>();
+        if(id.equals("토큰만료")){
+            map.put("ok", "토큰만료");
+        }
+        Optional<IotUser> iotUser = iotUserRepository.findById(id);
+        iotUser.get().setUserImg(image.getUserImg());
+        iotUserRepository.save(iotUser.get());
+        map.put("ok", true);
+        return map;
+    }
+
 
 
 
