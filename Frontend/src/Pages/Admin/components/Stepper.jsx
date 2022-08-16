@@ -7,16 +7,12 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 
-const steps = ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+const steps = ['QR코드를 스캔해주세요.', '꽁초를 넣어주세요.', '꽁초를 판별합니다.'];
 
 export default function HorizontalLinearStepper() {
   const navigate = useNavigate()
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
-
-  const isStepOptional = (step) => {
-    return step === 1;
-  };
 
   const isStepSkipped = (step) => {
     return skipped.has(step);
@@ -81,7 +77,7 @@ export default function HorizontalLinearStepper() {
 
             {activeStep === steps.length - 1 ? 
             <Button onClick={() => {localStorage.getItem('access-token') !== 'undefined' &&
-            localStorage.getItem('access-token') !== null ? navigate('/qr') : navigate('/login')}}>
+              localStorage.getItem('access-token') !== null ? navigate('/qr') : navigate('/login')}}>
               지금 이용하러 가기
             </Button>
             : 
@@ -89,9 +85,12 @@ export default function HorizontalLinearStepper() {
               다음
             </Button>
             }
-
-
           </Box>
+          <Box>
+            {activeStep === 0 ? <img src='https://i.postimg.cc/NFhngGj2/1.png'style={{width: "100%"}}/> : null}
+            {activeStep === 1 ? <img src='https://i.postimg.cc/j56H7Rh7/2.png'style={{width: "100%"}}/> : null}
+            {activeStep === 2 ? <img src='https://i.postimg.cc/x80KGBsF/3.png'style={{width: "100%"}}/> : null}
+          </Box> 
         </React.Fragment>
       )}
     </Box>

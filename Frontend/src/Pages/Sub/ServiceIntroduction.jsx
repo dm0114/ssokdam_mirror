@@ -48,8 +48,6 @@ const ServiceIntroduction = () => {
       </Wrap>
       
       <HorizontalLinearStepper></HorizontalLinearStepper>
-        쏙담은 이런 서비스 입니다.
-        <img src="https://i.postimg.cc/B67CnbTb/1.jpg" alt="main-belu-min" style={{width: "100%"}}/>      
       </SubBackgroundView>
     </ThemeProvider>
   )

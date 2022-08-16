@@ -55,14 +55,14 @@ const ServiceInfo = () => {
                         />
                 </ContentWrapper>
                 <ContentDivider />
-                <ContentWrapper onClick={() => navigate('/frequentlyQuestion')}>
+                {/* <ContentWrapper onClick={() => navigate('/frequentlyQuestion')}>
                     <ContentText>자주 묻는 질문</ContentText>
                         <ContentVector
                             alt=""
                             src="https://static.overlay-tech.com/assets/8baf2001-760e-444e-9536-318352b328b5.svg"
                         />
                 </ContentWrapper>
-                <ContentDivider />
+                <ContentDivider /> */}
             </TitleWrapper>
         </SubBackgroundView>
     </ThemeProvider>
