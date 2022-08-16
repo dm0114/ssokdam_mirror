@@ -67,7 +67,7 @@ export const MyPage = () => {
                     <ContentDivider/>
 
                     <ContentWrapper>
-                        <ContentText>아이디</ContentText>
+                        <ContentText>이름</ContentText>
                     <SubInnerText>{userInfo2.userName}</SubInnerText>
                 </ContentWrapper>
                 <ContentDivider/>

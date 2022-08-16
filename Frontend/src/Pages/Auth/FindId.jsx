@@ -73,7 +73,7 @@ const FindId = () => {
   const fetchCertificationNumber = async () => {
     const response = await fetchCertNum(inputData.userPhone)
     console.log(response)
-    if (response.ok === true) {
+    if (response.ok === false) {
       alert('등록되지 않은 번호입니다!')
     } else {
       setPhoneToken(response.Phone_token)

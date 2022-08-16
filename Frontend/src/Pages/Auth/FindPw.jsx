@@ -66,12 +66,14 @@ export const FindPw = () => {
 
   const [phoneToken, setPhoneToken] = useState('')
   const fetchCertificationNumber = async () => {
-    await fetchCertNum(inputData.userPhone)
-      .then((res) => {
-      setPhoneToken(res.Phone_token)
+
+    const response = await fetchCertNum(inputData.userPhone)
+    console.log(response)
+    if (response.ok === false) {
+      alert('등록되지 않은 번호입니다!')
+    } else {
+      setPhoneToken(response.Phone_token)
     }
-  )
-    
   }
 
   const checkCertificationNumber = async () => {
