@@ -45,7 +45,7 @@ public class IotUser {
 
     @Column(name = "user_img")
     @ColumnDefault("")
-    private String userImg;
+    private String userImg = "https://firebasestorage.googleapis.com/v0/b/ssokdam-e2b32.appspot.com/o/images%2Ftest%2F1.jpg?alt=media&token=fba8fbf4-82e5-4e06-953e-9ecf16866bb3";
 
     @Column(name = "user_admin")
     private String userAdmin = "N";

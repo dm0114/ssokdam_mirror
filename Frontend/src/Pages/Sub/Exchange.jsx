@@ -56,7 +56,7 @@ const Exchange = () => {
   };
 
   const onSubmitPoint = async () => {
-    if (userPoint >= userInput && userInput > 5000 ) {
+    if (userPoint >= userInput && userInput >= 5000 ) {
       const response = await FetchExchange(userInput);
       if (response.ok) {
         alert('전환 요청 완료!');
