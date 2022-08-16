@@ -77,7 +77,7 @@ function AdminSideBar(props) {
         comp = <AdminNoticeCreate/>
     }
     else{
-        comp = <AdminNoticeCreate/>
+        comp = <AdminMain/>
     }
 
 
@@ -98,7 +98,7 @@ function AdminSideBar(props) {
             </Box>
             <Divider />
             <List>
-                {['관리자 메인', '공지사항 관리', '기기 정보 확인', '접수된 불만 사항', '접수된 고장 신고', '회원 관리','포인트 전환','시험페이지'].map((text, index) => (
+                {['관리자 메인', '공지사항 관리', '기기 정보 확인', '접수된 불만 사항', '접수된 고장 신고', '회원 관리','포인트 전환'].map((text, index) => (
                     <ListItem key={text}  disablePadding>
                         <ListItemButton onClick={(e) => {
                             onModeHandling(text)
