@@ -53,6 +53,7 @@ import {
   MiddleImg,
 } from '../../styles/HomeStyle';
 import fetchUserInfo, {FetchUserInfo} from "../../api/fetchUserInfo";
+import {isLoginAtom} from "../../atoms";
 
 import { NavBar } from '../Nav/NavBar';
 import { getCookieToken, removeCookieToken } from '../../Cookie';
@@ -66,6 +67,7 @@ function Home() {
   const [userLevel, setUserLevel] = useState(1);
   const navigate = useNavigate();
   const [userInfo2, setUserInfo2] = useRecoilState(userInfo);
+  const [isLogin, setIsLogin] = useRecoilState(isLoginAtom)
 
   useEffect(() => {
     const response = fetchUserInfo()
@@ -77,7 +79,8 @@ function Home() {
         userCnt: res.userCnt,
         userTime: res.userTime,
         userImage: res.userImg,
-        notCheck : res.notCheck
+        notCheck : res.notCheck,
+        userAdmin : res.userAdmin
       }
       console.log(newObject)
       setUserInfo2(newObject)
@@ -90,12 +93,9 @@ function Home() {
   // 시간 계산
   const firstTime = () => {
     const now = new Date()
-    console.log(now)
     const lastUse = userInfo2.userTime
     const end = new Date(lastUse)
-    console.log(end)
     let diffTime = 2400 - parseInt((now - end)/1000)
-    console.log(diffTime)
     if(diffTime > 2400){
       diffTime = 0
     }
@@ -105,7 +105,6 @@ function Home() {
     const time = useRef(firstTime());
     const [min, setMin] = useState(parseInt(time/60));
     const [sec, setSec] = useState((parseInt(time))%60);
-    console.log(typeof min,typeof sec)
     const [isTimeOut,setIsTimeOut] = useState(false)
     const timerId = useRef(null);
     const [userNow,setUserNow] = useState("");
@@ -139,6 +138,7 @@ function Home() {
       userAdmin : '',
       notCheck : '',
     });
+    setIsLogin(false)
   };
 
   useEffect(() => {

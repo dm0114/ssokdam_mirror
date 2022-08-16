@@ -97,7 +97,7 @@ function SignUp2() {
                   userCnt: res.userCnt,
                   userImage: res.userImg,
                   userTime : res.userTime,
-                  userAdmin : res.userAdmin
+                  userAdmin : res.userAdmin,
                 });
                 setTimeout(() => {
                   navigate('/');
