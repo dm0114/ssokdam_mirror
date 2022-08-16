@@ -77,6 +77,7 @@ function Login() {
               userImage: res.userImg,
               userTime : res.userTime,
               userAdmin : res.userAdmin,
+              notCheck : res.notCheck,
             })
           }
         }).then(() => {

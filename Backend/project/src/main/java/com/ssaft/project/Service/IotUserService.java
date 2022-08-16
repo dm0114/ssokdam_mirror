@@ -222,6 +222,11 @@ public class IotUserService {
             return map;
         }
         Optional<IotUser> iotUser = iotUserRepository.findById(id);
+        if(notionService.notionCheck(id)){
+            iotUser.get().setNotCheck("Y");
+        }else{
+            iotUser.get().setNotCheck("N");
+        }
         return iotUser.get();
     }
 
@@ -243,8 +248,10 @@ public class IotUserService {
     public Map<String, Object> phoneCertification(String token, String number){             // 핸드폰 인증 번호 확인
         String Phone_token = function.getSubJect(token);
         Map<String, Object> map = new LinkedHashMap<>();
+        System.out.println(Phone_token);
+        System.out.println(number);
         if(Phone_token.equals("토큰만료")){
-            map.put("ok", "토큰만료");
+            map.put("ok", false);
             return map;
         }
         if(Phone_token.equals(number)){

@@ -27,14 +27,23 @@ import { useRecoilValue } from "recoil";
 import { fetchAlarm } from '../../api/alarm';
 import { useQuery } from '@tanstack/react-query';
 import Loading from '../Loading';
+import {AlarmReading} from "../../api/alarm";
 
 export const Alarm = () => {
   const userInfo2 = useRecoilValue(userInfo);
   const {isLoading, data} = useQuery(['myAlarmList'], async () => await fetchAlarm())
+  // const alarmReading = (id) => {
+  //     AlarmReading(id)
+  //         .then((res) => {res.json().then((res) => {
+  //             console.log(res)
+  //         })})
+  // }
 
   const alarmList = data?.map((alarm, index) => (
     <BinWrapper key={index}>
-      <ContentWrapper>
+      <ContentWrapper onClick={() => {
+          console.log(data.notSeq)
+      }}>
         {alarm.notCtnt === "포인트 적립" ? (<AlarmMainText>{alarm.notMoney} 포인트가 적립되었습니다.</AlarmMainText>) : (<AlarmMainText>{alarm.notMoney} 포인트가 환전되었습니다.</AlarmMainText>)}
       </ContentWrapper>
       <ContentWrapper>
