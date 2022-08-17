@@ -261,29 +261,30 @@ function Home() {
               <SubNoticeText>다음 이용까지</SubNoticeText>
               <SubNotice>
                 <TimeController>
-                  { localStorage.getItem('access-token') ? (
-                      <>
-                        { isTimeOut ? (
-                              <h4 style={{ margin : 0 }}>이용가능</h4>
-                          ) : (
-                              <>
-                                { isNaN(min) && isNaN(sec) ? (
-                                    <h4 style={{ margin : 0 }}>Loading...</h4>
-                                ) : (<>
-                                  {sec < 10 ? (
-                                      <h4 style={{ margin: 0 }}>
-                                        {min} : 0{sec}
-                                      </h4>
-                                  ) : (
-                                      <h4 style={{ margin: 0 }}>
-                                        {min} : {sec}
-                                      </h4>
-                                  )}
-                                </>)}
-                              </>
-                          ) }
-                      </>
-                  ) : (<h4 style={{ margin : 0 }}>-</h4>)}
+                  { localStorage.getItem('access-token') === 'undefined' || !localStorage.getItem('access-token') ? (
+                      <h4 style={{ margin : 0 }}>-</h4>
+                  ) : (<>
+                    { isTimeOut ? (
+                        <h4 style={{ margin : 0 }}>이용가능</h4>
+                    ) : (
+                        <>
+                          { isNaN(min) && isNaN(sec) ? (
+                              <h4 style={{ margin : 0 }}>Loading...</h4>
+                          ) : (<>
+                            {sec < 10 ? (
+                                <h4 style={{ margin: 0 }}>
+                                  {min} : 0{sec}
+                                </h4>
+                            ) : (
+                                <h4 style={{ margin: 0 }}>
+                                  {min} : {sec}
+                                </h4>
+                            )}
+                          </>)}
+                        </>
+                    ) }
+                  </>)}
+
                 </TimeController>
               </SubNotice>
             </BinWrapper>
@@ -384,7 +385,7 @@ function Home() {
               </Service>
               <Service>
                 <BinWrapper
-                  onClick={() => navigate('/serviceInfo')}
+                  onClick={() => navigate('/help')}
                   display='flex'
                   fd='column'
                   jc='center'
