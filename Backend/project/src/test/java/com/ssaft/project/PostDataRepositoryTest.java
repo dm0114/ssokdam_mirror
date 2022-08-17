@@ -31,11 +31,11 @@ public class PostDataRepositoryTest {
     public void 게시글등록및삭제테스트(){
         PostData postData = new PostData();
 
-        postData.setIotUser(iotUserRepository.findById("test").get());
+        postData.setIotUser(iotUserRepository.findById("admin").get());
         postData.setPstTitle("test title 내용입니다.!!!");
         postData.setPstCtnt("test ctnt 내용입니다.");
         postData.setPstProp("공지사항");
-        postService.postPush(function.creatToken("test", (1*1000*60)),postData);
+        postService.postPush(function.creatToken("admin", (1*1000*60)),postData);
 
         postService.postDelete(postData.getPstSeq());
     }
@@ -43,11 +43,11 @@ public class PostDataRepositoryTest {
     @Test
     public void 게시글수정테스트(){
         PostData postData = new PostData();
-        postData.setIotUser(iotUserRepository.findById("test").get());
+        postData.setIotUser(iotUserRepository.findById("admin").get());
         postData.setPstTitle("test title 내용입니다.!!!");
         postData.setPstCtnt("test ctnt 내용입니다.");
         postData.setPstProp("공지사항");
-        postService.postPush(function.creatToken("test", (1*1000*60)),postData);
+        postService.postPush(function.creatToken("admin", (1*1000*60)),postData);
         postData.setPstImg("수정이미지 테스트");
         postData.setPstTitle("수정타이틀 테스트");
         postData.setPstCtnt("수정내용 테스트");
