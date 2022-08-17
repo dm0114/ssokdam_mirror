@@ -85,7 +85,7 @@ export const AdminMain = () => {
                         </TextBox>
                     </ComponentBox>
                     <ComponentBox>
-                        <AdminMainImg alt="" src="https://cdn-icons-png.flaticon.com/512/2562/2562050.png"></AdminMainImg>
+                        <AdminMainImg alt="" src="https://cdn-icons-png.flaticon.com/512/149/149071.png"></AdminMainImg>
                         <TextBox>
                             <span>회원 수</span>
                             <span style={{ fontWeight : 'bold' }}>{ generalInfo.userCnt }</span>

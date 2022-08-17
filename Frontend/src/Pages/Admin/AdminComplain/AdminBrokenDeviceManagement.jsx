@@ -249,10 +249,10 @@ export const AdminBrokenDeviceManagement = () => {
                                             : rows[0]
                                     ).map((display, index) => (
                                         <StyledTableRow key={display.id}>
-                                            <StyledTableCell align="center" component="th" scope="display">
+                                            <StyledTableCell style={{ cursor : 'pointer' }} align="center" component="th" scope="display">
                                                 {index + 1}
                                             </StyledTableCell>
-                                            <StyledTableCell align="center" onClick={() => {
+                                            <StyledTableCell style={{ cursor : 'pointer' }}  align="center" onClick={() => {
                                                 setId(display.id)
                                                 setStatus(Detail)
                                             }}>{display.pstTitle}</StyledTableCell>
