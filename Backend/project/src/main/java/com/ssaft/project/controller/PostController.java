@@ -82,7 +82,7 @@ public class PostController {
     @GetMapping("/notice/id")              // 가장 최신 공지사항
     @ResponseBody()
     public PostData noticeLsat(){
-        return postService.findLast("고장신고");
+        return postService.findLast("공지사항");
     }
 
 
