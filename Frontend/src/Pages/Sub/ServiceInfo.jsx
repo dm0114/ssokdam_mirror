@@ -47,7 +47,7 @@ const ServiceInfo = () => {
 
             <TitleWrapper>
             <ContentDivider/>
-                <ContentWrapper onClick={() => navigate('/serviceIntroduction')}>
+                <ContentWrapper onClick={() => navigate('/serviceinfo/help')}>
                     <ContentText>서비스 소개</ContentText>
                         <ContentVector
                             alt=""

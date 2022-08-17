@@ -385,7 +385,7 @@ function Home() {
               </Service>
               <Service>
                 <BinWrapper
-                  onClick={() => navigate('/help')}
+                  onClick={() => navigate('/serviceinfo/help')}
                   display='flex'
                   fd='column'
                   jc='center'
