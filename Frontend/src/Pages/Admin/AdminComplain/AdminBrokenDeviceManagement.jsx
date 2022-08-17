@@ -186,7 +186,7 @@ export const AdminBrokenDeviceManagement = () => {
     }
     const deleteBroken = (id) => {
         DeleteComplain(id)
-            .then((res) => console.log(res))
+            .then((res) => window.location.replace("/admin"))
     }
 
 
@@ -258,7 +258,7 @@ export const AdminBrokenDeviceManagement = () => {
                                             }}>{display.pstTitle}</StyledTableCell>
                                             <StyledTableCell align="center">{display.userId}</StyledTableCell>
                                             <StyledTableCell align="center">{display.pstDt}</StyledTableCell>
-                                            <StyledTableCell align="center" onClick={() => {
+                                            <StyledTableCell style={{ cursor : 'pointer' }} align="center" onClick={() => {
                                                 deleteBroken(display.id)
                                             }}>{display.trash}</StyledTableCell>
                                         </StyledTableRow>

@@ -178,7 +178,7 @@ export const AdminCheckDevice = () => {
         onMouseOver={() => setIsVisible(true)}
         onMouseOut={() => setIsVisible(false)}
         image={{
-          src: "https://cdn-icons-png.flaticon.com/512/999/999047.png",
+          src: "https://firebasestorage.googleapis.com/v0/b/ssokdam-e2b32.appspot.com/o/images%2Ftest%2F%EC%A7%80%EB%8F%84%EC%9E%84%ED%8B%B0.png?alt=media&token=901d2aff-752d-4d7d-84dd-7f960fa0b91d",
           size: {
             width: 24,
             height: 35,
