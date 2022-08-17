@@ -354,7 +354,7 @@ function Home() {
             <Point onClick={() => navigate('/exchange')}>
               <PointSubText>
                 <PointMainText>
-                  포인트 확인
+                  포인트 전환
                   <br />
                 </PointMainText>
                 내가 적립한 포인트 확인하기
