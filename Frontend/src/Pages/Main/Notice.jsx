@@ -52,7 +52,7 @@ const Notice = () => {
           </ContentWrapper>
           <ContentDivider/>
 
-          {data?.pstImg ? <img src={data?.pstImg} /> : <>{data?.pstCtnt}</>}
+          {data?.pstImg ? <img style={{ width : '100%' }} src={data?.pstImg} /> : <>{data?.pstCtnt}</>}
         </Wrap>
       </SubLoginBackgroundView>
     </ThemeProvider>
