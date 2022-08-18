@@ -31,7 +31,7 @@ const Loading = () => {
               navigate('/fail');
             }
           });
-        if (count++ === 5 && flag) {
+        if (count++ === 8 && flag) {
           clearInterval(isCigar)
           navigate('/fail')
         }
