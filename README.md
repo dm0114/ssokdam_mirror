@@ -230,7 +230,7 @@
 ## 🎛️ 디바이스 주요기능
 
 <img src="https://user-images.githubusercontent.com/62362910/185401544-c46a1400-b708-4692-b073-763319dff4d5.jpg" width="384" height="682"/>
-<img src="https://user-images.githubusercontent.com/62362910/185401559-8cf49a38-1c31-4aa7-aeef-21b36b11c1f6.jpg" width="443" height="591"/>
+<img src="https://user-images.githubusercontent.com/62362910/185401559-8cf49a38-1c31-4aa7-aeef-21b36b11c1f6.jpg" width="510" height="682"/>
 
 ###  1. 투입구 개폐
 
@@ -243,10 +243,8 @@
 ![sensor](https://user-images.githubusercontent.com/62362910/185403878-708ea2cc-fd23-4dfe-be75-847c29a625bb.png)
 
 - 인식부에서는 CDS 조도 센서를 사용하여, 물체가 입구를 통과 할 경우 낮아지는 조도량을 측정하여 
-물체 통과를 인식합니다. 인식되지 않을경우 5초후 다음 과정은 
-
+물체 통과를 인식합니다. 인식되지 않을경우 5초후 다음 과정은 생략됩니다.
 - 판별부에서는 정확도를 높이기 위해 3가지 센서를 사용하여 담배인지 아닌지를 판별합니다. 
-
 - 비접촉 온도센서에서는 적정 설정온도를, 가스 센서에서는 일정량 이상의 가스를, 공기질 센서에서는 미세먼지 량을 측정하여 3가지 판별 프로세스 중 하나라도 통과하면 담배로 인식됩니다. 
 
 ###  3. 담배 분쇄
