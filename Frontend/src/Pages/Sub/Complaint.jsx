@@ -33,6 +33,8 @@ import {IsComplain} from "../../atoms";
 import { useRecoilState } from "recoil";
 import {ComplainDevice} from "../../atoms";
 import {ComplaintStatus} from "../../atoms";
+import Avatar from '@mui/material/Avatar';
+
 
 
 const Complaint = () => {
@@ -50,6 +52,7 @@ const Complaint = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [isComplain, setIsComplain] = useRecoilState(IsComplain)
   const [complainDevice, setComplainDevice] = useRecoilState(ComplainDevice)
+  const [progress, setProgress] = useState(0)
   let inputRef;
 
   const saveImage = (e) => {
@@ -120,6 +123,7 @@ const Complaint = () => {
           console.log("snapshot", snapshot);
           const percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log(percent + "% done");
+          setProgress(percent)
         },
         (error) => {
           console.log("err", error);
@@ -289,7 +293,18 @@ const Complaint = () => {
           {/*<PhotoCamera/>*/}
 
         </IconButton>
-        
+          { progress !== 0 ? (
+              <Box sx={{ display : 'flex', justifyContent : 'center', alignItems : 'center', flexDirection : 'column', width : '100%' }}>
+                  <Avatar
+                      alt="Remy Sharp"
+                      src="https://firebasestorage.googleapis.com/v0/b/ssokdam-e2b32.appspot.com/o/images%2Ftest%2F1.jpg?alt=media&token=72bc4824-1733-4184-a385-90a8a2652c3a"
+                      sx={{ width: 100, height: 100 }}
+                  />
+                  <Box sx={{ textAlign : 'center', width : '100%', fontWeight : 'bold'}}>
+                      { progress.toFixed(2) + `% 완료`  }
+                  </Box>
+              </Box>
+          ) : (<></>) }
         {isReadyToSubmit ? (
           <MainButton width='100%' onClick={() => submitComplaint(userInput)}>
             <ButtonText>제출하기</ButtonText>

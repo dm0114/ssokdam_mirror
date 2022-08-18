@@ -26,6 +26,20 @@ export const AdminMain = () => {
             .then((res) => (res.json().then(res => {
                 console.log(res)
                 if(res != 'undefined' && res != null) {
+                    // for(let i=0; i < res.complain.length; i++ ){
+                    //     res.complain[i].id = res.complain[i].pstSeq
+                    //     delete res.complain[i].pstSeq
+                    // }
+                    // for(let j=0; j < res.Broken.length; j++ ){
+                    //     res.Broken[j].id = res.Broken[j].pstSeq
+                    //     delete res.Broken[j].pstSeq
+                    // }
+                    res.complain.reverse((a,b) => {
+                        return a.pstSeq - b.pstSeq
+                    })
+                    res.Broken.reverse((a,b) => {
+                        return a.pstSeq - b.pstSeq
+                    })
                     setGeneralInfo(res)
                 }
             })))
@@ -71,7 +85,7 @@ export const AdminMain = () => {
                         </TextBox>
                     </ComponentBox>
                     <ComponentBox>
-                        <AdminMainImg alt="" src="https://cdn-icons-png.flaticon.com/512/2562/2562050.png"></AdminMainImg>
+                        <AdminMainImg alt="" src="https://cdn-icons-png.flaticon.com/512/149/149071.png"></AdminMainImg>
                         <TextBox>
                             <span>회원 수</span>
                             <span style={{ fontWeight : 'bold' }}>{ generalInfo.userCnt }</span>

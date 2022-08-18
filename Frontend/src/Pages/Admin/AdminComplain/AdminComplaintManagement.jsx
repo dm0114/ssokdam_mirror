@@ -207,7 +207,7 @@ export const AdminComplaintManagement = () => {
     }
     const deleteComplain = (id) => {
         DeleteComplain(id)
-            .then((res) => console.log(res))
+            .then((res) => window.location.replace("/admin"))
     }
 
 
@@ -267,17 +267,19 @@ export const AdminComplaintManagement = () => {
                                         : rows[0]
                                 ).map((display,index) => (
                                     <StyledTableRow key={display.id}>
-                                        <StyledTableCell align="center" component="th" scope="display">
+                                        <StyledTableCell style={{ cursor : 'pointer' }} align="center" component="th" scope="display">
                                             { index + 1 }
                                         </StyledTableCell>
-                                        <StyledTableCell onClick={() => {
+                                        <StyledTableCell
+                                            style={{ cursor : 'pointer' }}
+                                            onClick={() => {
                                             console.log(display.id)
                                             setId(display.id)
                                             setStatus(Detail)
                                         }} align="center">{display.pstTitle}</StyledTableCell>
                                         <StyledTableCell align="center">{display.userId}</StyledTableCell>
                                         <StyledTableCell align="center">{display.pstDt}</StyledTableCell>
-                                        <StyledTableCell align="center" onClick={() => {
+                                        <StyledTableCell style={{ cursor : 'pointer' }} align="center" onClick={() => {
                                             deleteComplain(display.id)
                                         }}>{display.trash}</StyledTableCell>
                                     </StyledTableRow>

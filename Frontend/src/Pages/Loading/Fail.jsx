@@ -5,15 +5,35 @@ import { BinWrapper, MainBackGround } from '../../styles/BackgroundStyle'
 import { MuiTheme } from '../../styles/MuiTheme';
 import { HeaderWrapper, SubBackgroundView, Wrap, MainText} from '../../styles/SubLoginStyles';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import fetchUserInfo from "../../api/fetchUserInfo";
+import {useRecoilState} from "recoil";
+import {userInfo} from "../../atoms";
 
 const Fail = () => {
   const navigate = useNavigate();
+  const [userInfo2, setUserInfo2] = useRecoilState(userInfo);
 
   useEffect(() => {
+      const response = fetchUserInfo()
+      response.then((res) => {
+          console.log(res)
+          const newObject = {
+              ...userInfo2,
+              userPoint: res.userPoint,
+              userCnt: res.userCnt,
+              userTime: res.userTime,
+              userImage: res.userImg,
+              notCheck : res.notCheck,
+              userAdmin : res.userAdmin
+          }
+          console.log(newObject)
+          setUserInfo2(newObject)
+      })
     setTimeout(() => {
       navigate('/');
     }, 3000);
   }, []);
+
 
   return (
     <ThemeProvider theme={MuiTheme}>

@@ -107,19 +107,16 @@ export const AdminBrokenDeviceManagementDetail = () => {
                     </Typography>
                     <Divider/>
                     <h3>내용</h3>
-                    {/*<div className="uploader-wrapper">*/}
-                    {/*    <div className="img-wrapper">*/}
-                    {/*        <img src={postDetail.preview_URL}/>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-                    { postDetail.pstImg ? (
-                        <div className="img-wrapper">
-                            <img style={{  width: '500px' , height: '500px', objectFit : "cover" }}  src={postDetail.pstImg}/>
-                        </div>
-                    ) : (<></>) }
-                    <Typography>
-                        { postDetail.pstCtnt }
-                    </Typography>
+                    <Box style={{ padding: "20px 20px", minHeight : '500px' }}>
+                        { postDetail.pstImg ? (
+                            <div className="img-wrapper">
+                                <img style={{  width: '500px' , height: '500px', objectFit : "contain" }}  src={postDetail.pstImg}/>
+                            </div>
+                        ) : (<></>) }
+                        <Typography>
+                            { postDetail.pstCtnt }
+                        </Typography>
+                    </Box>
                     <Divider/>
                 </FormControl>
 

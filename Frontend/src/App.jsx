@@ -70,7 +70,7 @@ function App() {
           <Route exact path="/myAsk/:id" element={<MyAskDetail/>} />
           <Route exact path='/exchange' element={<Exchange/>} />
           <Route exact path='/complaint' element={<Complaint/>} />
-          <Route exact path='/serviceIntroduction' element={<ServiceIntroduction/>} />
+          <Route exact path='/serviceinfo/help' element={<ServiceIntroduction/>} />
           {/* <Route exact path='/brokenDeviceReport' element={<BrokenDeviceReport/>} /> */}
           {/* ClientAuth */}
           <Route exact path='/login' element={<Login/>} />
