@@ -120,8 +120,8 @@ public class IotUserRepositoryTest {
     @Test
     public void 회원아이디_비밀번호찾기(){
         IotUser iotUser = new IotUser();
-        iotUser.setUserName("유승우");
-        iotUser.setUserPhone("01056389909");
+        iotUser.setUserName("관리자");
+        iotUser.setUserPhone("01055555555");
         Map<String, Object> map = new LinkedHashMap<>();
         map = iotUserService.findId(iotUser);
         if(map.containsKey("message")){
@@ -134,10 +134,4 @@ public class IotUserRepositoryTest {
         }
     }
 
-    @Test
-    public void ahffk(){
-        Optional<IotUser> iotUser = iotUserRepository.findById("admin");
-        iotUser.get().setUserPhone("01055555555");
-        iotUserRepository.save(iotUser.get());
-    }
 }
