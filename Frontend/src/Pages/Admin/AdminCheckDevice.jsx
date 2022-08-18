@@ -75,8 +75,8 @@ const columns = [
 export const AdminCheckDevice = () => {
   const [state, setState] = useState({
     center: {
-      lat: 33.450701,
-      lng: 126.570667,
+      lat : 35.18380150,
+      lng : 126.79374240,
     },
     errMsg: null,
     isLoading: true,
