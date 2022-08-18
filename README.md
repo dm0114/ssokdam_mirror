@@ -229,8 +229,8 @@
 
 ## 🎛️ 디바이스 주요기능
 
-![device1](https://user-images.githubusercontent.com/62362910/185401544-c46a1400-b708-4692-b073-763319dff4d5.jpg){: width="30%" height="30%"}
-![device2](https://user-images.githubusercontent.com/62362910/185401559-8cf49a38-1c31-4aa7-aeef-21b36b11c1f6.jpg){: width="30%" height="30%"}
+<img src="https://user-images.githubusercontent.com/62362910/185401544-c46a1400-b708-4692-b073-763319dff4d5.jpg" width="384" height="682"/>
+<img src="https://user-images.githubusercontent.com/62362910/185401559-8cf49a38-1c31-4aa7-aeef-21b36b11c1f6.jpg" width="443" height="591"/>
 
 ###  1. 투입구 개폐
 
@@ -257,7 +257,7 @@
 
 ###  4. 처리 후 사용 정보 DB 송신
 
-![get](https://user-images.githubusercontent.com/62362910/185400157-af7e391a-c9b0-4066-8b6e-0d41cc67b7c9.png){: width="30%" height="30%"}
+![get](https://user-images.githubusercontent.com/62362910/185400157-af7e391a-c9b0-4066-8b6e-0d41cc67b7c9.png)
 
 - 판별이 끝난 후 담배 인것이 확인되면 이를 DB측으로 송신합니다. 
 - DB에서는 이를 포인트로 적립시킵니다.
