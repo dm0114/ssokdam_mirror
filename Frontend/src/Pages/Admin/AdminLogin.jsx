@@ -114,7 +114,7 @@ export default function AdminLogin() {
                                 <LockOutlinedIcon />
                             </Avatar>
                             <Typography component="h1" variant="h5" sx={{ fontWeight : 'bold' }}>
-                                에코원 관리자
+                                쏙담 관리자
                             </Typography>
                         </Box>
                         <Box component="form" onSubmit={onSubmitAccount} noValidate sx={{ mt: 1 }}>
