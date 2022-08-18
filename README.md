@@ -287,13 +287,14 @@
             <img src="https://user-images.githubusercontent.com/97595340/184631769-830304cc-c992-441b-907b-5596b1f501fd.jpg" width="140px" /> <br><br> 🙄 윤성한 <br>(Embedded) </a> <br></td>
     </tr>
     <tr>
-        <td align="center">firmware<br/>3D Modeling</td>
+        <td align="center">Firmware<br/>3D Modeling</td>
         <td align="center">UI/UX<br/>React</td>
         <td align="center">UI/UX<br/>React</td>
         <td align="center">REST API<br/>CI/CD<br/>Infra<br/></td>
-        <td align="center">firmware</td>
+        <td align="center">Firmware</td>
     </tr>
 </table>
+
 
 
 
@@ -319,7 +320,7 @@
 
 | 구분            | 링크                                                         |
 | --------------- | ------------------------------------------------------------ |
-| 와이어프레임    | [웹 와이어프레임 바로가기](/outputs/1.광주_1반_C106조_와이어프레임.pdf)   [디바이스 와이어프레임 바로가기](/outputs/3.광주_1반_C106조_임베디드_와이어프레임.pdf) |
+| 와이어프레임    | [웹 와이어프레임 바로가기](/outputs/1.광주_1반_C106조_와이어프레임.pdf)  /  [디바이스 와이어프레임 바로가기](/outputs/3.광주_1반_C106조_임베디드_와이어프레임.pdf) |
 | 프로젝트 노션   | [프로젝트 노션 바로가기](https://inquisitive-warrior-3ad.notion.site/PJT1_-IOT-ba584e2f93cf41d8aa36975c0ef51f42) |
 | DB덤프          | [DB덤프 바로가기](/exec/03_DB덤프.sql)                       |
 | ERD             | [ERD 바로가기](https://www.erdcloud.com/d/fKA2qjd6gNFftuiW6) |
