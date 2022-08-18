@@ -229,8 +229,8 @@
 
 ## 🎛️ 디바이스 주요기능
 
-![device1](https://user-images.githubusercontent.com/62362910/185401544-c46a1400-b708-4692-b073-763319dff4d5.jpg)
-![device2](https://user-images.githubusercontent.com/62362910/185401559-8cf49a38-1c31-4aa7-aeef-21b36b11c1f6.jpg)
+![device1](https://user-images.githubusercontent.com/62362910/185401544-c46a1400-b708-4692-b073-763319dff4d5.jpg){: width="30%" height="30%"}
+![device2](https://user-images.githubusercontent.com/62362910/185401559-8cf49a38-1c31-4aa7-aeef-21b36b11c1f6.jpg){: width="30%" height="30%"}
 
 ###  1. 투입구 개폐
 
@@ -257,7 +257,7 @@
 
 ###  4. 처리 후 사용 정보 DB 송신
 
-![get](https://user-images.githubusercontent.com/62362910/185400157-af7e391a-c9b0-4066-8b6e-0d41cc67b7c9.png)
+![get](https://user-images.githubusercontent.com/62362910/185400157-af7e391a-c9b0-4066-8b6e-0d41cc67b7c9.png){: width="30%" height="30%"}
 
 - 판별이 끝난 후 담배 인것이 확인되면 이를 DB측으로 송신합니다. 
 - DB에서는 이를 포인트로 적립시킵니다.
@@ -265,7 +265,7 @@
 
 ###  5. 기기정보 업로드
 
-![post1](https://user-images.githubusercontent.com/62362910/185400142-e22f8ffc-08c9-417b-8cef-46a3e9dc1f27.png)
+![post1](https://user-images.githubusercontent.com/62362910/185400142-e22f8ffc-08c9-417b-8cef-46a3e9dc1f27.png){: width="30%" height="30%"}
 
 - 1시간 마다 기기의 정보를 업로드합니다. 
 - 위의 이미지 처럼 DB의 Table에 해당되는 JSON 형식으로 POST요청을 보냅니다. 기기 ID, 사용자 이름, 기기 상태, 쓰레기 통 용량, 배터리 등의 정보를 관리자 측으로 송신합니다.
