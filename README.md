@@ -8,16 +8,16 @@
 
 ## 🧾목차
 
-1. [**서비스 소개**](https://lab.ssafy.com/s07-webmobile3-sub2/S07P12C106#-%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%86%8C%EA%B0%9C)
-2. [**기술 스택**](https://lab.ssafy.com/s07-webmobile3-sub2/S07P12C106#-%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%86%8C%EA%B0%9C)
-3. [**시스템 아키텍처**](#3)
-4. [**웹 주요기능 및 데모영상**](#4)
-5. [**디바이스 주요기능**](#4)
-6. [**UCC 보러가기**](#5)
-7. [**협업 관리**](#6)
-8. [**개발 멤버 소개**](#7)
-9. [**프로젝트 기간**](#8)
-10. [**프로젝트 관련 문서**](#9)
+1. [**서비스 소개**](#-서비스-소개)
+2. [**기술 스택**](#%EF%B8%8F-기술-스택)
+3. [**시스템 아키텍처**](#-시스템-아키텍쳐)
+4. [**웹 주요기능 및 데모영상**](#-주요기능-및-데모영상)
+5. [**디바이스 주요기능**](#디바이스-주요기능)
+6. [**UCC 보러가기**](#-ucc-보러가기)
+7. [**협업 관리**](#-협업-관리)
+8. [**개발 멤버 소개**](#-개발-멤버-소개)
+9. [**프로젝트 기간**](#-프로젝트-기간)
+10. [**프로젝트 관련 문서**](#-프로젝트-관련-문서)
 
 
 
@@ -78,6 +78,12 @@
 ![7 광주_1반_C106조_시스템개략도](https://user-images.githubusercontent.com/97595340/185265060-a67b27f0-b63c-4ef0-9bda-126923750d6c.png)
 
 <img src="https://user-images.githubusercontent.com/97595340/185183225-d1f297ad-9373-458f-bb83-b3815698f94d.png" style="width : 100%">
+
+#### ERD
+
+![image-20220818102735177](https://user-images.githubusercontent.com/97595340/185272129-77747822-33ce-49c5-b3c6-e6c36f0fe466.png)
+
+
 
 #### Backend 디렉토리 구조
 
@@ -213,6 +219,14 @@
 - 디바이스 주변동네를 구체적으로 보고 싶다면 로드뷰 기능을 활용할 수도 있습니다.
 - 디바이스를 잘 조치했다면 고장상태를 변경할 수 있습니다.
 
+
+
+
+
+
+
+
+
 ## 🎛️ 디바이스 주요기능
 
 임베디드 추후 추가
@@ -249,9 +263,11 @@
 
 
 
-</br>
 
-</br>
+
+
+
+
 
 <div id="7"></div>
 
@@ -271,19 +287,18 @@
             <img src="https://user-images.githubusercontent.com/97595340/184631769-830304cc-c992-441b-907b-5596b1f501fd.jpg" width="140px" /> <br><br> 🙄 윤성한 <br>(Embedded) </a> <br></td>
     </tr>
     <tr>
-        <td align="center">Embedded<br/>3D Modeling</td>
+        <td align="center">firmware<br/>3D Modeling</td>
         <td align="center">UI/UX<br/>React</td>
         <td align="center">UI/UX<br/>React</td>
         <td align="center">REST API<br/>CI/CD<br/>Infra<br/></td>
-        <td align="center">Embedded</td>
+        <td align="center">firmware</td>
     </tr>
 </table>
 
 
 
-</br>
 
-</br>
+
 
 
 <div id="8"></div>
@@ -298,21 +313,17 @@
 
 
 
-</br>
-
-</br>
-
 <div id="9"></div>
 
 ## 📖 프로젝트 관련 문서
 
 | 구분            | 링크                                                         |
 | --------------- | ------------------------------------------------------------ |
-| 와이어프레임    | [와이어프레임 바로가기]()                                    |
+| 와이어프레임    | [웹 와이어프레임 바로가기]()   [디바이스 와이어프레임 바로가기](https://lab.ssafy.com/s07-webmobile3-sub2/S07P12C106/-/blob/master/docs/3.%EA%B4%91%EC%A3%BC_1%EB%B0%98_C106%EC%A1%B0_%EC%9E%84%EB%B2%A0%EB%94%94%EB%93%9C_%EC%99%80%EC%9D%B4%EC%96%B4%ED%94%84%EB%A0%88%EC%9E%84.pdf) |
 | 프로젝트 노션   | [프로젝트 노션 바로가기](https://inquisitive-warrior-3ad.notion.site/PJT1_-IOT-ba584e2f93cf41d8aa36975c0ef51f42) |
-| 테스트데이터    | [테스트데이터 바로가기]()                                    |
+| DB덤프          | [DB덤프 바로가기](https://lab.ssafy.com/s07-webmobile3-sub2/S07P12C106/-/blob/master/exec/03_DB%EB%8D%A4%ED%94%84.sql) |
 | ERD             | [ERD 바로가기](https://www.erdcloud.com/d/fKA2qjd6gNFftuiW6) |
-| 빌드/배포       | [빌드/배포 바로가기]()                                       |
-| 외부서비스 정보 | [외부서비스 정보 바로가기]()                                 |
-| 시연 시나리오   | [시연 시나리오 바로가기]()                                   |
+| 빌드/배포       | [빌드/배포 바로가기](https://lab.ssafy.com/s07-webmobile3-sub2/S07P12C106/-/blob/master/exec/01_%EA%B4%91%EC%A3%BC_1%EB%B0%98_C106_%EB%B9%8C%EB%93%9C%20%EB%B0%8F%EB%B0%B0%ED%8F%AC.pdf) |
+| 외부서비스 정보 | [외부서비스 정보 바로가기](https://lab.ssafy.com/s07-webmobile3-sub2/S07P12C106/-/blob/master/exec/02_%EA%B4%91%EC%A3%BC_1%EB%B0%98_C106_%EC%99%B8%EB%B6%80_%EC%84%9C%EB%B9%84%EC%8A%A4_%EC%A0%95%EB%B3%B4.pdf) |
+| 시연 시나리오   | [시연 시나리오 바로가기](https://lab.ssafy.com/s07-webmobile3-sub2/S07P12C106/-/blob/master/exec/04_%EA%B4%91%EC%A3%BC_1%EB%B0%98_%EC%8B%9C%EC%97%B0%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4.pdf) |
 | 발표자료        | [발표자료 바로가기]()                                        |
