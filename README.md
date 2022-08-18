@@ -229,6 +229,8 @@
 
 ## 🎛️ 디바이스 주요기능
 
+### 0. 디바이스 이미지
+
 <img src="https://user-images.githubusercontent.com/62362910/185401544-c46a1400-b708-4692-b073-763319dff4d5.jpg" width="332" height="591"/>
 <img src="https://user-images.githubusercontent.com/62362910/185401559-8cf49a38-1c31-4aa7-aeef-21b36b11c1f6.jpg" width="443" height="591"/>
 
@@ -263,7 +265,7 @@
 
 ###  5. 기기정보 업로드
 
-![post1](https://user-images.githubusercontent.com/62362910/185400142-e22f8ffc-08c9-417b-8cef-46a3e9dc1f27.png){: width="30%" height="30%"}
+<img src="https://user-images.githubusercontent.com/62362910/185400142-e22f8ffc-08c9-417b-8cef-46a3e9dc1f27.png" width="629" height="416"/>
 
 - 1시간 마다 기기의 정보를 업로드합니다. 
 - 위의 이미지 처럼 DB의 Table에 해당되는 JSON 형식으로 POST요청을 보냅니다. 기기 ID, 사용자 이름, 기기 상태, 쓰레기 통 용량, 배터리 등의 정보를 관리자 측으로 송신합니다.
