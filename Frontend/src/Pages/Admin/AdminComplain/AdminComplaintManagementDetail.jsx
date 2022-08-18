@@ -150,7 +150,7 @@ export const AdminComplaintManagementDetail = () => {
                                             onChange={onChangeComment}
                                         />)  }
                                         <p style={{ textAlign: "left", color: "gray" }}>
-                                            posted 1 minute ago
+                                            { comment.cmtDt }
                                         </p>
                                         <Box sx={{ display : 'flex', justifyContent : 'flex-end', marginTop : '10px' }}>
                                             { comment.cmtSeq !== editId ? (
@@ -183,7 +183,7 @@ export const AdminComplaintManagementDetail = () => {
                                     <Avatar alt="Remy Sharp" src={belu} />
                                 </Grid>
                                 <Grid justifyContent="left" item xs zeroMinWidth>
-                                    <h4 style={{ margin: 0, textAlign: "left" }}>{ myUserInfo.userName } 관리자님</h4>
+                                    <h4 style={{ margin: 0, textAlign: "left" }}>{ myUserInfo.userId } 관리자님</h4>
                                     <TextField
                                         sx={{ pt : 2 }}
                                         fullWidth

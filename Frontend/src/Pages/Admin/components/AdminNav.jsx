@@ -22,6 +22,10 @@ export default function AdminNav({adminName}) {
             userPoint : '',
             userCnt : '',
             userImage: '',
+            userId : '',
+            userTime : '',
+            userAdmin : '',
+            notCheck : '',
         })
         navigate('/adminLogin')
     }

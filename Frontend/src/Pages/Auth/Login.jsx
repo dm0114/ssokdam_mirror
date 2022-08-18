@@ -78,6 +78,7 @@ function Login() {
               userTime : res.userTime,
               userAdmin : res.userAdmin,
               notCheck : res.notCheck,
+              userId : res.userId,
             })
           }
         }).then(() => {

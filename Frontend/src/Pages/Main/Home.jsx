@@ -80,7 +80,8 @@ function Home() {
         userTime: res.userTime,
         userImage: res.userImg,
         notCheck : res.notCheck,
-        userAdmin : res.userAdmin
+        userAdmin : res.userAdmin,
+        userId : res.userId,
       }
       console.log(newObject)
       setUserInfo2(newObject)
@@ -137,6 +138,7 @@ function Home() {
       userTime : '',
       userAdmin : '',
       notCheck : '',
+      userId : '',
     });
     setIsLogin(false)
   };
