@@ -299,7 +299,7 @@ function Home() {
 
             <BinWrapper display='flex' fd='column' ai='center' jc='center'>
               <SubNoticeText>나의 포인트</SubNoticeText>
-              { localStorage.getItem('access-token') ? (
+              { localStorage.getItem('access-token') && localStorage.getItem('access-token') !== "undefined" ? (
                   <SubNotice>{userInfo2?.userPoint}점</SubNotice>
               ) : (
                   <SubNotice>-</SubNotice>
