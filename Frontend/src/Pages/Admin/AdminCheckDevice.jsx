@@ -125,10 +125,10 @@ export const AdminCheckDevice = () => {
           setState((prev) => ({
             ...prev,
             center: {
-              // lat: position.coords.latitude, // 위도
-              // lng: position.coords.longitude, // 경도
-              lat : 35.18380150,
-              lng : 126.79374240,
+              lat: position.coords.latitude, // 위도
+              lng: position.coords.longitude, // 경도
+              // lat : 35.18380150,
+              // lng : 126.79374240,
             },
             isLoading: false,
           }));
