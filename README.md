@@ -1,4 +1,4 @@
-![벨루생선](https://www.google.com/imgres?imgurl=https%3A%2F%2Fthx.sfo2.cdn.digitaloceanspaces.com%2Fwr%2Fcoverimages%2Fm_11%2F%25EB%25AF%25BC%25EC%258B%25AC_11.jpg&imgrefurl=https%3A%2F%2Fwordrow.kr%2F%25EC%259D%2598%25EB%25AF%25B8%2F%25EB%25AF%25BC%25EC%258B%25AC%2F&tbnid=jkUsRoQUFG8zeM&vet=12ahUKEwjOs5Gj8Lj6AhX-xosBHV16AYcQMygAegUIARDAAQ..i&docid=vT62KXZ-7YiR4M&w=1280&h=1280&q=%EB%AF%BC%EC%8B%AC&ved=2ahUKEwjOs5Gj8Lj6AhX-xosBHV16AYcQMygAegUIARDAAQ)
+![벨루생선](https://user-images.githubusercontent.com/97595340/184609346-792e375d-8063-455e-97f7-d9bdcec71854.jpg)
 
 <div align="center">
   <h1>담배꽁초처리 플랫폼 SSOKDAM</h1>
@@ -29,7 +29,7 @@
 
 ## ✨ 서비스 소개
 
-#### 유튜브 트랜드 분석 
+#### 심각한 바다의 오염문제 😖
 
 > 국내 하루 평균 길에 버려지는 담배꽁초가 무려 **1250**만 개비라고 합니다.<br />
 >
