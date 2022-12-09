@@ -115,4 +115,7 @@ fabric.properties
 # https://plugins.jetbrains.com/plugin/8053-azure-toolkit-for-intellij
 .idea/**/azureSettings.xml
 
+# etc. Files
+File Docs/광주_1반_C106_발표자료.pptx
+
 # End of https://www.toptal.com/developers/gitignore/api/intellij
